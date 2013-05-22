@@ -55,7 +55,7 @@ class Event(models.Model):
     monitor = models.CharField(max_length=2, choice=MONITOR_TYPES)
 
     # which term this event is active in
-    term = models.ForeignKey()  # TODO: write and import TERM
+    'term = models.ForeignKey()  # TODO: write and import TERM
 
     # which days this event repeats on, starting with Monday (0) through LD (6)
     # an event that repeats on Tuesday and Thursday would be (1,3)
@@ -72,6 +72,15 @@ class Event(models.Model):
     end = models.TimeField()
 
 class Schedule(models.Model):
+
+    # which trainee this schedule belongs to
+    'trainee = models.ForeignKey() #TODO: write and import user model
+
+    # which term this schedule applies to
+    term = models.ForeignKey() #TODO: write and import TERM
+
+    # which events are on this schedule
+    events = models.ManyToManyField(Event)
 
 class ScheduleTemplate(models.Model):
 
