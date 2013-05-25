@@ -9,6 +9,8 @@ This schedules module is for representing weekly trainee schedules.
 Data Models
 - Event: 
     an event, such as class or study time, that trainees need to attend.
+- EventGroup:
+
 - Schedule: 
     a collection of events for one trainee. each trainee should have one 
     schedule per term. 
@@ -46,7 +48,7 @@ class Event(models.Model):
     description = models.CharField(max_length=250, blank=True)
 
     # a groupID. used to group repeating events
-    group = models.IntegerField()
+    group = models.ForeignKey(EventGroup)
 
     # the type of event
     type = models.CharField(max_length=1, choice=EVENT_TYPES)
@@ -57,10 +59,6 @@ class Event(models.Model):
     # which term this event is active in
     'term = models.ForeignKey()  # TODO: write and import TERM
 
-    # which days this event repeats on, starting with Monday (0) through LD (6)
-    # an event that repeats on Tuesday and Thursday would be (1,3)
-    repeat = models.CommaSeparatedIntegerField(max_length=7)
-
     # weeks 0-19 for the 20 weeks of the training
     week = models.PositiveSmallIntegerField()
 
@@ -70,6 +68,15 @@ class Event(models.Model):
     start = models.TimeField()
 
     end = models.TimeField()
+
+class EventGroup(models.Model):
+
+    name = models.CharField(max_length=30)
+
+    # which days this event repeats on, starting with Monday (0) through LD (6)
+    # an event that repeats on Tuesday and Thursday would be (1,3)
+    repeat = models.CommaSeparatedIntegerField(max_length=7)
+
 
 class Schedule(models.Model):
 
@@ -83,4 +90,8 @@ class Schedule(models.Model):
     events = models.ManyToManyField(Event)
 
 class ScheduleTemplate(models.Model):
+
+    name = models.CharField(max_length=20)
+
+    eventgroup = models.ForeignKey(EventGroup)
 
