@@ -71,6 +71,7 @@ class Event(models.Model):
 
 class EventGroup(models.Model):
 
+    # for now, this should just be the same as the event name 
     name = models.CharField(max_length=30)
 
     # which days this event repeats on, starting with Monday (0) through LD (6)
