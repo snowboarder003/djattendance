@@ -1,4 +1,5 @@
 from django.db import models
+from terms.models import Term
 
 ########################################################################80chars
 
@@ -7,18 +8,19 @@ from django.db import models
 This schedules module is for representing weekly trainee schedules.
 
 Data Models
-- Event: 
+- Event:
     an event, such as class or study time, that trainees need to attend.
 - EventGroup:
 
-- Schedule: 
-    a collection of events for one trainee. each trainee should have one 
-    schedule per term. 
+- Schedule:
+    a collection of events for one trainee. each trainee should have one
+    schedule per term.
 - ScheduleTemplate:
-    a generic collection of events for one week that can be applied to a 
-    trainee or group of trainees. 
+    a generic collection of events for one week that can be applied to a
+    trainee or group of trainees.
 
 """
+
 
 class Event(models.Model):
 
@@ -26,10 +28,10 @@ class Event(models.Model):
         ('C', 'Class'),
         ('S', 'Study'),
         ('M', 'Meal'),
-        ('H','House'),
-        ('T','Team'),
-        ('L','Church Meeting'), # C is taken, so L for locality
-        ('*', 'Special'), # S is taken, so * for special
+        ('H', 'House'),
+        ('T', 'Team'),
+        ('L', 'Church Meeting'),  # C is taken, so L for locality
+        ('*', 'Special'),  # S is taken, so * for special
     )
 
     MONITOR_TYPES = (
@@ -57,7 +59,7 @@ class Event(models.Model):
     monitor = models.CharField(max_length=2, choice=MONITOR_TYPES)
 
     # which term this event is active in
-    'term = models.ForeignKey()  # TODO: write and import TERM
+    term = models.ForeignKey(Term)
 
     # weeks 0-19 for the 20 weeks of the training
     week = models.PositiveSmallIntegerField()
@@ -69,9 +71,10 @@ class Event(models.Model):
 
     end = models.TimeField()
 
+
 class EventGroup(models.Model):
 
-    # for now, this should just be the same as the event name 
+    # for now, this should just be the same as the event name
     name = models.CharField(max_length=30)
 
     # which days this event repeats on, starting with Monday (0) through LD (6)
@@ -82,17 +85,17 @@ class EventGroup(models.Model):
 class Schedule(models.Model):
 
     # which trainee this schedule belongs to
-    'trainee = models.ForeignKey() #TODO: write and import user model
+    'trainee = models.ForeignKey()  # TODO: write and import user model
 
     # which term this schedule applies to
-    term = models.ForeignKey() #TODO: write and import TERM
+    term = models.ForeignKey(Term)
 
     # which events are on this schedule
     events = models.ManyToManyField(Event)
+
 
 class ScheduleTemplate(models.Model):
 
     name = models.CharField(max_length=20)
 
     eventgroup = models.ForeignKey(EventGroup)
-
