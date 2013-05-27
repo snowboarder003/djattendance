@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 ########################################################################80chars
 
@@ -26,3 +27,6 @@ class Term(models.Model):
 
     # the last day of the term, the sat of semiannual
     end = models.DateField()
+
+    def getDate(week, day, self):
+        return self.start + datetime.timedelta(week * 7 + day)
