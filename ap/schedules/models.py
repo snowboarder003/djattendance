@@ -1,7 +1,6 @@
 from django.db import models
 from terms.models import Term
 
-########################################################################80chars
 
 """ SCHEDULES models.py
 
@@ -72,10 +71,12 @@ class Event(models.Model):
     end = models.TimeField()
 
     def _startDate(self):
-        return self.term.
+        return self.term.getDate(0, 0)
+    startDate = property(_startDate)
 
     def _endDate(self):
-
+        return self.term.getDate(19, 6)
+    endDate = property(_endDate)
 
 
 class EventGroup(models.Model):
@@ -84,7 +85,7 @@ class EventGroup(models.Model):
     name = models.CharField(max_length=30)
 
     # which days this event repeats on, starting with Monday (0) through LD (6)
-    # an event that repeats on Tuesday and Thursday would be (1,3)
+    # i.e. an event that repeats on Tuesday and Thursday would be (1,3)
     repeat = models.CommaSeparatedIntegerField(max_length=7)
 
 
@@ -99,9 +100,12 @@ class Schedule(models.Model):
     # which events are on this schedule
     events = models.ManyToManyField(Event)
 
+    def clear(startDate, endDate, self):
+        # delete events within this interval on this schedule
+        Event.objects.filter(schedule=self.id).filter(startDate__gte=startDate).filter(endDate__lte=endDate).delete()
+
     def clear(startWeek, startDay, endWeek, endDay, self):
-        "delete events within this interval on this schedule"
-        Event.objects.filter(schedule=self.id)
+        self.clear(self.term.getDate(startWeek, startDay), self.term.getDate(endWeek, endDay))
 
     def clear(self):
         self.clear(0, 0, 19, 6)
@@ -111,4 +115,14 @@ class ScheduleTemplate(models.Model):
 
     name = models.CharField(max_length=20)
 
-    eventgroup = models.ForeignKey(EventGroup)
+    eventgroup = models.ManyToManyField(EventGroup)
+
+    # applies a schedule template to a schedule
+    def apply(schedule, self):
+        # iterate over event groups in this template
+        for eventgrp in EventGroup.objects.filter(scheduletemplate=self.id):
+            # iterate over each event inside each event group
+            for event in Event.objects.filter(eventgroup=eventgrp.id):
+                schedule.events.add(event)
+
+    def apply(schedules)
