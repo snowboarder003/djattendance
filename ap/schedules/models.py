@@ -71,6 +71,12 @@ class Event(models.Model):
 
     end = models.TimeField()
 
+    def _startDate(self):
+        return self.term.
+
+    def _endDate(self):
+
+
 
 class EventGroup(models.Model):
 
@@ -92,6 +98,13 @@ class Schedule(models.Model):
 
     # which events are on this schedule
     events = models.ManyToManyField(Event)
+
+    def clear(startWeek, startDay, endWeek, endDay, self):
+        "delete events within this interval on this schedule"
+        Event.objects.filter(schedule=self.id)
+
+    def clear(self):
+        self.clear(0, 0, 19, 6)
 
 
 class ScheduleTemplate(models.Model):
