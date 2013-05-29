@@ -125,4 +125,6 @@ class ScheduleTemplate(models.Model):
             for event in Event.objects.filter(eventgroup=eventgrp.id):
                 schedule.events.add(event)
 
-    def apply(schedules)
+    def apply(schedules, self):
+        for schedule in schedules:
+            self.apply(schedule)
