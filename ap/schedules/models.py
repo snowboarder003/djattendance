@@ -88,10 +88,10 @@ class EventGroup(models.Model):
     # i.e. an event that repeats on Tuesday and Thursday would be (1,3)
     repeat = models.CommaSeparatedIntegerField(max_length=7)
 
-    # override save(): ensure all events in eventgroup are also deleted
-    def save(self, *args, **kwargs):
+    # override delete(): ensure all events in eventgroup are also deleted
+    def delete(self, *args, **kwargs):
         Events.objects.filter(eventgroup=self.id).delete()
-        super(EventGroup, self).save(*args, **kwargs)
+        super(EventGroup, self).delete(*args, **kwargs)
 
 
 class Schedule(models.Model):
