@@ -1,5 +1,7 @@
 from django.db import models
 
+from schedules.models import ScheduleTemplate
+
 """ TEAMS app
 
 The teams app is responsible for representing teams in data. This is a utility
@@ -9,7 +11,8 @@ Data Models:
     Team: an FTTA team
 """
 
-class Team(Models.model):
+
+class Team(models.Model):
 
     TEAM_TYPES = (
         ('CAMPUS', 'Campus')
@@ -26,3 +29,9 @@ class Team(Models.model):
     shortcode = models.CharField(max_length=10)
 
     type = models.CharField(max_length=6, choices=TEAM_TYPES)
+
+    # oftentimes, teams may have their own schedule
+    schedule = models.ForeignKey(ScheduleTemplate, blank=True)
+
+    # opposite of subteam... relates subteams to their superteam
+    superteam = models.ForeignKey(Team, blank=True)
