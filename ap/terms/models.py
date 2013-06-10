@@ -29,11 +29,11 @@ class Term(models.Model):
     end = models.DateField()
 
     # returns an absolute date for a term week/day pair
-    def getDate(week, day, self):
+    def getDate(self, week, day):
         return self.start + datetime.timedelta(week * 7 + day)
 
     # returns a term week/day pair for an absolute date
-    def reverseDate(date, self):
+    def reverseDate(self, date):
         if self.start <= date <= self.end:
             # days since the term started
             delta = date - self.start
