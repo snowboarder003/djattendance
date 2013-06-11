@@ -32,6 +32,15 @@ class House(models.Model):
     used = models.BooleanField()
 
 
+class Room(models.Model):
+
+    capacity = models.SmallIntegerField()
+
+    house = models.ForeignKey(House)
+
+    floor = models.SmallIntegerField(default=1)
+
+
 class Bunk(models.Model):
 
     POSITION = (
@@ -45,8 +54,8 @@ class Bunk(models.Model):
     # whether this is a top or bottom bunk
     position = models.CharField(max_length=1, choices=POSITION)
 
-    # which house this bunk is in
-    house = models.ForeignKey(House)
+    # which room this bunk is in
+    room = models.ForeignKey(Room)
 
     # which trainee is in this bunk
     trainee = models.OneToOneField('Trainee')
