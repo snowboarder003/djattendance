@@ -35,7 +35,7 @@ class House(models.Model):
     used = models.BooleanField()
 
     def _conc_addresses(self):
-        return address1 + " " + address2
+        return address1 + "\n" + address2
 
     address = property(_conc_addresses)
 
