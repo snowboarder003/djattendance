@@ -22,14 +22,22 @@ class House(models.Model):
     # the common name for the house, e.g. 1329 Amberwick, 2102 Grace
     name = models.CharField(max_length=50)
 
-    # the actual mailing address of the house
-    address = models.CharField(max_length=200)
+    # address line 1
+    address1 = models.CharField(max_length=100)
+
+    # address line 2
+    address2 = models.CharField(max_length=100)
 
     # whether this is a brother's house or a sister's house
     gender = models.CharField(max_length=1, choices=GENDER)
 
     # whether this house is actively used by the training
     used = models.BooleanField()
+
+    def _conc_addresses(self):
+        return address1 + " " + address2
+
+    address = property(_conc_addresses)
 
 
 class Room(models.Model):
