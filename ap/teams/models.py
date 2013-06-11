@@ -26,7 +26,7 @@ class Team(models.Model):
     name = models.CharField(max_length=50)
 
     # the abbreviation of the team, e.g. I-YP or ANA-COM
-    shortcode = models.CharField(max_length=10)
+    code = models.CharField(max_length=10)
 
     type = models.CharField(max_length=6, choices=TEAM_TYPES)
 
