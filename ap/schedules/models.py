@@ -1,5 +1,6 @@
 from django.db import models
 from terms.models import Term
+from classes.models import Class
 
 
 """ SCHEDULES models.py
@@ -50,6 +51,9 @@ class Event(models.Model):
 
     # a groupID. used to group repeating events
     group = models.ForeignKey(EventGroup)
+
+    # if this event is a class, relate it
+    clas = models.ForeignKey(Class)  # class is a reserved keyword :(
 
     # the type of event
     type = models.CharField(max_length=1, choice=EVENT_TYPES)
