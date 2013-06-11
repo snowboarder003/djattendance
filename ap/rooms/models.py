@@ -27,11 +27,11 @@ class Room (models.Model):
         ('R', 'Restricted'),
     )
 
-    # the room's number
-    number = models.SmallIntegerField(primary_key=True)
+    # the room number/code e.g.EPC, W372
+    code = models.CharField(max_length=6, primary_key=True)
 
-    # the abbreviated name
-    shortcode = models.CharField(max_length=20)
+    # the room's name, e.g. East Side Peach Chairs, or West Third Heavens
+    name = models.CharField(max_length=30)
 
     # which floor of the TC this room is on
     floor = models.SmallIntegerField()
