@@ -1,6 +1,7 @@
 from django.db import models
 
 from schedules.models import ScheduleTemplate
+from localities.models import Locality
 
 """ TEAMS app
 
@@ -29,6 +30,9 @@ class Team(models.Model):
     code = models.CharField(max_length=10)
 
     type = models.CharField(max_length=6, choices=TEAM_TYPES)
+
+    # which locality this team is in
+    locality = models.ForeignKey(Locality)
 
     # oftentimes, teams may have their own schedule
     schedule = models.ForeignKey(ScheduleTemplate, blank=True)
