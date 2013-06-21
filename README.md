@@ -8,7 +8,7 @@ The Attendance+ Project is a rewrite of the original FTTA attendance server in P
 ### Core Technologies
 Python
 Django
-MySQL
+Postgres
 
 ### Additional Technologies
 Redis
