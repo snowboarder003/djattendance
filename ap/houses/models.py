@@ -38,7 +38,9 @@ class House(models.Model):
         return address1 + "\n" + address2
 
     address = property(_conc_addresses)
-
+    
+    def _unicode_(self):
+        return self.name
 
 class Room(models.Model):
 
@@ -47,7 +49,9 @@ class Room(models.Model):
     house = models.ForeignKey(House)
 
     floor = models.SmallIntegerField(default=1)
-
+    
+    def _unicode_(self):
+        return self.house.name + " Room " + self.pk
 
 class Bunk(models.Model):
 
@@ -67,3 +71,6 @@ class Bunk(models.Model):
 
     # which trainee is in this bunk
     trainee = models.OneToOneField('Trainee')
+    
+    def _unicode_(self):
+        return self.room.house.name + " Bunk " + self.number
