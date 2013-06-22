@@ -9,6 +9,7 @@ from .forms import NewTermForm
 class IndexView(ArchiveIndexView):
     template_name = 'terms/index.html'
     context_object_name = 'term_list'
+    allow_empty = True
     model = Term
     date_field = 'start'
 
