@@ -16,3 +16,19 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default.
     }
 }
+
+TEMPLATE_DIRS = (
+    'C:/Users/Scrumbley/attendanceplus/ap/templates'
+)
+
+INSTALLED_APPS += (
+    'terms',
+    'django.contrib.admin',
+)
+
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    'C:/Users/Scrumbley/attendanceplus/ap/static',
+)
+
