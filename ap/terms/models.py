@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 import datetime
 
 ########################################################################80chars
@@ -20,7 +21,7 @@ class Term(models.Model):
     name = models.CharField(max_length=12)
 
     # a term's short code; i.e. Fa13, Sp15
-    code = models.CharField(max_length=4)
+    code = models.CharField(max_length=4, unique=True)
 
     # first day of the term, the monday of pre-training
     start = models.DateField()
@@ -41,3 +42,9 @@ class Term(models.Model):
         # if not within the dates the term, return invalid result
         else:
             return (-1, -1)
+
+    def get_absolute_url(self):
+        return reverse('terms:detail', kwargs={'code': self.code})
+
+    def __unicode__(self):
+        return self.name
