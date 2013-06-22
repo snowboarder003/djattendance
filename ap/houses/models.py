@@ -61,7 +61,7 @@ class Bunk(models.Model):
     )
 
     # the bunk's number
-    number = models.SmallIntegerField()
+    number = models.SmallIntegerField(primary_key=True)
 
     # whether this is a top or bottom bunk
     position = models.CharField(max_length=1, choices=POSITION)
