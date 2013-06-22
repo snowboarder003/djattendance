@@ -3,7 +3,7 @@ from django.db import models
 
 class serviceCategory(models.Model):
     Name = models.CharField(max_length=200)
-    discription = models.TextField()
+    description = models.TextField()
 
 class service(models.Model):
     category = models.ForeignKey(serviceCategory)
