@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from users.models import UserAccount
-from test.test_imageop import MAX_LEN
 
 # Create your models here.
 
