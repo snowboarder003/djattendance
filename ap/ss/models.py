@@ -1,12 +1,15 @@
 from django.db import models
+#from users.models import UserAccount
 
 
 class serviceCategory(models.Model):
+
     Name = models.CharField(max_length=200)
     description = models.TextField()
 
 
 class service(models.Model):
+
     category = models.ForeignKey(serviceCategory)
     serviceName = models.CharField(max_length=1000)
     isActive = models.BooleanField()
@@ -14,6 +17,7 @@ class service(models.Model):
 
 
 class servicePeriod(models.Model):
+
     periodName = models.CharField(max_length=200)
 
     #which service is on this Period
@@ -23,6 +27,7 @@ class servicePeriod(models.Model):
 
 
 class serviceInstance(models.Model):
+
     WEEKDAY = (
         ('Sun', 'Sunday'),
         ('Mon', 'Monday'),
@@ -32,6 +37,7 @@ class serviceInstance(models.Model):
         ('Fri', 'Friday'),
         ('Sat', 'Saturday'),
     )
+
     service = models.ForeignKey(service)
     period = models.ForeignKey(servicePeriod)
     weekday = models.CharField(max_length=3, choices=WEEKDAY)
@@ -41,7 +47,8 @@ class serviceInstance(models.Model):
 
 
 class serviceScheduler(models.Model):
-    svPeriodId=models.ForeignKey(servicePeriod)
-    startDate=models.DateField()
-    modifiedTime=models.DateTimeField()
 
+    svPeriodId = models.ForeignKey(servicePeriod)
+    startDate = models.DateField()
+    modifiedTime = models.DateTimeField()
+    #need to add user
