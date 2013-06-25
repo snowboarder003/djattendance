@@ -116,6 +116,7 @@ INSTALLED_APPS = (
 
     #servie scheduler
     'ss',
+	'service',
 )
 
 # A sample logging configuration. The only tangible logging
