@@ -24,6 +24,9 @@ class Book(models.Model):
     # the abbreviation of the book's title, e.g. YPT
     code = models.CharField(max_length=20)
 
+    # number of messages/chapters in this volume
+    chapters = models.SmallIntegerField(blank=True)
+
     # the collection this book belongs to, if any
     collection = models.ForeignKey(blank=True)
 
