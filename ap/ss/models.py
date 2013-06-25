@@ -1,8 +1,8 @@
 from django.db import models
-
 #from users.models import UserAccount
 
-#This is for service scheduler which is to define service and assign services to trainees.
+#This is for service scheduler .
+#Define service and assign service to trainees
 
 
 #define service category such as Cleaning, Guard etc
@@ -11,6 +11,7 @@ class serviceCategory(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
 
+    #return services of this category
     def getService(self):
         return service.objects.filter(svCategory=self)
 
