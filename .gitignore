@@ -1,1 +1,5 @@
 *.pyc
+key.pub
+ap/.project
+ap/.pydevproject
+.gitignore
