@@ -43,4 +43,4 @@ class Room (models.Model):
     access = models.CharField(max_length=1, choices=ACCESS_TYPES)
 
     # some rooms are in the system and have schedules, but cannot be reserved
-    reservable = models.BooleanField()
+    reservable = models.BooleanField(default=False)
