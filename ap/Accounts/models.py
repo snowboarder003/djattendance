@@ -48,3 +48,10 @@ class TraineeAccount(AbstractUser):
 class TrainintgAssistantAccount(UserAccount):
     user = models.OneToOneField(UserAccount.user)
     maritalStatus = models.BooleanField
+    
+class EmergencyInfo():
+    name = models.CharField(max_length=30)
+    address= models.CharField(max_length=30)
+    relation = models.CharField(max_length=30)
+    phone = models.CharField(max_length=15)
+    phone2 = models.CharField(max_length=15)
