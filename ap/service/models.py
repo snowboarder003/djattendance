@@ -3,6 +3,7 @@ from django.db import models
 
 #This is for define service
 
+
 #define service category such as Cleaning, Guard etc
 class category(models.Model):
 
