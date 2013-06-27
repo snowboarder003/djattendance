@@ -1,15 +1,14 @@
 from django.db import models
 
-""" HOUSES models.py
+#HOUSES models.py
 
-This houses module is a utility model that define training housing.
+#This houses module is a utility model that define training housing.
 
-Data Models:
-- House: a training house
+#Data Models:
+#- House: a training house
 
-- Bunk: a bunk (either lower of upper) in a given house
+#- Bunk: a bunk (either lower of upper) in a given house
 
-"""
 
 
 class House(models.Model):
@@ -35,7 +34,8 @@ class House(models.Model):
     used = models.BooleanField()
 
     def _conc_addresses(self):
-        return address1 + "\n" + address2
+    	addr = self.address1 + "\n" + self.address2
+        return addr
 
     address = property(_conc_addresses)
     
@@ -70,7 +70,8 @@ class Bunk(models.Model):
     room = models.ForeignKey(Room)
 
     # which trainee is in this bunk
-    trainee = models.OneToOneField('Trainee')
+    #Trainee model has not yet been implemented
+    #trainee = models.OneToOneField('Trainee')
     
     def _unicode_(self):
         return self.room.house.name + " Bunk " + self.number
