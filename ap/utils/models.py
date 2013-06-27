@@ -61,6 +61,3 @@ class Vehicle(models.Model):
 	model = models.CharField(max_length=30)
 	
 	license_plate = models.CharField(max_length=10)
-
-	# Trainee foreign key (will uncomment when imported)
-	# trainee = models.ForeignKey(Trainee.Trainee)
