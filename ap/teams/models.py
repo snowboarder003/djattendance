@@ -32,7 +32,7 @@ class Team(models.Model):
     type = models.CharField(max_length=6, choices=TEAM_TYPES)
 
     # which locality this team is in
-    locality = models.ForeignKey(Locality)
+    locality = models.ForeignKey(Locality.models.locality)
 
     # oftentimes, teams may have their own schedule
     schedule = models.ForeignKey(ScheduleTemplate, blank=True)
