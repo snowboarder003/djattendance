@@ -28,6 +28,7 @@ class House(models.Model):
     address2 = models.CharField(max_length=100)
 
     # whether this is a brother's house or a sister's house
+    ####Need to test for this: that Gender is either brother or sister####
     gender = models.CharField(max_length=1, choices=GENDER)
 
     # whether this house is actively used by the training
@@ -40,7 +41,7 @@ class House(models.Model):
     address = property(_conc_addresses)
     
     def _unicode_(self):
-        return self.name
+        return u' %s' %(self.name)
 
 class Room(models.Model):
 
@@ -51,7 +52,7 @@ class Room(models.Model):
     floor = models.SmallIntegerField(default=1)
     
     def _unicode_(self):
-        return self.house.name + " Room " + self.pk
+        return self.house.name + " Room " + str(self.pk)
 
 class Bunk(models.Model):
 
@@ -74,4 +75,4 @@ class Bunk(models.Model):
     #trainee = models.OneToOneField('Trainee')
     
     def _unicode_(self):
-        return self.room.house.name + " Bunk " + self.number
+        return self.room.house.name + " Bunk " + str(self.number)
