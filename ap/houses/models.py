@@ -28,7 +28,6 @@ class House(models.Model):
     address2 = models.CharField(max_length=100)
 
     # whether this is a brother's house or a sister's house
-    ####Need to test for this: that Gender is either brother or sister####
     gender = models.CharField(max_length=1, choices=GENDER)
 
     # whether this house is actively used by the training
