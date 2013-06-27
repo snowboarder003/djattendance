@@ -16,6 +16,8 @@ Data Models
 
 
 class Term(models.Model):
+    SPRING = 'Spring'
+    FALL = 'Fall'
 
     # a term's long name; i.e. Fall 2013, Spring 2015
     name = models.CharField(max_length=12)
@@ -23,11 +25,19 @@ class Term(models.Model):
     # a term's short code; i.e. Fa13, Sp15
     code = models.CharField(max_length=4, unique=True)
 
+    # a term's season; i.e. Spring/Fall
+    season = models.CharField(max_length=6,
+                              choices=(
+                                  (SPRING, 'Spring'),
+                                  (FALL, 'Fall'),
+                              ),
+                              default=None)
+
     # first day of the term, the monday of pre-training
-    start = models.DateField()
+    start = models.DateField(verbose_name='start date')
 
     # the last day of the term, the sat of semiannual
-    end = models.DateField()
+    end = models.DateField(verbose_name='end date')
 
     # returns an absolute date for a term week/day pair
     def getDate(week, day, self):
