@@ -21,17 +21,6 @@ class DatepickerWidget(DateInput):
             'js/datepicker.js',
         )
 
-class CustomRadioSelect(RadioSelect):
-    # make css file to remove bullets. or make no-bullets renderer.
-    def __init__(self, *args, **kwargs):
-        kwargs['attrs'] = {'class': 'radioselect'}
-        super(CustomRadioSelect, self).__init__(*args, **kwargs)
-    
-    class Media:
-        css = {
-            'all': ('css/radioselect.css',)
-        }
-
 class HorizRadioRenderer(RadioSelect.renderer):
     """ this overrides widget method to put radio buttons horizontally
         instead of vertically.

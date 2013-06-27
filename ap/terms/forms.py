@@ -1,6 +1,6 @@
 from django import forms
 from .models import Term
-from .widgets import DatepickerWidget, CustomRadioSelect, HorizRadioRenderer
+from .widgets import DatepickerWidget, HorizRadioRenderer
 
 class NewTermForm(forms.ModelForm):
     
