@@ -1,5 +1,5 @@
 from django.contrib import admin
-from ap.Accounts.models import UserAccount
+from ap.accounts.models import UserAccount
 
 class UserAdmin(admin.ModelAdmin):
     pass
