@@ -6,12 +6,19 @@ The UTILS model handles various miscellaneous data models that will be used
 widely across other files.
 
 Data Models:
+	- Country: A standard country, used in cities.
 	- City: A standard city anywhere in the world, used in localities and
     addresses
     - Address: A standard US address used for training residences, emergency
     contact information, and other things
     - Vehicle: Represents vehicles owned by trainees
 """
+
+
+class Country(models.Model):
+
+	# the name of the country
+	name = models.CharField(max_length=50)
 
 
 class City(models.Model):
@@ -22,7 +29,8 @@ class City(models.Model):
 	# state or province (depending on which country it is)
 	region = models.CharField(max_length=30)
 
-	country = models.CharField(max_length=50)
+	# Country foreign key
+	country = models.ForeignKey(Country)
 
 
 class Address(models.Model):
