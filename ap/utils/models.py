@@ -20,6 +20,9 @@ class Country(models.Model):
 	# the name of the country
 	name = models.CharField(max_length=50)
 
+	# e.g. "USA", "JPN"
+	code = models.CharField(max_length=3)
+
 
 class City(models.Model):
 
@@ -54,10 +57,10 @@ class Address(models.Model):
 
 class Vehicle(models.Model):
 	
-	# e.g. Honda, Toyota
+	# e.g. "Honda", "Toyota"
 	make = models.CharField(max_length=30)
 	
-	# e.g. Accord, Camry
+	# e.g. "Accord", "Camry"
 	model = models.CharField(max_length=30)
 	
 	license_plate = models.CharField(max_length=10)
