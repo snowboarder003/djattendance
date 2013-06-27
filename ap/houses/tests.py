@@ -53,3 +53,5 @@ class HouseTests(TestCase):
 		b=Bunk.objects.get(room=r)
 		
 		ck_bunk=b.room.house.name + " Bunk " + str(b.number)
+		self.assertEqual(ck_bunk, )
+		self.assertEqual(b.position, "Top")
