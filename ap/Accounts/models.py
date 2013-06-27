@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import date
+import util
 
 # Create your models here.
 def __get_age(self):
@@ -36,7 +37,7 @@ class TraineeAccount(AbstractUser):
     dateEnd = models.DateField()
     degree = models.CharField(max_length=30)
     mentor = models.ForeignKey("TraineeAccount")
-    vehicle = models.ForeignKey(util.vehicle)
+    vehicle = models.ForeignKey(util.models.Vehicle)
     schedule = models.ForeignKey(ss.schedule)
     team = models.ForeignKey(team.team)
     services = models.ManyToManyField(services.services)
