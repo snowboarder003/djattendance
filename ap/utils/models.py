@@ -46,10 +46,10 @@ class Address(models.Model):
 	# City foreign key
 	city = models.ForeignKey(City)
 	
-	zip_code = models.SmallIntegerPositiveField()
+	zip_code = models.PositiveSmallIntegerField()
 
 	# optional four-digit zip code extension
-	zip_4 = models.SmallPositiveIntegerField(blank=True)
+	zip_4 = models.PositiveSmallIntegerField(blank=True)
 
 	# optional details field
 	details = models.CharField(max_length=150)
