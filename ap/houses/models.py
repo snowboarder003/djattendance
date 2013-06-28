@@ -62,5 +62,5 @@ class Bunk(models.Model):
     # which room this bunk is in
     room = models.ForeignKey(Room)
 
-    def _unicode_(self):
-        return self.room.house.name + " Bunk " + self.number
+    def __unicode__(self):
+        return self.room.house.name + " Bunk " + str(self.number)
