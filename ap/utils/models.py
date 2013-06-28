@@ -61,7 +61,9 @@ class Address(models.Model):
 	details = models.CharField(max_length=150)
 
 	def __unicode__(self):
-		return self.address1 + '\n' + self.address2
+		adr1, adr2 = self.address1, self.address2
+		# don't include the newline if address2 is empty
+		return adr1 + '\n' + adr2 if adr2 else adr1
 
 
 class Vehicle(models.Model):
