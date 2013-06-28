@@ -69,8 +69,5 @@ class Bunk(models.Model):
     # which room this bunk is in
     room = models.ForeignKey(Room)
 
-    # which trainee is in this bunk
-    trainee = models.OneToOneField('Trainee')
-    
     def _unicode_(self):
         return self.room.house.name + " Bunk " + self.number
