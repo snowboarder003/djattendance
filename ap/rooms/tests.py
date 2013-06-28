@@ -4,13 +4,15 @@ when you run "manage.py test".
 
 Replace this with more appropriate tests for your application.
 """
-
 from django.test import TestCase
+from rooms.models import Room
 
-
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+class RoomsTest(TestCase):
+	def setUp(self):
+		r=Room.objects.create(code="154B", name="West Side Third Heavens", floor=3, type="SR", access="S")
+	def test_room_returns_right_value(self):
+		"""
+		"""
+		r=Room.objects.get(code="154B")
+		self.assertEqual(r.type, "SR")
+		self.assertEqual(r.access, "S")
