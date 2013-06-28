@@ -9,7 +9,6 @@ Data Models:
 - House: a training house
 
 - Bunk: a bunk (either lower of upper) in a given house
-
 """
 
 
@@ -33,8 +32,7 @@ class House(models.Model):
     used = models.BooleanField()
 
     def __unicode__(self):
-        return self.name
-
+        return u' %s' %(self.name)
 
 class Room(models.Model):
 
@@ -45,7 +43,7 @@ class Room(models.Model):
     floor = models.SmallIntegerField(default=1)
 
     def __unicode__(self):
-        return self.house.name + " Room " + self.pk
+        return self.house.name + " Room " + str(self.pk)
 
 
 class Bunk(models.Model):
@@ -68,4 +66,5 @@ class Bunk(models.Model):
     trainee = models.OneToOneField('Trainee')
 
     def __unicode__(self):
-        return self.room.house.name + " Bunk " + self.number
+        return self.room.house.name + " Bunk " + str(self.number)
+
