@@ -3,11 +3,18 @@ from django.contrib.auth.models import AbstractUser
 from datetime import date
 from utilities.models import Vehicle, Address
 from term_stub.models import Term
-from teams_stub.models import Team
-from houses_stub.models import House
+from teams_stub.models import Teams
 
 # Create your models here.
-def __get_age(self):
+
+class UserAccount(AbstractUser):
+    middleName = models.CharField(max_length=30)
+    nickname = models.CharField(max_length=30)
+    maidenName = models.CharField(max_length=30)
+    birthdate = models.DateField() 
+    gender = models.CharField(max_length = 10) 
+    address = models.ForeignKey(Address)
+    def get_age(self):
         "returns the age"
         today = date.today()
         birth = date.fromtimestamp(self.birthdate)
@@ -20,13 +27,7 @@ def __get_age(self):
         else:
             return today.year - birth
 
-class UserAccount(AbstractUser):
-    middleName = models.CharField(max_length=30)
-    nickname = models.CharField(max_length=30)
-    maidenName = models.CharField(max_length=30)
-    birthdate = models.DateField() 
-    gender = models.CharField(max_length = 10) 
-    address = models.ForeignKey(Address)
+    age = property(get_age)
     maritalStatus = models.BooleanField()
         
 class TraineeAccount(AbstractUser):
@@ -39,12 +40,12 @@ class TraineeAccount(AbstractUser):
     dateEnd = models.DateField()
     degree = models.CharField(max_length=30)
     mentor = models.ForeignKey("TraineeAccount")
-    vehicle = models.ForeignKey(Vehicle)
+    vehicle = models.ForeignKey(utils.vehicle)
     schedule = models.ForeignKey(ss.schedule)
-    team = models.ForeignKey(Team)
+    team = models.ForeignKey(team.team)
     services = models.ManyToManyField(services.services)
     gospelPreferences = models.CharField()
-    house = models.ForeignKey(House)
+    house = models.ForeignKey(houses.house)
     TA = models.ForeignKey("TrainingAssistantAccount")
     bunkNumber = models.ForeignKey(house.bunk)
     
