@@ -4,17 +4,16 @@ from datetime import date
 from utilities.models import Vehicle, Address
 from term_stub.models import Term
 from teams_stub.models import Teams
-from houses_stub.models import House
+from houses_stub.models import house
 
 # UserAccounts is the abstract class for all accounts.
-class User(AbstractUser):
+class UserAccount(AbstractUser):
     middleName = models.CharField(max_length=30)
     nickname = models.CharField(max_length=30)
     maidenName = models.CharField(max_length=30)
     birthdate = models.DateField() 
     gender = models.CharField(max_length = 10) 
     address = models.ForeignKey(Address)
-    #returns the age using birthday
     def get_age(self):
         "returns the age"
         today = date.today()
@@ -32,8 +31,8 @@ class User(AbstractUser):
     maritalStatus = models.BooleanField()
 
 #TraineeAccount is the model for all trainees.        
-class Trainee(User):
-    user = models.ForeignKey(User)
+class TraineeAccount(UserAccount):
+    user = models.ForeignKey(UserAccount)
     term = models.ManyToManyField(Term)
     type = models.CharField(max_length = 30)
     spouse = models.ForeignKey("TraineeAccount")
@@ -52,8 +51,8 @@ class Trainee(User):
     bunkNumber = models.ForeignKey(house.bunk)
 
 #TrainingAssistantAccount is the account type for TAs
-class TrainingAssistant(User):
-    user = models.OneToOneField(User.user)
+class TrainingAssistantAccount(UserAccount):
+    user = models.OneToOneField(UserAccount.user)
     maritalStatus = models.BooleanField
 
 #EmergencyInfo is a model to handle emergency info
