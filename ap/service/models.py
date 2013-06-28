@@ -37,6 +37,7 @@ class Period(models.Model):
     """define Service Period such as Pre-Training, FTTA regular week, etc"""
 
     name = models.CharField(max_length=200)
+    description = models.TextField()
 
     #which Service is on this Period
     service = models.ManyToManyField(Service)
