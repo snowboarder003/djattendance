@@ -24,7 +24,7 @@ class Country(models.Model):
 	code = models.CharField(max_length=3)
 
 	def __unicode__(self):
-		return name
+		return self.name
 
 
 class City(models.Model):
@@ -39,7 +39,7 @@ class City(models.Model):
 	country = models.ForeignKey(Country)
 
 	def __unicode__(self):
-		return name
+		return self.name
 
 
 class Address(models.Model):
@@ -61,7 +61,7 @@ class Address(models.Model):
 	details = models.CharField(max_length=150)
 
 	def __unicode__(self):
-		return address1 + '\n' + address2
+		return self.address1 + '\n' + self.address2
 
 
 class Vehicle(models.Model):
@@ -77,4 +77,4 @@ class Vehicle(models.Model):
 	license_plate = models.CharField(max_length=10)
 
 	def __unicode__(self):
-		return color + ' ' + make + ' ' + model
+		return self.color + ' ' + self.make + ' ' + self.model
