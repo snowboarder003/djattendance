@@ -32,9 +32,9 @@ class HouseTests(TestCase):
 		house_address = h.address
 		con_address =h.address1 + "\n" + h.address2
 		name=h.name
-		self.assertEqual(house_address, con_address)
 		self.assertEqual(name, h)
-	
+		self.assertEqual(house_address, con_address)
+		
 	def test_room_returns_right_value(self):
 		"""
 		Room should return House name + " Room " + primary key
@@ -53,5 +53,6 @@ class HouseTests(TestCase):
 		b=Bunk.objects.get(room=r)
 		
 		ck_bunk=b.room.house.name + " Bunk " + str(b.number)
-		self.assertEqual(ck_bunk, )
-		self.assertEqual(b.position, "Top")
+		self.assertEqual(b.position, "T")
+		self.assertEqual(ck_bunk, b)
+		
