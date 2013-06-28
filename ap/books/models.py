@@ -11,6 +11,7 @@ Data Models:
     - Collection: a series of books, such as the Life-study
     - Publisher: a book publisher, such as LSM or A&C Press
 """
+# Should a class for Authors also be created?
 
 class Collection(models.Model):
 
@@ -42,10 +43,10 @@ class Book(models.Model):
     code = models.CharField(max_length=20)
 
     # number of messages/chapters in this volume
-    chapters = models.SmallIntegerField(blank=True)
+    chapters = models.SmallIntegerField(blank=True, null=True)
 
     # the collection this book belongs to, if any
-    collection = models.ForeignKey(Collection, blank=True)
+    collection = models.ForeignKey(Collection, blank=True, null=True)
 
     # the book's publisher
     publisher = models.ForeignKey(Publisher)
