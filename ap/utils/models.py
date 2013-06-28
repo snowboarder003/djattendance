@@ -23,6 +23,9 @@ class Country(models.Model):
 	# e.g. "USA", "JPN"
 	code = models.CharField(max_length=3)
 
+	def __unicode__(self):
+		return name
+
 
 class City(models.Model):
 
@@ -34,6 +37,9 @@ class City(models.Model):
 
 	# Country foreign key
 	country = models.ForeignKey(Country)
+
+	def __unicode__(self):
+		return name
 
 
 class Address(models.Model):
@@ -54,8 +60,13 @@ class Address(models.Model):
 	# optional details field
 	details = models.CharField(max_length=150)
 
+	def __unicode__(self):
+		return address1 + '\n' + address2
+
 
 class Vehicle(models.Model):
+
+	color = models.CharField(max_length=10)
 	
 	# e.g. "Honda", "Toyota"
 	make = models.CharField(max_length=30)
@@ -64,3 +75,6 @@ class Vehicle(models.Model):
 	model = models.CharField(max_length=30)
 	
 	license_plate = models.CharField(max_length=10)
+
+	def __unicode__(self):
+		return color + ' ' + make + ' ' + model
