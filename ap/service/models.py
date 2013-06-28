@@ -6,8 +6,9 @@ from django.db import models
 
 #define Service Category such as Cleaning, Guard etc
 class Category(models.Model):
-
-    """Service category class to define service category such as Cleaning, Guard, etc"""
+    """ Service category class to define service category such as
+    Cleaning, Guard, Mopping, Chairs, etc.
+    """
 
     name = models.CharField(max_length=200)
     description = models.TextField()
@@ -17,20 +18,22 @@ class Category(models.Model):
         #return Service.objects.filter(category=self)
         return self.service_set.all()
 
-
     def __unicode__(self):
-        return self.name    
+        return self.name
+
 
 #define Service such as Breakfast Cleaning, Dinner Prep, Guard A, etc
 class Service(models.Model):
-
-    """"ftta service class to define service such as Breakfast cleaning, Dinner, Prep, Guard A, etc"""
+    """" FTTA service class to define service such as
+    Breakfast cleaning, Dinner, Prep, Guard A, etc
+    """
 
     category = models.ForeignKey(Category)
     name = models.CharField(max_length=1000)
     isActive = models.BooleanField()
 
-    #every service have different workLoad, for example guard is much more intense than cleaning
+    # every service have different workLoad,
+    # for example guard is much more intense than cleaning
     workLoad = models.IntegerField()
 
     def __unicode__(self):
@@ -39,7 +42,6 @@ class Service(models.Model):
 
 #define Service Period such as Pre-Training, FTTA regular week, etc
 class Period(models.Model):
-
     """define Service Period such as Pre-Training, FTTA regular week, etc"""
 
     name = models.CharField(max_length=200)
@@ -52,9 +54,8 @@ class Period(models.Model):
     endDate = models.DateField('end date')
 
     #return the services of this Period
-    def getService(self):
-        return service.objects.filter(period=self)
+    def getServices(self):
+        return self.service.all()
 
     def __unicode__(self):
-        return self.name    
-
+        return self.name
