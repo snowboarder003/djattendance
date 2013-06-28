@@ -4,9 +4,9 @@ from datetime import date
 from utilities.models import Vehicle, Address
 from term_stub.models import Term
 from teams_stub.models import Teams
+from houses_stub.models import house
 
-# Create your models here.
-
+# UserAccounts is the abstract class for all accounts.
 class UserAccount(AbstractUser):
     middleName = models.CharField(max_length=30)
     nickname = models.CharField(max_length=30)
@@ -29,8 +29,9 @@ class UserAccount(AbstractUser):
 
     age = property(get_age)
     maritalStatus = models.BooleanField()
-        
-class TraineeAccount(AbstractUser):
+
+#TraineeAccount is the model for all trainees.        
+class TraineeAccount(UserAccount):
     user = models.ForeignKey(UserAccount)
     term = models.ManyToManyField(Term)
     type = models.CharField(max_length = 30)
@@ -40,19 +41,21 @@ class TraineeAccount(AbstractUser):
     dateEnd = models.DateField()
     degree = models.CharField(max_length=30)
     mentor = models.ForeignKey("TraineeAccount")
-    vehicle = models.ForeignKey(utils.vehicle)
+    vehicle = models.ForeignKey(Vehicle)
     schedule = models.ForeignKey(ss.schedule)
-    team = models.ForeignKey(team.team)
+    team = models.ForeignKey(Teams)
     services = models.ManyToManyField(services.services)
     gospelPreferences = models.CharField()
-    house = models.ForeignKey(houses.house)
+    house = models.ForeignKey(House)
     TA = models.ForeignKey("TrainingAssistantAccount")
     bunkNumber = models.ForeignKey(house.bunk)
-    
-class TrainintgAssistantAccount(UserAccount):
+
+#TrainingAssistantAccount is the account type for TAs
+class TrainingAssistantAccount(UserAccount):
     user = models.OneToOneField(UserAccount.user)
     maritalStatus = models.BooleanField
-    
+
+#EmergencyInfo is a model to handle emergency info
 class EmergencyInfo():
     name = models.CharField(max_length=30)
     address= models.CharField(max_length=30)
