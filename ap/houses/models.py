@@ -1,4 +1,5 @@
 from django.db import models
+from utils.models import Address
 
 """ HOUSES models.py
 
@@ -8,7 +9,6 @@ Data Models:
 - House: a training house
 
 - Bunk: a bunk (either lower of upper) in a given house
-
 """
 
 
@@ -22,11 +22,8 @@ class House(models.Model):
     # the common name for the house, e.g. 1329 Amberwick, 2102 Grace
     name = models.CharField(max_length=50)
 
-    # address line 1
-    address1 = models.CharField(max_length=100)
-
-    # address line 2
-    address2 = models.CharField(max_length=100)
+    # the house's address (defined in the utils class)
+    address = ForeignKey(Address)
 
     # whether this is a brother's house or a sister's house
     gender = models.CharField(max_length=1, choices=GENDER)
@@ -34,13 +31,8 @@ class House(models.Model):
     # whether this house is actively used by the training
     used = models.BooleanField()
 
-    def _conc_addresses(self):
-        return address1 + "\n" + address2
-
-    address = property(_conc_addresses)
-    
-    def _unicode_(self):
-        return self.name
+    def __unicode__(self):
+        return u' %s' %(self.name)
 
 class Room(models.Model):
 
@@ -49,9 +41,10 @@ class Room(models.Model):
     house = models.ForeignKey(House)
 
     floor = models.SmallIntegerField(default=1)
-    
-    def _unicode_(self):
-        return self.house.name + " Room " + self.pk
+
+    def __unicode__(self):
+        return self.house.name + " Room " + str(self.pk)
+
 
 class Bunk(models.Model):
 
