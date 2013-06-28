@@ -1,8 +1,8 @@
 from django.db import models
 
-""" UTILITIES models.py
+""" APUTILS models.py
 
-The UTILITIES model handles various miscellaneous data models that will be used
+The APUTILS model handles various miscellaneous data models that will be used
 widely across other files.
 
 Data Models:

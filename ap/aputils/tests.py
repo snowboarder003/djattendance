@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from utilities.models import Address, City, Country, Vehicle
+from aputils.models import Address, City, Country, Vehicle
 
 
 def setup_country():
