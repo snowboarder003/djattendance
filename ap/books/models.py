@@ -22,6 +22,9 @@ class Collection(models.Model):
 
     # the abbreviation of this collection, e.g. LS
     code = models.CharField(max_length=10)
+    
+    def __unicode__(self):
+    	return self.name
 
 
 class Publisher(models.Model):
@@ -31,15 +34,23 @@ class Publisher(models.Model):
 
     # the abbreviation of the publisher's name
     code = models.CharField(max_length=20)
+    
+    def __unicode__(self):
+    	return self.name
 
 
 class Author(models.Model):
 
     # the author's name, e.g. Witness Lee or Watchman Nee
-    name = models.CharField(max_legnth=100)
+    first_name = models.CharField(max_length=100)
+    middle_name = models.CharField(max_length=100, blank=True, null=True)
+    last_name = models.CharField(max_length=100)
 
     # abbreviation of the author's name, e.g. WL or WN
     code = models.CharField(max_length=5)
+    
+    def __unicode__(self):
+    	return u'%s %s' % (self.first_name, self.last_name)
 
 
 class Book(models.Model):
@@ -54,7 +65,7 @@ class Book(models.Model):
     code = models.CharField(max_length=20)
 
     # the author of this book, e.g. Witness Lee or Watchman Nee
-    author = models.ForeignKey(Author)
+    author = models.ManyToManyField(Author)
 
     # number of messages/chapters in this volume
     chapters = models.SmallIntegerField(blank=True, null=True)
@@ -64,3 +75,6 @@ class Book(models.Model):
 
     # the book's publisher
     publisher = models.ForeignKey(Publisher)
+    
+    def __unicode__(self):
+    	return self.name
