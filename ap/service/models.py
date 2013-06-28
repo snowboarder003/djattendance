@@ -13,6 +13,9 @@ class category(models.Model):
     def getService(self):
         return service.objects.filter(category=self)
 
+    def __unicode__(self):
+        return self.name    
+
 
 #define service such as Breakfast Cleaning, Dinner Prep, Guard A, etc
 class service(models.Model):
@@ -21,6 +24,9 @@ class service(models.Model):
     name = models.CharField(max_length=1000)
     isActive = models.BooleanField()
     workLoad = models.IntegerField()
+
+    def __unicode__(self):
+        return self.name
 
 
 #define service Period such as Pre-Training, FTTA regular week, etc
@@ -37,6 +43,9 @@ class period(models.Model):
     #return the services of this Period
     def getService(self):
         return service.objects.filter(period=self)
+
+    def __unicode__(self):
+        return self.name    
 
 
 #define one specific service instance such as Monday Break Prep, Monday Guard C, etc
@@ -58,4 +67,7 @@ class instance(models.Model):
     startTime = models.TimeField('start time')
     endTime = models.TimeField('end time')
     recoveryTime = models.IntegerField('time')
+
+    def __unicode__(self):
+        return self.service.name
 
