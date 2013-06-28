@@ -12,28 +12,6 @@ Data Models:
     - Publisher: a book publisher, such as LSM or A&C Press
 """
 
-
-class Book(models.Model):
-
-    # the ISBN of this book
-    isbn = models.IntegerField(primary_key=True)
-
-    # the title of the book, e.g. Young People's Training
-    name = models.CharField(max_length=200)
-
-    # the abbreviation of the book's title, e.g. YPT
-    code = models.CharField(max_length=20)
-
-    # number of messages/chapters in this volume
-    chapters = models.SmallIntegerField(blank=True)
-
-    # the collection this book belongs to, if any
-    collection = models.ForeignKey(blank=True)
-
-    # the book's publisher
-    publisher = models.ForeignKey(Publisher)
-
-
 class Collection(models.Model):
 
     # the name of the collection, e.g. The Life-study of the Bible
@@ -51,3 +29,24 @@ class Publisher(models.Model):
 
     # the abbreviation of the publisher's name
     code = models.CharField(max_length=20)
+
+class Book(models.Model):
+
+    # the ISBN of this book
+    isbn = models.IntegerField(primary_key=True)
+
+    # the title of the book, e.g. Young People's Training
+    name = models.CharField(max_length=200)
+
+    # the abbreviation of the book's title, e.g. YPT
+    code = models.CharField(max_length=20)
+
+    # number of messages/chapters in this volume
+    chapters = models.SmallIntegerField(blank=True)
+
+    # the collection this book belongs to, if any
+    collection = models.ForeignKey(Collection, blank=True)
+
+    # the book's publisher
+    publisher = models.ForeignKey(Publisher)
+
