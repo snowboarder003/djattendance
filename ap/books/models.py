@@ -13,6 +13,7 @@ Data Models:
 """
 # Should a class for Authors also be created?
 
+
 class Collection(models.Model):
 
     # the name of the collection, e.g. The Life-study of the Bible
@@ -31,6 +32,16 @@ class Publisher(models.Model):
     # the abbreviation of the publisher's name
     code = models.CharField(max_length=20)
 
+
+class Author(models.Model):
+
+    # the author's name, e.g. Witness Lee or Watchman Nee
+    name = models.CharField(max_legnth=100)
+
+    # abbreviation of the author's name, e.g. WL or WN
+    code = models.CharField(max_length=5)
+
+
 class Book(models.Model):
 
     # the ISBN of this book
@@ -42,6 +53,9 @@ class Book(models.Model):
     # the abbreviation of the book's title, e.g. YPT
     code = models.CharField(max_length=20)
 
+    # the author of this book, e.g. Witness Lee or Watchman Nee
+    author = models.ForeignKey(Author)
+
     # number of messages/chapters in this volume
     chapters = models.SmallIntegerField(blank=True, null=True)
 
@@ -50,4 +64,3 @@ class Book(models.Model):
 
     # the book's publisher
     publisher = models.ForeignKey(Publisher)
-
