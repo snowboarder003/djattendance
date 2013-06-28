@@ -1,41 +1,52 @@
 from django.db import models
 #from users.models import UserAccount
 
-#This is for define service
+#This is to define Service
 
-#define service category such as Cleaning, Guard etc
-class category(models.Model):
+
+#define Service Category such as Cleaning, Guard etc
+class Category(models.Model):
+
+    """Service category class to define service category such as Cleaning, Guard, etc"""
 
     name = models.CharField(max_length=200)
     description = models.TextField()
 
-    #return services of this category
-    def getService(self):
-        return service.objects.filter(category=self)
+    #return services of this Category
+    def getServices(self):
+        #return Service.objects.filter(category=self)
+        return self.service_set.all()
+
 
     def __unicode__(self):
         return self.name    
 
+#define Service such as Breakfast Cleaning, Dinner Prep, Guard A, etc
+class Service(models.Model):
 
-#define service such as Breakfast Cleaning, Dinner Prep, Guard A, etc
-class service(models.Model):
+    """"ftta service class to define service such as Breakfast cleaning, Dinner, Prep, Guard A, etc"""
 
-    category = models.ForeignKey(category)
+    category = models.ForeignKey(Category)
     name = models.CharField(max_length=1000)
     isActive = models.BooleanField()
+
+    #every service have different workLoad, for example guard is much more intense than cleaning
     workLoad = models.IntegerField()
 
     def __unicode__(self):
         return self.name
 
 
-#define service Period such as Pre-Training, FTTA regular week, etc
-class period(models.Model):
+#define Service Period such as Pre-Training, FTTA regular week, etc
+class Period(models.Model):
+
+    """define Service Period such as Pre-Training, FTTA regular week, etc"""
 
     name = models.CharField(max_length=200)
+    description = models.TextField()
 
-    #which service is on this Period
-    service = models.ManyToManyField(service)
+    #which Service is on this Period
+    service = models.ManyToManyField(Service)
 
     startDate = models.DateField('start date')
     endDate = models.DateField('end date')
@@ -46,28 +57,4 @@ class period(models.Model):
 
     def __unicode__(self):
         return self.name    
-
-
-#define one specific service instance such as Monday Break Prep, Monday Guard C, etc
-class instance(models.Model):
-
-    WEEKDAY = (
-        ('Sun', 'Sunday'),
-        ('Mon', 'Monday'),
-        ('Tue', 'Tuesday'),
-        ('Wed', 'Wednesday'),
-        ('Thu', 'Thursday'),
-        ('Fri', 'Friday'),
-        ('Sat', 'Saturday'),
-    )
-
-    service = models.ForeignKey(service)
-    period = models.ForeignKey(period)
-    weekday = models.CharField(max_length=3, choices=WEEKDAY)
-    startTime = models.TimeField('start time')
-    endTime = models.TimeField('end time')
-    recoveryTime = models.IntegerField('time')
-
-    def __unicode__(self):
-        return self.service.name
 
