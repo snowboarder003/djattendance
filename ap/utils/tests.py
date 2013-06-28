@@ -52,6 +52,7 @@ def setup_vehicle():
 		model='Corolla',
 		license_plate='1ABC234',
 	)
+	vehicle.save()
 	return vehicle
 
 
@@ -62,6 +63,14 @@ class AddressTests(TestCase):
 		Creates a mythical address, city, and country.  This is a sanity check.
 		"""
 		setup_address()
+
+	def test_delete_address(self):
+		"""
+		Creates a mythical address, city, and country.  Deletes the address and
+		hopes that nothing goes wrong.
+		"""
+		address = setup_address()
+		address.delete()
 
 	def test_address_unicode_with_address1_and_address2(self):
 		"""
@@ -91,6 +100,14 @@ class CityTests(TestCase):
 		"""
 		setup_city()
 
+	def test_delete_city(self):
+		"""
+		Creates a mythical city and country.  Deletes the city and hopes that
+		nothing goes wrong.
+		"""
+		city = setup_city()
+		city.delete()
+
 	def test_city_unicode(self):
 		"""
 		Ensures that the City unicode method returns the right value.
@@ -108,6 +125,14 @@ class CountryTests(TestCase):
 		"""
 		setup_country()
 
+	def test_delete_country(self):
+		"""
+		Creates a mythical country.  Deletes the country and hopes that nothing
+		goes wrong.
+		"""
+		country = setup_country()
+		country.delete()
+
 	def test_country_unicode(self):
 		"""
 		Ensures that the Country unicode method returns the right value.
@@ -124,6 +149,14 @@ class VehicleTests(TestCase):
 		Creates a hypothetical vehicle.  This is a sanity check.
 		"""
 		setup_vehicle()
+
+	def test_delete_vehicle(self):
+		"""
+		Creates a hypothetical country.  Deletes the vehicle and hopes that 
+		nothing goes wrong.
+		"""
+		vehicle = setup_vehicle()
+		vehicle.delete()
 
 	def test_vehicle_unicode(self):
 		"""
