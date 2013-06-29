@@ -119,12 +119,15 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'aputils',
-    'rooms',
     'books',
-    'service',
     'classes',
     'houses',
+    'localities',
+    'rooms',
+    'service',
+    'teams',
     'terms',
+    'django_select2',
 )
 
 # A sample logging configuration. The only tangible logging
