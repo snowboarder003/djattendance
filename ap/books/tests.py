@@ -31,7 +31,7 @@ class BookTests(TestCase):
         self.assertEqual(b1.collection.name, "Life Studies")
         self.assertIsNone(b2.collection)
         self.assertIsNone(b1.chapters)
-        
+
     def test_unicode_functions(self):
         """
         Test for unicode functions in Collection, Publisher, Book and Author
@@ -41,7 +41,7 @@ class BookTests(TestCase):
         a=Author.objects.get(code="WL")
         b1=Book.objects.get(code="LSG1")
         b2=Book.objects.get(code="LSG2")
-        
+
         self.assertEqual('<Collection: Life Studies>', c)
         self.assertEqual('<Publisher: Living Stream Ministry>', p)
         self.assertEqual('<Author: Witness Lee>', a)
