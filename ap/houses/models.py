@@ -22,7 +22,7 @@ class House(models.Model):
     name = models.CharField(max_length=50)
 
     # the house's address (defined in the utils class)
-    address = ForeignKey(Address)
+    address = models.ForeignKey(Address)
 
     # whether this is a brother's house or a sister's house
     gender = models.CharField(max_length=1, choices=GENDER)
