@@ -121,7 +121,7 @@ INSTALLED_APPS = (
     'aputils',
     'rooms',
     'books',
-    'service',
+    'services',
     'classes',
     'houses',
     'terms',
