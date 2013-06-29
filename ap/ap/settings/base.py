@@ -124,6 +124,7 @@ INSTALLED_APPS = (
     'rooms',
     'books',
     'service',
+    'classes',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
