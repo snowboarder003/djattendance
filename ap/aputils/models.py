@@ -43,6 +43,7 @@ class City(models.Model):
 
 
 class Address(models.Model):
+
     # line 1 of the address field
     address1 = models.CharField(max_length=150)
 
