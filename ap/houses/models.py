@@ -7,7 +7,6 @@ This houses module is a utility model that define training housing.
 
 Data Models:
 - House: a training house
-
 - Bunk: a bunk (either lower of upper) in a given house
 """
 
@@ -32,7 +31,8 @@ class House(models.Model):
     used = models.BooleanField()
 
     def __unicode__(self):
-        return u' %s' %(self.name)
+        return u' %s' % (self.name)
+
 
 class Room(models.Model):
 
