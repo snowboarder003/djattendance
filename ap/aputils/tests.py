@@ -2,7 +2,6 @@ from django.test import TestCase
 
 from aputils.models import Address, City, Country, Vehicle
 
-
 def setup_country():
     """
     Creates a mythical country, saves it, and returns it.
