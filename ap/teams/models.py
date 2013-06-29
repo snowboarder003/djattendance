@@ -38,4 +38,7 @@ class Team(models.Model):
     schedule = models.ForeignKey(ScheduleTemplate, blank=True)
 
     # opposite of subteam... relates subteams to their superteam
-    superteam = models.ForeignKey(Team, blank=True)
+    superteam = models.ForeignKey('self', blank=True)
+
+    def __unicode__(self):
+        return self.name
