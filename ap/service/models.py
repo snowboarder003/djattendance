@@ -32,9 +32,9 @@ class Service(models.Model):
     name = models.CharField(max_length=1000)
     isActive = models.BooleanField()
 
-    # every service have different workLoad,
+    # every service have different workload,
     # for example guard is much more intense than cleaning
-    workLoad = models.IntegerField()
+    workload = models.IntegerField()
 
     def __unicode__(self):
         return self.name
