@@ -1,11 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import Group
 #from users.models import UserAccount
 
 #This is to define Service
 
 
 #define Service Category such as Cleaning, Guard etc
-class Category(models.Model):
+class Category(Group):
     """ Service category class to define service category such as
     Cleaning, Guard, Mopping, Chairs, etc.
     """
@@ -23,7 +24,7 @@ class Category(models.Model):
 
 
 #define Service such as Breakfast Cleaning, Dinner Prep, Guard A, etc
-class Service(models.Model):
+class Service(Group):
     """" FTTA service class to define service such as
     Breakfast cleaning, Dinner, Prep, Guard A, etc
     """
@@ -32,9 +33,9 @@ class Service(models.Model):
     name = models.CharField(max_length=1000)
     isActive = models.BooleanField()
 
-    # every service have different workLoad,
+    # every service have different workload,
     # for example guard is much more intense than cleaning
-    workLoad = models.IntegerField()
+    workload = models.IntegerField()
 
     def __unicode__(self):
         return self.name

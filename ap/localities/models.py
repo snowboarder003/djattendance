@@ -86,7 +86,7 @@ class Locality(models.Model):
     country = models.CharField(max_length=5, choices=COUNTRIES, default='USA')
 
     def __unicode__(self):
-        if state:
+        if self.state:
             return self.city + ', ' + self.state
         else:
             return self.city + ', ' + self.country

@@ -44,6 +44,6 @@ class Room (models.Model):
 
     # some rooms are in the system and have schedules, but cannot be reserved
     reservable = models.BooleanField(default=False)
-    
+
     def __unicode__(self):
     	return self.name
