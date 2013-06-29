@@ -42,13 +42,13 @@ class Term(models.Model):
     # returns an absolute date for a term week/day pair
     def getDate(week, day, self):
         return self.start + datetime.timedelta(week * 7 + day)
-
     # returns a term week/day pair for an absolute date
+
     def reverseDate(date, self):
         if self.start <= date <= self.end:
             # days since the term started
             delta = date - self.start
-            return (delta/7, delta%7)
+            return (delta / 7, delta % 7)
         # if not within the dates the term, return invalid result
         else:
             return (-1, -1)
