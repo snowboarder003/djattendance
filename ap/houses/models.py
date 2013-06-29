@@ -1,5 +1,5 @@
 from django.db import models
-from utils.models import Address
+from aputils.models import Address
 
 """ HOUSES models.py
 
