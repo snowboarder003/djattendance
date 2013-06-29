@@ -1,6 +1,5 @@
 from django.db import models
 
-from schedules.models import ScheduleTemplate
 from localities.models import Locality
 
 """ TEAMS app
@@ -16,11 +15,11 @@ Data Models:
 class Team(models.Model):
 
     TEAM_TYPES = (
-        ('CAMPUS', 'Campus')
-        ('CHILD', 'Children')
-        ('COM', 'Community')
-        ('YP', 'Young People')
-        ('I', 'Internet')
+        ('CAMPUS', 'Campus'),
+        ('CHILD', 'Children'),
+        ('COM', 'Community'),
+        ('YP', 'Young People'),
+        ('I', 'Internet'),
     )
 
     # the full name of a team, e.g. Irvine Young People, or Anaheim Community
@@ -32,13 +31,10 @@ class Team(models.Model):
     type = models.CharField(max_length=6, choices=TEAM_TYPES)
 
     # which locality this team is in
-    locality = models.ForeignKey(Locality.models.locality)
-
-    # oftentimes, teams may have their own schedule
-    schedule = models.ForeignKey(ScheduleTemplate, blank=True)
+    locality = models.ForeignKey(Locality)
 
     # opposite of subteam... relates subteams to their superteam
-    superteam = models.ForeignKey('self', blank=True)
+    superteam = models.ForeignKey('self', blank=True, null=True)
 
     def __unicode__(self):
         return self.name
