@@ -25,8 +25,8 @@ class Locality(models.Model):
     country = models.CharField(max_length=5, choices=COUNTRIES)
 
     STATES = (
-        ('AL','Alabama'),
-        ('',''),
+        ('AL', 'Alabama'),
+        ('', ''),
     )
 
     COUNTRIES = (
@@ -34,6 +34,5 @@ class Locality(models.Model):
         ('NZ', 'New Zealand'),
         ('AUS', 'Australia'),
         ('CAN', 'Canada'),
-        ('CHN', 'China'),
+        ('CHN', 'China')
     )
-
