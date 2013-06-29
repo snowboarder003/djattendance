@@ -41,7 +41,7 @@ class BookTests(TestCase):
         a=Author.objects.get(code="WL")
         b1=Book.objects.get(code="LSG1")
         b2=Book.objects.get(code="LSG2")
-        
+
         self.assertEqual('<Collection: Life Studies>', c)
         self.assertEqual('<Publisher: Living Stream Ministry>', p)
         self.assertEqual('<Author: Witness Lee>', a)
