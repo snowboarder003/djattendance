@@ -34,6 +34,6 @@ class Class(models.Model):
 
     # which type of class this is, e.g. Main, 1st year
     type = models.CharField(max_length=4, choices=CLASS_TYPE)
-	
+
     def __unicode__(self):
-		return self.name
+        return self.name
