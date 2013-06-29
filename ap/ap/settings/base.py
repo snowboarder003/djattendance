@@ -124,7 +124,7 @@ INSTALLED_APPS = (
     'houses',
     'localities',
     'rooms',
-    'service',
+    'services',
     'teams',
     'terms',
     'django_select2',
