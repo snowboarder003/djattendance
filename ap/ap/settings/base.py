@@ -26,7 +26,7 @@ DATABASES = {
         'USER': 'django',
         'PASSWORD': 'attend2god',
         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+        'PORT': '5432',                      # Set to empty string for default.
     }
 }
 
@@ -134,6 +134,7 @@ INSTALLED_APPS = (
     'rooms',
     'books',
     'service',
+    'houses',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
