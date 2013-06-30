@@ -21,6 +21,7 @@ class AddressAdmin(admin.ModelAdmin):
         'details'
     )
     ordering = ('address1', 'address2',)
+    search_fields = ['address1', 'address2', 'zip_code', 'zip4']
 
 
 class CityAdminForm(forms.ModelForm):
@@ -38,6 +39,7 @@ class CityAdmin(admin.ModelAdmin):
         'country'
     )
     ordering = ('country', 'region', 'name',)
+    search_fields = ['name', 'region']
 
 
 class CountryAdmin(admin.ModelAdmin):
@@ -46,6 +48,7 @@ class CountryAdmin(admin.ModelAdmin):
         'code'
     )
     ordering = ('name', 'code',)
+    search_fields = ['name', 'code']
 
 
 class VehicleAdmin(admin.ModelAdmin):
@@ -56,6 +59,7 @@ class VehicleAdmin(admin.ModelAdmin):
         'model'
     )
     ordering = ('make', 'model', 'color', 'license_plate',)
+    search_fields = ['make', 'model', 'color', 'license_plate']
 
 
 admin.site.register(Address, AddressAdmin)
