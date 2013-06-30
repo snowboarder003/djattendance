@@ -9,7 +9,6 @@ import datetime
 from django.test import TestCase
 from terms.models import Term
 
-
 def create_term(name, code, start):
     """
     Creates a term with the given `name`, 'code', 'start' and will create
@@ -19,6 +18,7 @@ def create_term(name, code, start):
 
 
 class TermModelTest(TestCase):
+
     def test_term_creation(self):
         """
         Tests that term object created successfully by checking the variables.
@@ -31,6 +31,7 @@ class TermModelTest(TestCase):
 
 
 class TermMethodTest(TestCase):
+
     def test_getDate_with_first_date(self):
         """
         getDate() should return the first date of the start of the term.
