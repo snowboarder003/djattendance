@@ -3,4 +3,4 @@ from teams.models import Team
 from localities.models import Locality
 
 admin.site.register(Team)
-admin.site.register(Locality)
+

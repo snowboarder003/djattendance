@@ -124,7 +124,7 @@ INSTALLED_APPS = (
     'houses',
     'localities',
     'rooms',
-    'services',
+    #'services',
     'teams',
     'terms',
 )
