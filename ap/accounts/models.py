@@ -89,13 +89,9 @@ class Trainee(UserAccount):
 
     vehicle = models.ForeignKey(Vehicle)
 
-    schedule = models.ForeignKey("Schedule")
-
     team = models.ForeignKey(Team)
 
     services = models.ManyToManyField(Service)
-
- #   gospelPreferences = models.CharField()
 
     house = models.ForeignKey(House)
 
