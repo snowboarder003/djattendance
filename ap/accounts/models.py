@@ -1,39 +1,64 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import date
-from utilities.models import Vehicle, Address
-from term_stub.models import Term
-from teams_stub.models import Teams
-from houses_stub.models import house
+from aputils.models import Vehicle, Address
+from terms.models import Term
+from teams.models import Team
+from houses.models import House, Bunk
+from services.models import Service
+
+""" accounts models.py
+The user accounts module takes care of user accounts for the attendance+
+
+There are several different kinds of users
+    - Trainee:
+    - TrainingAssistant
+    - ShortTermTrainee
+    - HospitalityGuest
+"""
+
+
+class EmergencyInfo(models.Model):
+
+    name = models.CharField(max_length=30)
+
+    address = models.ForeignKey(Address)
+
+    #contact's relation to the trainee.
+    relation = models.CharField(max_length=30)
+
+    phone = models.CharField(max_length=15)
+
+    phone2 = models.CharField(max_length=15)
 
 
 class UserAccount(AbstractUser):
-    
-     GENDER = (
+
+    GENDER = (
         ('B', 'Brother'),
         ('S', 'Sister')
     )
 
     #optional middle name. First and last are in the abstract
-    middleName = models.CharField(max_length=30)
-    
+    middleName = models.CharField(max_length=30, blank=True)
+
     nickname = models.CharField(max_length=30)
-    
+
     maidenName = models.CharField(max_length=30)
-    
-    birthdate = models.DateField() 
-    
+
+    birthdate = models.DateField()
+
     gender = models.CharField(max_length=1, choices=GENDER)
-    
+
     address = models.ForeignKey(Address)
-    
+
     #return the age based on birthday
     def get_age(self):
         today = date.today()
         birth = date.fromtimestamp(self.birthdate)
-        try: 
+        try:
             birthday = birth.replace(year=today.year)
-        except ValueError: # raised when birth date is February 29 and the current year is not a leap year
+        except ValueError:  # raised when birth date is February 29 and the current year is not a leap year
             birthday = birth.replace(year=today.year, day=birth.day-1)
         if birthday > today:
             return today.year - birth - 1
@@ -41,88 +66,72 @@ class UserAccount(AbstractUser):
             return today.year - birth
 
     age = property(get_age)
-    
+
     maritalStatus = models.BooleanField()
 
-     
-class TraineeAccount(UserAccount):
-    
+
+class TrainingAssistant(UserAccount):
+
     user = models.ForeignKey(UserAccount)
-    
+
+
+class Trainee(UserAccount):
+
+    user = models.ForeignKey(UserAccount)
+
     term = models.ManyToManyField(Term)
-    
-    type = models.CharField(max_length = 30)
-    
-    spouse = models.ForeignKey("TraineeAccount")
-    
-    emergencyInfo = models.ForeignKey("emergencyInfo")
-    
+
+    type = models.CharField(max_length=30)
+
+    spouse = models.OneToOneField('self')
+
+    emergencyInfo = models.OneToOneField(EmergencyInfo)
+
     dateBegin = models.DateField()
-    
+
     dateEnd = models.DateField()
-    
+
     degree = models.CharField(max_length=30)
-    
-    mentor = models.ForeignKey("TraineeAccount")
-    
+
+    mentor = models.ForeignKey('self')
+
     vehicle = models.ForeignKey(Vehicle)
-    
-    schedule = models.ForeignKey(ss.schedule)
-    
-    team = models.ForeignKey(Teams)
-    
-    services = models.ManyToManyField(services.services)
-    
-    gospelPreferences = models.CharField()
-    
+
+    schedule = models.ForeignKey("Schedule")
+
+    team = models.ForeignKey(Team)
+
+    services = models.ManyToManyField(Service)
+
+ #   gospelPreferences = models.CharField()
+
     house = models.ForeignKey(House)
-    
-    TA = models.ForeignKey("TrainingAssistantAccount")
-    
-    bunkNumber = models.ForeignKey(house.bunk)
-    
+
+    TA = models.ForeignKey(TrainingAssistant)
+
+    bunkNumber = models.ForeignKey(Bunk)
+
     #boolean for if the trainee is active in the training or not.
     active = models.BooleanField()
-    
+
     #flag for trainees being self attended. This will be false for 1st years and true for 2nd with some exceptions.
-    selfAttended = models.BooleanField()
+    selfAttendance = models.BooleanField()
 
-
-class TrainingAssistantAccount(UserAccount):
-    
-    user = models.OneToOneField(UserAccount.user)
-    
-    maritalStatus = models.BooleanField
-    
 
 class ShortTermTrainee(UserAccount):
-    
-    user = models.OneToOneField(UserAccount.user)
-    
+
+    user = models.ForeignKey(UserAccount)
+
     #date that they begin to be assigned to service
     serviceDate = models.DateField()
-    
+
     #date that they leave the training. No service should be assigned after this point
     departureDate = models.DateField()
 
 
 class HospitalityGuest(UserAccount):
-    
-    user = models.OneToOneField(UserAccount.user)
-    
+
+    user = models.ForeignKey(UserAccount)
+
     #date that they leave the training. No service should be assigned after this point
     departureDate = models.DateField()
-
-
-class EmergencyInfo(Model.models):
-    
-    name = models.CharField(max_length=30)
-    
-    address= models.foreignkey(Address)
-    
-    #contact's relation to the trainee.
-    relation = models.CharField(max_length=30)
-    
-    phone = models.CharField(max_length=15)
-    
-    phone2 = models.CharField(max_length=15)
