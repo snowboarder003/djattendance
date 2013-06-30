@@ -12,6 +12,7 @@ Data Models:
     - Address: A standard US address used for training residences, emergency
     contact information, and other things
     - Vehicle: Represents vehicles owned by trainees
+    - EmergencyInfo: Emergency contact info for a trainee, used in accounts
 """
 
 
@@ -81,3 +82,17 @@ class Vehicle(models.Model):
 
     def __unicode__(self):
         return self.color + ' ' + self.make + ' ' + self.model
+
+
+class EmergencyInfo(models.Model):
+
+    name = models.CharField(max_length=30)
+
+    address = models.ForeignKey(Address)
+
+    #contact's relation to the trainee.
+    relation = models.CharField(max_length=30)
+
+    phone = models.CharField(max_length=15)
+
+    phone2 = models.CharField(max_length=15)

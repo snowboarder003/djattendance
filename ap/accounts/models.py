@@ -1,35 +1,27 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import date
-from aputils.models import Vehicle, Address
+from aputils.models import Vehicle, Address, EmergencyInfo
 from terms.models import Term
 from teams.models import Team
 from houses.models import House, Bunk
 from services.models import Service
 
 """ accounts models.py
-The user accounts module takes care of user accounts for the attendance+
+The user accounts module takes care of user accounts for the attendance+ and
+utilizes/extends Django's auth system to handle user authentication.
 
 There are several different kinds of users
-    - Trainee:
-    - TrainingAssistant
-    - ShortTermTrainee
-    - HospitalityGuest
+    - Trainee: a regular (full-time) trainee at the FTTA
+    - TrainingAssistant: a TA
+    - ShortTermTrainee: a short-termer (that stays for longer than 2 weeks).
+                        this is used to assign services to short-termers
+    - HospitalityGuest: this is for those who take LSM hospitality during the
+                        semiannual training. they will be assigned services
+
+Each of these users is extended from UserAccount, which itself is extended from
+django's AbstractUser.
 """
-
-
-class EmergencyInfo(models.Model):
-
-    name = models.CharField(max_length=30)
-
-    address = models.ForeignKey(Address)
-
-    #contact's relation to the trainee.
-    relation = models.CharField(max_length=30)
-
-    phone = models.CharField(max_length=15)
-
-    phone2 = models.CharField(max_length=15)
 
 
 class UserAccount(AbstractUser):
