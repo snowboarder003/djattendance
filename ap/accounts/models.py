@@ -42,6 +42,7 @@ class UserAccount(AbstractUser):
 
     gender = models.CharField(max_length=1, choices=GENDER)
 
+    # refers to the user's home address, not their training residence
     address = models.ForeignKey(Address)
 
     #return the age based on birthday
@@ -69,13 +70,20 @@ class TrainingAssistant(UserAccount):
 
 class Trainee(UserAccount):
 
+    TRAINEE_TYPES = (
+        ('R', 'Regular (full-time)'),  # a regular full-time trainee
+        ('S', 'Short-term (long-term)'),  # a 'short-term' long-term trainee
+        ('C', 'Commuter')
+    )
+
     user = models.ForeignKey(UserAccount)
 
+    # many-to-many because a trainee can go through multiple terms
     term = models.ManyToManyField(Term)
 
-    type = models.CharField(max_length=30)
+    type = models.CharField(max_length=1, choices=TRAINEE_TYPES)
 
-    spouse = models.OneToOneField('self')
+    spouse = models.OneToOneField('self', null=True)
 
     emergencyInfo = models.OneToOneField(EmergencyInfo)
 
