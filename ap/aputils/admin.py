@@ -1,8 +1,17 @@
+from django import forms
 from django.contrib import admin
 
 from aputils.models import Country, City, Address, Vehicle
 
+class AddressAdminForm(forms.ModelForm):
+    city = forms.ModelChoiceField(queryset=City.objects.order_by('name'))
+
+    class Meta:
+        model = Address
+
+
 class AddressAdmin(admin.ModelAdmin):
+    form = AddressAdminForm
     list_display = (
         'address1', 
         'address2', 
@@ -13,7 +22,15 @@ class AddressAdmin(admin.ModelAdmin):
     )
 
 
+class CityAdminForm(forms.ModelForm):
+    country = forms.ModelChoiceField(queryset=Country.objects.order_by('name'))
+
+    class Meta:
+        model = City
+
+
 class CityAdmin(admin.ModelAdmin):
+    form = CityAdminForm
     list_display = (
         'name',
         'region',
