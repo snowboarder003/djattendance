@@ -2,14 +2,14 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import date
 from utilities.models import Vehicle, Address
-from term_stub.models import Term
-from teams_stub.models import Teams
-from houses_stub.models import house
+from terms.models import term   
+from teams.models import team
+from houses.models import House
 
 
 class UserAccount(AbstractUser):
     
-     GENDER = (
+    GENDER = (
         ('B', 'Brother'),
         ('S', 'Sister')
     )
@@ -49,7 +49,7 @@ class TraineeAccount(UserAccount):
     
     user = models.ForeignKey(UserAccount)
     
-    term = models.ManyToManyField(Term)
+    term = models.ManyToManyField(term)
     
     type = models.CharField(max_length = 30)
     
@@ -67,11 +67,9 @@ class TraineeAccount(UserAccount):
     
     vehicle = models.ForeignKey(Vehicle)
     
-    schedule = models.ForeignKey(ss.schedule)
+    #schedule = models.ForeignKey(shedule)
     
-    team = models.ForeignKey(Teams)
-    
-    services = models.ManyToManyField(services.services)
+    team = models.ForeignKey(team)
     
     gospelPreferences = models.CharField()
     
@@ -114,11 +112,11 @@ class HospitalityGuest(UserAccount):
     departureDate = models.DateField()
 
 
-class EmergencyInfo(Model.models):
+class EmergencyInfo(models.Model):
     
     name = models.CharField(max_length=30)
     
-    address= models.foreignkey(Address)
+    address= models.ForeignKey(Address)
     
     #contact's relation to the trainee.
     relation = models.CharField(max_length=30)
