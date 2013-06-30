@@ -6,7 +6,7 @@ from django.contrib.auth.models import Group
 
 
 #define Service Category such as Cleaning, Guard etc
-class Category(Group):
+class Category(models.Model):
     """ Service category class to define service category such as
     Cleaning, Guard, Mopping, Chairs, etc.
     """
@@ -24,7 +24,7 @@ class Category(Group):
 
 
 #define Service such as Breakfast Cleaning, Dinner Prep, Guard A, etc
-class Service(Group):
+class Service(models.Model):
     """" FTTA service class to define service such as
     Breakfast cleaning, Dinner, Prep, Guard A, etc
     """
