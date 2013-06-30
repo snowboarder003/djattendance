@@ -34,9 +34,9 @@ class UserAccount(AbstractUser):
     #optional middle name. First and last are in the abstract
     middleName = models.CharField(max_length=30, blank=True)
 
-    nickname = models.CharField(max_length=30)
+    nickname = models.CharField(max_length=30, blank=True)
 
-    maidenName = models.CharField(max_length=30)
+    maidenName = models.CharField(max_length=30, blank=True)
 
     birthdate = models.DateField()
 
@@ -45,7 +45,7 @@ class UserAccount(AbstractUser):
     address = models.ForeignKey(Address)
 
     #return the age based on birthday
-    def get_age(self):
+    def _get_age(self):
         today = date.today()
         birth = date.fromtimestamp(self.birthdate)
         try:
@@ -57,7 +57,7 @@ class UserAccount(AbstractUser):
         else:
             return today.year - birth
 
-    age = property(get_age)
+    age = property(_get_age)
 
     maritalStatus = models.BooleanField()
 
