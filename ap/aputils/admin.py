@@ -20,6 +20,7 @@ class AddressAdmin(admin.ModelAdmin):
         'zip4', 
         'details'
     )
+    ordering = ('address1', 'address2',)
 
 
 class CityAdminForm(forms.ModelForm):
@@ -36,6 +37,7 @@ class CityAdmin(admin.ModelAdmin):
         'region',
         'country'
     )
+    ordering = ('country', 'region', 'name',)
 
 
 class CountryAdmin(admin.ModelAdmin):
@@ -43,6 +45,7 @@ class CountryAdmin(admin.ModelAdmin):
         'name',
         'code'
     )
+    ordering = ('name', 'code',)
 
 
 class VehicleAdmin(admin.ModelAdmin):
@@ -52,6 +55,7 @@ class VehicleAdmin(admin.ModelAdmin):
         'make',
         'model'
     )
+    ordering = ('make', 'model', 'color', 'license_plate',)
 
 
 admin.site.register(Address, AddressAdmin)
