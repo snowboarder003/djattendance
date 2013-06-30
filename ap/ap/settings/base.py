@@ -127,7 +127,6 @@ INSTALLED_APPS = (
     'services',
     'teams',
     'terms',
-    'django_select2',
 )
 
 # A sample logging configuration. The only tangible logging
