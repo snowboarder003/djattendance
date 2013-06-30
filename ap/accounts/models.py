@@ -42,6 +42,8 @@ class UserAccount(AbstractUser):
 
     gender = models.CharField(max_length=1, choices=GENDER)
 
+    spouse = models.OneToOneField('self', null=True)
+
     # refers to the user's home address, not their training residence
     address = models.ForeignKey(Address)
 
@@ -82,8 +84,6 @@ class Trainee(UserAccount):
     term = models.ManyToManyField(Term)
 
     type = models.CharField(max_length=1, choices=TRAINEE_TYPES)
-
-    spouse = models.OneToOneField('self', null=True)
 
     emergencyInfo = models.OneToOneField(EmergencyInfo)
 
