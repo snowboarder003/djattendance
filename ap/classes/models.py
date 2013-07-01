@@ -1,5 +1,5 @@
 from django.db import models
-from term.models import Term
+from terms.models import Term
 
 """" CLASSES models.py
 
