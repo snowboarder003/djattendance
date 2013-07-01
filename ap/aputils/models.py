@@ -57,7 +57,7 @@ class Address(models.Model):
     zip_code = models.PositiveIntegerField()
 
     # optional four-digit zip code extension
-    zip4 = models.PositiveIntegerField(null=True, blank=True)
+    zip4 = models.PositiveSmallIntegerField(null=True, blank=True)
 
     # optional details field
     details = models.CharField(max_length=150, null=True, blank=True)
