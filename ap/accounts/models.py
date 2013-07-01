@@ -42,8 +42,6 @@ class UserAccount(AbstractUser):
 
     gender = models.CharField(max_length=1, choices=GENDER)
 
-    spouse = models.OneToOneField('self', null=True)
-
     # refers to the user's home address, not their training residence
     address = models.ForeignKey(Address)
 
@@ -85,17 +83,17 @@ class Trainee(UserAccount):
 
     type = models.CharField(max_length=1, choices=TRAINEE_TYPES)
 
+    spouse = models.OneToOneField('self', null=True)
+
     emergencyInfo = models.OneToOneField(EmergencyInfo)
+
+    TA = models.ForeignKey(TrainingAssistant)
 
     dateBegin = models.DateField()
 
     dateEnd = models.DateField()
 
-    degree = models.CharField(max_length=30)
-
     mentor = models.ForeignKey('self')
-
-    vehicle = models.ForeignKey(Vehicle)
 
     team = models.ForeignKey(Team)
 
@@ -103,14 +101,15 @@ class Trainee(UserAccount):
 
     house = models.ForeignKey(House)
 
-    TA = models.ForeignKey(TrainingAssistant)
-
     bunkNumber = models.ForeignKey(Bunk)
 
-    #boolean for if the trainee is active in the training or not.
+    vehicle = models.ForeignKey(Vehicle)
+
+    # boolean for if the trainee is active in the training or not.
     active = models.BooleanField()
 
-    #flag for trainees being self attended. This will be false for 1st years and true for 2nd with some exceptions.
+    # flag for trainees taking their own attendance
+    # this will be false for 1st years and true for 2nd with some exceptions.
     selfAttendance = models.BooleanField()
 
 
@@ -118,10 +117,10 @@ class ShortTermTrainee(UserAccount):
 
     user = models.ForeignKey(UserAccount)
 
-    #date that they begin to be assigned to service
+    # date that they begin to be assigned to service
     serviceDate = models.DateField()
 
-    #date that they leave the training. No service should be assigned after this point
+    # date that they leave the training. No service should be assigned after this point
     departureDate = models.DateField()
 
 
@@ -129,5 +128,5 @@ class HospitalityGuest(UserAccount):
 
     user = models.ForeignKey(UserAccount)
 
-    #date that they leave the training. No service should be assigned after this point
+    # date that they leave the training. No service should be assigned after this point
     departureDate = models.DateField()
