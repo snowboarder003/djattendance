@@ -7,10 +7,10 @@ from django.contrib.auth.models import Group
 
 #define Service Category such as Cleaning, Guard etc
 class Category(Group):
-    """ Defines a service category such as Cleanup, Guard, Mopping, Chairs, etc.
+    """
+    Defines a service category such as Cleanup, Guard, Mopping, Chairs, etc.
     """
 
-    name = models.CharField(max_length=200)
     description = models.TextField()
 
     #return services of this Category
@@ -31,7 +31,6 @@ class Service(Group):
     """
 
     category = models.ForeignKey(Category)
-    name = models.CharField(max_length=1000)
     isActive = models.BooleanField()
 
     # every service have different workload,
