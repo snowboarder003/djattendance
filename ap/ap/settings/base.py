@@ -118,7 +118,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
- #   'accounts',
+    'accounts',
     'aputils',
     'books',
     'classes',
