@@ -63,12 +63,12 @@ class UserAccount(AbstractUser):
     maritalStatus = models.BooleanField()
 
 
-class TrainingAssistant(UserAccount):
+class TrainingAssistant(models.Model):
 
     user = models.ForeignKey(UserAccount)
 
 
-class Trainee(UserAccount):
+class Trainee(models.Model):
 
     TRAINEE_TYPES = (
         ('R', 'Regular (full-time)'),  # a regular full-time trainee
@@ -113,7 +113,7 @@ class Trainee(UserAccount):
     selfAttendance = models.BooleanField()
 
 
-class ShortTermTrainee(UserAccount):
+class ShortTermTrainee(models.Model):
 
     user = models.ForeignKey(UserAccount)
 
@@ -124,7 +124,7 @@ class ShortTermTrainee(UserAccount):
     departureDate = models.DateField()
 
 
-class HospitalityGuest(UserAccount):
+class HospitalityGuest(models.Model):
 
     user = models.ForeignKey(UserAccount)
 
