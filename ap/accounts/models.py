@@ -65,7 +65,7 @@ class UserAccount(AbstractUser):
 
 class TrainingAssistant(models.Model):
 
-    user = models.ForeignKey(UserAccount)
+    account = models.ForeignKey(UserAccount)
 
 
 class Trainee(models.Model):
@@ -76,7 +76,7 @@ class Trainee(models.Model):
         ('C', 'Commuter')
     )
 
-    user = models.ForeignKey(UserAccount)
+    account = models.ForeignKey(UserAccount)
 
     # many-to-many because a trainee can go through multiple terms
     term = models.ManyToManyField(Term)
@@ -115,7 +115,7 @@ class Trainee(models.Model):
 
 class ShortTermTrainee(models.Model):
 
-    user = models.ForeignKey(UserAccount)
+    account = models.ForeignKey(UserAccount)
 
     # date that they begin to be assigned to service
     serviceDate = models.DateField()
@@ -126,7 +126,7 @@ class ShortTermTrainee(models.Model):
 
 class HospitalityGuest(models.Model):
 
-    user = models.ForeignKey(UserAccount)
+    account = models.ForeignKey(UserAccount)
 
     # date that they leave the training. No service should be assigned after this point
     departureDate = models.DateField()
