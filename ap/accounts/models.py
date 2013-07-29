@@ -25,6 +25,7 @@ django's AbstractUser.
 
 
 class UserAccount(AbstractUser):
+    """ a basic user account, with all common user information """
 
     GENDER = (
         ('B', 'Brother'),
@@ -62,21 +63,36 @@ class UserAccount(AbstractUser):
 
     maritalStatus = models.BooleanField()
 
+    primary_profile = models.OneToOneField('Profile')  # the main primary role this user holds
 
-class TrainingAssistant(models.Model):
+class Profile(models.Model):
+    """ A profile for a user account, containing user data. A profile can be thought
+    of as a 'role' that a user has, such as a TA, a trainee, or a service worker.
+    Profile files should be pertinent directly to that profile role. All generic
+    data should either be in this abstract class or in the User model.
+    """
 
+    # each user account account can have multiple profiles
     account = models.ForeignKey(UserAccount)
 
+    active = models.BooleanField()
 
-class Trainee(models.Model):
+    date_created = models.DateField(auto_now_add=True)
+
+    class Meta:
+        abstract = True
+
+class TrainingAssistant(Profile):
+
+    oversees = models.ManyToManyField(Service)
+
+class Trainee(Profile):
 
     TRAINEE_TYPES = (
         ('R', 'Regular (full-time)'),  # a regular full-time trainee
         ('S', 'Short-term (long-term)'),  # a 'short-term' long-term trainee
         ('C', 'Commuter')
     )
-
-    account = models.ForeignKey(UserAccount)
 
     # many-to-many because a trainee can go through multiple terms
     term = models.ManyToManyField(Term)
@@ -101,32 +117,10 @@ class Trainee(models.Model):
 
     house = models.ForeignKey(House)
 
-    bunkNumber = models.ForeignKey(Bunk)
+    bunk = models.ForeignKey(Bunk)
 
     vehicle = models.ForeignKey(Vehicle)
-
-    # boolean for if the trainee is active in the training or not.
-    active = models.BooleanField()
 
     # flag for trainees taking their own attendance
     # this will be false for 1st years and true for 2nd with some exceptions.
     selfAttendance = models.BooleanField()
-
-
-class ShortTermTrainee(models.Model):
-
-    account = models.ForeignKey(UserAccount)
-
-    # date that they begin to be assigned to service
-    serviceDate = models.DateField()
-
-    # date that they leave the training. No service should be assigned after this point
-    departureDate = models.DateField()
-
-
-class HospitalityGuest(models.Model):
-
-    account = models.ForeignKey(UserAccount)
-
-    # date that they leave the training. No service should be assigned after this point
-    departureDate = models.DateField()
