@@ -63,8 +63,6 @@ class UserAccount(AbstractUser):
 
     maritalStatus = models.BooleanField()
 
-    primary_profile = models.OneToOneField('Profile')  # the main primary role this user holds
-
 class Profile(models.Model):
     """ A profile for a user account, containing user data. A profile can be thought
     of as a 'role' that a user has, such as a TA, a trainee, or a service worker.
