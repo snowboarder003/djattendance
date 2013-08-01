@@ -61,7 +61,7 @@ class UserAccount(AbstractUser):
 
     age = property(_get_age)
 
-    maritalStatus = models.BooleanField()
+    married = models.BooleanField()
 
 class Profile(models.Model):
     """ A profile for a user account, containing user data. A profile can be thought
