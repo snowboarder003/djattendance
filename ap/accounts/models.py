@@ -97,7 +97,7 @@ class Trainee(Profile):
 
     type = models.CharField(max_length=1, choices=TRAINEE_TYPES)
 
-    spouse = models.OneToOneField('self', null=True)
+    spouse = models.OneToOneField('self', blank=True)
 
     emergencyInfo = models.OneToOneField(EmergencyInfo)
 
