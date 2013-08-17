@@ -34,6 +34,8 @@ class Roll(models.Model):
 
     status = models.CharField(max_length=1, choices=ROLL_STATUS)
 
+    # once a roll is finalized, it can no longer be edited
+    # except by a TA, attendance monitor, or other admin
     finalized = models.BooleanField()
 
     notes = models.CharField(max_length=200)
@@ -46,8 +48,10 @@ class Roll(models.Model):
 
 class Period(models.Model):
 
+    # the beginning week of this period
     start = models.SmallIntegerField()
 
+    # the ending week of this period
     end = models.SmallIntegerField()
 
     term = models.ForeignKey(Term)
