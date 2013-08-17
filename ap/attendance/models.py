@@ -45,6 +45,9 @@ class Roll(models.Model):
 
     timestamp = models.DateTimeField(auto_now=True)
 
+    def __unicode__(self):
+        return self.name
+
 
 class Period(models.Model):
 
@@ -55,3 +58,11 @@ class Period(models.Model):
     end = models.SmallIntegerField()
 
     term = models.ForeignKey(Term)
+
+    def _period_number(self):
+        return self.start/2 - 1
+
+    num = property(_period_number)
+
+    def __unicode__(self):
+        return "period " + str(self.num)
