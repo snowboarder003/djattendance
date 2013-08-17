@@ -36,14 +36,14 @@ class Roll(models.Model):
 
     # once a roll is finalized, it can no longer be edited
     # except by a TA, attendance monitor, or other admin
-    finalized = models.BooleanField()
+    finalized = models.BooleanField(default=False)
 
-    notes = models.CharField(max_length=200)
+    notes = models.CharField(max_length=200, blank=True)
 
     # the one who submitted this roll
     monitor = models.ForeignKey(Trainee, blank=True)
 
-    timestamp = models.DateTimeField()
+    timestamp = models.DateTimeField(auto_now=True)
 
 
 class Period(models.Model):
