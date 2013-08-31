@@ -118,16 +118,17 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+ #   'accounts',
     'aputils',
     'books',
     'classes',
     'houses',
     'localities',
     'rooms',
-    #'services',
+    'services',
     'teams',
     'terms',
-    #'django_select2',
+    'django_reset',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -161,8 +162,12 @@ LOGGING = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/home/atsang/code/test.db'
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ap',
+        'USER': 'atsang',
+        'PASSWORD': 'livingchrist',
+        'HOST': 'localhost',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '5432',                      # Set to empty string for default.
     }
 }
 
