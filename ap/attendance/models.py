@@ -65,4 +65,4 @@ class Period(models.Model):
     num = property(_period_number)
 
     def __unicode__(self):
-        return "period " + str(self.num)
+        return "period " + str(self.num) + ", " + str(self.term.code)
