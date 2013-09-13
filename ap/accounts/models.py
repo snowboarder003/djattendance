@@ -73,6 +73,8 @@ class Profile(models.Model):
     # each user account account can have multiple profiles
     account = models.ForeignKey(UserAccount)
 
+    # whether this profile is still active
+    # ex: if a trainee becomes a TA, they no longer need a service worker profile
     active = models.BooleanField()
 
     date_created = models.DateField(auto_now_add=True)
