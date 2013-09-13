@@ -70,8 +70,8 @@ class Profile(models.Model):
     data should either be in this abstract class or in the User model.
     """
 
-    # each user account account can have multiple profiles
-    account = models.ForeignKey(UserAccount)
+    # each user should only have one of each profile
+    account = models.OneToOneField(UserAccount)
 
     # whether this profile is still active
     # ex: if a trainee becomes a TA, they no longer need a service worker profile
