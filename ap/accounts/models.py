@@ -32,7 +32,6 @@ Trainee and then later a TA can keep the same account throughout).
 """
 
 class APUserManager(BaseUserManager):
-class MyUserManager(BaseUserManager):
     def create_user(self, email, date_of_birth, password=None):
         """
         Creates and saves a User with the given email, date of
