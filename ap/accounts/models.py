@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from datetime import date
 from aputils.models import Vehicle, Address, EmergencyInfo
 from terms.models import Term
@@ -31,15 +31,57 @@ allows a clean transition between roles (e.g. a Short-termer who becomes a
 Trainee and then later a TA can keep the same account throughout).
 """
 
+class APUserManager(BaseUserManager):
+class MyUserManager(BaseUserManager):
+    def create_user(self, email, date_of_birth, password=None):
+        """
+        Creates and saves a User with the given email, date of
+        birth and password.
+        """
+        if not email:
+            raise ValueError('Users must have an email address')
+
+        user = self.model(
+            email=self.normalize_email(email),
+            date_of_birth=date_of_birth,
+        )
+
+        # user's default password is date of birth
+        # formatted: '2013-09-16' (yyyy-mm-dd)
+        user.set_password(str(date_of_birth))
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, date_of_birth, password):
+        """
+        Creates and saves a superuser with the given email, date of
+        birth and password.
+        """
+        user = self.create_user(email,
+            password=password,
+            date_of_birth=date_of_birth
+        )
+        user.is_admin = True
+        user.save(using=self._db)
+        return user
 
 class User(AbstractBaseUser):
     """ a basic user account, with all common user information """
 
+    email = models.EmailField(
+        verbose_name='email address',
+        max_length=255,
+        unique=True,
+        db_index=True,
+    )
+
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['date_of_birth']
 
-    REQUIRED_FIELDS = ['firstname', 'lastname', 'gender', 'birthdate']
-
-    email = models.CharField(max_length=200, unique=True, db_index=True)
+    objects = MyUserManager()
 
     firstname = models.CharField(max_length=30, blank=True)
 
@@ -51,7 +93,8 @@ class User(AbstractBaseUser):
 
     maidenname = models.CharField(max_length=30, blank=True)
 
-    birthdate = models.DateField()
+    # date of birth
+    date_of_birth = models.DateField()
 
     GENDER = (
         ('B', 'Brother'),
@@ -80,13 +123,14 @@ class User(AbstractBaseUser):
 
     married = models.BooleanField()
 
-    is_active = models.BooleanField(default=True)
-
     def get_full_name(self):
         return self.firstname + " " + self.lastname
 
     def get_short_name(self):
         return self.firstname
+
+    def __unicode__(self):
+        return self.email
 
 
 class Profile(models.Model):
