@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     'localities',
     'rooms',
     'services',
+    'syllabus',
     'teams',
     'terms',
     'django_reset',

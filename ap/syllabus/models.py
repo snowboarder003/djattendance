@@ -2,6 +2,9 @@ from django.db import models
 from classes.models import Class
 from books.models import Book
 
+from djorm_pgarray.fields import ArrayField
+from djorm_expressions.models import ExpressionManager
+
 
 """" SYLLABUS models.py
 
@@ -24,10 +27,16 @@ Data Models:
 """
 
 
+class Post(models.Model):
+    subject = models.CharField(max_length=255)
+    content = models.TextField()
+    tags = ArrayField(dbtype="varchar(255)")
+
+
 class Syllabus (models.Model):
 
     # syllabus for a class; e.g. FMoC, BoC, GOW
-    classSyllabus = models.ForeignKey(Class)  # should this be ManyToMany relationship?
+    classSyllabus = models.ForeignKey(Class)
 
     def __unicode__(self):
         return self.classSyllabus
@@ -36,27 +45,31 @@ class Syllabus (models.Model):
 class Session(models.Model):
 
     # date of the class
-    """ Q: How does datefield work? """
+    """ TO DO: See Jon's explanation on datefield """
     date = models.DateField(verbose_name='session date')
 
     # topic; "exam";
-    topic = models.TextField()
+    topic = models.CharField(max_length=200)
 
     # book name, code
     book = models.ForeignKey(Book)
 
     # assignment info (pages; chapters; msgs; lessons; verses; exam: "FINAL, MIDTERM, ETC")
         # can list multiple assigments, e.g. memory verses
-    assignment = models.TextField()
+    """ Q: Is this implemented correctly? """
+    assignment = models.TextField()  # Post()
 
     # extra assignment;
     note = models.TextField()
 
     # exam (HIDDEN)
-    exam = models.BooleanField()
+    exam = models.BooleanField(default=False)
 
-    # which syllabus does this session refer to?
+    # the class syllabus this session refers to
     syllabus = models.ForeignKey(Syllabus)
 
     def __unicode__(self):
-        return self.date
+        """ Q: How does this work? """
+        return ("Class: " + self.syllabus.classSyllabus.name + "; Term: "
+                + self.syllabus.classSyllabus.term + "; Date: " + self.date
+                + "; Topic: " + self.topic)
