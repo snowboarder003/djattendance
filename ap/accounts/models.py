@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractBaseUser
 from datetime import date
 from aputils.models import Vehicle, Address, EmergencyInfo
 from terms.models import Term
@@ -8,38 +8,55 @@ from houses.models import House, Bunk
 from services.models import Service
 
 """ accounts models.py
-The user accounts module takes care of user accounts for the attendance+ and
+The user accounts module takes care of user accounts and
 utilizes/extends Django's auth system to handle user authentication.
 
-There are several different kinds of users
-    - Trainee: a regular (full-time) trainee at the FTTA
-    - TrainingAssistant: a TA
-    - ShortTermTrainee: a short-termer (that stays for longer than 2 weeks).
-                        this is used to assign services to short-termers
-    - HospitalityGuest: this is for those who take LSM hospitality during the
-                        semiannual training. they will be assigned services
+Because we want to use the user's email address as the unique
+identifier, we have chosen to implement a custom User model
+(extending Django's AbstractBaseUser), which handles authentication and
+also includes all basic/common user information.
 
-Each of these users is extended from UserAccount, which itself is extended from
-django's AbstractUser.
+User accounts are extended by Profiles, which contain additional information,
+generally representing roles that various users fill. The two most common
+ones, Trainee and TA, are implemented here. Other examples include:
+    - every Trainee is also a service worker, so those user accounts also
+    have a ServiceWorker profile that contains information needed for the
+    ServiceScheduler algorithm
+    - before coming to the FTTA, a trainee may have come to short-term. 
+    These trainees will have a Short-Term profile at that time, and later
+    also have a Trainee  profile when they come for the full-time.
+
+The usage of profiles allows user to have multiple roles at once, and also
+allows a clean transition between roles (e.g. a Short-termer who becomes a
+Trainee and then later a TA can keep the same account throughout).
 """
 
 
-class UserAccount(AbstractUser):
+class User(AbstractBaseUser):
     """ a basic user account, with all common user information """
+
+    USERNAME_FIELD = 'email'
+
+    REQUIRED_FIELDS = ['firstname', 'lastname', 'gender', 'birthdate']
+
+    email = models.CharField(max_length=200, unique=True, db_index=True)
+
+    firstname = models.CharField(max_length=30, blank=True)
+
+    lastname = models.CharField(max_length=30, blank=True)
+
+    middlename = models.CharField(max_length=30, blank=True)
+
+    nickname = models.CharField(max_length=30, blank=True)
+
+    maidenname = models.CharField(max_length=30, blank=True)
+
+    birthdate = models.DateField()
 
     GENDER = (
         ('B', 'Brother'),
         ('S', 'Sister')
     )
-
-    #optional middle name. First and last are in the abstract
-    middleName = models.CharField(max_length=30, blank=True)
-
-    nickname = models.CharField(max_length=30, blank=True)
-
-    maidenName = models.CharField(max_length=30, blank=True)
-
-    birthdate = models.DateField()
 
     gender = models.CharField(max_length=1, choices=GENDER)
 
@@ -63,6 +80,15 @@ class UserAccount(AbstractUser):
 
     married = models.BooleanField()
 
+    is_active = models.BooleanField(default=True)
+
+    def get_full_name(self):
+        return self.firstname + " " + self.lastname
+
+    def get_short_name(self):
+        return self.firstname
+
+
 class Profile(models.Model):
     """ A profile for a user account, containing user data. A profile can be thought
     of as a 'role' that a user has, such as a TA, a trainee, or a service worker.
@@ -71,7 +97,7 @@ class Profile(models.Model):
     """
 
     # each user should only have one of each profile
-    account = models.OneToOneField(UserAccount)
+    account = models.OneToOneField(User)
 
     # whether this profile is still active
     # ex: if a trainee becomes a TA, they no longer need a service worker profile
@@ -124,3 +150,5 @@ class Trainee(Profile):
     # flag for trainees taking their own attendance
     # this will be false for 1st years and true for 2nd with some exceptions.
     selfAttendance = models.BooleanField()
+
+
