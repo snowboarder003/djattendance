@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from datetime import date
 from aputils.models import Vehicle, Address, EmergencyInfo
 from terms.models import Term
@@ -11,77 +11,59 @@ from services.models import Service
 The user accounts module takes care of user accounts and
 utilizes/extends Django's auth system to handle user authentication.
 
-Because we want to use the user's email address as the unique
-identifier, we have chosen to implement a custom User model
-(extending Django's AbstractBaseUser), which handles authentication and
-also includes all basic/common user information.
+USER ACCOUNTS
+    Because we want to use the user's email address as the unique
+    identifier, we have chosen to implement a custom User model, 
 
-User accounts are extended by Profiles, which contain additional information,
-generally representing roles that various users fill. The two most common
-ones, Trainee and TA, are implemented here. Other examples include:
-    - every Trainee is also a service worker, so those user accounts also
-    have a ServiceWorker profile that contains information needed for the
-    ServiceScheduler algorithm
-    - before coming to the FTTA, a trainee may have come to short-term. 
-    These trainees will have a Short-Term profile at that time, and later
-    also have a Trainee  profile when they come for the full-time.
+    ...
 
-The usage of profiles allows user to have multiple roles at once, and also
-allows a clean transition between roles (e.g. a Short-termer who becomes a
-Trainee and then later a TA can keep the same account throughout).
+PROFILES
+    User accounts are extended by Profiles, which contain additional information,
+    generally representing roles that various users fill. The two most common
+    ones, Trainee and TA, are implemented here. Other examples include:
+        - every Trainee is also a service worker, so those user accounts also
+        have a ServiceWorker profile that contains information needed for the
+        ServiceScheduler algorithm
+        - before coming to the FTTA, a trainee may have come to short-term. 
+        These trainees will have a Short-Term profile at that time, and later
+        also have a Trainee  profile when they come for the full-time.
+
+    The usage of profiles allows user to have multiple roles at once, and also
+    allows a clean transition between roles (e.g. a Short-termer who becomes a
+    Trainee and then later a TA can keep the same account throughout).
 """
 
 class APUserManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, password=None):
-        """
-        Creates and saves a User with the given email, date of
-        birth and password.
-        """
+
+    def create_user(self, email, password=None):
+        """ Creates a user, given an email and a password (optional) """
+
         if not email:
-            raise ValueError('Users must have an email address')
+            raise ValueError("Users must have an email address")
 
-        user = self.model(
-            email=self.normalize_email(email),
-            date_of_birth=date_of_birth,
-        )
+        user = self.model(email=APUserManager.normalize_email(email))
 
-        # user's default password is date of birth
-        # formatted: '2013-09-16' (yyyy-mm-dd)
-        user.set_password(str(date_of_birth))
+        user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, date_of_birth, password):
-        """
-        Creates and saves a superuser with the given email, date of
-        birth and password.
-        """
-        user = self.create_user(email,
-            password=password,
-            date_of_birth=date_of_birth
-        )
+    def create_superuser(self, email, password):
+        """ Creates a super user, given an email and password (required) """
+
+        user = self.create_user(email, password=password)
+
         user.is_admin = True
-        user.save(using=self._db)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self.db)
+
         return user
 
-class User(AbstractBaseUser):
+
+class User(AbstractUser):
     """ a basic user account, with all common user information """
-
-    email = models.EmailField(
-        verbose_name='email address',
-        max_length=255,
-        unique=True,
-        db_index=True,
-    )
-
-    is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['date_of_birth']
-
-    objects = MyUserManager()
-
+ 
+    # names
     firstname = models.CharField(max_length=30, blank=True)
 
     lastname = models.CharField(max_length=30, blank=True)
@@ -92,18 +74,13 @@ class User(AbstractBaseUser):
 
     maidenname = models.CharField(max_length=30, blank=True)
 
-    # date of birth
+    def _get_full_name(self):
+        return self.firstname + " " + self.lastname
+
+    fullname = property(_get_full_name)
+
+    # age, gender, etc.
     date_of_birth = models.DateField()
-
-    GENDER = (
-        ('B', 'Brother'),
-        ('S', 'Sister')
-    )
-
-    gender = models.CharField(max_length=1, choices=GENDER)
-
-    # refers to the user's home address, not their training residence
-    address = models.ForeignKey(Address)
 
     #return the age based on birthday
     def _get_age(self):
@@ -120,16 +97,28 @@ class User(AbstractBaseUser):
 
     age = property(_get_age)
 
+
+    GENDER = (
+        ('B', 'Brother'),
+        ('S', 'Sister')
+    )
+
+    gender = models.CharField(max_length=1, choices=GENDER)
+
     married = models.BooleanField()
 
-    def get_full_name(self):
-        return self.firstname + " " + self.lastname
-
-    def get_short_name(self):
-        return self.firstname
+    def save(self, *args, **kwargs):
+        """
+        Override save() method so that username always matches the user's email
+        handle (minus the domain name).
+        e.g. jerome@ftta.org will simply become jerome and jonathan.tien@gmail.comm
+        becomes simply jonathan.tien
+        """
+        self.username = self.email.split('@')[0]
+        super(User, self).save(*args, **kwargs) # Call the "real" save() method.
 
     def __unicode__(self):
-        return self.email
+        return fullname
 
 
 class Profile(models.Model):
@@ -153,7 +142,9 @@ class Profile(models.Model):
 
 class TrainingAssistant(Profile):
 
-    oversees = models.ManyToManyField(Service)
+    services = models.ManyToManyField(Service)
+
+    house = models.ManyToManyField(House)
 
 class Trainee(Profile):
 
@@ -185,6 +176,9 @@ class Trainee(Profile):
     services = models.ManyToManyField(Service)
 
     house = models.ForeignKey(House)
+
+    # refers to the user's home address, not their training residence
+    address = models.ForeignKey(Address)
 
     bunk = models.ForeignKey(Bunk)
 
