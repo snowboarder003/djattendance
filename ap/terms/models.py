@@ -39,13 +39,20 @@ class Term(models.Model):
     # the last day of the term, the sat of semiannual
     end = models.DateField(verbose_name='end date')
 
-    # 
+    @staticmethod
+    def current_term():
+        """ Return the current term """
+        # this is terribly inefficient. optimize later.
+        for term in Term.objects.all():
+            if term.start < datetime.date.today() < term.end:
+                return term
+
     def getDate(self, week, day):
         """ return an absolute date for a term week/day pair """
         return self.start + datetime.timedelta(week * 7 + day)
 
     def reverseDate(self, date):
-        """ # returns a term week/day pair for an absolute date """
+        """ returns a term week/day pair for an absolute date """
         if self.start <= date <= self.end:
             # days since the term started
             delta = date - self.start
