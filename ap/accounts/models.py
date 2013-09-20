@@ -1,6 +1,10 @@
+from datetime import date
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from datetime import date
+from django.core.mail import send_mail
+from django.utils.http import urlquote
+
 from aputils.models import Vehicle, Address, EmergencyInfo
 from terms.models import Term
 from teams.models import Team
@@ -33,6 +37,7 @@ PROFILES
     Trainee and then later a TA can keep the same account throughout).
 """
 
+
 class APUserManager(BaseUserManager):
 
     def create_user(self, email, password=None):
@@ -60,43 +65,26 @@ class APUserManager(BaseUserManager):
         return user
 
 
-class User(AbstractUser):
-    """ a basic user account, with all common user information """
- 
-    # names
-    firstname = models.CharField(max_length=30, blank=True)
+class User(AbstractBaseUser, PermissionsMixin):
+    """ A basic user account, containing all common user information.
+    This is a custom-defined User, but inherits from Django's classes to integrate with 
+    Django's other provided User tools/functionality
+    AbstractBaseUser provides Django's basic authentication backend.
+    PermissionsMixin provides compatability with Django's built-in permissions system.
+    """
 
-    lastname = models.CharField(max_length=30, blank=True)
+    email = models.EmailField(verbose_name=u'email address', max_length=255, unique=True, db_index=True)
 
+    def _make_username(self):
+        return self.email.split('@')[0]
+
+    username = property(_make_username)
+
+    firstname = models.CharField(max_length=30)
+    lastname = models.CharField(max_length=30)
     middlename = models.CharField(max_length=30, blank=True)
-
     nickname = models.CharField(max_length=30, blank=True)
-
     maidenname = models.CharField(max_length=30, blank=True)
-
-    def _get_full_name(self):
-        return self.firstname + " " + self.lastname
-
-    fullname = property(_get_full_name)
-
-    # age, gender, etc.
-    date_of_birth = models.DateField()
-
-    #return the age based on birthday
-    def _get_age(self):
-        today = date.today()
-        birth = date.fromtimestamp(self.birthdate)
-        try:
-            birthday = birth.replace(year=today.year)
-        except ValueError:  # raised when birth date is February 29 and the current year is not a leap year
-            birthday = birth.replace(year=today.year, day=birth.day-1)
-        if birthday > today:
-            return today.year - birth - 1
-        else:
-            return today.year - birth
-
-    age = property(_get_age)
-
 
     GENDER = (
         ('B', 'Brother'),
@@ -104,21 +92,32 @@ class User(AbstractUser):
     )
 
     gender = models.CharField(max_length=1, choices=GENDER)
+    date_of_birth = models.DateField()
 
-    married = models.BooleanField()
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['firstname', 'lastname']
 
-    def save(self, *args, **kwargs):
-        """
-        Override save() method so that username always matches the user's email
-        handle (minus the domain name).
-        e.g. jerome@ftta.org will simply become jerome and jonathan.tien@gmail.comm
-        becomes simply jonathan.tien
-        """
-        self.username = self.email.split('@')[0]
-        super(User, self).save(*args, **kwargs) # Call the "real" save() method.
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+
+    objects = APUserManager()
+
+    def get_absolute_url(self):
+        return "/users/%s/" % urlquote(self.username)
+
+    def get_full_name(self):
+        fullname = '%s %s' % (self.firstname, self.lastname)
+        return fullname.strip()
+
+    def get_short_name(self):
+        return self.firstname
+
+    def email_user(self, subject, message, from_email=None):
+        send_mail(subject, message, from_email, [self.email])
 
     def __unicode__(self):
-        return fullname
+        return self.email
 
 
 class Profile(models.Model):
@@ -154,20 +153,21 @@ class Trainee(Profile):
         ('C', 'Commuter')
     )
 
-    # many-to-many because a trainee can go through multiple terms
+    type = models.CharField(max_length=1, choices=TRAINEE_TYPES)
+
     term = models.ManyToManyField(Term)
 
-    type = models.CharField(max_length=1, choices=TRAINEE_TYPES)
+    married = models.BooleanField(default=False)
 
     spouse = models.OneToOneField('self', blank=True)
 
-    emergencyInfo = models.OneToOneField(EmergencyInfo)
+    emergency_info = models.OneToOneField(EmergencyInfo)
 
     TA = models.ForeignKey(TrainingAssistant)
 
-    dateBegin = models.DateField()
+    date_begin = models.DateField()
 
-    dateEnd = models.DateField()
+    date_end = models.DateField(blank=True)
 
     mentor = models.ForeignKey('self', related_name='mentee')
 
@@ -186,6 +186,6 @@ class Trainee(Profile):
 
     # flag for trainees taking their own attendance
     # this will be false for 1st years and true for 2nd with some exceptions.
-    selfAttendance = models.BooleanField()
+    self_attendance = models.BooleanField()
 
 
