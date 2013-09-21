@@ -1,10 +1,16 @@
 from django.conf.urls import patterns, include, url
+from django.contrib.auth.views import login, logout
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+	url(r'^accounts/login/$', login),
+	url(r'^accounts/logout/$', logout),
+    url(r'^$', 'ap.views.home'),
+    url(r'^base_example/$', 'ap.views.base_example'),
+    # url(r'^absentTraineeRoster/$', 'ap.views.absentTraineeRoster'),
     url(r'^terms/', include('terms.urls', namespace="terms")),
     # Examples:
     # url(r'^$', 'ap.views.home', name='home'),

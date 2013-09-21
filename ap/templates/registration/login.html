@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Login{% endblock %}
+
+{% block references %}
+    <link href="{% static "css/align_form.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block navbar-right %}
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block content %}
+	{% if form.errors %}
+	    <p class="error">Sorry, that's not a valid username or password.</p>
+	  {% endif %}
+
+	<div>
+	  <form class="form-horizontal" action="" method="post">
+	  	{% csrf_token %}
+	  	<div class="form-group">
+	  		<label for="username" class="col-xs-3 col-sm-2 col-md-2 control-label">Username:</label>
+	    	<div class="col-xs-9 col-sm-4 col-md-4">
+	    		<input class="form-control" type="text" name="username" value="" id="username">
+	    	</div>
+	    	<!--<div class="col-lg-4">
+	    		<span class="tooltip glyphicon glyphicon-question-sign" title="Your default username is your first and last name, all lowercase with no spaces."></span>
+	    	</div>-->
+	    </div>
+	    <div class="form-group">
+	    	<label for="password" class="col-xs-3 col-sm-2 col-md-2 control-label">Password:</label>
+	    	<div class="col-xs-9 col-sm-4 col-md-4">
+	    		<input class="form-control" type="password" name="password" value="" id="password">
+	    	</div>
+	    	<!--<div>
+	    		<span class="tooltip glyphicon glyphicon-question-sign" title="Your default password is your birthday (mmddyy). You can change your password after you log in."></span>
+	    	</div>-->
+	    </div>
+	    <div class="form-group">
+	    	<div class="col-sm-offset-2 col-sm-4 col-md-offset-2 col-md-10">
+	    		<input type="submit" value="Login" />
+	    	</div>
+	    </div>
+	    <input type="hidden" name="next" value="{{ next|escape }}" />
+	  </form>
+	  <div class="col-sm-offset-2 col-md-offset-2"
+	  <p>
+	  	Your default username is your first and last name, all lowercase with no spaces.<br>
+	  	Your default password is your birthday (mmddyy).<br>
+	  	If you forgot your password, please contact a TA brother.
+	  </p>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+	$('.tooltip').tooltip({
+		animation: true,
+		placement: 'right',
+		container: 'body',
+	});
+</script>
+{% endblock %}
