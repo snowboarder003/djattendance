@@ -16,16 +16,16 @@ class SyllabusTests(TestCase):
     def setUp(self):
         """
         Tests:
-            - syllabus with:
-                - class: syllabus -> code
-            - row (session) with:
+            - (1) SYLLABUS with:
+                - class: syllabus -> class.code
+            - (2) row (SESSION) with:
                 - assignment[]: session -> assignment[]
                 - self: session -> topic
                 - book: session -> book
                 - syllabus, class: session -> syllabus
-
         Setup:
-            - c: class objects
+            - k,p,b: book objects
+            - t,c: term, class objects
             - s: syllabus objects
             - r: rows (session) objects
         """
@@ -48,7 +48,6 @@ class SyllabusTests(TestCase):
         s1.type_id = 2
 
         # The rows/Sessions for the Syllabus
-        """ Q: How to change assignment from char field i.e.: ("") to Post()? """
         r1 = Session.objects.create(date="2013-09-10",
                                     topic="Bringing the Infinite God Into the Finite Man",
                                     book=b1, assignment=['BPEL, ch1', '1 John 5:12; Col 3:4; John 11:25; 14:6; 10:10'],
