@@ -92,7 +92,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     gender = models.CharField(max_length=1, choices=GENDER)
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
