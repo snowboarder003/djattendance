@@ -175,8 +175,6 @@ class Trainee(Profile):
 
     team = models.ForeignKey(Team)
 
-    services = models.ManyToManyField(Service)
-
     house = models.ForeignKey(House)
 
     # refers to the user's home address, not their training residence
