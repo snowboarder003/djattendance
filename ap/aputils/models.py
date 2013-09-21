@@ -27,6 +27,9 @@ class Country(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "countries"
+
 
 class City(models.Model):
 
@@ -41,6 +44,9 @@ class City(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "cities"
 
 
 class Address(models.Model):
@@ -66,6 +72,9 @@ class Address(models.Model):
         adr1, adr2 = self.address1, self.address2
         # don't include the newline if address2 is empty
         return adr1 + '\n' + adr2 if adr2 else adr1
+
+    class Meta:
+        verbose_name_plural = "addresses"
 
 
 class Vehicle(models.Model):
