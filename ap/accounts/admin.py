@@ -65,7 +65,7 @@ class APUserAdmin(UserAdmin):
         ("Personal info", {"fields": 
                             ("firstname", "lastname")}),
         ("Permissions", {"fields": 
-                            ("is_active,"
+                            ("is_active",
                             "is_staff",
                             "is_superuser",
                             "groups",
