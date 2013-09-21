@@ -20,17 +20,11 @@ Data Models:
         date
         topic
         book (ForeignKey: Book) - name(?), code
-        assignment
+        assignment[]
         note
         exam (boolean, HIDDEN)
         syllabus (ForeignKey: Syllabus)
 """
-
-
-class Assignment(models.Model):
-    content = ArrayField(dbtype="varchar(255)")
-
-    #tags = ArrayField(dbtype="varchar(255)")
 
 
 class Syllabus (models.Model):
@@ -41,11 +35,6 @@ class Syllabus (models.Model):
     # read assignment AFTER class?
     after = models.BooleanField(default=False)
 
-    """if ((after == true))
-        "Read assignment AFTER class"
-
-    """
-
     def __unicode__(self):
         return self.classSyllabus
 
@@ -53,7 +42,6 @@ class Syllabus (models.Model):
 class Session(models.Model):
 
     # date of the class
-    """ TO DO: See Jon's explanation on datefield """
     date = models.DateField(verbose_name='session date')
 
     # topic; "exam";
@@ -64,11 +52,7 @@ class Session(models.Model):
 
     # assignment info (pages; chapters; msgs; lessons; verses; exam: "FINAL, MIDTERM, ETC")
         # can list multiple assigments, e.g. memory verses
-    """ Q: How to correctly implement Post() functionality? """
-    assignment = Assignment()
-
-    # extra assignment;
-    note = models.TextField()
+    assignment = ArrayField(dbtype="varchar(255)")
 
     # exam (HIDDEN)
     exam = models.BooleanField(default=False)

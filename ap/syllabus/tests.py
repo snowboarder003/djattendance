@@ -58,9 +58,12 @@ class SyllabusTests(TestCase):
         s4 = Syllabus.objects.create(classSyllabus=c4)
 
         # The rows/Sessions for the Syllabus
+        """ Q: How to change assignment from char field i.e.: ("") to Post()? """
         r1 = Session.objects.create(date="2013-09-10",
                                     topic="Bringing the Infinite God Into the Finite Man",
-                                    book=b1, assignment="pgs 252-263", exam=False, syllabus=s1)
+                                    book=b1, assignment=['BPEL, ch1', '1 John 5:12; Col 3:4; John 11:25; 14:6; 10:10'],
+                                    exam=False, syllabus=s1)
+        #r1.assignment = x1
 
     def test_syllabus_code(self):
         """
@@ -74,9 +77,13 @@ class SyllabusTests(TestCase):
         """
         Test that the rows match with their assignment
         """
-        r1 = Session.objects.get(assignment="pgs 252-263")
+        r1 = Session.objects.get(date="2013-09-10")
+
+        self.assertEqual(r1.assignment[0], 'BPEL, ch1')
+        self.assertEqual(r1.assignment[1], '1 John 5:12; Col 3:4; John 11:25; 14:6; 10:10')
 
         # self assert
+        """ TO DO: Fix __UNICODE__ SELF TEST """
         self.assertEqual(r1, "Class: Full Ministry of Christ; Term: Fall 2013; Date: 2013-09-10; Topic: Bringing the Infinite God Into the Finite Man")
 
         # check row with self
