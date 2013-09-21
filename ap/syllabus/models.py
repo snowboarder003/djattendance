@@ -6,7 +6,7 @@ from djorm_pgarray.fields import ArrayField
 from djorm_expressions.models import ExpressionManager
 
 
-"""" SYLLABUS models.py
+""" SYLLABUS models.py
 
 This module catalogs all pertinent data associated with classes in the FTTA
 for use in in other functions. For example, Data includes class name, date,
@@ -27,16 +27,24 @@ Data Models:
 """
 
 
-class Post(models.Model):
-    subject = models.CharField(max_length=255)
-    content = models.TextField()
-    tags = ArrayField(dbtype="varchar(255)")
+class Assignment(models.Model):
+    content = ArrayField(dbtype="varchar(255)")
+
+    #tags = ArrayField(dbtype="varchar(255)")
 
 
 class Syllabus (models.Model):
 
     # syllabus for a class; e.g. FMoC, BoC, GOW
     classSyllabus = models.ForeignKey(Class)
+
+    # read assignment AFTER class?
+    after = models.BooleanField(default=False)
+
+    """if ((after == true))
+        "Read assignment AFTER class"
+
+    """
 
     def __unicode__(self):
         return self.classSyllabus
@@ -56,8 +64,8 @@ class Session(models.Model):
 
     # assignment info (pages; chapters; msgs; lessons; verses; exam: "FINAL, MIDTERM, ETC")
         # can list multiple assigments, e.g. memory verses
-    """ Q: Is this implemented correctly? """
-    assignment = models.TextField()  # Post()
+    """ Q: How to correctly implement Post() functionality? """
+    assignment = Assignment()
 
     # extra assignment;
     note = models.TextField()
@@ -69,7 +77,7 @@ class Session(models.Model):
     syllabus = models.ForeignKey(Syllabus)
 
     def __unicode__(self):
-        """ Q: How does this work? """
+        """ Q: How does this work + DISPLAY? """
         return ("Class: " + self.syllabus.classSyllabus.name + "; Term: "
                 + self.syllabus.classSyllabus.term + "; Date: " + self.date
                 + "; Topic: " + self.topic)
