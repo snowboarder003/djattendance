@@ -95,7 +95,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_of_birth = models.DateField()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['firstname', 'lastname']
+    REQUIRED_FIELDS = []
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -139,11 +139,13 @@ class Profile(models.Model):
     class Meta:
         abstract = True
 
+
 class TrainingAssistant(Profile):
 
     services = models.ManyToManyField(Service)
 
     house = models.ManyToManyField(House)
+
 
 class Trainee(Profile):
 
@@ -187,5 +189,3 @@ class Trainee(Profile):
     # flag for trainees taking their own attendance
     # this will be false for 1st years and true for 2nd with some exceptions.
     self_attendance = models.BooleanField()
-
-
