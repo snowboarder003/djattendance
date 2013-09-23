@@ -32,7 +32,7 @@ class Roll(models.Model):
 
     trainee = models.ForeignKey(Trainee)
 
-    status = models.CharField(max_length=1, choices=ROLL_STATUS)
+    status = models.CharField(max_length=1, choices=ROLL_STATUS, default='P')
 
     # once a roll is finalized, it can no longer be edited
     # except by a TA, attendance monitor, or other admin
@@ -41,12 +41,14 @@ class Roll(models.Model):
     notes = models.CharField(max_length=200, blank=True)
 
     # the one who submitted this roll
-    monitor = models.ForeignKey(Trainee, blank=True)
+    monitor = models.ForeignKey(Trainee, null=True)
 
+    # when the roll was last updated
     timestamp = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return self.name
+        # return status, trainee name, and event
+        return "[%s] %s @ %s" % (self.status, self.trainee, self.event)
 
 
 class Period(models.Model):
