@@ -3,15 +3,17 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from accounts.models import User
+from accounts.models import User, Trainee, TrainingAssistant
 
 """" ACCOUNTS admin.py """
 
 class APUserCreationForm(forms.ModelForm):
     """ A form for creating a new user """
 
-    password = forms.CharField(label="Password", widget=forms.PasswordInput)
-    password_repeat = forms.CharField(label="Password confirmation", widget=forms.PasswordInput)
+    password = forms.CharField(label="Password", 
+                               widget=forms.PasswordInput)
+    password_repeat = forms.CharField(label="Password confirmation", 
+                                      widget=forms.PasswordInput)
 
     class Meta:
         model = User
@@ -81,5 +83,6 @@ class APUserAdmin(UserAdmin):
 
 # Register the new Admin
 admin.site.register(User, APUserAdmin)
-
+admin.site.register(Trainee)
+admin.site.register(TrainingAssistant)
 
