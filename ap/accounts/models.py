@@ -132,7 +132,7 @@ class Profile(models.Model):
 
     # whether this profile is still active
     # ex: if a trainee becomes a TA, they no longer need a service worker profile
-    active = models.BooleanField()
+    active = models.BooleanField(default=True)
 
     date_created = models.DateField(auto_now_add=True)
 
