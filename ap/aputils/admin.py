@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 
-from aputils.models import Country, City, Address, Vehicle
+from aputils.models import Country, City, Address, Vehicle, EmergencyInfo
 
 class AddressAdminForm(forms.ModelForm):
     city = forms.ModelChoiceField(queryset=City.objects.order_by('name'))
@@ -66,3 +66,4 @@ admin.site.register(Address, AddressAdmin)
 admin.site.register(City, CityAdmin)
 admin.site.register(Country, CountryAdmin)
 admin.site.register(Vehicle, VehicleAdmin)
+admin.site.register(EmergencyInfo)
