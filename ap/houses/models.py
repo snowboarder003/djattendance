@@ -59,6 +59,8 @@ class Bunk(models.Model):
     # whether this is a top or bottom bunk
     position = models.CharField(max_length=1, choices=POSITION)
 
+    link = models.OneToOneField('Bunk', null=True)
+
     # which room this bunk is in
     room = models.ForeignKey(Room)
 
