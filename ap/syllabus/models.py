@@ -2,6 +2,8 @@ from django.db import models
 from classes.models import Class
 from books.models import Book
 
+from time import strftime
+
 from djorm_pgarray.fields import ArrayField
 from djorm_expressions.models import ExpressionManager
 
@@ -36,7 +38,7 @@ class Syllabus (models.Model):
     after = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return self.classSyllabus
+        return self.classSyllabus.name
 
 
 class Session(models.Model):
@@ -61,7 +63,7 @@ class Session(models.Model):
     syllabus = models.ForeignKey(Syllabus)
 
     def __unicode__(self):
-        """ Q: How does this work + DISPLAY? """
+        """ Q: How to turn self.date into STRING """
         return ("Class: " + self.syllabus.classSyllabus.name + "; Term: "
-                + self.syllabus.classSyllabus.term + "; Date: " + self.date
-                + "; Topic: " + self.topic)
+                + self.syllabus.classSyllabus.term.code + "; Date: " + 
+                self.date.strftime('%Y/%m/%d') + "; Topic: " + self.topic)
