@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import Group
-#from users.models import UserAccount
+from users.models import TrainingAssistant,Trainee
 
 #This is to define Service
 
@@ -36,6 +36,18 @@ class Service(Group):
     # every service have different workload,
     # for example guard is much more intense than cleaning
     workload = models.IntegerField()
+	
+	#whether this service needs certain qualified trainees
+    needQualification = models.BooleanField(blank=True)
+
+	#Service qualification such as Sack lunch star,Kitchen Star,
+	#Shuttle Driver, Piano, Usher,etc
+    #This is different from permanent designation. For example, 
+	#two brothers might be designated as AV brothers,
+    #but others brothers have the qualification to serve AV.
+	qualifiedTrainees = models.ManyToManyField(Trainee)
+
+    overseer = models.ManyToManyField(TrainingAssistant)
 
     def __unicode__(self):
         return self.name
