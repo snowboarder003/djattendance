@@ -142,9 +142,12 @@ class Profile(models.Model):
 
 class TrainingAssistant(Profile):
 
-    services = models.ManyToManyField(Service)
+    services = models.ManyToManyField(Service, blank=True, null=True)
 
-    house = models.ManyToManyField(House)
+    house = models.ManyToManyField(House, blank=True, null=True)
+
+    def __unicode__(self):
+        return self.account.get_full_name()
 
 
 class Trainee(Profile):
@@ -163,7 +166,9 @@ class Trainee(Profile):
 
     spouse = models.OneToOneField('self', blank=True)
 
-    emergency_info = models.OneToOneField(EmergencyInfo)
+    # for purposes of making this inline in the admin, 
+    # made 'trainee' a foreign key in aputils.EmergencyInfo
+    # emergency_info = models.ForeignKey(EmergencyInfo)
 
     TA = models.ForeignKey(TrainingAssistant)
 
@@ -187,3 +192,6 @@ class Trainee(Profile):
     # flag for trainees taking their own attendance
     # this will be false for 1st years and true for 2nd with some exceptions.
     self_attendance = models.BooleanField()
+
+    def __unicode__(self):
+        return self.account.get_full_name()

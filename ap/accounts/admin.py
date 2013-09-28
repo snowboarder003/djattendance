@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from accounts.models import User, Trainee, TrainingAssistant
+from aputils.admin import EmergencyInfoInline
 
 """" ACCOUNTS admin.py """
 
@@ -81,8 +82,12 @@ class APUserAdmin(UserAdmin):
         ),
     )
 
+class TraineeAdmin(admin.ModelAdmin):
+    inlines = [
+        EmergencyInfoInline,
+    ]
+
 # Register the new Admin
 admin.site.register(User, APUserAdmin)
-admin.site.register(Trainee)
+admin.site.register(Trainee, TraineeAdmin)
 admin.site.register(TrainingAssistant)
-
