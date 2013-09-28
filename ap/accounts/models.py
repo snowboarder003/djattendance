@@ -80,11 +80,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     username = property(_make_username)
 
-    firstname = models.CharField(max_length=30)
-    lastname = models.CharField(max_length=30)
-    middlename = models.CharField(max_length=30, blank=True)
+    firstname = models.CharField(verbose_name=u'first name', max_length=30)
+    lastname = models.CharField(verbose_name=u'last name', max_length=30)
+    middlename = models.CharField(verbose_name=u'middle name', max_length=30, blank=True)
     nickname = models.CharField(max_length=30, blank=True)
-    maidenname = models.CharField(max_length=30, blank=True)
+    maidenname = models.CharField(verbose_name=u'maiden name', max_length=30, blank=True)
 
     GENDER = (
         ('B', 'Brother'),
