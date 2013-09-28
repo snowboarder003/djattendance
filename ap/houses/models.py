@@ -37,7 +37,7 @@ class House(models.Model):
 class Room(models.Model):
 
     ROOM_TYPES = (
-        ('LIV', 'Living Room')
+        ('LIV', 'Living Room'),
         ('BED', 'Bedroom'),
         ('KIT', 'Kitchen'),
         ('BATH', 'Bathroom'),
