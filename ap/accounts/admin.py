@@ -19,13 +19,13 @@ class APUserCreationForm(forms.ModelForm):
         model = User
         fields = ("email", "firstname", "lastname")
 
-    def clean_password(self):
-        """ Check that the password match """
-        password = self.cleaned_data.get("password")
-        password_repeat = self.cleaned_data.get("password_repeat")
-        if password and password_repeat and password != password_repeat:
-            raise forms.ValidationError("Password's don't match")
-        return password_repeat
+    def clean(self):
+        cleaned_data = super(APUserCreationForm, self).clean()
+        password = cleaned_data.get("password")
+        password_repeat = cleaned_data.get("password_repeat")
+        if password != password_repeat:
+            raise forms.ValidationError("Passwords don't match")
+        return cleaned_data
 
     def save(self, commit=True):
         """ Save the provided password in hashed format """
