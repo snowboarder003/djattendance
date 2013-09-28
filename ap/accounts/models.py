@@ -142,9 +142,9 @@ class Profile(models.Model):
 
 class TrainingAssistant(Profile):
 
-    services = models.ManyToManyField(Service)
+    services = models.ManyToManyField(Service, null=True)
 
-    house = models.ManyToManyField(House)
+    houses = models.ManyToManyField(House, null=True)
 
 
 class Trainee(Profile):
