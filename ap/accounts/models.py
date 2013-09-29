@@ -80,11 +80,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     username = property(_make_username)
 
-    firstname = models.CharField(max_length=30)
-    lastname = models.CharField(max_length=30)
-    middlename = models.CharField(max_length=30, blank=True)
+    firstname = models.CharField(verbose_name=u'first name', max_length=30)
+    lastname = models.CharField(verbose_name=u'last name', max_length=30)
+    middlename = models.CharField(verbose_name=u'middle name', max_length=30, blank=True)
     nickname = models.CharField(max_length=30, blank=True)
-    maidenname = models.CharField(max_length=30, blank=True)
+    maidenname = models.CharField(verbose_name=u'maiden name', max_length=30, blank=True)
 
     GENDER = (
         ('B', 'Brother'),
@@ -142,9 +142,12 @@ class Profile(models.Model):
 
 class TrainingAssistant(Profile):
 
-    services = models.ManyToManyField(Service, null=True)
+    services = models.ManyToManyField(Service, blank=True, null=True)
 
-    houses = models.ManyToManyField(House, null=True)
+    houses = models.ManyToManyField(House, blank=True, null=True)
+
+    def __unicode__(self):
+        return "[TA] " + self.account.get_full_name()
 
 
 class Trainee(Profile):
@@ -163,7 +166,9 @@ class Trainee(Profile):
 
     spouse = models.OneToOneField('self', blank=True)
 
-    emergency_info = models.OneToOneField(EmergencyInfo)
+    # for purposes of making this inline in the admin, 
+    # made 'trainee' a foreign key in aputils.EmergencyInfo
+    # emergency_info = models.ForeignKey(EmergencyInfo)
 
     TA = models.ForeignKey(TrainingAssistant)
 
@@ -187,3 +192,6 @@ class Trainee(Profile):
     # flag for trainees taking their own attendance
     # this will be false for 1st years and true for 2nd with some exceptions.
     self_attendance = models.BooleanField()
+
+    def __unicode__(self):
+        return "[Trainee] " + self.account.get_full_name()

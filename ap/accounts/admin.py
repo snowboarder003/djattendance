@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from accounts.models import User, Trainee, TrainingAssistant
+from aputils.admin import EmergencyInfoInline
 
 """" ACCOUNTS admin.py """
 
@@ -19,13 +20,13 @@ class APUserCreationForm(forms.ModelForm):
         model = User
         fields = ("email", "firstname", "lastname")
 
-    def clean_password(self):
-        """ Check that the password match """
-        password = self.cleaned_data.get("password")
-        password_repeat = self.cleaned_data.get("password_repeat")
-        if password and password_repeat and password != password_repeat:
-            raise forms.ValidationError("Password's don't match")
-        return password_repeat
+    def clean(self):
+        cleaned_data = super(APUserCreationForm, self).clean()
+        password = cleaned_data.get("password")
+        password_repeat = cleaned_data.get("password_repeat")
+        if password != password_repeat:
+            raise forms.ValidationError("Passwords don't match")
+        return cleaned_data
 
     def save(self, commit=True):
         """ Save the provided password in hashed format """
@@ -81,8 +82,12 @@ class APUserAdmin(UserAdmin):
         ),
     )
 
+class TraineeAdmin(admin.ModelAdmin):
+    inlines = [
+        EmergencyInfoInline,
+    ]
+
 # Register the new Admin
 admin.site.register(User, APUserAdmin)
-admin.site.register(Trainee)
+admin.site.register(Trainee, TraineeAdmin)
 admin.site.register(TrainingAssistant)
-

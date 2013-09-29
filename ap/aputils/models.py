@@ -97,11 +97,15 @@ class EmergencyInfo(models.Model):
 
     name = models.CharField(max_length=30)
 
-    address = models.ForeignKey(Address)
-
     #contact's relation to the trainee.
     relation = models.CharField(max_length=30)
 
     phone = models.CharField(max_length=15)
 
     phone2 = models.CharField(max_length=15)
+
+    street_address = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    zip_code = models.PositiveIntegerField()
+
+    trainee = models.ForeignKey('accounts.Trainee')
