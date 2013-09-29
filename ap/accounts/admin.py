@@ -40,14 +40,9 @@ class APUserCreationForm(forms.ModelForm):
 class APUserChangeForm(forms.ModelForm):
     """ A form for updating users. """
 
-    password = ReadOnlyPasswordHashField()
-
     class Meta:
         model = User
-
-    def clean_password(self):
-        # Regardless of what the user provides, return the initial value.
-        return self.initial["password"]
+        exclude = ['password']
 
 
 class APUserAdmin(UserAdmin):
@@ -64,7 +59,8 @@ class APUserAdmin(UserAdmin):
     filter_horizontal = ("groups", "user_permissions")
     fieldsets = (
         (None, {"fields": 
-                            ("email", "password")}),
+                            ("email",)}),
+
         ("Personal info", {"fields": 
                             ("firstname", "lastname")}),
         ("Permissions", {"fields": 
