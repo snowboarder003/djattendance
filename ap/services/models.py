@@ -30,7 +30,7 @@ class Service(Group):
     This also includes designated services such as Accounting or Lights.
     """
 
-    category = models.ForeignKey(Category)
+    category = models.ForeignKey(Category,related_name="services")
     isActive = models.BooleanField()
 
     # every service have different workload,
@@ -61,7 +61,7 @@ class Period(models.Model):
     description = models.TextField()
 
     #which Service is on this Period
-    service = models.ManyToManyField(Service)
+    service = models.ManyToManyField(Service,,related_name="periods")
 
     startDate = models.DateField('start date')
     endDate = models.DateField('end date')
