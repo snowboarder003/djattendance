@@ -178,20 +178,20 @@ class Trainee(Profile):
 
     mentor = models.ForeignKey('self', related_name='mentee', null=True)
 
-    team = models.ForeignKey(Team)
+    team = models.ForeignKey(Team, null=True)
 
-    house = models.ForeignKey(House)
+    house = models.ForeignKey(House, null=True)
 
     # refers to the user's home address, not their training residence
     address = models.ForeignKey(Address)
 
-    bunk = models.ForeignKey(Bunk)
+    bunk = models.ForeignKey(Bunk, null=True)
 
-    vehicle = models.ForeignKey(Vehicle)
+    vehicle = models.ForeignKey(Vehicle, null=True)
 
     # flag for trainees taking their own attendance
     # this will be false for 1st years and true for 2nd with some exceptions.
-    self_attendance = models.BooleanField()
+    self_attendance = models.BooleanField(default=False)
 
     def __unicode__(self):
         return "[Trainee] " + self.account.get_full_name()
