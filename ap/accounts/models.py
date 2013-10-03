@@ -176,7 +176,7 @@ class Trainee(Profile):
 
     date_end = models.DateField(blank=True)
 
-    mentor = models.ForeignKey('self', related_name='mentee')
+    mentor = models.ForeignKey('self', related_name='mentee', null=True)
 
     team = models.ForeignKey(Team)
 
