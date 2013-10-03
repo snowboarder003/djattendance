@@ -147,7 +147,7 @@ class TrainingAssistant(Profile):
     houses = models.ManyToManyField(House, blank=True, null=True)
 
     def __unicode__(self):
-        return "[TA] " + self.account.get_full_name()
+        return self.account.get_full_name()
 
 
 class Trainee(Profile):
@@ -194,4 +194,4 @@ class Trainee(Profile):
     self_attendance = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return "[Trainee] " + self.account.get_full_name()
+        return self.account.get_full_name()
