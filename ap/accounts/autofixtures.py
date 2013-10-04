@@ -1,10 +1,10 @@
 import random
 
 from accounts.models import User, TrainingAssistant, Trainee
-from autofixture import generators, register, AutoFixture, Generator
+from autofixture import generators, register, AutoFixture
 
 
-class FirstNameGenerator(Generator):
+class FirstNameGenerator(generators.Generator):
 	""" Generates a first name, either male or female """
 
 	def __init__(self, gender=None):
@@ -28,7 +28,7 @@ class FirstNameGenerator(Generator):
 			return random.choice(self.all)
 
 
-class LastNameGenerator(Generator):
+class LastNameGenerator(generators.Generator):
 	""" Generates a last name """
 
 	def __init__(self):
@@ -45,7 +45,7 @@ class LastNameGenerator(Generator):
 
 class UserAutoFixture(AutoFixture):
     field_values = {
-    	'email' : generators.EmailGenerator(),
+    	'email' : generators.EmailGenerator(static_domain='example.com'),
     	'firstname' : FirstNameGenerator(),
     	'lastname' : LastNameGenerator()
     }
@@ -53,14 +53,14 @@ class UserAutoFixture(AutoFixture):
 register(User, UserAutoFixture)
 
 
-class TraineeAutoFixture(AutoFixture, generate_fk=['account']):
+class TraineeAutoFixture(AutoFixture):
 	field_values = {
     }
 
 register(Trainee, TraineeAutoFixture)
 
 
-class TrainingAssistantAutoFixture(AutoFixture, generate_fk=['account']):
+class TrainingAssistantAutoFixture(AutoFixture):
 	field_values = {
     }
 
