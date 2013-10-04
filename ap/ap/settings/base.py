@@ -123,6 +123,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     # third-party modules
     'scaffolding',
+    'autofixture',
     'django_reset',
     # ap modules
     'accounts',
