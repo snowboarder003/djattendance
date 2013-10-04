@@ -13,7 +13,7 @@ class FirstNameGenerator(Generator):
 					 'George', 'Henry', 'Isaac', 'Ian', 'Jonathan', 'Jeremy', 'Jacob', 'John', 'Jerry',
 					 'Joseph', 'James', 'Larry', 'Michael', 'Mark', 'Paul', 'Peter', 'Phillip', 'Stephen', 
 					 'Tony', 'Titus', 'Trevor', 'Timothy', 'Victor', 'Vincent', 'Winston', 'Walt']
-		self.female = ['Abbie', 'Anna', 'Alice', 'Betty', 'Carrie', 'Christina' 'Danielle', 'Emma', 
+		self.female = ['Abbie', 'Anna', 'Alice', 'Beth', 'Carrie', 'Christina' 'Danielle', 'Emma', 
 					   'Emily', 'Esther', 'Felicia', 'Grace', 'Gloria' 'Helen', 'Irene', 'Joanne', 
 					   'Joyce', 'Jessica', 'Kathy', 'Katie', 'Kelly', 'Linda', 'Lydia' 'Mandy', 'Mary', 
 					   'Olivia', 'Priscilla', 'Rebecca', 'Rachel', 'Susan', 'Sarah', 'Stacey', 'Vivian']
@@ -21,11 +21,11 @@ class FirstNameGenerator(Generator):
 
 	def generate(self):
 		if self.gender == 'M' or self.gender == 'Male':
-			return self.male[random.randint(0, len(self.male))]
+			return random.choice(self.male)
 		elif self.gender == 'F' or self.gender == 'Female':
-			return self.female[random.randint(0, len(self.female))]
+			return random.choice(self.female)
 		else:
-			return self.all[random.randint(0, len(self.all))]
+			return random.choice(self.all)
 
 
 class LastNameGenerator(Generator):
@@ -40,7 +40,7 @@ class LastNameGenerator(Generator):
 						'Kang', 'Park', 'Kim', 'Choi', 'Ahn', 'Mujuni']
 
 	def generate(self):
-		return self.surname[random.randint(0, len(self.surname))]
+		return random.choice(self.surname)
 
 
 class UserAutoFixture(AutoFixture):
