@@ -46,8 +46,8 @@ class LastNameGenerator(Generator):
 class UserAutoFixture(AutoFixture):
     field_values = {
     	'email' : generators.EmailGenerator(),
-    	'firstname' : ,
-    	'lastname' :
+    	'firstname' : FirstNameGenerator(),
+    	'lastname' : LastNameGenerator()
     }
 
 register(User, UserAutoFixture)
