@@ -164,7 +164,7 @@ class Trainee(Profile):
 
     married = models.BooleanField(default=False)
 
-    spouse = models.OneToOneField('self', blank=True)
+    spouse = models.OneToOneField('self', null=True, blank=True)
 
     # for purposes of making this inline in the admin, 
     # made 'trainee' a foreign key in aputils.EmergencyInfo
