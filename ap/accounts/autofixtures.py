@@ -4,11 +4,40 @@ from accounts.models import User, TrainingAssistant, Trainee
 from autofixture import generators, register, AutoFixture, Generator
 
 
+class FirstNameGenerator(Generator):
+	""" Generates a first name, either male or female """
+
+	def __init__(self, gender=None):
+		self.gender = gender
+		self.male = ['Abraham', 'Adam', 'Anthony', 'Brian', 'Bill', 'Ben' 'Calvin', 'David', 'Daniel',
+					 'George', 'Henry', 'Isaac', 'Ian', 'Jonathan', 'Jeremy', 'Jacob', 'John', 'Jerry',
+					 'Joseph', 'James', 'Larry', 'Michael', 'Mark', 'Paul', 'Peter', 'Phillip', 'Stephen', 
+					 'Tony', 'Titus', 'Trevor', 'Timothy', 'Victor', 'Vincent', 'Winston', 'Walt']
+		self.female = ['Abbie', 'Anna', 'Alice', 'Betty', 'Carrie', 'Christina' 'Danielle', 'Emma', 
+					   'Emily', 'Esther', 'Felicia', 'Grace', 'Gloria' 'Helen', 'Irene', 'Joanne', 
+					   'Joyce', 'Jessica', 'Kathy', 'Katie', 'Kelly', 'Linda', 'Lydia' 'Mandy', 'Mary', 
+					   'Olivia', 'Priscilla', 'Rebecca', 'Rachel', 'Susan', 'Sarah', 'Stacey', 'Vivian']
+		self.all = self.male + self.female
+
+	def generate(self):
+		if self.gender == 'M' or self.gender == 'Male':
+			return self.male[random.randint(0, len(self.male))]
+		elif self.gender == 'F' or self.gender == 'Female':
+			return self.female[random.randint(0, len(self.female))]
+		else:
+			return self.all[random.randint(0, len(self.all))]
+
+
 class LastNameGenerator(Generator):
 	""" Generates a last name """
 
 	def __init__(self):
-		self.surname = []
+		self.surname = ['Smith', 'Walker', 'Conroy', 'Stevens', 'Jones', 'Armstrong', 'Johnson',
+						'White', 'Stone', 'Strong', 'Olson', 'Lee', 'Forrest', 'Baker', 'Portman',
+						'Davis', 'Clark', 'Brown', 'Roberts', 'Ellis', 'Jackson', 'Marshall',
+						'Wang', 'Chen', 'Chou', 'Tang', 'Huang', 'Liu', 'Shih', 'Su', 'Song', 'Yang',
+						'Chan', 'Tsai', 'Wong', 'Hsu', 'Cheng', 'Chang', 'Wu', 'Lin', 'Yu', 'Yao', 
+						'Kang', 'Park', 'Kim', 'Choi', 'Ahn', 'Mujuni']
 
 	def generate(self):
 		return self.surname[random.randint(0, len(self.surname))]
