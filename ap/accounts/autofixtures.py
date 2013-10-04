@@ -9,12 +9,12 @@ class FirstNameGenerator(generators.Generator):
 
 	def __init__(self, gender=None):
 		self.gender = gender
-		self.male = ['Abraham', 'Adam', 'Anthony', 'Brian', 'Bill', 'Ben' 'Calvin', 'David', 'Daniel',
+		self.male = ['Abraham', 'Adam', 'Anthony', 'Brian', 'Bill', 'Ben', 'Calvin', 'David', 'Daniel',
 					 'George', 'Henry', 'Isaac', 'Ian', 'Jonathan', 'Jeremy', 'Jacob', 'John', 'Jerry',
 					 'Joseph', 'James', 'Larry', 'Michael', 'Mark', 'Paul', 'Peter', 'Phillip', 'Stephen', 
 					 'Tony', 'Titus', 'Trevor', 'Timothy', 'Victor', 'Vincent', 'Winston', 'Walt']
 		self.female = ['Abbie', 'Anna', 'Alice', 'Beth', 'Carrie', 'Christina' 'Danielle', 'Emma', 
-					   'Emily', 'Esther', 'Felicia', 'Grace', 'Gloria' 'Helen', 'Irene', 'Joanne', 
+					   'Emily', 'Esther', 'Felicia', 'Grace', 'Gloria', 'Helen', 'Irene', 'Joanne', 
 					   'Joyce', 'Jessica', 'Kathy', 'Katie', 'Kelly', 'Linda', 'Lydia' 'Mandy', 'Mary', 
 					   'Olivia', 'Priscilla', 'Rebecca', 'Rachel', 'Susan', 'Sarah', 'Stacey', 'Vivian']
 		self.all = self.male + self.female
