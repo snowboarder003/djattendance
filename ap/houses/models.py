@@ -36,15 +36,25 @@ class House(models.Model):
 
 class Room(models.Model):
 
-    capacity = models.SmallIntegerField()
+    ROOM_TYPES = (
+        ('LIV', 'Living Room'),
+        ('BED', 'Bedroom'),
+        ('KIT', 'Kitchen'),
+        ('BATH', 'Bathroom'),
+        ('GAR', 'Garage'),
+        ('PAT', 'Patio'),
+    )
+
+    type = models.CharField(max_length=4, choices=ROOM_TYPES)
+
+    capacity = models.SmallIntegerField(default=0)  # null if room is not a bedroom
 
     house = models.ForeignKey(House)
 
     floor = models.SmallIntegerField(default=1)
 
     def __unicode__(self):
-        return self.house.name + " Room " + str(self.pk)
-
+        return self.house.name + " " + self.type
 
 class Bunk(models.Model):
 
@@ -58,6 +68,8 @@ class Bunk(models.Model):
 
     # whether this is a top or bottom bunk
     position = models.CharField(max_length=1, choices=POSITION)
+
+    link = models.OneToOneField('Bunk', null=True)
 
     # which room this bunk is in
     room = models.ForeignKey(Room)
