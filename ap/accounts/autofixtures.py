@@ -15,63 +15,63 @@ $ django-admin.py loadtestdata accounts.User:50 accounts.TrainingAssistant:5 acc
 """
 
 class FirstNameGenerator(generators.Generator):
-	""" Generates a first name, either male or female """
+    """ Generates a first name, either male or female """
 
-	def __init__(self, gender=None):
-		self.gender = gender
-		self.male = ['Abraham', 'Adam', 'Anthony', 'Brian', 'Bill', 'Ben', 'Calvin', 'David', 'Daniel',
-					 'George', 'Henry', 'Isaac', 'Ian', 'Jonathan', 'Jeremy', 'Jacob', 'John', 'Jerry',
-					 'Joseph', 'James', 'Larry', 'Michael', 'Mark', 'Paul', 'Peter', 'Phillip', 'Stephen', 
-					 'Tony', 'Titus', 'Trevor', 'Timothy', 'Victor', 'Vincent', 'Winston', 'Walt']
-		self.female = ['Abbie', 'Anna', 'Alice', 'Beth', 'Carrie', 'Christina' 'Danielle', 'Emma', 
-					   'Emily', 'Esther', 'Felicia', 'Grace', 'Gloria', 'Helen', 'Irene', 'Joanne', 
-					   'Joyce', 'Jessica', 'Kathy', 'Katie', 'Kelly', 'Linda', 'Lydia', 'Mandy', 'Mary', 
-					   'Olivia', 'Priscilla', 'Rebecca', 'Rachel', 'Susan', 'Sarah', 'Stacey', 'Vivian']
-		self.all = self.male + self.female
+    def __init__(self, gender=None):
+        self.gender = gender
+        self.male = ['Abraham', 'Adam', 'Anthony', 'Brian', 'Bill', 'Ben', 'Calvin', 'David', 'Daniel',
+                     'George', 'Henry', 'Isaac', 'Ian', 'Jonathan', 'Jeremy', 'Jacob', 'John', 'Jerry',
+                     'Joseph', 'James', 'Larry', 'Michael', 'Mark', 'Paul', 'Peter', 'Phillip', 'Stephen', 
+                     'Tony', 'Titus', 'Trevor', 'Timothy', 'Victor', 'Vincent', 'Winston', 'Walt']
+        self.female = ['Abbie', 'Anna', 'Alice', 'Beth', 'Carrie', 'Christina' 'Danielle', 'Emma', 
+                       'Emily', 'Esther', 'Felicia', 'Grace', 'Gloria', 'Helen', 'Irene', 'Joanne', 
+                       'Joyce', 'Jessica', 'Kathy', 'Katie', 'Kelly', 'Linda', 'Lydia', 'Mandy', 'Mary', 
+                       'Olivia', 'Priscilla', 'Rebecca', 'Rachel', 'Susan', 'Sarah', 'Stacey', 'Vivian']
+        self.all = self.male + self.female
 
-	def generate(self):
-		if self.gender == 'M' or self.gender == 'Male':
-			return random.choice(self.male)
-		elif self.gender == 'F' or self.gender == 'Female':
-			return random.choice(self.female)
-		else:
-			return random.choice(self.all)
+    def generate(self):
+        if self.gender == 'M' or self.gender == 'Male':
+            return random.choice(self.male)
+        elif self.gender == 'F' or self.gender == 'Female':
+            return random.choice(self.female)
+        else:
+            return random.choice(self.all)
 
 
 class LastNameGenerator(generators.Generator):
-	""" Generates a last name """
+    """ Generates a last name """
 
-	def __init__(self):
-		self.surname = ['Smith', 'Walker', 'Conroy', 'Stevens', 'Jones', 'Armstrong', 'Johnson',
-						'White', 'Stone', 'Strong', 'Olson', 'Lee', 'Forrest', 'Baker', 'Portman',
-						'Davis', 'Clark', 'Brown', 'Roberts', 'Ellis', 'Jackson', 'Marshall',
-						'Wang', 'Chen', 'Chou', 'Tang', 'Huang', 'Liu', 'Shih', 'Su', 'Song', 'Yang',
-						'Chan', 'Tsai', 'Wong', 'Hsu', 'Cheng', 'Chang', 'Wu', 'Lin', 'Yu', 'Yao', 
-						'Kang', 'Park', 'Kim', 'Choi', 'Ahn', 'Mujuni']
+    def __init__(self):
+        self.surname = ['Smith', 'Walker', 'Conroy', 'Stevens', 'Jones', 'Armstrong', 'Johnson',
+                        'White', 'Stone', 'Strong', 'Olson', 'Lee', 'Forrest', 'Baker', 'Portman',
+                        'Davis', 'Clark', 'Brown', 'Roberts', 'Ellis', 'Jackson', 'Marshall',
+                        'Wang', 'Chen', 'Chou', 'Tang', 'Huang', 'Liu', 'Shih', 'Su', 'Song', 'Yang',
+                        'Chan', 'Tsai', 'Wong', 'Hsu', 'Cheng', 'Chang', 'Wu', 'Lin', 'Yu', 'Yao', 
+                        'Kang', 'Park', 'Kim', 'Choi', 'Ahn', 'Mujuni']
 
-	def generate(self):
-		return random.choice(self.surname)
+    def generate(self):
+        return random.choice(self.surname)
 
 
 class UserAutoFixture(AutoFixture):
     field_values = {
-    	'email' : generators.EmailGenerator(static_domain='example.com'),
-    	'firstname' : FirstNameGenerator(),
-    	'lastname' : LastNameGenerator()
+        'email' : generators.EmailGenerator(static_domain='example.com'),
+        'firstname' : FirstNameGenerator(),
+        'lastname' : LastNameGenerator()
     }
 
 register(User, UserAutoFixture)
 
 
 class TraineeAutoFixture(AutoFixture):
-	field_values = {
+    field_values = {
     }
 
 register(Trainee, TraineeAutoFixture)
 
 
 class TrainingAssistantAutoFixture(AutoFixture):
-	field_values = {
+    field_values = {
     }
 
 register(TrainingAssistant, TrainingAssistantAutoFixture)
