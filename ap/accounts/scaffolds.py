@@ -33,4 +33,28 @@ class UserScaffold(object):
 
 scaffolding.register(User, UserScaffold)
 
-# class TrainingAssistantScaffold(object):
+class TrainingAssistantScaffold(object):
+
+	account = scaffolding.ForeignKey(queryset=User.objects.all())
+	# services = scaffolding.ForeignKeyOrNone(queryset=Service.objects.all())
+	# houses = scaffolding.ForeignKeyOrNone(queryset=House.objects.all())
+
+scaffolding.register(TrainingAssistant, TrainingAssistantScaffold)
+
+
+class TraineeScaffold(object):
+
+	account = scaffolding.ForeignKey(queryset=User.objects.all())
+	type = scaffolding.RandomValue(lst=['R', 'S', 'C'])
+	#  term = scaffolding.RandomValue(Term.objects.all())
+	TA = scaffolding.ForeignKey(queryset=TrainingAssistant.objects.all())
+	date_begin = scaffolding.RandomDate(date(1960, 1, 1), date.today())
+	date_end = scaffolding.RandomDate(date(1960, 1, 1), date.today())
+	mentor = scaffolding.ForeignKeyOrNone(queryset=Trainee.objects.all())
+	team = scaffolding.ForeignKeyOrNone(queryset=Team.objects.all())
+	house = scaffolding.ForeignKeyOrNone(queryset=House.objects.all())
+	address = scaffolding.ForeignKey(queryset=Address.objects.all())
+	bunk = scaffolding.ForeignKeyOrNone(queryset=Bunk.objects.all())
+	vehicle = scaffolding.ForeignKeyOrNone(queryset=Vehicle.objects.all())
+
+scaffolding.register(Trainee, TraineeScaffold)
