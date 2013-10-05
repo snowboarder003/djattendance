@@ -27,6 +27,9 @@ class Country(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "countries"
+
 
 class City(models.Model):
 
@@ -41,6 +44,9 @@ class City(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "cities"
 
 
 class Address(models.Model):
@@ -67,6 +73,13 @@ class Address(models.Model):
         # don't include the newline if address2 is empty
         return adr1 + '\n' + adr2 if adr2 else adr1
 
+    class Meta:
+        verbose_name_plural = "addresses"
+
+
+class HomeAddress(Address):
+    trainee = models.ForeignKey('accounts.Trainee')
+
 
 class Vehicle(models.Model):
 
@@ -80,6 +93,10 @@ class Vehicle(models.Model):
 
     license_plate = models.CharField(max_length=10)
 
+    state = models.CharField(max_length=20)
+
+    trainee = models.OneToOneField('accounts.Trainee', blank=True, null=True)
+
     def __unicode__(self):
         return self.color + ' ' + self.make + ' ' + self.model
 
@@ -88,11 +105,15 @@ class EmergencyInfo(models.Model):
 
     name = models.CharField(max_length=30)
 
-    address = models.ForeignKey(Address)
-
     #contact's relation to the trainee.
     relation = models.CharField(max_length=30)
 
     phone = models.CharField(max_length=15)
 
     phone2 = models.CharField(max_length=15)
+
+    street_address = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    zip_code = models.PositiveIntegerField()
+
+    trainee = models.ForeignKey('accounts.Trainee')
