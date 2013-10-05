@@ -77,6 +77,10 @@ class Address(models.Model):
         verbose_name_plural = "addresses"
 
 
+class HomeAddress(Address):
+    trainee = models.ForeignKey('accounts.Trainee')
+
+
 class Vehicle(models.Model):
 
     color = models.CharField(max_length=10)
@@ -88,6 +92,10 @@ class Vehicle(models.Model):
     model = models.CharField(max_length=30)
 
     license_plate = models.CharField(max_length=10)
+
+    # state = models.CharField(max_length=20)
+
+    trainee = models.OneToOneField('accounts.Trainee', blank=True, null=True)
 
     def __unicode__(self):
         return self.color + ' ' + self.make + ' ' + self.model

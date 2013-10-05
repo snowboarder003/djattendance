@@ -61,12 +61,19 @@ class VehicleAdmin(admin.ModelAdmin):
     ordering = ('make', 'model', 'color', 'license_plate',)
     search_fields = ['make', 'model', 'color', 'license_plate']
 
+
+class VehicleInline(admin.TabularInline):
+    model = Vehicle
+    fk_name = 'trainee'
+
+
 class EmergencyInfoInline(admin.TabularInline):
     model = EmergencyInfo
     fk_name = 'trainee'
     verbose_name = 'emergency contact'
     verbose_name_plural = 'emergency contacts'
     extra = 1
+
 
 admin.site.register(Address, AddressAdmin)
 admin.site.register(City, CityAdmin)

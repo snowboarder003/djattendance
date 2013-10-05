@@ -164,30 +164,32 @@ class Trainee(Profile):
 
     married = models.BooleanField(default=False)
 
-    spouse = models.OneToOneField('self', blank=True)
+    spouse = models.OneToOneField('self', null=True, blank=True)
 
     # for purposes of making this inline in the admin, 
     # made 'trainee' a foreign key in aputils.EmergencyInfo
     # emergency_info = models.ForeignKey(EmergencyInfo)
 
-    TA = models.ForeignKey(TrainingAssistant)
+    TA = models.ForeignKey(TrainingAssistant, null=True, blank=True)
 
     date_begin = models.DateField()
 
-    date_end = models.DateField(blank=True)
+    date_end = models.DateField(null=True, blank=True)
 
-    mentor = models.ForeignKey('self', related_name='mentee')
+    mentor = models.ForeignKey('self', related_name='mentee', null=True, blank=True)
 
-    team = models.ForeignKey(Team)
+    team = models.ForeignKey(Team, null=True, blank=True)
 
-    house = models.ForeignKey(House)
+    house = models.ForeignKey(House, null=True, blank=True)
 
     # refers to the user's home address, not their training residence
-    address = models.ForeignKey(Address)
+    address = models.ForeignKey(Address, verbose_name='home address')
 
-    bunk = models.ForeignKey(Bunk)
+    bunk = models.ForeignKey(Bunk, null=True, blank=True)
 
-    vehicle = models.ForeignKey(Vehicle)
+    # for purposes of making this inline in the admin, 
+    # made 'trainee' a foreign key in aputils.Vehicle
+    # vehicle = models.ForeignKey(Vehicle)
 
     # flag for trainees taking their own attendance
     # this will be false for 1st years and true for 2nd with some exceptions.

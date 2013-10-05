@@ -1,10 +1,9 @@
 from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from accounts.models import User, Trainee, TrainingAssistant
-from aputils.admin import EmergencyInfoInline
+from aputils.admin import VehicleInline, EmergencyInfoInline
 
 """" ACCOUNTS admin.py """
 
@@ -77,10 +76,18 @@ class APUserAdmin(UserAdmin):
             "fields": ("email", "firstname", "lastname", "password", "password_repeat")}
         ),
     )
+    
 
 class TraineeAdmin(admin.ModelAdmin):
+    fieldsets = (
+        (None, {
+            'fields': (('account', 'active',), 'type', 'term', ('date_begin', 'date_end',), ('married', 'spouse',), ('TA', 'mentor',), 'team', ('house', 'bunk',), 'address', 'self_attendance',)
+        }),
+    )
+
     inlines = [
-        EmergencyInfoInline,
+        VehicleInline,
+        EmergencyInfoInline,    
     ]
 
 # Register the new Admin
