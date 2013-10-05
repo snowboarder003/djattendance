@@ -174,7 +174,7 @@ class Trainee(Profile):
     married = models.BooleanField(default=False)
     spouse = models.OneToOneField('self', null=True, blank=True)
     # refers to the user's home address, not their training residence
-    address = models.ForeignKey(Address, null=True, verbose_name='home address')
+    address = models.ForeignKey(Address, null=True, blank=True, verbose_name='home address')
 
     # flag for trainees taking their own attendance
     # this will be false for 1st years and true for 2nd with some exceptions.
