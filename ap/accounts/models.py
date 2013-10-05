@@ -94,6 +94,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     gender = models.CharField(max_length=1, choices=GENDER)
     date_of_birth = models.DateField(null=True)
 
+    def _get_age(self):
+        age = date.today() - self.date_of_birth
+        return age.days/365
+
+    age = property(_get_age)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
