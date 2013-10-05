@@ -143,8 +143,7 @@ class Profile(models.Model):
 class TrainingAssistant(Profile):
 
     services = models.ManyToManyField(Service, blank=True, null=True)
-
-    house = models.ManyToManyField(House, blank=True, null=True)
+    houses = models.ManyToManyField(House, blank=True, null=True)
 
     def __unicode__(self):
         return self.account.get_full_name()
@@ -160,40 +159,26 @@ class Trainee(Profile):
 
     type = models.CharField(max_length=1, choices=TRAINEE_TYPES)
 
-    term = models.ManyToManyField(Term)
-
-    married = models.BooleanField(default=False)
-
-    spouse = models.OneToOneField('self', null=True, blank=True)
-
-    # for purposes of making this inline in the admin, 
-    # made 'trainee' a foreign key in aputils.EmergencyInfo
-    # emergency_info = models.ForeignKey(EmergencyInfo)
-
-    TA = models.ForeignKey(TrainingAssistant, null=True, blank=True)
-
+    term = models.ManyToManyField(Term, null=True)
     date_begin = models.DateField()
-
     date_end = models.DateField(null=True, blank=True)
 
+    TA = models.ForeignKey(TrainingAssistant, null=True, blank=True)
     mentor = models.ForeignKey('self', related_name='mentee', null=True, blank=True)
 
     team = models.ForeignKey(Team, null=True, blank=True)
-
     house = models.ForeignKey(House, null=True, blank=True)
-
-    # refers to the user's home address, not their training residence
-    address = models.ForeignKey(Address, verbose_name='home address')
-
     bunk = models.ForeignKey(Bunk, null=True, blank=True)
 
-    # for purposes of making this inline in the admin, 
-    # made 'trainee' a foreign key in aputils.Vehicle
-    # vehicle = models.ForeignKey(Vehicle)
+    # personal information
+    married = models.BooleanField(default=False)
+    spouse = models.OneToOneField('self', null=True, blank=True)
+    # refers to the user's home address, not their training residence
+    address = models.ForeignKey(Address, null=True, verbose_name='home address')
 
     # flag for trainees taking their own attendance
     # this will be false for 1st years and true for 2nd with some exceptions.
-    self_attendance = models.BooleanField()
+    self_attendance = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.account.get_full_name()

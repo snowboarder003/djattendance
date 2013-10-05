@@ -112,6 +112,7 @@ TEMPLATE_DIRS = (
 AUTH_USER_MODEL = 'accounts.User'
 
 INSTALLED_APPS = (
+    # django contrib
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -120,6 +121,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    # third-party modules
+    'autofixture',
+    'django_reset',
+    # ap modules
     'accounts',
     'aputils',
     'books',

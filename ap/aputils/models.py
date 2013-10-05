@@ -93,7 +93,7 @@ class Vehicle(models.Model):
 
     license_plate = models.CharField(max_length=10)
 
-    # state = models.CharField(max_length=20)
+    state = models.CharField(max_length=20)
 
     trainee = models.OneToOneField('accounts.Trainee', blank=True, null=True)
 
