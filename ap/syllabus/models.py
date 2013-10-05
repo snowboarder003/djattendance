@@ -38,7 +38,8 @@ class Syllabus (models.Model):
     after = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return self.classSyllabus.name
+        # added Term to syllabus (already included Name)
+        return (self.classSyllabus.name + " | " + self.classSyllabus.term.name)
 
 
 class Session(models.Model):
@@ -54,6 +55,10 @@ class Session(models.Model):
 
     # assignment info (pages; chapters; msgs; lessons; verses; exam: "FINAL, MIDTERM, ETC")
         # can list multiple assigments, e.g. memory verses
+    """ TO DO: Django Admin does not properly display ARRAY assignment
+               Can currently only create one assignment;
+               Should be able to create multiple assignments.
+    """
     assignment = ArrayField(dbtype="varchar(255)")
 
     # exam (HIDDEN)
@@ -63,7 +68,6 @@ class Session(models.Model):
     syllabus = models.ForeignKey(Syllabus)
 
     def __unicode__(self):
-        """ Q: How to turn self.date into STRING """
-        return ("Class: " + self.syllabus.classSyllabus.name + "; Term: "
-                + self.syllabus.classSyllabus.term.code + "; Date: " + 
-                self.date.strftime('%Y/%m/%d') + "; Topic: " + self.topic)
+        return (self.syllabus.classSyllabus.name + " | "
+                + self.syllabus.classSyllabus.term.name + " | " + 
+                self.date.strftime('%Y/%m/%d') + " | " + self.topic)
