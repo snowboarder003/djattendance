@@ -1,14 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import Group
-from users.models import TrainingAssistant,Trainee
-
-#This is to define Service
-
-
-#define Service Category such as Cleaning, Guard etc
+	
+#Define Service Category such as Cleaning, Guard, etc.
 class Category(Group):
     """
-    Defines a service category such as Cleanup, Guard, Mopping, Chairs, etc.
+    Defines a service category such as Clean-up, Guard, Mopping, Chairs, etc.
     """
 
     description = models.TextField()
@@ -25,7 +21,7 @@ class Category(Group):
 #define Service such as Breakfast Cleaning, Dinner Prep, Guard A, etc
 class Service(Group):
     """" FTTA service class to define service such as
-    Breakfast Cleanup, Dinner Prep, Guard A, Wednesday Chairs, etc.
+    Breakfast Clean-up, Dinner Prep, Guard A, Wednesday Chairs, etc.
 
     This also includes designated services such as Accounting or Lights.
     """
@@ -45,9 +41,7 @@ class Service(Group):
     #This is different from permanent designation. For example, 
 	#two brothers might be designated as AV brothers,
     #but others brothers have the qualification to serve AV.
-	qualifiedTrainees = models.ManyToManyField(Trainee)
-
-    overseer = models.ManyToManyField(TrainingAssistant)
+	qualifiedTrainees = models.ManyToManyField('accounts.Trainee')
 
     def __unicode__(self):
         return self.name
