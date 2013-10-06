@@ -1,6 +1,8 @@
 from django.db import models
+
 from terms.models import Term
 from classes.models import Class
+from accounts.models import Trainee
 
 
 """ SCHEDULES models.py
