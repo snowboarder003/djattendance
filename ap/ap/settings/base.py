@@ -10,7 +10,7 @@ print(SITE_ROOT)
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
-    ('Jonathan Tien', 'jonathan.tien@gmail.com')
+    ('Attendance Project', 'attendanceproj@gmail.com')
 )
 
 MANAGERS = ADMINS
