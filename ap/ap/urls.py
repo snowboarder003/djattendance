@@ -9,10 +9,10 @@ admin.autodiscover()
 autofixture.autodiscover()
 
 urlpatterns = patterns('',
-
-    url(r'^accounts/login/$', login),
-    url(r'^accounts/logout/$', logout),
+	url(r'^accounts/login/$', login),
+	url(r'^accounts/logout/$', logout),
     url(r'^$', 'ap.views.home'),
+    url(r'^base_example/$', 'ap.views.base_example'),
 
     url(r'^terms/', include('terms.urls', namespace="terms")),
     url(r'^absentTraineeRoster/', include('absentTraineeRoster.urls', namespace="absentTraineeRoster")),
