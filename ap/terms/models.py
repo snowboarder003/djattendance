@@ -42,10 +42,7 @@ class Term(models.Model):
     @staticmethod
     def current_term():
         """ Return the current term """
-        # this is terribly inefficient. optimize later.
-        for term in Term.objects.all():
-            if term.start < datetime.date.today() < term.end:
-                return term
+        return Term.objects.all().filter(start__lte=datetime.date.today()).filter(end__gte=datetime.date.today())
 
     def getDate(self, week, day):
         """ return an absolute date for a term week/day pair """
