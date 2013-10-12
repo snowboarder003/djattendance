@@ -1,1 +1,10 @@
-Welcome, {{ user.get_full_name }}!
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}FTTA - Home{% endblock %}
+
+{% block content %}
+
+	Welcome, {{ user.get_full_name }}!
+
+{% endblock %}
