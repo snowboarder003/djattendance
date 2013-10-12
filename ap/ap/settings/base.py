@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     'teams',
     'terms',
     'django_reset',
+    'absentTraineeRoster',
 )
 
 # A sample logging configuration. The only tangible logging

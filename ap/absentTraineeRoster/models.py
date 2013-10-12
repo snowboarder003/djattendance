@@ -1,12 +1,12 @@
 from django.db import models
-from datetime import date
+# from datetime import date
 
-#import from djorm-ext-pgarray for Postgres array field for Django
-from djorm_pgarray.fields import ArrayField
-from djorm_expressions.models import ExpressionManager
+# #import from djorm-ext-pgarray for Postgres array field for Django
+# from djorm_pgarray.fields import ArrayField
+# from djorm_expressions.models import ExpressionManager
 
 #import from other apps
-from accounts.models import Trainee, Profile
+from accounts.models import Profile
 from houses.models import House
 
 """ absent_trainee_roster models.py
@@ -35,6 +35,11 @@ class Absentee(Profile):
 	term = property(trainee_term)
 
 
+class Roster(models.Model):
+	date = models.DateField(primary_key=True)
+	unreported_houses = models.ManyToManyField(House)
+
+
 class Entry(models.Model):
 	
 	ABSENT_REASONS = (
@@ -44,15 +49,10 @@ class Entry(models.Model):
         ('O', 'Other'),
         ('T', 'Out of Town'),
         ('NA', 'Sick - Not absent'),
-        ('F', 'Fatigue')
+        ('F', 'Fatigue'),
     )
-
-    roster = models.ForeignKey(Roster)
-    absentee = models.ForeignKey(Absentee)
+	
+	roster = models.ForeignKey(Roster)
+	absentee = models.ForeignKey(Absentee)
 	reason = models.CharField(max_length=2, choices=ABSENT_REASONS)
-	notes = models.CharField(max_length=250)
-
-
-class Roster(models.Model):
-	date = models.DateField(primary_key=True)
-	unreported_houses = models.ManyToManyField(House)
+	comments = models.CharField(max_length=250)

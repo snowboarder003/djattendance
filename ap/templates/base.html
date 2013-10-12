@@ -72,7 +72,7 @@
                 {% block attendance_links %}
                 <li class="active"><a href="#">View Attendance Report</a></li>
                 <li><a href="#">Submit Attendance</a></li>
-                <li><a href="#">Link 3</a></li>
+                <li><a href="{% url 'absentTraineeRoster:attendance_form' %}">Absent Trainee Roster</a></li>
                 {% endblock %}
               <hr style="border-top: 1px solid #dddddd;">
               <li>Classes</li>
