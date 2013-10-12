@@ -113,3 +113,6 @@ class EmergencyInfo(models.Model):
     phone2 = models.CharField(max_length=15)
 
     address = models.ForeignKey(Address)
+
+    def __unicode__(self):
+        return self.name + '(' + self.relation + ')'
