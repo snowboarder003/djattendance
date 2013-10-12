@@ -103,7 +103,7 @@ class Vehicle(models.Model):
 
 class EmergencyInfo(models.Model):
 
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=255)
 
     #contact's relation to the trainee.
     relation = models.CharField(max_length=30)
@@ -113,5 +113,3 @@ class EmergencyInfo(models.Model):
     phone2 = models.CharField(max_length=15)
 
     address = models.ForeignKey(Address)
-
-    trainee = models.ForeignKey('accounts.Trainee')
