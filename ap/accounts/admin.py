@@ -87,7 +87,6 @@ class TraineeAdmin(admin.ModelAdmin):
 
     inlines = [
         VehicleInline,
-        EmergencyInfoInline,    
     ]
 
 # Register the new Admin
