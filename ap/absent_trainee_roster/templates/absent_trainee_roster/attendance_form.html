@@ -5,11 +5,11 @@
 {% block content %}
 <h3>Absent Trainee Roster</h3>
 <div class="row">
-  <div class="col-xs-12 col-sm-3">
-    Date: {% now "l, F d, Y" %}
+  <div class="col-xs-12 col-sm-6">
+    <b>Date:</b> {% now "l, F d, Y" %}
   </div>
-  <div class="col-xs-12 col-sm-3">
-    House: {{ user.house }}
+  <div class="col-xs-12 col-sm-6">
+    <b>House:</b> {{ user.trainee.house }}
   </div>
 </div>
 <form action="" method="post">
