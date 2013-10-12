@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import Group
 	
+
 #Define Service Category such as Cleaning, Guard, etc.
 class Category(Group):
     """
@@ -21,7 +22,7 @@ class Service(Group):
     This also includes designated services such as Accounting or Lights.
     """
 
-    category = models.ForeignKey(Category,related_name="services")
+    category = models.ForeignKey(Category, related_name="services")
     isActive = models.BooleanField()
 
     #Every service has different workload to describe its 
@@ -50,7 +51,7 @@ class Period(models.Model):
     description = models.TextField()
 
     #Service which is in this Period
-    service = models.ManyToManyField(Service,,related_name="periods")
+    service = models.ManyToManyField(Service, related_name="periods")
 
     startDate = models.DateField('start date')
     endDate = models.DateField('end date')
