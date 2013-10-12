@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     url(r'^base_example/$', 'ap.views.base_example'),
 
     url(r'^terms/', include('terms.urls', namespace="terms")),
-    url(r'^absentTraineeRoster/', include('absentTraineeRoster.urls', namespace="absentTraineeRoster")),
+    url(r'^absent_trainee_roster/', include('absent_trainee_roster.urls', namespace="absent_trainee_roster")),
     # Examples:
     # url(r'^$', 'ap.views.home', name='home'),
     # url(r'^ap/', include('ap.foo.urls')),

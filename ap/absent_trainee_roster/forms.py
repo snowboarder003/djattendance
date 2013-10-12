@@ -1,5 +1,5 @@
 from django import forms
-from absentTraineeRoster.models import Roster, Entry
+from absent_trainee_roster.models import Roster, Entry
 
 class AbsentTraineeForm(forms.ModelForm):
 	class Meta:
