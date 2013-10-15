@@ -81,7 +81,8 @@ class APUserAdmin(UserAdmin):
 class TraineeAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': (('account', 'active',), 'type', 'term', ('date_begin', 'date_end',), ('married', 'spouse',), ('TA', 'mentor',), 'team', ('house', 'bunk',), 'address', 'self_attendance',)
+            # add 'bunk' back in once db behaves
+            'fields': (('account', 'active',), 'type', 'term', ('date_begin', 'date_end',), ('married', 'spouse',), ('TA', 'mentor',), 'team', 'house', 'address', 'self_attendance',)
         }),
     )
 
