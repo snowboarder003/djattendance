@@ -9,8 +9,9 @@ It also allow users to submit portions.
 """
 
 
-class portion(models.Model):
+class Portion(models.Model):
 
+    title = models.CharField(max_length=255)
     text = models.TextField()
     ref = models.CharField(max_length=255)
     submitted_by = models.ForeignKey(User)
