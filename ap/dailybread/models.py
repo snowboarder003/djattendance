@@ -17,3 +17,6 @@ class Portion(models.Model):
     submitted_by = models.ForeignKey(User)
     timestamp = models.TimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
+
+    def get_absolute_url(self):
+        return "/dailybread/%i/" % self.id
