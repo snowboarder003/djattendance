@@ -123,8 +123,9 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     # third-party modules
     'autofixture',
+    'braces',
     'django_reset',
-    # ap modules
+    # ap CORE
     'accounts',
     'aputils',
     'books',
@@ -135,7 +136,8 @@ INSTALLED_APPS = (
     'services',
     'teams',
     'terms',
-    'django_reset',
+    # ap modules
+    'dailybread',  # daily nourishment
 )
 
 # A sample logging configuration. The only tangible logging
