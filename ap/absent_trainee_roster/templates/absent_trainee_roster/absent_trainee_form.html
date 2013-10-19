@@ -12,12 +12,15 @@
     <b>House:</b> {{ user.trainee.house }}
   </div>
 </div>
-<form action="" method="post">
-  {% csrf_token %}
-  {{ formset.management_form }}
-  {% for form in formset %}
-  	<p>{{ form }}</p>
-  {% endfor %}
-  <input type="submit" value="Submit" />
+<form action="" method="post">{% csrf_token %}
+	{{ formset.management_form }}
+	{% for form in formset %}
+	<div class ="item">
+		{{form.as_p}}
+		<p style =""><a class="delete" href="#">Delete</a></p>
+	</div>
+	{% endfor %}
+	<p><a id ="add" href"#">Add another item</a></p>
+	<input type="submit" value="Submit" />
 </form>
 {% endblock %}
