@@ -1729,5 +1729,239 @@
         "zip4": null,
         "zip_code": 92804
     }
-}
+},
+
+
+   {
+      "pk":34,
+      "model":"aputils.address",
+      "fields":{
+         "city":2,
+         "address1":"12345 Random St.",
+         "address2":"",
+         "details":"Fictional address",
+         "zip4":null,
+         "zip_code":92804
+      }
+   },
+   {
+      "pk":35,
+      "model":"aputils.address",
+      "fields":{
+         "city":2,
+         "address1":"134 Fake Ave.",
+         "address2":"",
+         "details":"Fictional address",
+         "zip4":null,
+         "zip_code":92804
+      }
+   },
+   {
+      "pk":36,
+      "model":"aputils.address",
+      "fields":{
+         "city":1,
+         "address1":"872 Mymomshouse Dr.",
+         "address2":"",
+         "details":"Fictional address",
+         "zip4":null,
+         "zip_code":90041
+      }
+   },
+   {
+      "pk":37,
+      "model":"aputils.address",
+      "fields":{
+         "city":1,
+         "address1":"4738 Fictional Blvd.",
+         "address2":"",
+         "details":"Fictional address",
+         "zip4":null,
+         "zip_code":90029
+      }
+   },
+   {
+      "pk":38,
+      "model":"aputils.address",
+      "fields":{
+         "city":5,
+         "address1":"7843 Whereilive St.",
+         "address2":"",
+         "details":"Fictional address",
+         "zip4":null,
+         "zip_code":94720
+      }
+   },
+   {
+      "pk":39,
+      "model":"aputils.address",
+      "fields":{
+         "city":5,
+         "address1":"788 Parentshouse Ave.",
+         "address2":"",
+         "details":"Fictional address",
+         "zip4":null,
+         "zip_code":94720
+      }
+   },
+   {
+      "pk":40,
+      "model":"aputils.address",
+      "fields":{
+         "city":126,
+         "address1":"1900 Fried Chicken St.",
+         "address2":"",
+         "details":"Fictional address",
+         "zip4":null,
+         "zip_code":40213
+      }
+   },
+   {
+      "pk":41,
+      "model":"aputils.address",
+      "fields":{
+         "city":2,
+         "address1":"2 Testimony St.",
+         "address2":"",
+         "details":"Fictional address",
+         "zip4":null,
+         "zip_code":92804
+      }
+   },
+   {
+      "pk":42,
+      "model":"aputils.address",
+      "fields":{
+         "city":2,
+         "address1":"4 Brothers Rd.",
+         "address2":"",
+         "details":"Fictional address",
+         "zip4":null,
+         "zip_code":92804
+      }
+   },
+   {
+      "pk":43,
+      "model":"aputils.address",
+      "fields":{
+         "city":2,
+         "address1":"10 Commandments Way",
+         "address2":"",
+         "details":"Fictional address",
+         "zip4":null,
+         "zip_code":92804
+      }
+   },
+
+   
+   {
+      "pk":1,
+      "model":"aputils.emergencyinfo",
+      "fields":{
+         "phone2":"7145550100",
+         "phone":"7145550100",
+         "relation":"father",
+         "name":"John Doe",
+         "address":34
+      }
+   },
+   {
+      "pk":2,
+      "model":"aputils.emergencyinfo",
+      "fields":{
+         "phone2":"7145550100",
+         "phone":"7145550100",
+         "relation":"mother",
+         "name":"Jane Doe",
+         "address":34
+      }
+   },
+   {
+      "pk":3,
+      "model":"aputils.emergencyinfo",
+      "fields":{
+         "phone2":"7145550100",
+         "phone":"7145550100",
+         "relation":"uncle",
+         "name":"Uncle Bob",
+         "address":38
+      }
+   },
+   {
+      "pk":4,
+      "model":"aputils.emergencyinfo",
+      "fields":{
+         "phone2":"7145550100",
+         "phone":"7145550100",
+         "relation":"father",
+         "name":"Rich Dad",
+         "address":39
+      }
+   },
+   {
+      "pk":5,
+      "model":"aputils.emergencyinfo",
+      "fields":{
+         "phone2":"7145550100",
+         "phone":"7145550100",
+         "relation":"mother",
+         "name":"Momma Jones",
+         "address":36
+      }
+   },
+   {
+      "pk":6,
+      "model":"aputils.emergencyinfo",
+      "fields":{
+         "phone2":"7145550100",
+         "phone":"7145550100",
+         "relation":"sister",
+         "name":"Mary Martha",
+         "address":35
+      }
+   },
+   {
+      "pk":7,
+      "model":"aputils.emergencyinfo",
+      "fields":{
+         "phone2":"7145550100",
+         "phone":"7145550100",
+         "relation":"grandfather",
+         "name":"Colonel Sanders",
+         "address":40
+      }
+   },
+   {
+      "pk":8,
+      "model":"aputils.emergencyinfo",
+      "fields":{
+         "phone2":"7145550100",
+         "phone":"7145550100",
+         "relation":"grandmother",
+         "name":"Anna Simeon",
+         "address":41
+      }
+   },
+   {
+      "pk":9,
+      "model":"aputils.emergencyinfo",
+      "fields":{
+         "phone2":"7145550100",
+         "phone":"7145550100",
+         "relation":"brother",
+         "name":"Brother Hermano",
+         "address":42
+      }
+   },
+   {
+      "pk":10,
+      "model":"aputils.emergencyinfo",
+      "fields":{
+         "phone2":"7145550100",
+         "phone":"7145550100",
+         "relation":"great great great grandfather",
+         "name":"Moses Aaron",
+         "address":43
+      }
+   }
 ]

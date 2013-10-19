@@ -10,7 +10,7 @@ print(SITE_ROOT)
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
-    ('Jonathan Tien', 'jonathan.tien@gmail.com')
+    ('Attendance Project', 'attendanceproj@gmail.com')
 )
 
 MANAGERS = ADMINS
@@ -109,7 +109,10 @@ TEMPLATE_DIRS = (
     os.path.join(SITE_ROOT, 'templates'),
 )
 
+AUTH_USER_MODEL = 'accounts.User'
+
 INSTALLED_APPS = (
+    # django contrib
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -118,7 +121,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
- #   'accounts',
+    # third-party modules
+    'autofixture',
+    'django_reset',
+    # ap modules
+    'accounts',
     'aputils',
     'books',
     'classes',

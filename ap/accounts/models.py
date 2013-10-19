@@ -1,6 +1,10 @@
-from django.db import models
-from django.contrib.auth.models import AbstractUser
 from datetime import date
+
+from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.core.mail import send_mail
+from django.utils.http import urlquote
+
 from aputils.models import Vehicle, Address, EmergencyInfo
 from terms.models import Term
 from teams.models import Team
@@ -8,67 +12,150 @@ from houses.models import House, Bunk
 from services.models import Service
 
 """ accounts models.py
-The user accounts module takes care of user accounts for the attendance+ and
+The user accounts module takes care of user accounts and
 utilizes/extends Django's auth system to handle user authentication.
 
-There are several different kinds of users
-    - Trainee: a regular (full-time) trainee at the FTTA
-    - TrainingAssistant: a TA
-    - ShortTermTrainee: a short-termer (that stays for longer than 2 weeks).
-                        this is used to assign services to short-termers
-    - HospitalityGuest: this is for those who take LSM hospitality during the
-                        semiannual training. they will be assigned services
+USER ACCOUNTS
+    Because we want to use the user's email address as the unique
+    identifier, we have chosen to implement a custom User model, 
 
-Each of these users is extended from UserAccount, which itself is extended from
-django's AbstractUser.
+    ...
+
+PROFILES
+    User accounts are extended by Profiles, which contain additional information,
+    generally representing roles that various users fill. The two most common
+    ones, Trainee and TA, are implemented here. Other examples include:
+        - every Trainee is also a service worker, so those user accounts also
+        have a ServiceWorker profile that contains information needed for the
+        ServiceScheduler algorithm
+        - before coming to the FTTA, a trainee may have come to short-term. 
+        These trainees will have a Short-Term profile at that time, and later
+        also have a Trainee  profile when they come for the full-time.
+
+    The usage of profiles allows user to have multiple roles at once, and also
+    allows a clean transition between roles (e.g. a Short-termer who becomes a
+    Trainee and then later a TA can keep the same account throughout).
 """
 
 
-class UserAccount(AbstractUser):
+class APUserManager(BaseUserManager):
+
+    def create_user(self, email, password=None):
+        """ Creates a user, given an email and a password (optional) """
+
+        if not email:
+            raise ValueError("Users must have an email address")
+
+        user = self.model(email=APUserManager.normalize_email(email))
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password):
+        """ Creates a super user, given an email and password (required) """
+
+        user = self.create_user(email, password=password)
+
+        user.is_admin = True
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self.db)
+
+        return user
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    """ A basic user account, containing all common user information.
+    This is a custom-defined User, but inherits from Django's classes to integrate with 
+    Django's other provided User tools/functionality
+    AbstractBaseUser provides Django's basic authentication backend.
+    PermissionsMixin provides compatability with Django's built-in permissions system.
+    """
+
+    email = models.EmailField(verbose_name=u'email address', max_length=255, unique=True, db_index=True)
+
+    def _make_username(self):
+        return self.email.split('@')[0]
+
+    username = property(_make_username)
+
+    firstname = models.CharField(verbose_name=u'first name', max_length=30)
+    lastname = models.CharField(verbose_name=u'last name', max_length=30)
+    middlename = models.CharField(verbose_name=u'middle name', max_length=30, blank=True)
+    nickname = models.CharField(max_length=30, blank=True)
+    maidenname = models.CharField(verbose_name=u'maiden name', max_length=30, blank=True)
 
     GENDER = (
         ('B', 'Brother'),
         ('S', 'Sister')
     )
 
-    #optional middle name. First and last are in the abstract
-    middleName = models.CharField(max_length=30, blank=True)
-
-    nickname = models.CharField(max_length=30, blank=True)
-
-    maidenName = models.CharField(max_length=30, blank=True)
-
-    birthdate = models.DateField()
-
     gender = models.CharField(max_length=1, choices=GENDER)
+    date_of_birth = models.DateField(null=True)
 
-    # refers to the user's home address, not their training residence
-    address = models.ForeignKey(Address)
-
-    #return the age based on birthday
     def _get_age(self):
-        today = date.today()
-        birth = date.fromtimestamp(self.birthdate)
-        try:
-            birthday = birth.replace(year=today.year)
-        except ValueError:  # raised when birth date is February 29 and the current year is not a leap year
-            birthday = birth.replace(year=today.year, day=birth.day-1)
-        if birthday > today:
-            return today.year - birth - 1
-        else:
-            return today.year - birth
+        age = date.today() - self.date_of_birth
+        return age.days/365
 
     age = property(_get_age)
 
-    maritalStatus = models.BooleanField()
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+
+    objects = APUserManager()
+
+    def get_absolute_url(self):
+        return "/users/%s/" % urlquote(self.username)
+
+    def get_full_name(self):
+        fullname = '%s %s' % (self.firstname, self.lastname)
+        return fullname.strip()
+
+    def get_short_name(self):
+        return self.firstname
+
+    def email_user(self, subject, message, from_email=None):
+        send_mail(subject, message, from_email, [self.email])
+
+    def __unicode__(self):
+        return self.email
 
 
-class TrainingAssistant(UserAccount):
+class Profile(models.Model):
+    """ A profile for a user account, containing user data. A profile can be thought
+    of as a 'role' that a user has, such as a TA, a trainee, or a service worker.
+    Profile files should be pertinent directly to that profile role. All generic
+    data should either be in this abstract class or in the User model.
+    """
 
-    user = models.ForeignKey(UserAccount)
+    # each user should only have one of each profile
+    account = models.OneToOneField(User)
+
+    # whether this profile is still active
+    # ex: if a trainee becomes a TA, they no longer need a service worker profile
+    active = models.BooleanField(default=True)
+
+    date_created = models.DateField(auto_now_add=True)
+
+    class Meta:
+        abstract = True
 
 
-class Trainee(UserAccount):
+class TrainingAssistant(Profile):
+
+    services = models.ManyToManyField(Service, blank=True, null=True)
+    houses = models.ManyToManyField(House, blank=True, null=True)
+
+    def __unicode__(self):
+        return self.account.get_full_name()
+
+
+class Trainee(Profile):
 
     TRAINEE_TYPES = (
         ('R', 'Regular (full-time)'),  # a regular full-time trainee
@@ -76,57 +163,28 @@ class Trainee(UserAccount):
         ('C', 'Commuter')
     )
 
-    user = models.ForeignKey(UserAccount)
-
-    # many-to-many because a trainee can go through multiple terms
-    term = models.ManyToManyField(Term)
-
     type = models.CharField(max_length=1, choices=TRAINEE_TYPES)
 
-    spouse = models.OneToOneField('self', null=True)
+    term = models.ManyToManyField(Term, null=True)
+    date_begin = models.DateField()
+    date_end = models.DateField(null=True, blank=True)
 
-    emergencyInfo = models.OneToOneField(EmergencyInfo)
+    TA = models.ForeignKey(TrainingAssistant, null=True, blank=True)
+    mentor = models.ForeignKey('self', related_name='mentee', null=True, blank=True)
 
-    TA = models.ForeignKey(TrainingAssistant)
+    team = models.ForeignKey(Team, null=True, blank=True)
+    house = models.ForeignKey(House, null=True, blank=True)
+    bunk = models.ForeignKey(Bunk, null=True, blank=True)
 
-    dateBegin = models.DateField()
-
-    dateEnd = models.DateField()
-
-    mentor = models.ForeignKey('self')
-
-    team = models.ForeignKey(Team)
-
-    services = models.ManyToManyField(Service)
-
-    house = models.ForeignKey(House)
-
-    bunkNumber = models.ForeignKey(Bunk)
-
-    vehicle = models.ForeignKey(Vehicle)
-
-    # boolean for if the trainee is active in the training or not.
-    active = models.BooleanField()
+    # personal information
+    married = models.BooleanField(default=False)
+    spouse = models.OneToOneField('self', null=True, blank=True)
+    # refers to the user's home address, not their training residence
+    address = models.ForeignKey(Address, null=True, blank=True, verbose_name='home address')
 
     # flag for trainees taking their own attendance
     # this will be false for 1st years and true for 2nd with some exceptions.
-    selfAttendance = models.BooleanField()
+    self_attendance = models.BooleanField(default=False)
 
-
-class ShortTermTrainee(UserAccount):
-
-    user = models.ForeignKey(UserAccount)
-
-    # date that they begin to be assigned to service
-    serviceDate = models.DateField()
-
-    # date that they leave the training. No service should be assigned after this point
-    departureDate = models.DateField()
-
-
-class HospitalityGuest(UserAccount):
-
-    user = models.ForeignKey(UserAccount)
-
-    # date that they leave the training. No service should be assigned after this point
-    departureDate = models.DateField()
+    def __unicode__(self):
+        return self.account.get_full_name()

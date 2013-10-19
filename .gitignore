@@ -1,9 +1,6 @@
 *.pyc
-<<<<<<< HEAD
-base.py
-=======
+.DS_Store
 key.pub
 ap/.project
 ap/.pydevproject
-.gitignore
->>>>>>> d6592552ab4533aef0c77a999e22a543e7118044
+

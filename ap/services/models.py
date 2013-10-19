@@ -21,6 +21,9 @@ class Category(Group):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "categories"
+
 
 #define Service such as Breakfast Cleaning, Dinner Prep, Guard A, etc
 class Service(Group):
