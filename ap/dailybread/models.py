@@ -20,3 +20,6 @@ class Portion(models.Model):
 
     def get_absolute_url(self):
         return "/dailybread/%i/" % self.id
+
+    def __unicode__(self):
+        return self.title
