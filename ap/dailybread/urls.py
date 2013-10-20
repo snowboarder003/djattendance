@@ -6,7 +6,7 @@ urlpatterns = patterns('',
     url(r'submit/$', 
         views.CreatePortion.as_view(), 
         name='submit'),
-    url(r'view/(?P<pk>\d+)/$', 
+    url(r'(?P<pk>\d+)/$', 
         views.DetailPortion.as_view(), 
         name='detail')
 )
