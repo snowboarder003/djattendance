@@ -1,11 +1,22 @@
 from django.db import models
 from django.contrib.auth.models import Group
-#from users.models import UserAccount
 
-#This is to define Service
+""" SERVICES models.py 
+This data model defines services in the training. We organize services in the following way:
+    Category: this is a broad category that contains specific services. For example,
+    Cleanup is a category that contains services such as Tuesday Breakfast Cleanup or
+    Saturday Lunch Cleanup. Guard contains Guards A, B, C, and D. 
 
+    Service: this refers to a specific service that repeats on a weekly basis.
+    I.e. Tuesday Breakfast Prep is a service. It repeats every week. A specific instance
+    of that service is defined in the service scheduler module as a service Instance.
 
-#define Service Category such as Cleaning, Guard etc
+    Period: this is a period in which services are active and generally changes with
+    the schedule of the training. Most of the time, the regular FTTA schedule will be in
+    effect, but there are exceptions such as Service Week and the semiannual training.
+
+"""
+
 class Category(models.Model):
     """
     Defines a service category such as Cleanup, Guard, Mopping, Chairs, etc.
@@ -25,10 +36,9 @@ class Category(models.Model):
         verbose_name_plural = "categories"
 
 
-#define Service such as Breakfast Cleaning, Dinner Prep, Guard A, etc
 class Service(Group):
     """" FTTA service class to define service such as
-    Breakfast Cleanup, Dinner Prep, Guard A, Wednesday Chairs, etc.
+    Tues. Breakfast Cleanup, Dinner Prep, Guard A, Wednesday Chairs, etc.
 
     This also includes designated services such as Accounting or Lights.
     """
@@ -45,7 +55,6 @@ class Service(Group):
         return self.name
 
 
-#define Service Period such as Pre-Training, FTTA regular week, etc
 class Period(models.Model):
     """define Service Period such as Pre-Training, FTTA regular week, etc"""
 
