@@ -6,12 +6,12 @@ from django.contrib.auth.models import Group
 
 
 #define Service Category such as Cleaning, Guard etc
-class Category(Group):
+class Category(models.Model):
     """
     Defines a service category such as Cleanup, Guard, Mopping, Chairs, etc.
     """
-
-    description = models.TextField()
+    name = models.CharField(max_length=75)
+    description = models.TextField(blank=True, null=True)
 
     #return services of this Category
     def getServices(self):
