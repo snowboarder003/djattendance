@@ -33,6 +33,7 @@ class Service(Group):
     This also includes designated services such as Accounting or Lights.
     """
 
+    description = models.CharField(max_length=255, blank=True, null=True)
     category = models.ForeignKey(Category)
     isActive = models.BooleanField()
 
