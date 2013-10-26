@@ -1,5 +1,5 @@
 from django.db import models
-# from datetime import date
+from datetime import date
 
 # #import from djorm-ext-pgarray for Postgres array field for Django
 # from djorm_pgarray.fields import ArrayField
@@ -35,9 +35,17 @@ class Absentee(Profile):
 	term = property(trainee_term)
 
 
+class RosterManager(models.Manager):
+	def create_roster(self, date):
+		roster = self.create(date=date)
+		
+		return roster
+
 class Roster(models.Model):
 	date = models.DateField(primary_key=True)
 	unreported_houses = models.ManyToManyField(House)
+	
+	objects = RosterManager()
 
 
 class Entry(models.Model):
