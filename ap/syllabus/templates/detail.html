@@ -1,0 +1,6 @@
+Hey world, this is detail.html for syllabus instead.
+
+<a href="{% url 'syllabus:about' %}">Back to syllabus list.</a>
+
+<h1>{{ classSyllabus.name }}</h1>
+<p><a href="{% url 'terms:delete_term' term.code %}">Delete term.</a></p>
