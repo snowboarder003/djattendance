@@ -17,7 +17,7 @@ This data model defines services in the training. We organize services in the fo
 
 """
 
-class Category(models.Model):
+class Category(Group):
     """
     Defines a service category such as Cleanup, Guard, Mopping, Chairs, etc.
     """
