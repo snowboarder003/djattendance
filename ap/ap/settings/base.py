@@ -8,6 +8,9 @@ DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
 SITE_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 print(SITE_ROOT)
 
+import djcelery
+djcelery.setup_loader()
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
     ('Attendance Project', 'attendanceproj@gmail.com')
@@ -139,6 +142,7 @@ INSTALLED_APPS = (
     'terms',
     'django_reset',
     'absent_trainee_roster',
+    'djcelery',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
@@ -171,3 +175,5 @@ LOGGING = {
         },
     }
 }
+
+BROKER_URL = 'amqp://guest:guest@localhost:5672/'
