@@ -55,7 +55,7 @@ class Event(models.Model):
     group = models.ForeignKey(EventGroup)
 
     # if this event is a class, relate it
-    clas = models.ForeignKey(Class)  # class is a reserved keyword :(
+    classs = models.ForeignKey(Class)  # class is a reserved keyword :(
 
     # the type of event
     type = models.CharField(max_length=1, choice=EVENT_TYPES)
@@ -103,7 +103,7 @@ class EventGroup(models.Model):
 class Schedule(models.Model):
 
     # which trainee this schedule belongs to
-    'trainee = models.ForeignKey()  # TODO: write and import user model
+    trainee = models.ForeignKey(Trainee)
 
     # which term this schedule applies to
     term = models.ForeignKey(Term)
@@ -111,31 +111,21 @@ class Schedule(models.Model):
     # which events are on this schedule
     events = models.ManyToManyField(Event)
 
-    def clear(startDate, endDate, self):
-        # delete events within this interval on this schedule
-        Event.objects.filter(schedule=self.id).filter(startDate__gte=startDate).filter(endDate__lte=endDate).delete()
-
-    def clear(startWeek, startDay, endWeek, endDay, self):
-        self.clear(self.term.getDate(startWeek, startDay), self.term.getDate(endWeek, endDay))
-
-    def clear(self):
-        self.clear(0, 0, 19, 6)
-
 
 class ScheduleTemplate(models.Model):
 
     name = models.CharField(max_length=20)
 
-    eventgroup = models.ManyToManyField(EventGroup)
-
-    # applies a schedule template to a schedule
+    eventgroup = models.ManyToManyField(EventGroup)  # TODO: consider refactor using postgres arrays
+    
     def apply(schedule, self):
-        # iterate over event groups in this template
+        """ applies a schedule template to a schedule """
         for eventgrp in EventGroup.objects.filter(scheduletemplate=self.id):
             # iterate over each event inside each event group
             for event in Event.objects.filter(eventgroup=eventgrp.id):
                 schedule.events.add(event)
 
-    def apply(schedules, self):
+    def apply_multiple(schedules, self):
+        """ applies a schedule template to a group of schedules """
         for schedule in schedules:
             self.apply(schedule)
