@@ -138,6 +138,8 @@ INSTALLED_APPS = (
     'teams',
     'terms',
     # ap modules
+    'schedules'
+    'ss', # service scheduler
     'dailybread',  # daily nourishment
 )
 
