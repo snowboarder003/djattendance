@@ -17,11 +17,11 @@ This data model defines services in the training. We organize services in the fo
 
 """
 
-class Category(models.Model):
+class Category(Group):
     """
     Defines a service category such as Cleanup, Guard, Mopping, Chairs, etc.
     """
-    name = models.CharField(max_length=75)
+    # name = models.CharField(max_length=75)
     description = models.TextField(blank=True, null=True)
 
     #return services of this Category
