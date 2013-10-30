@@ -1,3 +1,6 @@
+import random
+from datetime import date
+
 from django.db import models
 
 from accounts.models import User
@@ -20,6 +23,12 @@ class Portion(models.Model):
 
     def get_absolute_url(self):
         return "/dailybread/%i/" % self.id
+
+    @staticmethod
+    def today():
+        """ returns random daily portion for each day """
+        random.seed(date.today())
+        return random.choice(list(Portion.objects.filter(approved=True)))
 
     def __unicode__(self):
         return self.title
