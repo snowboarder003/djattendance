@@ -52,7 +52,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             {% block navbar-right %}
-              <li><a href="#account">User Name</a></li>
+              <li><a href="#account">{{ user.email }}</a></li>
               <li><a href="#">Logout</a></li>
             {% endblock %}
           </ul>
