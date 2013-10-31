@@ -150,6 +150,8 @@ class Profile(models.Model):
 
 class TrainingAssistant(Profile):
 
+    badge = models.ImageField(upload_to='badges/office/')
+
     services = models.ManyToManyField(Service, blank=True, null=True)
     houses = models.ManyToManyField(House, blank=True, null=True)
 
@@ -170,6 +172,8 @@ class Trainee(Profile):
     term = models.ManyToManyField(Term, null=True)
     date_begin = models.DateField()
     date_end = models.DateField(null=True, blank=True)
+
+    badge = models.ImageField(upload_to='badges/trainees/'+Term.current_term()[0].code)
 
     TA = models.ForeignKey(TrainingAssistant, null=True, blank=True)
     mentor = models.ForeignKey('self', related_name='mentee', null=True, blank=True)
