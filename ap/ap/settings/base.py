@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     # third-party modules
     'autofixture',
     'django_reset',
+    'django_select2',
     # 'debug_toolbar',
     # ap modules
     'accounts',

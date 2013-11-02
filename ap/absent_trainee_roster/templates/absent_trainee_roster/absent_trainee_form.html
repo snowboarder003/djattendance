@@ -1,6 +1,25 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block title %}Absent Trainee Roster{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/select2.js' %}"></script>
+    <script src="{% static 'js/dynamic_formset.js' %}"></script>
+    <script>
+        $(document).ready(function() { $(".select2").select2({width:'element',}); });
+    </script>
+{% endblock %}
+
+{% block references %}
+    <link href="{% static 'css/select2.css' %}" rel="stylesheet">
+    <link href="{% static 'css/select2-bootstrap.css' %}" rel="stylesheet">
+    <style type='text/css'>
+      .comments {
+        width: 100%;
+      }
+    </style>
+{% endblock %}
 
 {% block content %}
 <h3>Absent Trainee Roster</h3>
@@ -12,15 +31,30 @@
     <b>House:</b> {{ user.trainee.house }}
   </div>
 </div>
-<form action="" method="post">{% csrf_token %}
-	{{ formset.management_form }}
-	{% for form in formset %}
-	<div class ="item">
-		{{form.as_p}}
-		<p style =""><a class="delete" href="#">Delete</a></p>
-	</div>
-	{% endfor %}
-	<p><a id ="add" href"#">Add another item</a></p>
-	<input type="submit" value="Submit" />
+<div class="row">
+  {% for i in "xxxxxxxxxxxx" %}
+    <div class="col-xs-1">
+      |
+    </div>
+  {% endfor %}
+</div>
+<form action="" method="post">
+  {% csrf_token %}
+  {{ formset.management_form }}
+  {% for form in formset %}
+  	<div class="row entry">
+      {{ form.id }}
+      <div class="col-xs-6 col-sm-4 col-md-4">{{ form.absentee.label_tag }} <br>{{ form.absentee }}</div>
+      <div class="col-xs-6 col-sm-3 col-md-3">{{ form.reason.label_tag }} <br>{{ form.reason }}</div>
+      <div class="col-xs-12 col-sm-4 col-md-4" style="padding-right: 0px;">{{ form.comments.label_tag }} <br> {{ form.comments }}</div>
+      <div class="col-xs-1"><br><a class="delete" href="#"><span class="glyphicon glyphicon-remove" style="margin-top:5px; padding: 5px 0px;"></span></a></div>
+    </div>
+  {% endfor %}
+  <div class="row">
+    <a id="add" href="#">Add another trainee</a></p>
+  </div>
+  <div class="row">
+    <input type="submit" value="Submit" />
+  </div>
 </form>
 {% endblock %}
