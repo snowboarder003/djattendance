@@ -52,16 +52,16 @@ class Event(models.Model):
     description = models.CharField(max_length=250, blank=True)
 
     # a groupID. used to group repeating events
-    group = models.ForeignKey(EventGroup)
+    group = models.ForeignKey('EventGroup')
 
     # if this event is a class, relate it
     classs = models.ForeignKey(Class)  # class is a reserved keyword :(
 
     # the type of event
-    type = models.CharField(max_length=1, choice=EVENT_TYPES)
+    type = models.CharField(max_length=1, choices=EVENT_TYPES)
 
     # who takes roll for this event
-    monitor = models.CharField(max_length=2, choice=MONITOR_TYPES)
+    monitor = models.CharField(max_length=2, choices=MONITOR_TYPES)
 
     # which term this event is active in
     term = models.ForeignKey(Term)
