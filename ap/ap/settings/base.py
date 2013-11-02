@@ -123,9 +123,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     # third-party modules
-    'autofixture',
-    'braces',
-    'django_reset',
+    #'autofixture',
+    #'braces',
+    #'django_reset',
     # ap CORE
     'accounts',
     'aputils',
