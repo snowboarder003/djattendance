@@ -43,10 +43,13 @@ class RosterManager(models.Manager):
 
 class Roster(models.Model):
 	date = models.DateField(primary_key=True)
-	unreported_houses = models.ManyToManyField(House)
 	
 	objects = RosterManager()
+	unreported_houses = models.ManyToManyField(House, blank=True, null=True)
 
+	def __unicode__(self):
+		return self.date.__str__()
+		
 
 class Entry(models.Model):
 	

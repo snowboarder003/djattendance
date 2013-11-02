@@ -8,7 +8,6 @@ from django.template import RequestContext # For CSRF
 from django.forms.formsets import formset_factory, BaseFormSet
 from absent_trainee_roster.forms import AbsentTraineeForm, NewEntryFormSet
 
-
 def absent_trainee_form(request):
 	EntryFormSet = modelformset_factory(Entry, AbsentTraineeForm, formset=NewEntryFormSet, max_num=10, extra=2)
 	if request.method == 'POST':
