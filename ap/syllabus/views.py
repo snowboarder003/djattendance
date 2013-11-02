@@ -3,7 +3,7 @@ from .models import Syllabus
 
 class AboutView(ListView):
 
-	template_name = "about.html"
+	template_name = "syllabus/about.html"
 	context_object_name = 'syllabus_list'
 	#allow_empty = True
 	model = Syllabus
@@ -13,12 +13,15 @@ class AboutView(ListView):
 
 class SyllabusDetailView(DetailView):
 	model = Syllabus
-	template_name = "detail.html"	
+	template_name = "syllabus/detail.html"	
+	context_object_name = "syllabus_detail"
 
-	""" TO DO: Get access to get_absolute_url from syllabus module """
-	slug_field = 'get_absolute_url'
-	slug_url_kwarg = 'get_absolute_url'
+	""" (2?) TO DO: Get access to get_absolute_url from syllabus module """
+	#slug_field = 'get_absolute_url'
+	#slug_url_kwarg = 'get_absolute_url'
 
 class HomeView(TemplateView):
 
-	template_name = "home.html"
+	template_name = "syllabus/home.html"
+	context_object_name = 'home'
+	model = Syllabus
