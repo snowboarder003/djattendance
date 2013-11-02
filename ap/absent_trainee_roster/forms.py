@@ -10,7 +10,7 @@ class RosterForm(forms.ModelForm):
 
 
 class AbsentTraineeForm(forms.ModelForm):
-	comments = forms.CharField(max_length=40, widget=forms.TextInput(attrs={'class':'comments'}))
+	comments = forms.CharField(max_length=40, required=False, widget=forms.TextInput(attrs={'class':'comments'}))
 
 	class Meta:
 		model = Entry
@@ -23,8 +23,6 @@ class AbsentTraineeForm(forms.ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		self.user = kwargs.pop('user', None)
-		print('ASDFASDFASDFASDFASDFASF USER')
-		print(self.user)
 		super(AbsentTraineeForm, self).__init__(*args, **kwargs)
 		self.fields['absentee'].queryset = Absentee.objects.filter(account__trainee__house=self.user.trainee.house)
 		self.fields['absentee'].label = 'Name'
