@@ -40,7 +40,7 @@ class Roster(models.Model):
 	unreported_houses = models.ManyToManyField(House, blank=True, null=True)
 
 	def __unicode__(self):
-		return self.date.__str__()
+		return self.date.strftime("%m/%d/%Y")
 
 
 class Entry(models.Model):
