@@ -123,7 +123,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     # third-party modules
-    'autocomplete_light',
     'autofixture',
     'django_reset',
     'django_select2',

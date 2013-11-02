@@ -4,9 +4,7 @@ from django.contrib.auth.views import login, logout
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 import autofixture
-import autocomplete_light
 
-autocomplete_light.autodiscover()
 admin.autodiscover()
 autofixture.autodiscover()
 

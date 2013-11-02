@@ -91,8 +91,6 @@ class TraineeAdmin(admin.ModelAdmin):
         EmergencyInfoInline,    
     ]
 
-# class AbsenteeAdmin(admin.ModelAdmin):
-
 
 # Register the new Admin
 admin.site.register(User, APUserAdmin)
