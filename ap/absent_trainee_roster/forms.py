@@ -23,6 +23,8 @@ class AbsentTraineeForm(forms.ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		self.user = kwargs.pop('user', None)
+		print('ASDFASDFASDFASDFASDFASF USER')
+		print(self.user)
 		super(AbsentTraineeForm, self).__init__(*args, **kwargs)
 		self.fields['absentee'].queryset = Absentee.objects.filter(account__trainee__house=self.user.trainee.house)
 		self.fields['absentee'].label = 'Name'
