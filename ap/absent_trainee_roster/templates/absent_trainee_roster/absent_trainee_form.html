@@ -18,11 +18,27 @@
       .comments {
         width: 100%;
       }
+      ul.errorlist {
+      	margin: 0;
+      	padding: 0;
+      }
+      .errorlist li {
+      	color: red;
+      	font-size: 10px
+      	margin 0 0 3px;
+      	padding: 4px 5px;
+      }
     </style>
 {% endblock %}
 
 {% block content %}
 <h3>Absent Trainee Roster</h3>
+
+{% if formset.errors %}
+	<p style ="color: red;">
+		Please correct the error{{ formset.errors|pluralize}} below.
+	</p>
+{% endif %}
 <div class="row">
   <div class="col-xs-12 col-sm-6">
     <b>Date:</b> {% now "l, F d, Y" %}
@@ -42,11 +58,13 @@
   {% csrf_token %}
   {{ formset.management_form }}
   {% for form in formset %}
+  	<!--{{ form.non_field_errors }}-->
+  	<!--{{ form.errors}}-->
   	<div class="row entry">
       {{ form.id }}
-      <div class="col-xs-6 col-sm-4 col-md-4">{{ form.absentee.label_tag }} <br>{{ form.absentee }}</div>
-      <div class="col-xs-6 col-sm-3 col-md-3">{{ form.reason.label_tag }} <br>{{ form.reason }}</div>
-      <div class="col-xs-12 col-sm-4 col-md-4" style="padding-right: 0px;">{{ form.comments.label_tag }} <br> {{ form.comments }}</div>
+      <div class="col-xs-6 col-sm-4 col-md-4">{{form.absentee.errors}}{{ form.absentee.label_tag }} <br>{{ form.absentee }}</div>
+      <div class="col-xs-6 col-sm-3 col-md-3">{{form.reason.errors}}{{ form.reason.label_tag }} <br>{{ form.reason }}</div>
+      <div class="col-xs-12 col-sm-4 col-md-4" style="padding-right: 0px;">{{form.comments.error}}{{ form.comments.label_tag }} <br> {{ form.comments }}</div>
       <div class="col-xs-1"><br><a class="delete" href="#"><span class="glyphicon glyphicon-remove" style="margin-top:5px; padding: 5px 0px;"></span></a></div>
     </div>
   {% endfor %}

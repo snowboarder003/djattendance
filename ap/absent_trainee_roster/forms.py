@@ -9,7 +9,7 @@ class RosterForm(forms.ModelForm):
 
 
 class AbsentTraineeForm(forms.ModelForm):
-	comments = forms.CharField(max_length=40, widget=forms.TextInput(attrs={'class':'comments'}))
+	comments = forms.CharField(required=False, max_length=40, widget=forms.TextInput(attrs={'class':'comments'}))
 
 	class Meta:
 		model = Entry
@@ -36,8 +36,24 @@ class NewEntryFormSet(forms.formsets.BaseFormSet):
 	def __init__(self, *args, **kwargs):
 		self.user = kwargs.pop('user', None)
 		super(NewEntryFormSet, self).__init__(*args, **kwargs)
+		for form in self.forms:
+			form.empty_permitted =False
 
 	def _construct_forms(self):
 		self.forms = []
 		for i in xrange(self.total_form_count()):
 			self.forms.append(self._construct_form(i, user=self.user))
+	
+	def clean(self):
+		"""Checks that no two entries registers the same absentee."""
+		if any(self.errors):
+			#Don't bother validating the formset unless each form is valid on its own
+			return
+		absentees = []
+		for i in range(0, self.total_form_count()):
+			form = self.forms[i]
+			absentee = form.cleaned_data['absentee']
+			if absentee in absentees:
+				raise forms.ValidationError("Entry for this absentee has already been submitted.")
+			absentees.append(absentee)
+		

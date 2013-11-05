@@ -67,4 +67,4 @@ class Entry(models.Model):
 	roster = models.ForeignKey(Roster)
 	absentee = models.ForeignKey(Absentee)
 	reason = models.CharField(max_length=2, choices=ABSENT_REASONS)
-	comments = models.CharField(max_length=250)
+	comments = models.CharField(max_length=250, blank=True)
