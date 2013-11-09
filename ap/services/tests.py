@@ -1,5 +1,5 @@
 from django.test import TestCase
-from service.models import Category, Service, Period
+from services.models import Category, Service, Period
 
 
 class ServiceTest(TestCase):
