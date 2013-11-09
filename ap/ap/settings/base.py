@@ -123,7 +123,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     # third-party modules
-    #'autofixture',
+    'autofixture',
     #'braces',
     #'django_reset',
     # ap CORE
@@ -139,7 +139,7 @@ INSTALLED_APPS = (
     'terms',
     # ap modules
     'schedules',
-    'ss', # service scheduler
+    'ss',  # service scheduler
     'dailybread',  # daily nourishment
 )
 
