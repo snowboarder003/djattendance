@@ -141,6 +141,7 @@ INSTALLED_APPS = (
     'schedules',
     'ss',  # service scheduler
     'dailybread',  # daily nourishment
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging
