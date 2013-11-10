@@ -39,14 +39,14 @@ class Service(Group):
     """
 
     category = models.ForeignKey(Category, related_name="services")
-    isActive = models.BooleanField()
+    active = models.BooleanField()
 
     #Every service has different workload to describe its
         #service hours and service intensity
     workload = models.IntegerField()
 
         #whether this service needs certain qualified trainees
-    needQualification = models.BooleanField(blank=True)
+    need_qualification = models.BooleanField(blank=True)
 
     #Service qualification such as Sack lunch star,Kitchen Star,
     #Shuttle Driver, Piano, Usher, etc
