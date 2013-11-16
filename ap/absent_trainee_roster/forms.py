@@ -11,6 +11,7 @@ class RosterForm(forms.ModelForm):
 
 
 class AbsentTraineeForm(forms.ModelForm):
+
 	comments = forms.CharField(required=False, max_length=40, widget=forms.TextInput(attrs={'class':'comments'}))
 
 	class Meta:
@@ -24,8 +25,6 @@ class AbsentTraineeForm(forms.ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		self.user = kwargs.pop('user', None)
-		print('ASDFASDFASDFASDFASDFASF USER')
-		print(self.user)
 		super(AbsentTraineeForm, self).__init__(*args, **kwargs)
 		#Every trainee should have an absentee profile
 		self.fields['absentee'].queryset = Absentee.objects.filter(account__trainee__house=self.user.trainee.house)

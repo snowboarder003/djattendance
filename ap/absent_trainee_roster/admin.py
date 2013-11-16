@@ -7,6 +7,7 @@ from django.shortcuts import render_to_response
 from models import Absentee, Roster, Entry
 
 
+
 class RosterAdmin(admin.ModelAdmin):
 	generate_roster = 'absent_trainee_roster/generate_roster.html'
 	
@@ -43,6 +44,17 @@ class RosterAdmin(admin.ModelAdmin):
 		p.save()
 		return response	
 
+
+class EntryAdmin(admin.ModelAdmin):
+	def house(obj):
+		return obj.absentee.house
+
+	def term(obj):
+		return obj.absentee.term
+
+	list_display = ('roster', 'absentee', 'reason', 'comments', house,)
+
 admin.site.register(Absentee)
 admin.site.register(Roster, RosterAdmin)
-admin.site.register(Entry)
+admin.site.register(Entry, EntryAdmin)
+
