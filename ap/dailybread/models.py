@@ -28,13 +28,11 @@ class Portion(models.Model):
     def today():
         """ returns random daily portion for each day """
         portions = list(Portion.objects.filter(approved=True))
-        """ Check for portions in the database. """
-        if portions:
-            random.seed(date.today())
-            return random.choice(portions)
-        else:
+        if portions is not None:
             """ Return an empty portion if there are no portions. """
             return Portion()
+        random.seed(date.today())
+        return random.choice(portions)
 
     def __unicode__(self):
         return self.title
