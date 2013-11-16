@@ -1,7 +1,23 @@
-{% extends "base.html" %}
-
+{% extends "admin/base.html" %}
+{% load admin_static %}
 {% block title %}Generate Roster{% endblock %}
-
+<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "admin/css/base.css" %} {% endblock %}" />
+{% block extrahead %}{{ block.super }}
+{% url 'admin' jsi18n as jsi18nurl %}
+<script src="{{ jsi18nurl|default:" type="text/javascript"><!--mce:0--></script>
+{% endblock %}
+{% block extrastyle %}{{ block.super }}
+{% endblock %}
+{% load i18n %}
+{% block bodyclass %}{{ opts.app_label }}-{{ opts.object_name.lower }} change-form{% endblock %}
+{% block breadcrumbs %}{% if not is_popup %}
+<div class="breadcrumbs">
+     <a href="../../../../">{% trans "Home" %}</a> ›
+     <a href="../../../">{{ opts.app_label|capfirst|escape }}</a> ›
+     <a href="../../">{{ opts.verbose_name_plural|capfirst }}</a> ›
+     <a href="../">{{ opts.verbose_name|capfirst }} {{ roster }}</a> ›
+     {% trans 'Generate' %}</div>
+{% endif %}{% endblock %}
 {% block content %}
 <h3>Generate Roster</h3>
 <div class="row">
@@ -9,9 +25,4 @@
     <b>Date:</b> {% now "l, F d, Y" %}
   </div>
 </div>
-<a target="_blank"
-	class="Roster"
-	href="absent_trainee_roster/generate_roster">
-	Generate Roster
-</a>
 {% endblock %}

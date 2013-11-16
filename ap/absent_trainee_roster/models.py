@@ -48,7 +48,6 @@ class Roster(models.Model):
 	unreported_houses = models.ManyToManyField(House, blank=True, null=True)
 
 	def __unicode__(self):
-
 		return self.date.strftime("%m/%d/%Y")
 
 
@@ -68,3 +67,7 @@ class Entry(models.Model):
 	absentee = models.ForeignKey(Absentee)
 	reason = models.CharField(max_length=2, choices=ABSENT_REASONS)
 	comments = models.CharField(max_length=250, blank=True)
+	
+	class Meta(object):
+		verbose_name ="Entry"
+		verbose_name_plural = "Entries"

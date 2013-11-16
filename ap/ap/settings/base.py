@@ -87,6 +87,7 @@ SECRET_KEY = 'h%)g$1=j)_(lozsexfe*=$iwj9l#8mfaszohyg5n0azz691r#b'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
+#    'apptemplates.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
 
@@ -96,7 +97,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -129,7 +130,7 @@ INSTALLED_APPS = (
     'autofixture',
     'django_reset',
     'django_select2',
-    # 'debug_toolbar',
+    'debug_toolbar',
     # ap modules
     'accounts',
     'aputils',

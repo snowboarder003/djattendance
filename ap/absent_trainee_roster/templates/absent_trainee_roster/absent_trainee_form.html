@@ -23,7 +23,9 @@
       	padding: 0;
       }
       .errorlist li {
-      	color: red;
+      	background-color: red;
+      	color: white;
+      	display: block;
       	font-size: 10px
       	margin 0 0 3px;
       	padding: 4px 5px;
@@ -34,11 +36,6 @@
 {% block content %}
 <h3>Absent Trainee Roster</h3>
 
-{% if formset.errors %}
-	<p style ="color: red;">
-		Please correct the error{{ formset.errors|pluralize}} below.
-	</p>
-{% endif %}
 <div class="row">
   <div class="col-xs-12 col-sm-6">
     <b>Date:</b> {% now "l, F d, Y" %}
@@ -57,9 +54,10 @@
 <form action="" method="post">
   {% csrf_token %}
   {{ formset.management_form }}
+  {{ formset.non_field_errors }}
+  {{ formset.non_form_errors }}
   {% for form in formset %}
-  	<!--{{ form.non_field_errors }}-->
-  	<!--{{ form.errors}}-->
+  
   	<div class="row entry">
       {{ form.id }}
       <div class="col-xs-6 col-sm-4 col-md-4">{{form.absentee.errors}}{{ form.absentee.label_tag }} <br>{{ form.absentee }}</div>
