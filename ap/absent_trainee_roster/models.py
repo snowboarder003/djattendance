@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import date
 from accounts.models import Profile
 from houses.models import House
 
@@ -28,8 +29,16 @@ class Absentee(Profile):
 	term = property(trainee_term)
 
 
+class RosterManager(models.Manager):
+	def create_roster(self, date):
+		roster = self.create(date=date)
+		
+		return roster
+
 class Roster(models.Model):
 	date = models.DateField(primary_key=True)
+	
+	objects = RosterManager()
 	unreported_houses = models.ManyToManyField(House, blank=True, null=True)
 
 	def __unicode__(self):

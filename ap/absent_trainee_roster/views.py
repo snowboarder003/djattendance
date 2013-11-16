@@ -1,24 +1,37 @@
 from django.forms.models import modelformset_factory
-from django.shortcuts import render_to_response
 from absent_trainee_roster.forms import AbsentTraineeForm, NewEntryFormSet
+from django.shortcuts import render, render_to_response, redirect
 from absent_trainee_roster.models import Entry, Roster
 from django.core.context_processors import csrf
-from django.template import RequestContext
+from django.template import RequestContext # For CSRF
 from datetime import date
-# from reportlab.pdfgen import canvas
-# from django.http import HttpResponse
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+
 
 def absent_trainee_form(request):
-	EntryFormSet = modelformset_factory(Entry, AbsentTraineeForm, formset=NewEntryFormSet, max_num=10, extra=2)
+	EntryFormSet = modelformset_factory(Entry, AbsentTraineeForm, formset=NewEntryFormSet, max_num=10)
 	if request.method == 'POST':
+		try:
+			roster = Roster.objects.filter(date=date.today())[0]
+		except Exception as e:
+			return HttpResponse("Roster was not created for today.")
+			
 		formset = EntryFormSet(request.POST, request.FILES, user=request.user)
 		if formset.is_valid():
-			roster = Roster.objects.filter(date=date.today())[0]
 			for form in formset.forms:
 				entry = form.save(commit=False)
 				entry.roster = roster
 				entry.save()
 			roster.unreported_houses.remove(request.user.trainee.house)
+			return redirect('/')
+		
+		else:
+			c = {'formset': formset, 'user': request.user}
+			c.update(csrf(request))
+			
+			return render_to_response('absent_trainee_roster/absent_trainee_form.html', c)
+
 	else:
 		formset = EntryFormSet(user=request.user)
 
