@@ -7,7 +7,14 @@
     <script src="{% static 'js/select2.js' %}"></script>
     <script src="{% static 'js/dynamic_formset.js' %}"></script>
     <script>
-        $(document).ready(function() { $(".select2").select2({width:'element',}); });
+        $(document).ready(function() { 
+          // var entry = $('.entry:first').clone(false).get(0);
+          // $("select.select2").select2({width:'element',}); 
+
+          // $('#add').click(function () {
+          //     return addEntry(entry, 'form');
+          // });
+        });
     </script>
 {% endblock %}
 
@@ -31,13 +38,7 @@
     <b>House:</b> {{ user.trainee.house }}
   </div>
 </div>
-<div class="row">
-  {% for i in "xxxxxxxxxxxx" %}
-    <div class="col-xs-1">
-      |
-    </div>
-  {% endfor %}
-</div>
+
 <form action="" method="post">
   {% csrf_token %}
   {{ formset.management_form }}
@@ -50,7 +51,7 @@
       <div class="col-xs-1"><br><a class="delete" href="#"><span class="glyphicon glyphicon-remove" style="margin-top:5px; padding: 5px 0px;"></span></a></div>
     </div>
   {% endfor %}
-  <div class="row">
+  <div class="row" style="padding-left:15px;">
     <a id="add" href="#">Add another trainee</a></p>
   </div>
   <div class="row" style="padding-left:15px;">

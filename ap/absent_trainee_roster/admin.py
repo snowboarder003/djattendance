@@ -12,6 +12,19 @@ class EntryAdmin(admin.ModelAdmin):
 
 	list_display = ('roster', 'absentee', 'reason', 'comments', house,)
 
+
+class EntryInline(admin.TabularInline):
+	model = Entry
+	fk_name = 'roster'
+	verbose_name_plural = 'entries'
+	extra = 1
+
+
+class RosterAdmin(admin.ModelAdmin):
+	inlines = [
+		EntryInline,
+	]
+
 admin.site.register(Absentee)
-admin.site.register(Roster)
+admin.site.register(Roster, RosterAdmin)
 admin.site.register(Entry, EntryAdmin)
