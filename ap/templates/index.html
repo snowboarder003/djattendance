@@ -7,17 +7,15 @@
 
     <h2>Welcome, {{ user.get_full_name }}! </h2>
 
+    <h5>Daily Nourishment</h5>
     {% if daily_nourishment.text %}
-        <h5>Daily Nourishment</h5>
         <blockquote>
             {{ daily_nourishment.text }}
             <small>{{ daily_nourishment.ref }}</small>
         </blockquote>
     {% else %}
-        <h5>
-            No daily nourishment has been submitted.  Click
-            <a href="/dailybread/submit">here</a> to submit some.
-        </h5>
+        <i>No daily nourishment has been submitted.  Click
+        <a href="/dailybread/submit">here</a> to submit some.</i>
     {% endif %}
 
 {% endblock %}
