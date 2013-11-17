@@ -1,24 +1,25 @@
 from django.views.generic import ListView, TemplateView, DetailView
-from .models import Syllabus
+from .models import Syllabus, Session
 
 class AboutView(ListView):
 
-	template_name = "syllabus/about.html"
-	context_object_name = 'syllabus_list'
+	template_name = "syllabus/classlist.html"
+	context_object_name = 'list'
 	#allow_empty = True
 	model = Syllabus
 	#date_field = '' #Syllabus.classSyllabus.Term.start
 
 	#allow_future = True
 
-class SyllabusDetailView(DetailView):
-	model = Syllabus
+class SyllabusDetailView(ListView):
+	model = Session
 	template_name = "syllabus/detail.html"	
-	context_object_name = "syllabus_detail"
+	context_object_name = 'sl'
+	slug_field = 'classSyllabus'
+	# slug_url_kwarg = 'code'
+    
 
-	""" (2?) TO DO: Get access to get_absolute_url from syllabus module """
-	#slug_field = 'get_absolute_url'
-	#slug_url_kwarg = 'get_absolute_url'
+
 
 class HomeView(TemplateView):
 

@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 
 
 
+
 """ SYLLABUS models.py
 
 This module catalogs all pertinent data associated with classes in the FTTA
@@ -42,12 +43,20 @@ class Syllabus (models.Model):
     # read assignment AFTER class?
     after = models.BooleanField(default=False)
 
+    # def get_absolute_url(self):
+    #     """ (1) TO DO: Figure out how this gets the URL code for about.html 
+    #                 This turns into P<code>Fa|Sp \d{2} object for the URL...?
+    #     """
+    #     return "/syllabus/%i/" % self.classSyllabus.code
+    #     #return reverse('syllabus:detail', kwargs={'code': self.classSyllabus.code})
     def get_absolute_url(self):
-        """ (1) TO DO: Figure out how this gets the URL code for about.html 
-                    This turns into P<code>Fa|Sp \d{2} object for the URL...?
-        """
-        return "/syllabus/%i/" % self.classSyllabus.code
-        #return reverse('syllabus:detail', kwargs={'code': self.classSyllabus.code})
+        # return reverse('syllabus:detail-view', kwargs={'code': self.classSyllabus.code})
+        # return reverse('syllabus:classlist-view', kwargs={'code': self.classSyllabus.code})
+        return reverse('self.classSyllabus.code')
+
+    def get_url_path(self):
+        return '%s/' % self.classSyllabus.code
+
 
     def __unicode__(self):
         # added Term to syllabus (already included Name)
