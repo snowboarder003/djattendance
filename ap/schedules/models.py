@@ -96,7 +96,7 @@ class EventGroup(models.Model):
 
     # override delete(): ensure all events in eventgroup are also deleted
     def delete(self, *args, **kwargs):
-        Events.objects.filter(eventgroup=self.id).delete()
+        Event.objects.filter(eventgroup=self.id).delete()
         super(EventGroup, self).delete(*args, **kwargs)
 
 
