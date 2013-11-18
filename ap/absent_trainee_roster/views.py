@@ -1,15 +1,15 @@
 from django.forms.models import modelformset_factory
 from django.shortcuts import render, render_to_response, redirect
 from django.views.generic.edit import FormView
-from absent_trainee_roster.forms import AbsentTraineeForm
-from absent_trainee_roster.models import Entry, Roster
 from django.core.context_processors import csrf
 from django.template import RequestContext # For CSRF
 from django.forms.formsets import formset_factory, BaseFormSet
+from django.http import HttpResponse
+
+from absent_trainee_roster.forms import AbsentTraineeForm
+from absent_trainee_roster.models import Entry, Roster
 from absent_trainee_roster.forms import AbsentTraineeForm, NewEntryFormSet
 from datetime import date
-from reportlab.pdfgen import canvas
-from django.http import HttpResponse
 
 
 def absent_trainee_form(request):
@@ -41,3 +41,4 @@ def absent_trainee_form(request):
 	c.update(csrf(request))
 
 	return render_to_response('absent_trainee_roster/absent_trainee_form.html', c)
+
