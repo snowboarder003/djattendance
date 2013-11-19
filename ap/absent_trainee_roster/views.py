@@ -23,6 +23,8 @@ def absent_trainee_form(request):
 				entry = form.save(commit=False)
 				entry.roster = roster
 				entry.save()
+			print(request.user.trainee.house)
+			print(roster.unreported_houses)
 			roster.unreported_houses.remove(request.user.trainee.house)
 			return redirect('/')
 		

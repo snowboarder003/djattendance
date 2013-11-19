@@ -32,8 +32,13 @@ class Absentee(Profile):
 class RosterManager(models.Manager):
 	def create_roster(self, date):
 		roster = self.create(date=date)
-		
+		roster.save() # have to save before adding many-to-many relationship
+		# initialize with all houses unreported, remove houses from list when hc submits form.
+		for house in House.objects.all(): 
+			roster.unreported_houses.add(house)
+
 		return roster
+
 
 class Roster(models.Model):
 	date = models.DateField(primary_key=True)
@@ -43,16 +48,6 @@ class Roster(models.Model):
 
 	def __unicode__(self):
 		return self.date.strftime("%m/%d/%Y")
-
-
-class RosterManager(models.Manager):
-	def create_roster(self, date):
-		roster = self.create(date=date)
-		roster.save() # have to save before adding many-to-many relationship
-		# initialize with all houses unreported, remove houses from list when hc submits form.
-		for house in House.objects.all(): 
-			roster.unreported_houses.add(house)
-		return roster
 
 
 class Entry(models.Model):

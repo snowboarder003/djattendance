@@ -132,6 +132,7 @@ INSTALLED_APPS = (
     'django_select2',
     'debug_toolbar',
     # ap modules
+    'absent_trainee_roster',
     'accounts',
     'aputils',
     'books',
@@ -142,9 +143,6 @@ INSTALLED_APPS = (
     'services',
     'teams',
     'terms',
-    'django_reset',
-    'absent_trainee_roster',
-    'djcelery',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
