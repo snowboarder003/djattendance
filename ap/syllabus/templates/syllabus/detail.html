@@ -1,10 +1,28 @@
 <p> Hey world, this is detail.html for syllabus instead. </p>
 
-<a href="{% url 'classlist-view' %}">Back to syllabus list.</a>
+
 
 
 
 <h1> Session List: </h1>
+
+<h2> ---
+{% if sl %}
+	{% for session in sl %}
+		{% if session.topic == 'Inclusion' %}
+			<p> Topic: {{session.topic}}  
+			<br>	Syllabus: {{session.syllabus}}
+			<br>	Class Syllabus: {{session.syllabus.classSyllabus}}
+			</p>
+		{% endif %}
+
+		{% if session.syllabus.classSyllabus %}
+			<p>{{ session.syllabus.classSyllabus }}</p>
+		{% endif %}
+	{% endfor %}	
+ --- </h2>
+
+{% endif %}
 
 <p> session date: </p>
 {% if sl %}
