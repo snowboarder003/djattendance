@@ -38,28 +38,16 @@ class Syllabus (models.Model):
     # syllabus for a class; e.g. FMoC, BoC, GOW
     classSyllabus = models.ForeignKey(Class)
 
-    #start = models.DateField(verbose_name='start date')
-
     # read assignment AFTER class?
     after = models.BooleanField(default=False)
 
-    # def get_absolute_url(self):
-    #     """ (1) TO DO: Figure out how this gets the URL code for about.html 
-    #                 This turns into P<code>Fa|Sp \d{2} object for the URL...?
-    #     """
-    #     return "/syllabus/%i/" % self.classSyllabus.code
-    #     #return reverse('syllabus:detail', kwargs={'code': self.classSyllabus.code})
     def get_absolute_url(self):
-        # return reverse('syllabus:detail-view', kwargs={'code': self.classSyllabus.code})
-        # return reverse('syllabus:classlist-view', kwargs={'code': self.classSyllabus.code})
         return reverse('self.classSyllabus.code')
 
     def get_url_path(self):
         return '%s/' % self.classSyllabus.code
 
-
     def __unicode__(self):
-        # added Term to syllabus (already included Name)
         return (self.classSyllabus.name + " | " + self.classSyllabus.term.name)
 
 
