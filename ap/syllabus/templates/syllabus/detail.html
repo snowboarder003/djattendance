@@ -8,6 +8,13 @@
 
 <h2> ---
 {% if sl %}
+	{% for syllabus in sl %}
+		<p> {{syllabus.topic}} </p>
+	{% endfor %}
+{% endif %}
+
+<!-- How to find duplicates in the FOR loop and exclude them. i.e. if multiple syllabus??? -->
+{% if sl %}
 	{% for session in sl %}
 		{% if session.topic == 'Inclusion' %}
 			<p> Topic: {{session.topic}}  

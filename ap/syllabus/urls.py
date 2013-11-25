@@ -12,13 +12,11 @@ urlpatterns = patterns('',
 
 	url(r'^$', HomeView.as_view(), name='home-view'),
 
-	# TO DO: get classlist-view to work with the <code> thing.
-	# Currently, detail-view works with the <code> thing.
-	# Hypotheses: detail-view has Session as its module, and also has a slug field!
+	# This is BROKE right now... it doesnt like the <code>() {} thing.
 	url(r'^(?P<code>(Fa|Sp)\d{2})/1styear/$', AboutView.as_view(model=Syllabus, 
 					context_object_name="list"), name='classlist-view'),
 		
-	# (3) TO DO: Get this URL to get to syllabus/FmoC, /TG, /GK, etc.
+	# Need to get access to SYLLABUS model along with SESSION model.
 	url(r'^(?P<code>(Fa|Sp)\d{2})/1styear/(\D+)/$', SyllabusDetailView.as_view(model=Session, context_object_name="sl"),name='detail-view'),
 
 
