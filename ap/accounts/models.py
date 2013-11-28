@@ -10,6 +10,7 @@ from terms.models import Term
 from teams.models import Team
 from houses.models import House, Bunk
 from services.models import Service
+from badges.modles import Badge
 
 """ accounts models.py
 The user accounts module takes care of user accounts and
@@ -150,7 +151,7 @@ class Profile(models.Model):
 
 class TrainingAssistant(Profile):
 
-    badge = models.ImageField(upload_to='badges/office/')
+    badge = models.ForeignKey(Badge, blank=True, null=True)
 
     services = models.ManyToManyField(Service, blank=True, null=True)
     houses = models.ManyToManyField(House, blank=True, null=True)
@@ -173,7 +174,7 @@ class Trainee(Profile):
     date_begin = models.DateField()
     date_end = models.DateField(null=True, blank=True)
 
-    badge = models.ImageField(upload_to='badges/trainees/'+Term.current_term()[0].code)
+    badge = models.ForeignKey(Badge, blank=True, null=True)
 
     TA = models.ForeignKey(TrainingAssistant, null=True, blank=True)
     mentor = models.ForeignKey('self', related_name='mentee', null=True, blank=True)
