@@ -43,3 +43,6 @@ MEDIA_ROOT = '/Library/WebServer/Documents/djattendance/ap/media/'
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
 MEDIA_URL = '/media/'
+
+MAX_UPLOAD_SIZE = 20971520  # 20MB
+CONTENT_TYPES = ['application/pdf', 'image/jpeg', 'image/png']  # .pdf, .jpeg and .png
