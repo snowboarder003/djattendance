@@ -10,7 +10,7 @@ from terms.models import Term
 from teams.models import Team
 from houses.models import House, Bunk
 from services.models import Service
-from badges.modles import Badge
+from badges.models import Badge
 
 """ accounts models.py
 The user accounts module takes care of user accounts and
