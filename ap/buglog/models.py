@@ -15,26 +15,26 @@ issue in GitHub, and displays the bug log and statuses.
 
 """
 
-LOG_TYPES = (
-		('Bug', 'Bug'),
-		('Suggestion', 'Suggestion'),
-		('Comment', 'Other'),
-	)
-
-PRIORITY_TYPES = (
-		(1, 'Low priority'),
-		(2, 'Medium priority'),
-		(3, 'High priority'),
-	)
-
-ISSUES_URL = 'https://api.github.com/repos/attendanceproject/djattendance/issues'
-ADMIN_USER = 'ysbecca' # TODO - create an admin user on the djattendance project
-POST_HEADER = { 'Content-Type': 'application/json', 'Authorization': 'token 56398b834f0277f4e609ef2ca11d2fc1d4663e78' }
-
-# For testing - personal access token for username ysbecca (with push pull access):
-# 56398b834f0277f4e609ef2ca11d2fc1d4663e78
-
 class Bug(models.Model):
+
+	LOG_TYPES = (
+			('Bug', 'Bug'),
+			('Suggestion', 'Suggestion'),
+			('Comment', 'Other'),
+		)
+
+	PRIORITY_TYPES = (
+			(1, 'Low priority'),
+			(2, 'Medium priority'),
+			(3, 'High priority'),
+		)
+
+	ISSUES_URL = 'https://api.github.com/repos/attendanceproject/djattendance/issues'
+	ADMIN_USER = 'ysbecca' # TODO - create an admin user on the djattendance project
+	POST_HEADER = { 'Content-Type': 'application/json', 'Authorization': 'token 56398b834f0277f4e609ef2ca11d2fc1d4663e78' }
+	# For testing - personal access token for username ysbecca (with push pull access):
+	# 56398b834f0277f4e609ef2ca11d2fc1d4663e78
+
 	title = models.CharField(max_length=200)
 	description = models.CharField(max_length=500)
 	priority = models.IntegerField(default=0, choices=PRIORITY_TYPES)
@@ -60,7 +60,7 @@ class Bug(models.Model):
 		""" Retrieves all issues from the Github repo. """
 		# TODO: only get the OPEN issues
 		try:
-			r = requests.get(ISSUES_URL)
+			r = requests.get(Bug.ISSUES_URL)
 			if(r.status_code == 200):
 				issues = json.loads(r.text)
 				return issues
@@ -75,11 +75,11 @@ class Bug(models.Model):
 		data = {
 			'title': self.title + ' submitted by ' + self.get_name(),
 			'body': self.description,
-			'assignee': ADMIN_USER,
+			'assignee': Bug.ADMIN_USER,
 			'labels': self.log_type,
 			}
 		try:
-			r = requests.post(ISSUES_URL, data=json.dumps(data), headers=POST_HEADER)
+			r = requests.post(Bug.ISSUES_URL, data=json.dumps(data), headers=Bug.POST_HEADER)
 			if(r.status_code == 200 or r.status_code == 201):
 				content = json.loads(r.text)
 				self.issue_id = content['number']
