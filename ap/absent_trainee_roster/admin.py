@@ -12,6 +12,8 @@ import xhtml2pdf.pisa as pisa
 from django.template.loader import get_template
 from cgi import escape
 
+from datetime import date
+
 from models import Absentee, Roster, Entry
 
 from pdf import render_to_pdf
@@ -23,7 +25,9 @@ class RosterAdmin(admin.ModelAdmin):
 	def get_urls(self):
 		urls = super(RosterAdmin, self).get_urls()
 		my_urls =patterns('',
-			(r'\d+/generate/$', self.admin_site.admin_view(self.myview)),
+			#(r'\d+/generate/$', self.admin_site.admin_view(self.myview)),
+			(r'(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d+)/generate/$', self.admin_site.admin_view(self.myview)),
+			
 		)
 		return my_urls +urls
 	
@@ -55,13 +59,15 @@ class RosterAdmin(admin.ModelAdmin):
 		}, context_instance=RequestContext(request))
 	
 	#using Pisa
-	def myview(self, request):
+	def myview(self, request, year, month, day):
 		#Retrieve data or whatever you need
+		roster = Roster.objects.get(date=date(int(year),int(month),int(day)))
+		
 		return render_to_pdf(
 			'absent_trainee_roster/generate_roster.html',
 			{
 				'pagsize': 'A4',
-				#'mylist': results,
+				'roster': roster,
 			}
 		)
 

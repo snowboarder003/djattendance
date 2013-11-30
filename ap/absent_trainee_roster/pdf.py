@@ -5,11 +5,10 @@ import xhtml2pdf.pisa as pisa
 from django.template.loader import get_template
 from cgi import escape
 
-context_dic ={}
 
 def render_to_pdf(template_src, context_dict):
 		template = get_template(template_src)
-		context = Context(context_dic)
+		context = Context(context_dict)
 		html = template.render(context)
 		result = StringIO.StringIO()
 		
