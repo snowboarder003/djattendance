@@ -1,9 +1,12 @@
 from datetime import datetime
-from accounts.models import User
-from django.db import models
-from django.forms import ModelForm, Textarea, RadioSelect
 import requests, json
 from requests.auth import HTTPDigestAuth
+
+from django.db import models
+from django.forms import ModelForm, Textarea, RadioSelect
+
+from .models import User
+
 
 """ buglog models.py
 
@@ -70,7 +73,7 @@ class Bug(models.Model):
 
 	def create_issue(self):
 		data = {
-			'title': self.log_type + ' submitted by ' + self.get_name(),
+			'title': self.title + ' submitted by ' + self.get_name(),
 			'body': self.description,
 			'assignee': ADMIN_USER,
 			'labels': self.log_type,
