@@ -3,11 +3,6 @@
 Utility functions for badges module
 """
 
-def construct_upload_path(badge_type):
-    path = ""
-    if badge_type == 'T':
-        path += "trainees/" + Term.current_term().code + '/'
-    elif badge_type == 'S':
-        path += "staff/"
-    else:
-        return path
+def _image_upload_path(instance, filename):
+  # To customise the path which the image saves to.
+  return instance.get_upload_path(filename)

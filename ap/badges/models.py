@@ -1,7 +1,8 @@
 from django.db import models
 
 from terms.models import Term
-from .util import construct_upload_path
+from .util import _image_upload_path
+
 
 class Badge(models.Model):
     """
@@ -15,7 +16,15 @@ class Badge(models.Model):
     )
 
     type = models.CharField(max_length=2, choices=BADGE_TYPES)
-    original = models.ImageField(upload_to='badges/'+construct_upload_path(type))
+    original = models.ImageField(upload_to=_image_upload_path)
+
+    def get_upload_path(self, filename):
+        path = "badges/"
+        if self.type == 'T':
+            path += "trainees/" + Term.current_term()[0].code + '/'
+        elif self.type == 'S':
+            path += "staff/"
+        return path + filename
 
     def __unicode__(self):
         return u"[%s] %s" % (self.type, self.original.name)
