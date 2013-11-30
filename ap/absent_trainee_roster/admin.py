@@ -34,6 +34,7 @@ class RosterAdmin(admin.ModelAdmin):
 	# formfield_overrides = {
 	# 	models.ManyToManyField: {'widget': admin.widgets.ManyToManyRawIdWidget},
 	# }
+	# filter_horizontal = ('unreported_houses',)
 
 	def get_urls(self):
 		urls = super(RosterAdmin, self).get_urls()

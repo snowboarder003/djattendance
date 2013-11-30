@@ -10,7 +10,7 @@ from django.http import HttpResponse
 
 
 def absent_trainee_form(request):
-	EntryFormSet = modelformset_factory(Entry, AbsentTraineeForm, formset=NewEntryFormSet, max_num=10)
+	EntryFormSet = modelformset_factory(Entry, AbsentTraineeForm, formset=NewEntryFormSet, max_num=10, extra=2, can_delete=True)
 	if request.method == 'POST':
 		try:
 			roster = Roster.objects.filter(date=date.today())[0]

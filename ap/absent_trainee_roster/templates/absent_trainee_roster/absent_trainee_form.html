@@ -6,21 +6,9 @@
 {% block scripts %}
     <script src="{% static 'js/select2.js' %}"></script>
     <script src="{% static 'js/dynamic_formset.js' %}"></script>
-    <script>
-        $(document).ready(function() { 
-          // var entry = $('.entry:first').clone(false).get(0);
-          // $("select.select2").select2({width:'element',}); 
-
-          // $('#add').click(function () {
-          //     return addEntry(entry, 'form');
-          // });
-        });
-    </script>
 {% endblock %}
 
 {% block references %}
-    <link href="{% static 'css/select2.css' %}" rel="stylesheet">
-    <link href="{% static 'css/select2-bootstrap.css' %}" rel="stylesheet">
     <style type='text/css'>
       .comments {
         width: 100%;
@@ -52,26 +40,41 @@
   </div>
 </div>
 
-<form action="" method="post">
+<hr class="visible-xs">
+
+<form action="" method="post" role="form">
   {% csrf_token %}
+
+  <div class="row hidden-xs" style="margin-top:10px; margin-bottom:5px">
+    <div class="col-sm-4"><strong>Name</strong></div>
+    <div class="col-sm-3"><strong>Reason</strong></div>
+    <div class="col-sm-4"><strong>Comments</strong></div>
+  </div>
+
   {{ formset.management_form }}
   {{ formset.non_field_errors }}
   {{ formset.non_form_errors }}
   {% for form in formset %}
-  
-  	<div class="row entry">
+
+    <div class="row entry" style="border-bottom:1px solid #e3e3e3; margin-top:15px">
       {{ form.id }}
-      <div class="col-xs-6 col-sm-4 col-md-4">{{form.absentee.errors}}{{ form.absentee.label_tag }} <br>{{ form.absentee }}</div>
-      <div class="col-xs-6 col-sm-3 col-md-3">{{form.reason.errors}}{{ form.reason.label_tag }} <br>{{ form.reason }}</div>
-      <div class="col-xs-12 col-sm-4 col-md-4" style="padding-right: 0px;">{{form.comments.error}}{{ form.comments.label_tag }} <br> {{ form.comments }}</div>
-      <div class="col-xs-1"><br><a class="delete" href="#"><span class="glyphicon glyphicon-remove" style="margin-top:5px; padding: 5px 0px;"></span></a></div>
+      <div class="form-group col-xs-6 col-sm-4 col-md-4">{{ form.absentee.errors }}{{ form.absentee }}</div>
+      <div class="form-group col-xs-5 col-sm-3 col-md-3">{{ form.reason.errors }}{{ form.reason }}</div>
+      <div class="col-xs-1 visible-xs" style="padding:0px;"><a class="delete" href="#"><span class="glyphicon glyphicon-remove" style="margin-top:8px;"></span></a></div>
+      <br class="visible-xs"><br class="visible-xs"> <!--This is a temporary hack to prevent the next div from overlapping the select boxes above it. It would be better to do this with Less.-->
+      <div class="form-group col-xs-12 col-sm-4 col-md-4" style="padding-right: 15px;">{{ form.comments.error }}{{ form.comments }}</div>
+      <div class="col-sm-1 hidden-xs" style="padding:0px;"><a class="delete" href="#"><span class="glyphicon glyphicon-remove" style="margin-top:8px;"></span></a></div>
     </div>
+
   {% endfor %}
-  <div class="row" style="padding-left:15px;">
+
+  <div class="row" style="padding-left:15px; margin-top:10px">
     <a id="add" href="#">Add another trainee</a></p>
   </div>
+
   <div class="row" style="padding-left:15px;">
     <input type="submit" value="Submit" />
   </div>
-</form>
+
+</form> 
 {% endblock %}
