@@ -16,3 +16,6 @@ class Badge(models.Model):
 
     type = models.CharField(max_length=2, choices=BADGE_TYPES)
     original = models.ImageField(upload_to='badges/'+construct_upload_path(type))
+
+    def __unicode__(self):
+        return u"[%s] %s" % (self.type, self.original.name)
