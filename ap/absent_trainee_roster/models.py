@@ -30,13 +30,15 @@ class Absentee(Profile):
 
 
 class RosterManager(models.Manager):
+	# when roster is created in admin, admin calls RosterAdmin.save_related()
+	# to add the unreported houses.
 	def create_roster(self, date):
 		roster = self.create(date=date)
 		roster.save() # have to save before adding many-to-many relationship
-		# initialize with all houses unreported, remove houses from list when hc submits form.
+		# initialize with all houses unreported (remove houses from list when hc submits form).
 		for house in House.objects.all(): 
 			roster.unreported_houses.add(house)
-
+		roster.save()
 		return roster
 
 

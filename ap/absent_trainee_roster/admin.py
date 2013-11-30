@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.conf.urls.defaults import patterns
 from django.shortcuts import render_to_response
 
-from models import Absentee, Roster, Entry
+from models import Absentee, Roster, Entry, House
 
 
 class EntryAdmin(admin.ModelAdmin):
@@ -31,10 +31,19 @@ class RosterAdmin(admin.ModelAdmin):
 		EntryInline,
 	]
 
-	# formfield_overrides = {
-	# 	models.ManyToManyField: {'widget': admin.widgets.ManyToManyRawIdWidget},
-	# }
-	# filter_horizontal = ('unreported_houses',)
+	readonly_fields = ('unreported_houses',)
+
+	# when roster is created, add all houses as unreported.
+	# --this is also done in RosterManager.create_roster(), but  
+	# admin doesn't call this function to create objects.
+	def save_related(self, request, form, formsets, change):
+		if change == False:
+			roster = Roster.objects.get(date=request.REQUEST['date'])
+			for house in House.objects.all():
+				roster.unreported_houses.add(house)
+			roster.save()
+		return True
+
 
 	def get_urls(self):
 		urls = super(RosterAdmin, self).get_urls()
