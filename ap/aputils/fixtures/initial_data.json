@@ -1483,7 +1483,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "2115 W Grace Ct",
+        "address1": "2113 W Grace Ct",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1495,7 +1495,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "2113 W Grace Ct",
+        "address1": "2103 W Grace Ct",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1507,7 +1507,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "2103 W Grace Ct",
+        "address1": "2120 W Grace Ct",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1519,7 +1519,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "2120 W Grace Ct",
+        "address1": "2111 W Grace Ct",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1531,7 +1531,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "2111 W Grace Ct",
+        "address1": "2117 W Grace Ct",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1543,7 +1543,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "2117 W Grace Ct",
+        "address1": "2105 W Grace Ct",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1555,7 +1555,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "2105 W Grace Ct",
+        "address1": "2109 W Grace Ct",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1567,7 +1567,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "2109 W Grace Ct",
+        "address1": "905 Neptune Pl",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1579,7 +1579,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "905 Neptune Pl",
+        "address1": "1827 W Beacon Ave",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1591,7 +1591,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "1827 W Beacon Ave",
+        "address1": "1321 S Amberwick Ln",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1603,7 +1603,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "1321 S Amberwick Ln",
+        "address1": "1775 Castle Ave",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1615,7 +1615,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "1775 Castle Ave",
+        "address1": "1807 W Chalet Ave",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1627,7 +1627,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "1807 W Chalet Ave",
+        "address1": "1356 S Nutwood St",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1639,7 +1639,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "1356 S Nutwood St",
+        "address1": "1240 S Nutwood St",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1651,7 +1651,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "1240 S Nutwood St",
+        "address1": "1767 Minerva Ave",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1663,7 +1663,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "1767 Minerva Ave",
+        "address1": "1329 S Amberwick Ln",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1675,7 +1675,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "1329 S Amberwick Ln",
+        "address1": "1779 Colonial Ave",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1687,7 +1687,7 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "1779 Colonial Ave",
+        "address1": "713 S Agate St",
         "address2": "",
         "details": "",
         "zip4": null,
@@ -1699,18 +1699,6 @@
     "model": "aputils.address",
     "fields": {
         "city": 2,
-        "address1": "713 S Agate St",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 32,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
         "address1": "2147 W York Cir",
         "address2": "",
         "details": "",
@@ -1719,7 +1707,7 @@
     }
 },
 {
-    "pk": 33,
+    "pk": 32,
     "model": "aputils.address",
     "fields": {
         "city": 2,
