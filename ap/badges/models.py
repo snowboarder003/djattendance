@@ -18,10 +18,10 @@ class Badge(models.Model):
     type = models.CharField(max_length=2, choices=BADGE_TYPES)
     original = models.ImageField(upload_to=_image_upload_path)
 
-    def get_upload_path(self, filename):
+    def get_upload_path(self, filename, term=Term.current_term()[0].code):
         path = "badges/"
         if self.type == 'T':
-            path += "trainees/" + Term.current_term()[0].code + '/'
+            path += "trainees/" + term + '/'
         elif self.type == 'S':
             path += "staff/"
         return path + filename
