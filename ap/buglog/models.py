@@ -36,7 +36,7 @@ class Bug(models.Model):
 	# 56398b834f0277f4e609ef2ca11d2fc1d4663e78
 
 	title = models.CharField(max_length=200)
-	description = models.CharField(max_length=500)
+	description = models.TextField()
 	priority = models.IntegerField(default=0, choices=PRIORITY_TYPES)
 	open_date = models.DateTimeField(default=datetime.now(), auto_now_add=True)
 	close_date = models.DateTimeField(auto_now=True)
