@@ -17,8 +17,7 @@ urlpatterns = patterns('',
 					context_object_name="list"), name='classlist-view'),
 		
 	# Need to get access to SYLLABUS model along with SESSION model.
-	url(r'^(?P<code>(Fa|Sp)\d{2})/1styear/(\D+)/$', SyllabusDetailView.as_view(model=Session, context_object_name="sl"),name='detail-view'),
-
-
-	
+	url(r'^(?P<code>(Fa|Sp)\d{2})/1styear/(\D+)/$', 
+		SyllabusDetailView.as_view(model=Syllabus, context_object_name="syl_list"), 
+		name='detail-view'),	
 )
