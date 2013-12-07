@@ -60,6 +60,7 @@ class Session(models.Model):
     topic = models.CharField(max_length=200)
 
     # book name, code
+    """ TO DO: Make this OPTIONAL. """
     book = models.ForeignKey(Book)
 
     # assignment info (pages; chapters; msgs; lessons; verses; exam: "FINAL, MIDTERM, ETC")

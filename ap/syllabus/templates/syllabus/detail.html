@@ -6,24 +6,36 @@
 
 <h1> Session List: </h1>
 
-<h2> 
+
 ---
 {% if syl_list %}
+	<h3><p># of Syllabii: {{ syl_list|length }}</p></h3>
 	{% for syllabus in syl_list %}
-		
+
+		<h2>Current Syllabus: {{ syllabus.classSyllabus.name }}</h2>
+			{% if syllabus.classSyllabus.name == 'Triune God' %}
+				HOORAY this syllabus is trune god!
+
+				<h5>
+				<p># of Sessions: {{ syllabus.session_set.all|length }}</p>
+				{% if syllabus.session_set.all %}
+					{% for session in syllabus.session_set.all %}
+						<p> Date: {{ session.date }} |
+							Topic: {{ session.topic }} |
+							Reading Assignment: {{ session.book.code }},
+							{{ session.assignment }} |
+							Exam: {{ session.exam }} </p>
+					{% endfor %}
+				{% endif %}
+				</h5>
+
+			{% endif %}
 		<!-- TO DO: get session related objects by doing a REVERSE relationship from SYLLABUS object. -->
-		Topic, book, syllabus, date, assignment, exam:
-		<p> {{ syllabus.session_set.all.0.topic }} </p>
-		<p> {{ syllabus.session_set.all.0.book }} </p>
-		<p> {{ syllabus.session_set.all.0.syllabus }} </p>
-		<p> {{ syllabus.session_set.all.0.date }} </p>
-		<p> {{ syllabus.session_set.all.0.assignment }} </p>
-		<p> {{ syllabus.session_set.all.0.exam }} </p>
-		<p>that was a syllabus</p>
-		
 	{% endfor %}
+
 {% endif %}
----
+--- // end of all syllabus
+
 <!-- How to find duplicates in the FOR loop and exclude them. i.e. if multiple syllabus??? -->
 {% if sl %}
 	{% for session in sl %}
@@ -38,7 +50,7 @@
 			<p>{{ session.syllabus.classSyllabus }}</p>
 		{% endif %}
 	{% endfor %}	
- --- </h2>
+ ---
 
 {% endif %}
 
