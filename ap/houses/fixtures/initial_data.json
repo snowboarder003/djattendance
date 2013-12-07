@@ -1,0 +1,322 @@
+[
+{
+	"pk": 1,
+	"model": "houses.house",
+	"fields": {
+		"name": "Agate", 
+		"address": 30, 
+		"gender": "B",
+		"used": "True"
+	}
+},
+{
+	"pk": 2,
+	"model": "houses.house",
+	"fields": {
+		"name": "1321 Amberwick", 
+		"address": 22, 
+		"gender": "B",
+		"used": "True"
+	}
+},
+{
+	"pk": 3,
+	"model": "houses.house",
+	"fields": {
+		"name": "1329 Amberwick", 
+		"address": 28, 
+		"gender": "B",
+		"used": "True"
+	}
+},
+{
+	"pk": 4,
+	"model": "houses.house",
+	"fields": {
+		"name": "Beacon", 
+		"address": 21, 
+		"gender": "B",
+		"used": "True"
+	}
+},
+{
+	"pk": 5,
+	"model": "houses.house",
+	"fields": {
+		"name": "Castle", 
+		"address": 23, 
+		"gender": "B",
+		"used": "True"
+	}
+},
+{
+	"pk": 6,
+	"model": "houses.house",
+	"fields": {
+		"name": "Chalet", 
+		"address": 24, 
+		"gender": "B",
+		"used": "True"
+	}
+},
+{
+	"pk": 7,
+	"model": "houses.house",
+	"fields": {
+		"name": "Churchill", 
+		"address": 32, 
+		"gender": "B",
+		"used": "True"
+	}
+},
+{
+	"pk": 8,
+	"model": "houses.house",
+	"fields": {
+		"name": "Colonial", 
+		"address": 29, 
+		"gender": "B",
+		"used": "True"
+	}
+},
+{
+	"pk": 9,
+	"model": "houses.house",
+	"fields": {
+		"name": "2102 Grace", 
+		"address": 9, 
+		"gender": "B",
+		"used": "True"
+	}
+},
+{
+	"pk": 10,
+	"model": "houses.house",
+	"fields": {
+		"name": "2103 Grace", 
+		"address": 14, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 11,
+	"model": "houses.house",
+	"fields": {
+		"name": "2104 Grace", 
+		"address": 3, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 12,
+	"model": "houses.house",
+	"fields": {
+		"name": "2105 Grace", 
+		"address": 18, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 13, 
+	"model": "houses.house",
+	"fields": {
+		"name": "2106 Grace", 
+		"address": 2, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 14,
+	"model": "houses.house",
+	"fields": {
+		"name": "2107 Grace", 
+		"address": 4, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 15,
+	"model": "houses.house",
+	"fields": {
+		"name": "2108 Grace", 
+		"address": 5, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 16,
+	"model": "houses.house",
+	"fields": {
+		"name": "2109 Grace", 
+		"address": 19, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 17,
+	"model": "houses.house",
+	"fields": {
+		"name": "2111 Grace", 
+		"address": 16, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 18,
+	"model": "houses.house",
+	"fields": {
+		"name": "2113 Grace", 
+		"address": 13, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 19,
+	"model": "houses.house",
+	"fields": {
+		"name": "2114 Grace", 
+		"address": 12, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 20,
+	"model": "houses.house",
+	"fields": {
+		"name": "2115 Grace", 
+		"address": 7, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 21,
+	"model": "houses.house",
+	"fields": {
+		"name": "2116 Grace", 
+		"address": 10, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 22,
+	"model": "houses.house",
+	"fields": {
+		"name": "2117 Grace", 
+		"address": 17, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 23,
+	"model": "houses.house",
+	"fields": {
+		"name": "2118 Grace", 
+		"address": 11, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 24,
+	"model": "houses.house",
+	"fields": {
+		"name": "2119 Grace", 
+		"address": 8, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 25,
+	"model": "houses.house",
+	"fields": {
+		"name": "2120 Grace", 
+		"address": 15, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 26,
+	"model": "houses.house",
+	"fields": {
+		"name": "2121 Grace", 
+		"address": 6, 
+		"gender": "S",
+		"used": "True"
+	}
+},
+{
+	"pk": 27,
+	"model": "houses.house",
+	"fields": {
+		"name": "Minerva", 
+		"address": 27, 
+		"gender": "B",
+		"used": "True"
+	}
+},
+{
+	"pk": 28,
+	"model": "houses.house",
+	"fields": {
+		"name": "Neptune", 
+		"address": 20, 
+		"gender": "B",
+		"used": "True"
+	}
+},
+{
+	"pk": 29, 
+	"model": "houses.house", 
+	"fields": {
+		"name": "Niobe", 
+		"address": 1, 
+		"gender": "B",
+		"used": "True"
+	}
+},
+{
+	"pk": 30,
+	"model": "houses.house",
+	"fields": {
+		"name": "1240 Nutwood", 
+		"address": 26, 
+		"gender": "B",
+		"used": "True"
+	}
+},
+{
+	"pk": 31,
+	"model": "houses.house",
+	"fields": {
+		"name": "1356 Nutwood", 
+		"address": 25, 
+		"gender": "B",
+		"used": "True"
+	}
+},
+{
+	"pk": 32,
+	"model": "houses.house",
+	"fields": {
+		"name": "York", 
+		"address": 31, 
+		"gender": "B",
+		"used": "True"
+	}
+}
+]

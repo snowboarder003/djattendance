@@ -16,12 +16,12 @@ from datetime import date
 
 
 def absent_trainee_form(request):
-	EntryFormSet = modelformset_factory(Entry, AbsentTraineeForm, formset=NewEntryFormSet, max_num=10, extra=2, can_delete=True)
+	EntryFormSet = modelformset_factory(Entry, AbsentTraineeForm, formset=NewEntryFormSet, max_num=10, extra=1, can_delete=True)
 	if request.method == 'POST':
-		try:
-			roster = Roster.objects.filter(date=date.today())[0]
-		except Exception as e:
-			return HttpResponse("Roster was not created for today.")
+		if Roster.objects.filter(date=date.today()).exists():
+			roster = Roster.objects.get(date=date.today())
+		else:
+			roster = Roster.objects.create_roster(date=date.today())
 			
 		formset = EntryFormSet(request.POST, request.FILES, user=request.user)
 		if formset.is_valid():
