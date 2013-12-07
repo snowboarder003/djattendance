@@ -10,12 +10,12 @@ from django.http import HttpResponse
 
 
 def absent_trainee_form(request):
-	EntryFormSet = modelformset_factory(Entry, AbsentTraineeForm, formset=NewEntryFormSet, max_num=10, extra=2, can_delete=True)
+	EntryFormSet = modelformset_factory(Entry, AbsentTraineeForm, formset=NewEntryFormSet, max_num=10, extra=1, can_delete=True)
 	if request.method == 'POST':
-		try:
-			roster = Roster.objects.filter(date=date.today())[0]
-		except Exception as e:
-			return HttpResponse("Roster was not created for today.")
+		if Roster.objects.filter(date=date.today()).exists():
+			roster = Roster.objects.get(date=date.today())
+		else:
+			roster = Roster.objects.create_roster(date=date.today())
 			
 		formset = EntryFormSet(request.POST, request.FILES, user=request.user)
 		if formset.is_valid():
@@ -39,20 +39,3 @@ def absent_trainee_form(request):
 	c.update(csrf(request))
 
 	return render_to_response('absent_trainee_roster/absent_trainee_form.html', c)
-
-# def pdf_helloworld(request):
-# 	# Create the HttpResponse object with the appropriate PDF headers.
-# 	response = HttpResponse(content_type='application/pdf')
-# 	response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
-
-# 	# Create the PDF object, using the response object as its "file."
-# 	pdf = canvas.Canvas(response)
-
-# 	# Draw things on the PDF. Here's where the PDF generation happens.
-# 	# See the ReportLab documentation for the full list of functionality.
-# 	p.drawString(100, 100, "Hello world.")
-
-# 	# Close the PDF object cleanly, and we're done.
-# 	p.showPage()
-# 	p.save()
-# 	return response
