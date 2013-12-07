@@ -1,11 +1,5 @@
 from django.db import models
 from datetime import date
-
-# #import from djorm-ext-pgarray for Postgres array field for Django
-# from djorm_pgarray.fields import ArrayField
-# from djorm_expressions.models import ExpressionManager
-
-#import from other apps
 from accounts.models import Profile
 from houses.models import House
 
@@ -36,10 +30,17 @@ class Absentee(Profile):
 
 
 class RosterManager(models.Manager):
+	# when roster is created in admin, admin calls RosterAdmin.save_related()
+	# to add the unreported houses.
 	def create_roster(self, date):
 		roster = self.create(date=date)
-		
+		roster.save() # have to save before adding many-to-many relationship
+		# initialize with all houses unreported (remove houses from list when hc submits form).
+		for house in House.objects.all(): 
+			roster.unreported_houses.add(house)
+		roster.save()
 		return roster
+
 
 class Roster(models.Model):
 	date = models.DateField(primary_key=True)
@@ -67,7 +68,6 @@ class Entry(models.Model):
 	absentee = models.ForeignKey(Absentee)
 	reason = models.CharField(max_length=2, choices=ABSENT_REASONS)
 	comments = models.CharField(max_length=250, blank=True)
-	
-	class Meta(object):
-		verbose_name ="Entry"
-		verbose_name_plural = "Entries"
+
+	class Meta:
+		verbose_name_plural = 'entries'

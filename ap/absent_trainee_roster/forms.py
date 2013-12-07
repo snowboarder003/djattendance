@@ -1,8 +1,6 @@
 from django import forms
 from absent_trainee_roster.models import Entry, Roster
 from datetime import date
-# from django_select2.fields import ModelSelect2Field
-# from django_select2.widgets import Select2Widget
 from absent_trainee_roster.models import Roster, Entry, Absentee
 
 class RosterForm(forms.ModelForm):
@@ -11,17 +9,12 @@ class RosterForm(forms.ModelForm):
 
 
 class AbsentTraineeForm(forms.ModelForm):
+	comments = forms.CharField(required=False, max_length=40, widget=forms.TextInput(attrs={'class':'comments form-control', 'placeholder':'Comments'}))
 
-	comments = forms.CharField(required=False, max_length=40, widget=forms.TextInput(attrs={'class':'comments'}))
 
 	class Meta:
 		model = Entry
 		fields = ('absentee', 'reason', 'comments')
-		# widgets = {
-		# 	'absentee': Select2Widget(select2_options={
-		# 		'width':'element',
-		# 		}),
-		# }
 
 	def __init__(self, *args, **kwargs):
 		self.user = kwargs.pop('user', None)
@@ -29,8 +22,9 @@ class AbsentTraineeForm(forms.ModelForm):
 		#Every trainee should have an absentee profile
 		self.fields['absentee'].queryset = Absentee.objects.filter(account__trainee__house=self.user.trainee.house)
 		self.fields['absentee'].label = 'Name'
-		self.fields['absentee'].empty_label = ''
-		self.fields['absentee'].widget.attrs={'class': 'select2'}
+		self.fields['absentee'].empty_label = '--Name--'
+		self.fields['absentee'].widget.attrs={'class': 'form-control'}
+		self.fields['reason'].widget.attrs={'class': 'form-control'}
 	
 
 class NewEntryFormSet(forms.formsets.BaseFormSet):
@@ -69,4 +63,3 @@ class NewEntryFormSet(forms.formsets.BaseFormSet):
 		if list:
 			raise forms.ValidationError("Entry/Entries for %s has already been submitted." %', '.join(map(str,list)))
 			
-		
