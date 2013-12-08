@@ -1,88 +1,71 @@
+// DEBUG:
 <p> Hey world, this is detail.html for syllabus instead. </p>
-
-
-
-
-
-<h1> Session List: </h1>
-
+<p>The current url path is {{ request.get_full_path }}</p>
+<p># of Syllabii: {{ syl_list|length }}</p>
 
 ---
-{% if syl_list %}
-	<h3><p># of Syllabii: {{ syl_list|length }}</p></h3>
+<br><br>
+<b>FULL-TIME TRAINING IN ANAHEIM</b>
+
+{% if syl_list %}	
 	{% for syllabus in syl_list %}
+	<!-- /////////////////
+	TO DO:
+		- (psuedocode):
+			- if: the syllabus == the class.id in the URL
+				- then: display the syllabus.
+			- else: don't display the syllabus.
+		- so:
+			- how to track what class user selected
+		
+	
+ 	///////////////////// -->
+		<h2>
+			<p>
+			{{ syllabus.classSyllabus.term }} |
+			{{ syllabus.classSyllabus.name }}
+			</p>
+		</h2>	
+			<p>Syllabus</p>
 
-		<h2>Current Syllabus: {{ syllabus.classSyllabus.name }}</h2>
-			{% if syllabus.classSyllabus.name == 'Triune God' %}
-				HOORAY this syllabus is trune god!
-
-				<h5>
-				<p># of Sessions: {{ syllabus.session_set.all|length }}</p>
-				{% if syllabus.session_set.all %}
-					{% for session in syllabus.session_set.all %}
-						<p> Date: {{ session.date }} |
-							Topic: {{ session.topic }} |
-							Reading Assignment: {{ session.book.code }},
-							{{ session.assignment }} |
-							Exam: {{ session.exam }} </p>
-					{% endfor %}
-				{% endif %}
-				</h5>
-
+			{% if syllabus.after %}
+				Complete the assigned reading AFTER each class section
+			{% else %}	
+				Complete the assigned reading BEFORE each class section
 			{% endif %}
+
+
+			<h5>// (debug) # of Sessions: {{ syllabus.session_set.all|length }}</h5>
+		</h4>
+			{% if syllabus.session_set.all %}
+				<h4>
+				{% for session in syllabus.session_set.all %}
+				<p>		
+						Date: {{ session.date }} |
+						Topic: {{ session.topic }} |
+						Reading Assignment: {{ session.book.code }},
+						{{ session.assignment }} |
+						Exam: {{ session.exam }}
+				</p>
+				{% endfor %}
+				</h4>
+				
+				<p>
+				{% for session in syllabus.session_set.all %}
+					{{ session.book.code }} - {{ session.book }}<br>
+				{% endfor %}	
+				</p>
+			{% endif %}
+		
 		<!-- TO DO: get session related objects by doing a REVERSE relationship from SYLLABUS object. -->
 	{% endfor %}
 
 {% endif %}
---- // end of all syllabus
+--- 
+<br><br>
+// end of all syllabus
 
-<!-- How to find duplicates in the FOR loop and exclude them. i.e. if multiple syllabus??? -->
-{% if sl %}
-	{% for session in sl %}
-		{% if session.topic == 'Inclusion' %}
-			<p> Topic: {{session.topic}}  
-			<br>	Syllabus: {{session.syllabus}}
-			<br>	Class Syllabus: {{session.syllabus.classSyllabus}}
-			</p>
-		{% endif %}
 
-		{% if session.syllabus.classSyllabus %}
-			<p>{{ session.syllabus.classSyllabus }}</p>
-		{% endif %}
-	{% endfor %}	
- ---
+{% if syllabus.classSyllabus.name == 'Triune God' %}
 
-{% endif %}
-
-<p> session date: </p>
-{% if sl %}
-	<ul>
-		{% for session in sl %}
-				<li> {{session.date}} </li>
-		{% endfor %}
-	</ul>
-
-<p> session topic: </p>
-	<ul>
-		{% for session in sl %}
-				<li> {{session.topic}}  </li>
-		{% endfor %}
-	</ul>
-
-<p> session book: </p>
-	<ul>
-		{% for session in sl %}
-				<li>  {{session.book}}  </li>
-		{% endfor %}
-	</ul>
-
-<p> session name: </p>
-	<ul>
-		{% for session in sl %}
-				<li> {{session.syllabus}} </li>
-		{% endfor %}
-	</ul>
-
-{% else %}
-	<p>No sessions.</p>
 {% endif %}
