@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import date
+from datetime import timedelta
 from accounts.models import Profile
 from houses.models import House
 
@@ -60,14 +60,48 @@ class Entry(models.Model):
         ('SE', 'Service'),
         ('O', 'Other'),
         ('T', 'Out of Town'),
-        ('NA', 'Sick - Not absent'),
         ('F', 'Fatigue'),
     )
 	
 	roster = models.ForeignKey(Roster)
 	absentee = models.ForeignKey(Absentee)
 	reason = models.CharField(max_length=2, choices=ABSENT_REASONS)
+	coming_to_class = models.BooleanField(default=False)
 	comments = models.CharField(max_length=250, blank=True)
+
+	# second integer is a flag for the '+' in days absent report.
+	# -if the flag is 0, then the house was reported all previous 7 days.
+	# -if the flag is 1, then the house was unreported within the past 7 days,
+	#  and the entry should have a '+' in days absent.
+	# days_absent = models.IntegerField()
+	# flag_unreported = models.BooleanField(default=False)
+
+	# def calc_days_absent(self):
+	# 	days = 1
+	# 	unreported = False
+	# 	date = self.roster.date
+	# 	for i in range(1,7):
+	# 		date = date - timedelta(days=1)
+	# 		try:
+	# 			prev_roster = Roster.objects.get(date=date)
+	# 		except:
+	# 			pass
+	# 		else:
+	# 			if self.absentee.house in prev_roster.unreported_houses.all():
+	# 				unreported = True
+	# 			else:
+	# 				for entry in prev_roster.entry_set.all():
+	# 					if self.absentee == entry.trainee:
+	# 						days += 1
+	# 	return (days, unreported)
+
+	# def save(self):
+	# 	# super(Entry, self).save()
+	# 	# asdf = self.calc_days_absent()
+	# 	# print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+	# 	# print(asdf)
+	# 	# (self.days_absent, self.flag_unreported) = self.calc_days_absent()
+	# 	super(Entry, self).save()
 
 	class Meta:
 		verbose_name_plural = 'entries'
