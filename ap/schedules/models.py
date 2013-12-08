@@ -55,7 +55,7 @@ class Event(models.Model):
     group = models.ForeignKey('EventGroup')
 
     # if this event is a class, relate it
-    classs = models.ForeignKey(Class)  # class is a reserved keyword :(
+    #classs = models.ForeignKey(Class)  # class is a reserved keyword :(
 
     # the type of event
     type = models.CharField(max_length=1, choices=EVENT_TYPES)
