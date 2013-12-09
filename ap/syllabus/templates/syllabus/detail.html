@@ -41,11 +41,23 @@
 				<h4>
 				{% for session in syllabus.session_set.all %}
 				<p>		
-						Date: {{ session.date }} |
-						Topic: {{ session.topic }} |
-						Reading Assignment: {{ session.book.code }},
-						{{ session.assignment }} |
-						Exam: {{ session.exam }}
+						<!-- TO DO:
+							 add leading zero to session.date.month
+						-->
+						Date: {{ session.date.month }}/{{ session.date.day }} |
+						{% if session.exam %}
+							Topic: EXAM |
+						{% else %}
+							Topic: {{ session.topic }} |	
+						{% endif %}
+						{% if session.exam %}
+							{{ session.assignment }}
+						{% else %}	
+						{% if session.book %}
+							Reading Assignment: {{ session.book.code }},
+						{% endif %}	
+							{{ session.assignment }}
+						{% endif %}
 				</p>
 				{% endfor %}
 				</h4>

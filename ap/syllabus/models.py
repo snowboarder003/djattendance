@@ -61,13 +61,12 @@ class Session(models.Model):
 
     # book name, code
     """ TO DO: Make this OPTIONAL. """
-    book = models.ForeignKey(Book)
+    book = models.ForeignKey(Book) #, blank=True, null=True)
 
     # assignment info (pages; chapters; msgs; lessons; verses; exam: "FINAL, MIDTERM, ETC")
         # can list multiple assigments, e.g. memory verses
-    """ TO DO: Django Admin does not properly display ARRAY assignment
-               Can currently only create one assignment;
-               Should be able to create multiple assignments.
+    """ TO DO:  Make this Array list work
+                Fix formatting to remove (u'assignment') 'u + single quotes'
     """
     assignment = ArrayField(dbtype="varchar(255)")
 
