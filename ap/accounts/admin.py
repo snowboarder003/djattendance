@@ -84,7 +84,7 @@ class TraineeAdmin(admin.ModelAdmin):
             'fields': (('account', 'active',), 'type', 'term', ('date_begin', 'date_end',), ('married', 'spouse',), ('TA', 'mentor',), 'team', ('house', 'bunk',), 'address', 'self_attendance',)
         }),
     )
-
+    list_display = ('__unicode__', 'current_term')
     inlines = [
         VehicleInline,
     ]
