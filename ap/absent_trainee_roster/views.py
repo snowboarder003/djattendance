@@ -6,7 +6,7 @@ from django.views.generic.edit import FormView
 from django.core.context_processors import csrf
 from django.template import RequestContext # For CSRF
 from django.forms.formsets import formset_factory, BaseFormSet
-from django.http import HttpResponse
+
 
 from absent_trainee_roster.forms import AbsentTraineeForm
 from absent_trainee_roster.models import Entry, Roster

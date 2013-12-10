@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.template import RequestContext, Context
 from django.conf.urls import patterns
 from django.shortcuts import render_to_response
+from django.core.mail import mail_admins
 
 from reportlab.pdfgen import canvas
 from django.http import HttpResponse
@@ -62,6 +63,7 @@ class RosterAdmin(admin.ModelAdmin):
 		my_urls =patterns('',
 			#(r'\d+/generate/$', self.admin_site.admin_view(self.myview)),
 			(r'(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d+)/generate/$', self.admin_site.admin_view(self.myview)),
+			(r'(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d+)/email/$', self.admin_site.admin_view(self.send_mail)),
 			
 		)
 		return my_urls +urls
@@ -123,7 +125,16 @@ class RosterAdmin(admin.ModelAdmin):
 			date = date - timedelta(days=1)
 		return list
 	
-	#using Reportlab
+	#sends absent trainee roster to admins
+	def send_mail(self,request, year, month, day):
+		d=date(int(year),int(month),int(day))
+		subject = "Absent Trainee Roster for " +str(d)
+		message = "Hello!"
+		mail_admins(subject, message)
+		
+		return HttpResponse("Email was sent")
+		
+	#using Reportlab example
 	def roster_pdf(self, request):
 		#Create the HttpResponse object with the appropriate PDF headers
 		response = HttpResponse(mimetype='application/pdf')
