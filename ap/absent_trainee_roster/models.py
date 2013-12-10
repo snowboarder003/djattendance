@@ -22,7 +22,7 @@ class Absentee(Profile):
 		return self.account.trainee.house
 	
 	def trainee_term(self):
-		return self.account.trainee.term
+		return self.account.trainee.current_term
 	
 	name = property(trainee_name)
 	house = property(trainee_house)
