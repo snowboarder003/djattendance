@@ -8,7 +8,7 @@ from accounts.models import User
 """ dailybread models.py
 
 This module displays a daily excerpt from the Word or the ministry every day.
-It also allow users to submit portions. 
+It also allow users to submit portions.
 """
 
 
@@ -27,8 +27,12 @@ class Portion(models.Model):
     @staticmethod
     def today():
         """ returns random daily portion for each day """
+        portions = list(Portion.objects.filter(approved=True))
+        if portions is not None:
+            """ Return an empty portion if there are no portions. """
+            return Portion()
         random.seed(date.today())
-        return random.choice(list(Portion.objects.filter(approved=True)))
+        return random.choice(portions)
 
     def __unicode__(self):
         return self.title
