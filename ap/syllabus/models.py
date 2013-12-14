@@ -35,10 +35,10 @@ Data Models:
 
 class Syllabus (models.Model):
 
-    # syllabus for a class; e.g. FMoC, BoC, GOW
+    # which class this syllabus belongs to
     classSyllabus = models.ForeignKey(Class)
 
-    # read assignment AFTER class?
+    # whether assignment is read before or after class (== true)
     after = models.BooleanField(default=False)
 
     def get_absolute_url(self):

@@ -1,14 +1,5 @@
-
-
-
 </br>
-
 <a href="{% url 'home-view' %}"> Back to Home page</a>
-
-
-<!-- figure out how to get the class syllabus module objects (json) values
-	 into the "syllabus_list" container to be displayed through the function
-	 get_absolute_url in the models.py file -->
 
 <h1> First Year Class List: </h1>
 
@@ -19,10 +10,7 @@
 			<li> <a href="{{ syllabus.get_url_path }}">{{ syllabus.classSyllabus }} </a> </li>
 			<!-- <p> {{syllabus.classSyllabus.code}} </p> -->
 		{% endfor %}
-
-		
 	</ul>
 {% else %}
 	<p>No syllabus.</p>
 {% endif %}
-
