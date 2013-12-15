@@ -12,7 +12,7 @@ import djcelery
 djcelery.setup_loader()
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Tiffany Hua', 'tiffanyhua@gmail.com'),
     ('Attendance Project', 'attendanceproj@gmail.com')
 )
 
@@ -177,3 +177,13 @@ LOGGING = {
 }
 
 BROKER_URL = 'amqp://guest:guest@localhost:5672/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+#Host for sending email.
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'djattendanceproject@gmail.com'
+EMAIL_HOST_PASSWORD = 'test4now'
+#Port for sending email.
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
