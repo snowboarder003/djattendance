@@ -11,12 +11,14 @@ from django.http import HttpResponse
 
 def absent_trainee_form(request):
 	EntryFormSet = modelformset_factory(Entry, AbsentTraineeForm, formset=NewEntryFormSet, max_num=10, extra=1, can_delete=True)
+	
+	# get today's roster. create it if it doesn't exist.
+	if Roster.objects.filter(date=date.today()).exists():
+		roster = Roster.objects.get(date=date.today())
+	else:
+		roster = Roster.objects.create_roster(date=date.today())
+
 	if request.method == 'POST':
-		if Roster.objects.filter(date=date.today()).exists():
-			roster = Roster.objects.get(date=date.today())
-		else:
-			roster = Roster.objects.create_roster(date=date.today())
-			
 		formset = EntryFormSet(request.POST, request.FILES, user=request.user)
 		if formset.is_valid():
 			for form in formset.forms:
@@ -33,7 +35,7 @@ def absent_trainee_form(request):
 			return render_to_response('absent_trainee_roster/absent_trainee_form.html', c)
 
 	else:
-		formset = EntryFormSet(user=request.user)
+		formset = EntryFormSet(user=request.user, queryset=roster.entry_set.filter(absentee__account__trainee__house=request.user.trainee.house))
 
 	c = {'formset': formset, 'user': request.user}
 	c.update(csrf(request))

@@ -14,7 +14,7 @@ class AbsentTraineeForm(forms.ModelForm):
 
 	class Meta:
 		model = Entry
-		fields = ('absentee', 'reason', 'comments')
+		fields = ('absentee', 'reason', 'coming_to_class', 'comments')
 
 	def __init__(self, *args, **kwargs):
 		self.user = kwargs.pop('user', None)
@@ -27,12 +27,12 @@ class AbsentTraineeForm(forms.ModelForm):
 		self.fields['reason'].widget.attrs={'class': 'form-control'}
 	
 
-class NewEntryFormSet(forms.formsets.BaseFormSet):
+class NewEntryFormSet(forms.models.BaseModelFormSet):
 	def __init__(self, *args, **kwargs):
 		self.user = kwargs.pop('user', None)
 		super(NewEntryFormSet, self).__init__(*args, **kwargs)
 		for form in self.forms:
-			form.empty_permitted =False
+			form.empty_permitted = False
 
 	def _construct_forms(self):
 		self.forms = []
@@ -55,11 +55,4 @@ class NewEntryFormSet(forms.formsets.BaseFormSet):
 			if absentee in absentees:
 				raise forms.ValidationError("You're submitting entries for the same trainee.")
 			absentees.append(absentee)
-			
-			# checks that absentee is not already in roster
-			for entry in entries:
-				if absentee == entry.absentee:
-					list.append(absentee)
-		if list:
-			raise forms.ValidationError("Entry/Entries for %s has already been submitted." %', '.join(map(str,list)))
 			
