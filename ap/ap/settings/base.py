@@ -176,6 +176,10 @@ LOGGING = {
     }
 }
 
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+}
+
 BROKER_URL = 'amqp://guest:guest@localhost:5672/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
