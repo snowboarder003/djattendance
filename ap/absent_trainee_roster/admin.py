@@ -1,10 +1,24 @@
 from django.contrib import admin
-from django.db import models
-from django.template import RequestContext
-from django.conf.urls.defaults import patterns
+from django.contrib.auth.admin import UserAdmin
+from django.template import loader, RequestContext, Context
+from django.conf.urls import patterns
 from django.shortcuts import render_to_response
+from django.core.mail import EmailMessage
+from django.conf import settings # to get admin email addresses
+
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+
+import cStringIO as StringIO
+import xhtml2pdf.pisa as pisa
+from django.template.loader import get_template
+from cgi import escape
+
+from datetime import date, timedelta
 
 from models import Absentee, Roster, Entry, House
+
+from pdf import render_to_pdf
 
 
 class EntryAdmin(admin.ModelAdmin):
@@ -48,24 +62,108 @@ class RosterAdmin(admin.ModelAdmin):
 	def get_urls(self):
 		urls = super(RosterAdmin, self).get_urls()
 		my_urls =patterns('',
-			(r'\d+/generate/$', self.admin_site.admin_view(self.hello_pdf)),
+			#(r'\d+/generate/$', self.admin_site.admin_view(self.myview)),
+			(r'(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d+)/generate/$', self.admin_site.admin_view(self.generate_pdf)),
+			(r'(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d+)/email/$', self.admin_site.admin_view(self.send_mail)),
+			
 		)
 		return my_urls +urls
 	
-	def generate(self, request):
-		#roster = Roster.objects.get(date=date)
+	#using Pisa
+	def generate_pdf(self, request, year, month, day):
+		#Retrieve data or whatever you need
+		d=date(int(year),int(month),int(day))
+		roster = Roster.objects.get(date=d)
+		entries = roster.entry_set.all().order_by('-absentee')
+		bro_unreported_houses = roster.unreported_houses.filter(gender='B')
+		sis_unreported_houses = roster.unreported_houses.filter(gender='S')
 		
-		return render_to_response(self.generate_roster, {
-			#'date': roster.date,
-			#'unreported_houses': roster.unreported_houses,
-			'opts': self.model._meta,
-			#'root_path': self.admin_site.root_path,
-		}, context_instance=RequestContext(request))
+		days = self.calculate_days(d)
+		unreported_list = self.list_unreported_houses(d)
+		return render_to_pdf(
+			'absent_trainee_roster/generate_roster.html',
+			{
+				'pagsize': 'letter',
+				'roster': roster,
+				'entries': entries,
+				'bro_unreported_houses': bro_unreported_houses,
+				'sis_unreported_houses': sis_unreported_houses,
+				'days': days,
+				'unreported_list': unreported_list,
+				
+			}
+		)
+
+	#calculate how many days a trainee has been absent in the last 7 days
+	def calculate_days(self,date):
+		days = {}
+		for i in range(7):
+			try:
+				roster = Roster.objects.get(date=date)
+				for entry in roster.entry_set.all():
+					if str(entry.absentee) in days:
+						days[str(entry.absentee)] += 1
+					else:
+						days[str(entry.absentee)] = 1
+			except:
+				pass
+			
+			date = date - timedelta(days=1)
+		return days
 	
-	def hello_pdf(self, request):
+	#makes list of trainee houses that are unreported within the last 7 days
+	def list_unreported_houses(self, date):
+		list = []
+		for i in range(7):
+			try:
+				roster = Roster.objects.get(date=date)
+				for house in roster.unreported_houses.all():
+					if house not in list:
+						list.append(house)
+			except:
+				pass
+			
+			date = date - timedelta(days=1)
+		return list
+	
+	#sends absent trainee roster to admins
+	def send_mail(self,request, year, month, day):
+		d=date(int(year),int(month),int(day))
+		roster = Roster.objects.get(date=d)
+		entries = roster.entry_set.all().order_by('-absentee')
+		bro_unreported_houses = roster.unreported_houses.filter(gender='B')
+		sis_unreported_houses = roster.unreported_houses.filter(gender='S')
+		
+		days = self.calculate_days(d)
+		unreported_list = self.list_unreported_houses(d)
+		
+		subject = "Absent Trainee Roster for " +str(d)
+		email_template = loader.get_template('absent_trainee_roster/generate_roster.html')
+		context = Context({
+				'pagsize': 'letter',
+				'roster': roster,
+				'entries': entries,
+				'bro_unreported_houses': bro_unreported_houses,
+				'sis_unreported_houses': sis_unreported_houses,
+				'days': days,
+				'unreported_list': unreported_list,
+				
+			})
+		
+		admin_emails = [v for k,v in settings.ADMINS]
+		email =EmailMessage(subject, email_template.render(context), 'djattendanceproject@gmail.com', admin_emails)
+		email.content_subtype ="html"
+		#email.attach('roster.pdf', self.generate_pdf, 'application/pdf')
+		email.send()
+		
+		
+		return HttpResponse("Email was sent")
+		
+	#using Reportlab example -- not currently used
+	def roster_pdf(self, request):
 		#Create the HttpResponse object with the appropriate PDF headers
 		response = HttpResponse(mimetype='application/pdf')
-		response['Content-Disposition'] = 'attachment; filename=hello.pdf'
+		response['Content-Disposition'] = 'attachment; filename=roster.pdf'
 	
 		#Create the PDF object, using the response object as its "file."
 		p =canvas.Canvas(response)
@@ -77,8 +175,20 @@ class RosterAdmin(admin.ModelAdmin):
 		p.showPage()
 		p.save()
 		return response	
-
-
+		
+		
+	#not currently used
+	def generate(self, request):
+		#roster = Roster.objects.get(date=date)
+		
+		return render_to_response(self.generate_roster, {
+			#'date': roster.date,
+			#'unreported_houses': roster.unreported_houses,
+			'opts': self.model._meta,
+			#'root_path': self.admin_site.root_path,
+		}, context_instance=RequestContext(request))
+	
+	
 admin.site.register(Absentee)
 admin.site.register(Roster, RosterAdmin)
 admin.site.register(Entry, EntryAdmin)

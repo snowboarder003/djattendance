@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.models import BaseInlineFormSet
 from absent_trainee_roster.models import Entry, Roster
 from datetime import date
 from absent_trainee_roster.models import Roster, Entry, Absentee

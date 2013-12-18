@@ -188,3 +188,11 @@ class Trainee(Profile):
 
     def __unicode__(self):
         return self.account.get_full_name()
+
+	#calculates what term the trainee is in
+    def _calculate_term(self):
+    	num_terms = self.term.all().count()
+    	
+    	return num_terms
+    
+    current_term = property(_calculate_term)

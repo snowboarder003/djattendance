@@ -22,7 +22,7 @@ class Absentee(Profile):
 		return self.account.trainee.house
 	
 	def trainee_term(self):
-		return self.account.trainee.term
+		return self.account.trainee.current_term
 	
 	name = property(trainee_name)
 	house = property(trainee_house)
@@ -46,7 +46,7 @@ class Roster(models.Model):
 	date = models.DateField(primary_key=True)
 	
 	objects = RosterManager()
-	unreported_houses = models.ManyToManyField(House, blank=True, null=True)
+	unreported_houses = models.ManyToManyField(House, related_name= 'rosters', blank=True, null=True)
 
 	def __unicode__(self):
 		return self.date.strftime("%m/%d/%Y")
@@ -105,3 +105,8 @@ class Entry(models.Model):
 
 	class Meta:
 		verbose_name_plural = 'entries'
+
+	def __unicode__(self):
+		return self.absentee
+	
+	

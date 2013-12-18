@@ -1,11 +1,19 @@
 from django.forms.models import modelformset_factory
 from absent_trainee_roster.forms import AbsentTraineeForm, NewEntryFormSet
 from django.shortcuts import render, render_to_response, redirect
-from absent_trainee_roster.models import Entry, Roster
+
+from django.views.generic.edit import FormView
 from django.core.context_processors import csrf
 from django.template import RequestContext # For CSRF
+from django.forms.formsets import formset_factory, BaseFormSet
+
+
+from absent_trainee_roster.forms import AbsentTraineeForm
+from absent_trainee_roster.models import Entry, Roster
+from absent_trainee_roster.forms import AbsentTraineeForm, NewEntryFormSet
+
 from datetime import date
-from reportlab.pdfgen import canvas
+
 from django.http import HttpResponse
 
 
