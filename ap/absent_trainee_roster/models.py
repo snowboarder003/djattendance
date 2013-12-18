@@ -107,6 +107,6 @@ class Entry(models.Model):
 		verbose_name_plural = 'entries'
 
 	def __unicode__(self):
-		return self.absentee
+		return self.absentee.name
 	
 	
