@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.models import BaseInlineFormSet
 from absent_trainee_roster.models import Entry, Roster
 from datetime import date
 from absent_trainee_roster.models import Roster, Entry, Absentee
@@ -26,8 +27,19 @@ class AbsentTraineeForm(forms.ModelForm):
 		self.fields['absentee'].widget.attrs={'class': 'form-control'}
 		self.fields['reason'].widget.attrs={'class': 'form-control'}
 	
+"""
+class BaseFormSet(BaseInlineFormSet):
+	def save_new(self, form, commit=True):
+		#custom save behaviour for new objects, form is a ModelForm
+		return super(BaseFormSet, self).save_new(form, commit=commit)
+	
+	def save_existing(self, form, instance, commit=True):
+		#custom save behaviour for existing objects
+		#instance is the existing object, and form has the updated data
+		return super(BaseFormset, self).save_existing(form, instance, commit=commit)
+"""
 
-class NewEntryFormSet(forms.formsets.BaseFormSet):
+class NewEntryFormSet(forms.models.ModelFormSet):
 	def __init__(self, *args, **kwargs):
 		self.user = kwargs.pop('user', None)
 		super(NewEntryFormSet, self).__init__(*args, **kwargs)
