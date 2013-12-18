@@ -33,7 +33,7 @@ class NewEntryFormSet(forms.models.BaseModelFormSet):
 		self.user = kwargs.pop('user', None)
 		super(NewEntryFormSet, self).__init__(*args, **kwargs)
 		for form in self.forms:
-			form.empty_permitted = False
+			form.empty_permitted = True
 
 	def _construct_forms(self):
 		self.forms = []
@@ -51,9 +51,10 @@ class NewEntryFormSet(forms.models.BaseModelFormSet):
 		list = []
 		for i in range(0, self.total_form_count()):
 			form = self.forms[i]
-			absentee = form.cleaned_data['absentee']
-			#checks that absentee is not duplicated in formset
-			if absentee in absentees:
-				raise forms.ValidationError("You're submitting entries for the same trainee.")
-			absentees.append(absentee)
-			
+			if form.cleaned_data: # don't do this is the form is empty
+				absentee = form.cleaned_data['absentee']
+				#checks that absentee is not duplicated in formset
+				if absentee in absentees:
+					raise forms.ValidationError("You're submitting entries for the same trainee.")
+				absentees.append(absentee)
+				

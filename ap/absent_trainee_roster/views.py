@@ -30,9 +30,10 @@ def absent_trainee_form(request):
 		formset = EntryFormSet(request.POST, request.FILES, user=request.user)
 		if formset.is_valid():
 			for form in formset.forms:
-				entry = form.save(commit=False)
-				entry.roster = roster
-				entry.save()
+				if form.cleaned_data: # only save entry if it's not empty
+					entry = form.save(commit=False)
+					entry.roster = roster
+					entry.save()
 			roster.unreported_houses.remove(request.user.trainee.house)
 			return redirect('/')
 		
