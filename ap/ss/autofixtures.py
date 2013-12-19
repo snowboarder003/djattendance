@@ -66,37 +66,83 @@ class UserAutoFixture(AutoFixture):
 register(User, UserAutoFixture)
 
 
+class CampusTeamGenerator(generators.Generator):
+    """
+    Generates a campus team.
+    """
+
+    def generate(self):
+        team = Team()
+        team.name, team.type = 'CalStateLA Team', 'CAMPUS'
+        return team
+
+
+class ChildrensTeamGenerator(generators.Generator):
+    """
+    Generates a children's team.
+    """
+
+    def generate(self):
+        team = Team()
+        team.name, team.type = 'Children\'s Team', 'CHILD'
+        return team
+
+
+class CommunityTeamGenerator(generators.Generator):
+    """
+    Generates a community team.
+    """
+
+    def generate(self):
+        team = Team()
+        team.name, team.type = 'Anaheim Community Team', 'COM'
+        return team
+
+
+class YPTeamGenerator(generators.Generator):
+    """
+    Generates a YP team.
+    """
+
+    def generate(self):
+        team = Team()
+        team.name, team.type = 'Anaheim YP Team', 'YP'
+        return team
+
+
+class InternetTeamGenerator(generators.Generator):
+    """
+    Generates an Internet team.
+    """
+
+    def generate(self):
+        team = Team()
+        team.name, team.type = 'I-DCP Team', 'I'
+        return team
+
+
 class TraineeAutoFixture(AutoFixture):
     # This sets the ratios of the trainee types ('R' is for regular trainees,
     # C' is for commuter trainees, and 'S' is for long term short term
     # trainees)
     trainee_type_ratios = [(generators.StaticGenerator('R'), 70),
                            (generators.StaticGenerator('C'), 30)]
-    # Generate teams
-    teams = Team.objects.all()
-    if not teams:
-        team = Team()
-        team.name = 'Children\'s Team'
-        team.type = 'CHILD'
-    else:
-        team = teams[0]
+    team_ratios = [(CampusTeamGenerator(), 29),
+                   (ChildrensTeamGenerator(), 6),
+                   (CommunityTeamGenerator(), 15),
+                   (YPTeamGenerator(), 27),
+                   (InternetTeamGenerator(), 3)]
     # Generate dummy fields for trainees
-    term = Term()
-    date_begin = datetime.date.today()
-    date_end = datetime.date.today()
-    ta = TrainingAssistant()
-    mentor = Trainee()
-    house = House()
-    bunk = Bunk()
-    address = Address()
-    spouse = Trainee()
+    term, date_begin, date_end, ta, mentor, house, bunk, address, spouse = \
+        Term(), datetime.date.today(), datetime.date.today(), \
+        TrainingAssistant(), Trainee(), House(), Bunk(), Address(), Trainee()
     field_values = {
         'type': generators.WeightedGenerator(choices=trainee_type_ratios),
         'date_begin': date_begin,
         'date_end': date_end,
         'ta': ta,
         'mentor': mentor,
-        'team': team,
+        'team': generators.WeightedGenerator(choices=team_ratios),
         'house': house,
         'bunk': bunk,
         'address': address,
