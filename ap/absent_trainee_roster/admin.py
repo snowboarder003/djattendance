@@ -158,7 +158,7 @@ class RosterAdmin(admin.ModelAdmin):
 		
 		
 		return HttpResponse("Email was sent")
-		
+"""		
 	#using Reportlab example -- not currently used
 	def roster_pdf(self, request):
 		#Create the HttpResponse object with the appropriate PDF headers
@@ -187,7 +187,7 @@ class RosterAdmin(admin.ModelAdmin):
 			'opts': self.model._meta,
 			#'root_path': self.admin_site.root_path,
 		}, context_instance=RequestContext(request))
-	
+"""	
 	
 admin.site.register(Absentee)
 admin.site.register(Roster, RosterAdmin)

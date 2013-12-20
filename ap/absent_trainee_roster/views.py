@@ -7,6 +7,7 @@ from django.core.context_processors import csrf
 from django.template import RequestContext # For CSRF
 from django.forms.formsets import formset_factory, BaseFormSet
 
+from django.contrib.auth.decorators import user_passes_test
 
 from absent_trainee_roster.forms import AbsentTraineeForm
 from absent_trainee_roster.models import Entry, Roster
@@ -16,7 +17,7 @@ from datetime import date
 
 from django.http import HttpResponse
 
-
+@user_passes_test(lambda u: u.groups.filter(name='house_coordinator').count() == 1, login_url = '/')
 def absent_trainee_form(request):
 	EntryFormSet = modelformset_factory(Entry, AbsentTraineeForm, formset=NewEntryFormSet, max_num=10, extra=1, can_delete=True)
 	
