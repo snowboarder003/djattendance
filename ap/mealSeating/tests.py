@@ -10,27 +10,65 @@ from django.test import TestCase
 
 from accounts.models import User, Trainee
 from mealSeating.models import Table
-from mealSeating.autofixtures import TraineeAutoFixture, UserAutoFixture
+from mealSeating.autofixtures import TraineeAutoFixture, UserBrotherAutoFixture, UserSisterAutoFixture
 
 
-def setup_trainees_autofixture():
+def setup_traineeBrothers_autofixture(number):
     """
         This is a test case for using autofixtures in a test.
     """
-    user_fixture, trainee_fixture = UserAutoFixture(User), \
+    user_fixture, trainee_fixture = UserBrotherAutoFixture(User), \
         TraineeAutoFixture(Trainee)
-    users, trainees = user_fixture.create(25), trainee_fixture.create(25)
+    users, trainees = user_fixture.create(number), trainee_fixture.create(number)
+
+def setup_traineeSisters_autofixture(number):
+    """
+        This is a test case for using autofixtures in a test.
+    """
+    user_fixture, trainee_fixture = UserSisterAutoFixture(User), \
+        TraineeAutoFixture(Trainee)
+    users, trainees = user_fixture.create(number), trainee_fixture.create(number)
+
+def setup_south_tables():
+    """
+        Creates all the table's in the south cafeteria
+    """
+    tables = []
+    tables.append(Table(name="S-01", capacity=9, location="S", genderType="B").save())
+    tables.append(Table(name="S-02", capacity=9, location="S", genderType="B").save())
+    tables.append(Table(name="S-03", capacity=9, location="S", genderType="B").save())
+    tables.append(Table(name="S-04", capacity=9, location="S", genderType="B").save())
+    tables.append(Table(name="S-05", capacity=7, location="S", genderType="B").save())
+    tables.append(Table(name="S-06", capacity=10, location="S", genderType="B").save())
+    tables.append(Table(name="S-07", capacity=10, location="S", genderType="B").save())
+    tables.append(Table(name="S-08", capacity=10, location="S", genderType="B").save())
+    tables.append(Table(name="S-09", capacity=10, location="S", genderType="B").save())
+
+    return tables
+
 
 def setup_southeast_tables():
     """
         Creates all the table's in the southeast cafeteria
     """
     tables = []
-    tables.append(Table(name="SE-01", capacity=8, location="SE", genderType="B").save())
-    tables.append(Table(name="SE-02", capacity=8, location="SE", genderType="B").save())
-    tables.append(Table(name="SE-03", capacity=8, location="SE", genderType="B").save())
-    tables.append(Table(name="SE-04", capacity=8, location="SE", genderType="B").save())
+    tables.append(Table(name="SE-01", capacity=9, location="SE", genderType="B").save())
+    tables.append(Table(name="SE-02", capacity=9, location="SE", genderType="B").save())
+    tables.append(Table(name="SE-03", capacity=9, location="SE", genderType="B").save())
+    tables.append(Table(name="SE-04", capacity=9, location="SE", genderType="B").save())
 
+    return tables
+
+def setup_main_brothers_tables():
+    """
+        Creates all the table's in the south cafeteria
+    """
+    tables = []
+    tables.append(Table(name="M-23", capacity=7, location="M", genderType="B").save())
+    tables.append(Table(name="M-24", capacity=8, location="M", genderType="B").save())
+    tables.append(Table(name="M-25", capacity=9, location="M", genderType="B").save())
+    tables.append(Table(name="M-26", capacity=9, location="M", genderType="B").save())
+    
     return tables
 
 def setup_west_tables():
@@ -38,11 +76,11 @@ def setup_west_tables():
         Creates all the table's in the west cafeteria
     """
     tables = []
-    tables.append(Table(name="W-01", capacity=8, location="W").save())
-    tables.append(Table(name="W-02", capacity=8, location="W").save())
-    tables.append(Table(name="W-03", capacity=8, location="W").save())
-    tables.append(Table(name="W-04", capacity=8, location="W").save())
-    tables.append(Table(name="W-05", capacity=8, location="W").save())
+    tables.append(Table(name="W-01", capacity=8, location="W", genderType="S").save())
+    tables.append(Table(name="W-02", capacity=8, location="W", genderType="S").save())
+    tables.append(Table(name="W-03", capacity=8, location="W", genderType="S").save())
+    tables.append(Table(name="W-04", capacity=8, location="W", genderType="S").save())
+    tables.append(Table(name="W-05", capacity=8, location="W", genderType="S").save())
 
     return tables
 
@@ -124,7 +162,7 @@ class TestTableCapacity(TestCase):
         ensure that trainees will not be added beyond the capacity of the table.
     '''
     def test_seatTrainee_cannot_add_beyond_capacity(self):
-        setup_trainees_autofixture()
+        setup_traineeBrothers_autofixture(25)
         setup_southeast_tables()
 
         table = Table.objects.filter(location="SE").all()[0]
@@ -138,14 +176,32 @@ class TestTableCapacity(TestCase):
 class TestTableOverflow(TestCase):
     '''
         This test will test that trainees being added to a group of tables, will be able to 
-        overflow from the first table to the next
+        overflow from the first table to the next.
     '''
     def test_seatTrainee_overflow(self):
-        setup_trainees_autofixture()
+        setup_traineeBrothers_autofixture(25)
         setup_southeast_tables()
 
         traineesToSeat = Trainee.objects.filter(married=False).order_by('account__firstname')
-
-        Table.seatBrothers(traineesToSeat)
+        tables = Table.objects.filter(genderType="B")
         
+        Table.seatTables(traineesToSeat, tables)
+
         self.assertLess(0, Table.objects.all()[1].getSeatedTrainees().count())
+
+    def test_seat_all_brothers(self):
+        setup_south_tables()
+        setup_southeast_tables()
+        setup_main_brothers_tables()
+
+        setup_traineeBrothers_autofixture(146)
+
+        trainees = Trainee.objects.filter(account__gender="B").order_by('account__firstname')
+        tables = Table.objects.all()
+
+        myList = Table.seatTables(trainees, tables)
+
+        s05 = Table.objects.filter(name="S-05")
+
+        self.assertEqual(146, len(myList))
+        self.assertEqual(7, s05[0].getSeatedTrainees().count())
