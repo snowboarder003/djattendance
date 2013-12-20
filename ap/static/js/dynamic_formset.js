@@ -138,7 +138,7 @@ $(document).ready(function () {
 
 	// INITIAL_FORMS should match the number of updated forms
 	$('form').submit(function(e){
-		$('#id_form-INITIAL_FORMS').val($('form .entry input[value]').length);
+		$('#id_form-INITIAL_FORMS').val($('form .entry').children('input[value]').length);
 		return true;
 	});
 });
