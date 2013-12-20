@@ -134,7 +134,7 @@ class Profile(models.Model):
     """
 
     # each user should only have one of each profile
-    account = models.OneToOneField(User)
+    account = models.OneToOneField(User, related_name = "profile")
 
     # whether this profile is still active
     # ex: if a trainee becomes a TA, they no longer need a service worker profile
@@ -185,6 +185,9 @@ class Trainee(Profile):
     # flag for trainees taking their own attendance
     # this will be false for 1st years and true for 2nd with some exceptions.
     self_attendance = models.BooleanField(default=False)
+    
+    #if the trainee is a house coordinator
+    house_coordinator = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.account.get_full_name()

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.admin import Group, User
 
 from accounts.models import User, Trainee, TrainingAssistant
 from aputils.admin import VehicleInline, EmergencyInfoInline
@@ -42,7 +43,7 @@ class APUserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         exclude = ['password']
-
+    
 
 class APUserAdmin(UserAdmin):
     # Set the add/modify forms
@@ -82,7 +83,7 @@ class TraineeAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             # add 'bunk' back in once db behaves
-            'fields': (('account', 'active',), 'type', 'term', ('date_begin', 'date_end',), ('married', 'spouse',), ('TA', 'mentor',), 'team', 'house', 'address', 'self_attendance',)
+            'fields': (('account', 'active',), 'type', 'term', ('date_begin', 'date_end',), ('married', 'spouse',), ('TA', 'mentor',), 'team', 'house', 'address', 'self_attendance', 'house_coordinator')
         }),
     )
     list_display = ('__unicode__', 'current_term')
@@ -90,6 +91,21 @@ class TraineeAdmin(admin.ModelAdmin):
         VehicleInline,
         EmergencyInfoInline,    
     ]
+	"""
+	#overriding save function to add user to house_coordinator group if applicable
+	def save_model(self, request, obj, form, change):
+        
+        if commit:
+        	#if user is a house_coordinator, adds user to the house_coordinator group
+        	if obj.user.profile.trainee.house_coordinator:
+        		try:
+        			group = Group.objects.get(name='house_coordinator')
+        			group.user_set.add(obj.user)
+        		else:
+        			group = Group.objects.create(name = 'house_coordinator')
+            user.save()
+        return user
+"""
 
 
 # Register the new Admin
