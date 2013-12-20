@@ -26,10 +26,11 @@ function deleteForm(btn, prefix) {
 				var i = 0;
 				// Go through the forms and set their indices, names, and IDs
 				for (formCount = forms.length; i < formCount; i++) {
-					$(forms.get(i)).children().children().each(function() {
-						if ($(this).attr('type') == 'text') {
+					$(forms.get(i)).children().first().each(function() {
+						updateElementIndex(this, prefix, i);
+					})
+					$(forms.get(i)).children().children("[id^='id_form-']").each(function() {
 							updateElementIndex(this, prefix, i);
-						}
 					});
 				}
 
@@ -126,7 +127,6 @@ function addEntry(entry, prefix) {
 	}
 
 $(document).ready(function () {
-	
 
 	$('#add').click(function () {
 		return addForm(this, 'form');
@@ -134,5 +134,11 @@ $(document).ready(function () {
 
 	$('.delete').click(function() {
 		return deleteForm(this, 'form');
+	});
+
+	// INITIAL_FORMS should match the number of updated forms
+	$('form').submit(function(e){
+		$('#id_form-INITIAL_FORMS').val($('form .entry input[value]').length);
+		return true;
 	});
 });
