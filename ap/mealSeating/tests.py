@@ -26,4 +26,4 @@ class TestTableCreation(TestCase):
 
     def test_create_tables(self):
         tables = setup_southeast_tables()
-        self.assertEqual(4, tables.count())
+        self.assertEqual(4, len(tables))
