@@ -42,6 +42,19 @@ class Table(models.Model):
         else:
             return False
 
+    def splitTablesByGender(self, tables):
+        brothersTables = []
+        sistersTables = []
+        tableSplit = [brothersTables, sistersTables]
+
+        for table in tables:
+            if table.genderType == "B":
+                brothersTables.append(table)
+            else:
+                sistersTables.append(table)
+
+        return tableSplit
+
     def getSeatedTrainees(self):
         return self.seatedTrainees.all()
 
@@ -52,16 +65,22 @@ class Table(models.Model):
         return self.name
     
     @staticmethod
-    def seatBrothers(traineeList):
-        tables = list(Table.objects.filter(genderType="B"))
-
+    def seatTables(traineeList, tableList):
+        tables = Table().splitTablesByGender(tableList)
         tableToAddTo = 0
+        seatingList = []
+        brothers = 0
+        sisters = 1
 
         for trainee in traineeList:
-            if not tables[tableToAddTo].isFull():
-                tables[tableToAddTo].seatTrainee(trainee)
+            if trainee.account.gender == "B":
+                gender = brothers
             else:
-                if(tableToAddTo < len(tables)):
-                    tableToAddTo +=1
-                    tables[tableToAddTo].seatTrainee(trainee)
-    
+                gender = sisters
+
+            if tables[gender][tableToAddTo].isFull() & (tableToAddTo < len(tables[gender])):
+                tableToAddTo +=1
+            tables[gender][tableToAddTo].seatTrainee(trainee)
+            seatingList.append([trainee.account.get_full_name(),tables[gender][tableToAddTo].name])
+
+        return seatingList
