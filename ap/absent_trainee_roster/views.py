@@ -1,3 +1,4 @@
+from django import forms
 from django.forms.models import modelformset_factory
 from absent_trainee_roster.forms import AbsentTraineeForm, NewEntryFormSet
 from django.shortcuts import render, render_to_response, redirect
@@ -29,11 +30,29 @@ def absent_trainee_form(request):
 	if request.method == 'POST':
 		formset = EntryFormSet(request.POST, request.FILES, user=request.user)
 		if formset.is_valid():
+			new_absentees = {}
+			for i in xrange(int(request.POST['form-TOTAL_FORMS'])):
+				if request.POST['form-' + str(i) + '-absentee']:
+					absentee = int(request.POST['form-' + str(i) + '-absentee'])
+					new_absentees[absentee] = i
 			for form in formset.forms:
 				if form.cleaned_data: # only save entry if it's not empty
 					entry = form.save(commit=False)
+
+					# check for overriding entry for absentee already in database
+					for existing_entry in roster.entry_set.filter(absentee__account__trainee__house=request.user.trainee.house):
+						if entry.absentee == existing_entry.absentee:
+							existing_entry.delete()
+							
 					entry.roster = roster
 					entry.save()
+			
+			# delete entries for absentees not in newly submitted form
+			entries = roster.entry_set.filter(absentee__account__trainee__house=request.user.trainee.house)
+			for entry in entries:
+				if entry.absentee.id not in new_absentees.keys():
+					entry.delete()
+
 			roster.unreported_houses.remove(request.user.trainee.house)
 			return redirect('/')
 		
