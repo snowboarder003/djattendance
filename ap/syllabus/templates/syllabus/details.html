@@ -1,0 +1,40 @@
+Hey world, this is detail.html.
+
+<a href="{% url 'home-view' %}">Back to term list.</a>
+
+<h1>{{ syllabus.classSyllabus }}</h1>
+<p>Course Code: {{ syllabus.classSyllabus.code }}</p>
+<p>Course Code: {{ syllabus.classSyllabus.name }}</p>
+<p>Course Code: {{ syllabus.classSyllabus.term }}</p>
+
+{% if syllabus.session_set.all %}
+				<h4>
+				{% for session in syllabus.session_set.all %}
+				<p>		
+						<!-- TO DO:
+							 add leading zero to session.date.month
+						-->
+						Date: {{ session.date.month }}/{{ session.date.day }} |
+						{% if session.exam %}
+							Topic: EXAM |
+						{% else %}
+							Topic: {{ session.topic }} |	
+						{% endif %}
+						{% if session.exam %}
+							{{ session.assignment }}
+						{% else %}	
+						{% if session.book %}
+							Reading Assignment: {{ session.book.code }},
+						{% endif %}	
+							{{ session.assignment }}
+						{% endif %}
+				</p>
+				{% endfor %}
+				</h4>
+				
+				<p>
+				{% for session in syllabus.session_set.all %}
+					{{ session.book.code }} - {{ session.book }}<br>
+				{% endfor %}	
+				</p>
+			{% endif %}

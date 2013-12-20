@@ -7,10 +7,35 @@
 	<ul>
 		{% for syllabus in list %}
 			<!-- <li><a href="{{ syllabus.classSyllabus.code }}">{{ syllabus.classSyllabus }}</a></li> -->
-			<li> <a href="{{ syllabus.get_url_path }}">{{ syllabus.classSyllabus }} </a> </li>
+			<li> <a href="{{ syllabus.get_url_path }}" >{{ syllabus.classSyllabus }} </a> </li>
 			<!-- <p> {{syllabus.classSyllabus.code}} </p> -->
 		{% endfor %}
 	</ul>
 {% else %}
 	<p>No syllabus.</p>
 {% endif %}
+
+
+{% if list %}
+	<ul>
+		{% for syllabus in list %}
+			<!-- <li><a href="{{ syllabus.classSyllabus.code }}">{{ syllabus.classSyllabus }}</a></li> -->
+			<li> <a href="{{syllabus.get_id}}" > {{ syllabus.classSyllabus.code }} </a> </li>
+			<!-- <p> {{syllabus.classSyllabus.code}} </p> -->
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>No syllabus.</p>
+{% endif %}
+
+{% if list %}
+	<ul>
+		{% for syllabus in list %}
+			<!-- <li><a href="{{ syllabus.classSyllabus.code }}">{{ syllabus.classSyllabus }}</a></li> -->
+			<li> <a href="{{syllabus.classSyllabus.code}}" > {{ syllabus.classSyllabus.code }} </a> </li>
+			<!-- <p> {{syllabus.classSyllabus.code}} </p> -->
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>No syllabus.</p>
+{% endif %}ß

@@ -41,14 +41,40 @@ class Syllabus (models.Model):
     # whether assignment is read before or after class (== true)
     after = models.BooleanField(default=False)
 
-    def get_absolute_url(self):
-        return reverse('self.classSyllabus.code')
+    # def get_absolute_url(self):
+    #     return reverse('self.classSyllabus.code')
 
-    def get_url_path(self):
+    def get_absolute_url(self):
+        return reverse('syllabus:detail', kwargs={'code': self.classSyllabus.code})
+
+    def get_url(self):
         return '%s/' % self.classSyllabus.code
+
+    
+    def get_id(self):
+        code = self.id
+        return code
+
+    # @property
+    # def _get_code(self):
+    #     code= self.classSyllabus.code
+    #     return code
+    
+    # codes = property(_get_code)
+
+
+
 
     def __unicode__(self):
         return (self.classSyllabus.name + " | " + self.classSyllabus.term.name)
+
+    # code = Syllabus.classSyllabus.code
+
+    # def get_code(self):
+    #     code = self.classSyllabus.term.name
+    #     return code
+
+    
 
 
 class Session(models.Model):
