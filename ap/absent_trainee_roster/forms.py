@@ -49,13 +49,13 @@ class NewEntryFormSet(forms.models.BaseModelFormSet):
 		roster = Roster.objects.filter(date=date.today())[0]
 		entries = Entry.objects.filter(roster=roster)
 		absentees = [] # list of absentee id's
-		for i in range(0, self.total_form_count()):
-			form = self.forms[i]
-			for i in xrange(int(self.data['form-TOTAL_FORMS'])):
-				if self.data['form-' + str(i) + '-absentee']:
-					absentee = int(self.data['form-' + str(i) + '-absentee'])
-					if absentee in absentees:
-						raise forms.ValidationError("You're submitting multiple entries for the same trainee.")
-					absentees.append(absentee)
+		for i in xrange(self.total_form_count()):
+			if self.data['form-' + str(i) + '-absentee']:
+				absentee = int(self.data['form-' + str(i) + '-absentee'])
+				print('ABSENTEES', absentees)
+				print('ABSENTEE', absentee)
+				if absentee in absentees:
+					raise forms.ValidationError("You're submitting multiple entries for the same trainee.")
+				absentees.append(absentee)
 		return super(NewEntryFormSet, self).clean()
 				
