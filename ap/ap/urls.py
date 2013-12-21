@@ -16,6 +16,7 @@ urlpatterns = patterns('',
 
     url(r'^terms/', include('terms.urls', namespace="terms")),
     url(r'^dailybread/', include('dailybread.urls', namespace="dailybread")),
+    url(r'^verse_parse/', include('verse_parse.urls', namespace="verse_parse")),
     # Examples:
     # url(r'^$', 'ap.views.home', name='home'),
     # url(r'^ap/', include('ap.foo.urls')),
