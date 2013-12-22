@@ -85,7 +85,7 @@ def pdf_to_text(fname):
 
 # split outline by Roman Numerals and alphabets
 def tsplit(text):
-	list=re.split('\n(?P<bullet>[0-9A-Z-a-z]*\.)\s',text)
+	list=re.split('\n(?P<bullet>[0-9A-Z-a-z][0-9A-Z]*\.)\s',text)
 	title=list.pop(0)
 	title=re.split('Scripture Reading:', title)
 	dict={'title': title[0], 'Scripture Reading': title[1]}
