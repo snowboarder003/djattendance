@@ -1,9 +1,11 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.views.generic import ListView, TemplateView, DetailView, ArchiveIndexView
+from django.views.generic import ListView, TemplateView, DetailView, ArchiveIndexView, CreateView, DeleteView
 from .models import Syllabus
 from terms.models import Term
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from .forms import NewSyllabusForm
+from django.core.urlresolvers import reverse_lazy
 
 
 
@@ -17,10 +19,11 @@ class HomeView(ListView):
     model = Term
     context_object_name = 'termlist'
 
-class TestView(ListView):
-    template_name = "syllabus/detail.html"
+class CLView(ListView):
+
+    template_name = "syllabus/classlist.html"
+    context_object_name = 'list'
     model = Syllabus
-    context_object_name = 'syl_list'
 
 class DetailView(ListView):
     template_name = "syllabus/details.html"
@@ -34,17 +37,28 @@ class DetailView(ListView):
         return Syllabus.objects.filter(classSyllabus__code= kode)
         # .filter(classSyllabus__term = term)
 
-
-
-
-    
-
-class AboutView(ListView):
-
-    template_name = "syllabus/classlist.html"
-    context_object_name = 'list'
+class AddSyllabusView(CreateView):
     model = Syllabus
+    template_name = 'syllabus/new_syllabus_form.html'
+    form_class = NewSyllabusForm
 
+class DeleteSyllabusView(DeleteView):
+    model = Syllabus
+    template_name = 'syllabus/delete_syllabus_confirm.html'
+    slug_field = 'after' # REPLACE_3
+    slug_url_kwarg = 'after' # REPLACE_4
+    success_url = reverse_lazy('classlist-view') 
+
+
+
+
+
+
+
+class TestView(ListView):
+    template_name = "syllabus/detail.html"
+    model = Syllabus
+    context_object_name = 'syl_list'
 
 
 class SyllabusDetailView(ListView):
