@@ -1,1 +1,1 @@
-web: gunicorn djattendance.wsgi
+web: gunicorn ap.wsgi
