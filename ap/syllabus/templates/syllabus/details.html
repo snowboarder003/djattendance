@@ -1,12 +1,58 @@
 Hey world, this is detail.html.
 
-<a href="{% url 'home-view' %}">Back to term list.</a>
+<br><br>
+
+<a href="{% url 'home-view' %}"> Back to term list.</a>
+
+
+
+
+
+<p> {{list}} </p>
+<p> {{kode}} </p>
+<p> {{term}} </p>
+<p> {{ syllabus.classSyllabus.code }}</p>
+
+{% if list %}
+	<ul>
+		{% for syllabus in list %}
+			<!-- <li><a href="{{ syllabus.classSyllabus.code }}">{{ syllabus.classSyllabus }}</a></li> -->
+			<li> <a href="{{ syllabus.get_url_path }}" >{{ syllabus.classSyllabus }} </a> </li>
+			<!-- <p> {{syllabus.classSyllabus.code}} </p> -->
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>No syllabus.</p>
+{% endif %}
+
+
+
+
+
+{% for syllabus in list %}
 
 <h1>{{ syllabus.classSyllabus }}</h1>
 <p>Course Code: {{ syllabus.classSyllabus.code }}</p>
-<p>Course Code: {{ syllabus.classSyllabus.name }}</p>
-<p>Course Code: {{ syllabus.classSyllabus.term }}</p>
+<p>Course Name: {{ syllabus.classSyllabus.name }}</p>
+<p>Course Term: {{ syllabus.classSyllabus.term }}</p>
+<p>When to Read: 
+{% if syllabus.after %}
+				Complete the assigned reading AFTER each class section
+			{% else %}	
+				Complete the assigned reading BEFORE each class section
+			{% endif %}
+</p>
 
+
+
+{% endfor %}
+
+<p> {{session.date}} </p>
+
+<h5>// (debug) # of Sessions: {{ syllabus.session_set.all|length }}</h5>
+			
+
+<!-- GET A REALLY WEIRD ERROR - CAN ONLY ACCESS SYLLABUS.CLASSSYLLABUS.CODE IF ITS INSIDE A IF / FOR LOOP. DOESN'T WORK STAND ALONE?! -->
 {% if syllabus.session_set.all %}
 				<h4>
 				{% for session in syllabus.session_set.all %}

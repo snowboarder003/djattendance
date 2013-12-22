@@ -52,8 +52,8 @@ class Syllabus (models.Model):
 
     
     def get_id(self):
-        code = self.id
-        return code
+        slug = self.id
+        return slug
 
     # @property
     # def _get_code(self):
