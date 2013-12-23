@@ -22,7 +22,7 @@ import re
 def handle_uploaded_file(f):
 	data = pdf_to_text(f)
 	title, rest = tsplit(data)
-	return rest
+	return data
 			
 
 def upload_file(request):
