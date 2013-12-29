@@ -29,7 +29,7 @@ class Badge(models.Model):
     locality = models.CharField(max_length=100, null=True, blank=True)
 
 
-    def get_upload_path(self, filename, term=Term.current_term()[0].code):
+    def get_upload_path(self, filename, term=Term.current_term().code):
         path = "badges/"
         if self.type == 'T':
             path += "trainees/" + term + '/'
