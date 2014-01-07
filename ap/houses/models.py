@@ -39,6 +39,10 @@ class Room(models.Model):
     ROOM_TYPES = (
         ('LIV', 'Living Room'),
         ('BED', 'Bedroom'),
+        ('BED1', 'Single Bedroom'),
+        ('BED2', 'Double Bedroom'),
+        ('BED3', 'Triple Bedroom'),
+        ('BEDc', 'Couple\'s Bedroom'),
         ('KIT', 'Kitchen'),
         ('BATH', 'Bathroom'),
         ('GAR', 'Garage'),
@@ -54,14 +58,50 @@ class Room(models.Model):
     floor = models.SmallIntegerField(default=1)
 
     def __unicode__(self):
-        return self.house.name + " " + self.type
+        return "("+str(self.id)+") "+self.house.name + " " + self.type
+
+
+class BedFrame(models.Model):
+    name = models.CharField(max_length=50)
+    
+    def __unicode__(self):
+        return self.name
+    
+class Mattress(models.Model):
+    name = models.CharField(max_length=50)
+    
+    def __unicode__(self):
+        return self.name
 
 class Bunk(models.Model):
 
     POSITION = (
+        ('B', 'Bottom'),
         ('T', 'Top'),
-        ('B', 'Bottom')
+        ('Q', 'Queen-A'),
+        ('q', 'Queen-B'),
+        ('S', 'Single')
     )
+
+    LENGTH = (
+        ('R', 'Regular'),
+        ('L', 'Long')
+    )
+    
+    #MS Access db fields
+    for_trainees = models.BooleanField(default=True)
+    
+    has_protector = models.BooleanField()
+    
+    has_ladder = models.BooleanField()
+    
+    length = models.CharField(max_length=1, choices=LENGTH)
+    
+    bed_frame = models.ForeignKey(BedFrame)
+    
+    mattress = models.ForeignKey(Mattress)
+    #End of MS access db fields
+    
 
     # the bunk's number
     number = models.SmallIntegerField(primary_key=True)
@@ -69,10 +109,13 @@ class Bunk(models.Model):
     # whether this is a top or bottom bunk
     position = models.CharField(max_length=1, choices=POSITION)
 
-    link = models.OneToOneField('Bunk', null=True)
+    link = models.OneToOneField('Bunk', null=True, blank=True)
 
     # which room this bunk is in
     room = models.ForeignKey(Room)
+    
+    #from Access db
+    notes = models.TextField()
 
     def __unicode__(self):
         return self.room.house.name + " Bunk " + str(self.number)
