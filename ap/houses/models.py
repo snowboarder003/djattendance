@@ -15,7 +15,8 @@ class House(models.Model):
 
     GENDER = (
         ('B', 'Brother'),
-        ('S', 'Sister')
+        ('S', 'Sister'),
+        ('C', 'Couple')
     )
 
     # the common name for the house, e.g. 1329 Amberwick, 2102 Grace

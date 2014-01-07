@@ -254,6 +254,222 @@
     "model" : "houses.house",
     "pk" : 32
   },
+  { "fields" : { "address" : 44,
+        "gender" : "B",
+        "name" : "Ball Apt. 1",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 33
+  },
+  { "fields" : { "address" : 44,
+        "gender" : "B",
+        "name" : "Ball Apt. 4",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 34
+  },
+  { "fields" : { "address" : 44,
+        "gender" : "B",
+        "name" : "Ball Apt. 5",
+        "used" : false
+      },
+    "model" : "houses.house",
+    "pk" : 35
+  },
+  { "fields" : { "address" : 44,
+        "gender" : "B",
+        "name" : "Ball Apt. 3",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 36
+  },
+  { "fields" : { "address" : 44,
+        "gender" : "B",
+        "name" : "Ball Apt. 6",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 37
+  },
+  { "fields" : { "address" : 24,
+        "gender" : "C",
+        "name" : "Castle Couple",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 38
+  },
+  { "fields" : { "address" : 45,
+        "gender" : "C",
+        "name" : "Hall Apt. 1-East",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 39
+  },
+  { "fields" : { "address" : 45,
+        "gender" : "C",
+        "name" : "Hall Apt. 1-West",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 40
+  },
+  { "fields" : { "address" : 9,
+        "gender" : "C",
+        "name" : "2102 Grace Ct. Couple",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 41
+  },
+  { "fields" : { "address" : 19,
+        "gender" : "C",
+        "name" : "2105 Grace Ct. Couple",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 42
+  },
+  { "fields" : { "address" : 14,
+        "gender" : "C",
+        "name" : "2113 Grace Ct. Couple",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 43
+  },
+  { "fields" : { "address" : 10,
+        "gender" : "C",
+        "name" : "2116 Grace Ct. Couple",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 44
+  },
+  { "fields" : { "address" : 18,
+        "gender" : "C",
+        "name" : "2117 Grace Ct. Couple",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 45
+  },
+  { "fields" : { "address" : 16,
+        "gender" : "C",
+        "name" : "2120 Grace Ct. Couple",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 46
+  },
+  { "fields" : { "address" : 6,
+        "gender" : "C",
+        "name" : "2121 Grace Ct. Couple",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 47
+  },
+  { "fields" : { "address" : 45,
+        "gender" : "C",
+        "name" : "Hall Apt. 2-East",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 48
+  },
+  { "fields" : { "address" : 45,
+        "gender" : "C",
+        "name" : "Hall Apt. 2-West",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 49
+  },
+  { "fields" : { "address" : 45,
+        "gender" : "C",
+        "name" : "Hall Apt. 3-East",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 50
+  },
+  { "fields" : { "address" : 45,
+        "gender" : "C",
+        "name" : "Hall Apt. 3-West",
+        "used" : false
+      },
+    "model" : "houses.house",
+    "pk" : 51
+  },
+  { "fields" : { "address" : 45,
+        "gender" : "S",
+        "name" : "Hall Apt. 4-East",
+        "used" : false
+      },
+    "model" : "houses.house",
+    "pk" : 52
+  },
+  { "fields" : { "address" : 45,
+        "gender" : "C",
+        "name" : "Hall Apt. 4-West",
+        "used" : false
+      },
+    "model" : "houses.house",
+    "pk" : 53
+  },
+  { "fields" : { "address" : 45,
+        "gender" : "S",
+        "name" : "Hall Apt. 5-East",
+        "used" : false
+      },
+    "model" : "houses.house",
+    "pk" : 54
+  },
+  { "fields" : { "address" : 45,
+        "gender" : "C",
+        "name" : "Hall Apt. 5-West",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 55
+  },
+  { "fields" : { "address" : 45,
+        "gender" : "C",
+        "name" : "Hall Apt. 6-East",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 56
+  },
+  { "fields" : { "address" : 45,
+        "gender" : "C",
+        "name" : "Hall Apt. 6-West",
+        "used" : true
+      },
+    "model" : "houses.house",
+    "pk" : 57
+  },
+  { "fields" : { "address" : 45,
+        "gender" : "S",
+        "name" : "Hall Apt. 7-West",
+        "used" : false
+      },
+    "model" : "houses.house",
+    "pk" : 58
+  },
+  { "fields" : { "address" : 22,
+        "gender" : "S",
+        "name" : "Hall Apt. 8-West",
+        "used" : false
+      },
+    "model" : "houses.house",
+    "pk" : 59
+  },
   { "fields" : { "name" : "Cot" },
     "model" : "houses.bedframe",
     "pk" : 1
