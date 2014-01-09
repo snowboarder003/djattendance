@@ -5,6 +5,8 @@ from django.contrib.auth.views import login, logout
 from django.contrib import admin
 import autofixture
 
+from houses import urls as houses_urls
+
 admin.autodiscover()
 autofixture.autodiscover()
 
@@ -25,5 +27,8 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    
+    
+    url(r'^houses/', include(houses_urls)),
 )
 

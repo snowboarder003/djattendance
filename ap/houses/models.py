@@ -40,10 +40,6 @@ class Room(models.Model):
     ROOM_TYPES = (
         ('LIV', 'Living Room'),
         ('BED', 'Bedroom'),
-        ('BED1', 'Single Bedroom'),
-        ('BED2', 'Double Bedroom'),
-        ('BED3', 'Triple Bedroom'),
-        ('BEDc', 'Couple\'s Bedroom'),
         ('KIT', 'Kitchen'),
         ('BATH', 'Bathroom'),
         ('GAR', 'Garage'),
@@ -98,14 +94,14 @@ class Bunk(models.Model):
     
     length = models.CharField(max_length=1, choices=LENGTH)
     
-    bed_frame = models.ForeignKey(BedFrame)
+    bed_frame = models.ForeignKey(BedFrame, null=True, blank=True)
     
-    mattress = models.ForeignKey(Mattress)
+    mattress = models.ForeignKey(Mattress, null=True, blank=True)
     #End of MS access db fields
     
 
     # the bunk's number
-    number = models.SmallIntegerField(primary_key=True)
+    number = models.SmallIntegerField()
 
     # whether this is a top or bottom bunk
     position = models.CharField(max_length=1, choices=POSITION)
