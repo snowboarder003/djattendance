@@ -1,1967 +1,1576 @@
-[
-{
-    "pk": 1,
-    "model": "aputils.country",
-    "fields": {
-        "code": "USA",
-        "name": "United States of America"
-    }
-},
-{
-    "pk": 2,
-    "model": "aputils.country",
-    "fields": {
-        "code": "CAN",
-        "name": "Canada"
-    }
-},
-{
-    "pk": 3,
-    "model": "aputils.country",
-    "fields": {
-        "code": "CHN",
-        "name": "China"
-    }
-},
-{
-    "pk": 4,
-    "model": "aputils.country",
-    "fields": {
-        "code": "ESP",
-        "name": "Spain"
-    }
-},
-{
-    "pk": 5,
-    "model": "aputils.country",
-    "fields": {
-        "code": "ZAF",
-        "name": "South Africa"
-    }
-},
-{
-    "pk": 6,
-    "model": "aputils.country",
-    "fields": {
-        "code": "BRA",
-        "name": "Brazil"
-    }
-},
-{
-    "pk": 7,
-    "model": "aputils.country",
-    "fields": {
-        "code": "GRD",
-        "name": "Grenada"
-    }
-},
-{
-    "pk": 8,
-    "model": "aputils.country",
-    "fields": {
-        "code": "SGP",
-        "name": "Singapore"
-    }
-},
-{
-    "pk": 9,
-    "model": "aputils.country",
-    "fields": {
-        "code": "THA",
-        "name": "Thailand"
-    }
-},
-{
-    "pk": 10,
-    "model": "aputils.country",
-    "fields": {
-        "code": "NZL",
-        "name": "New Zealand"
-    }
-},
-{
-    "pk": 11,
-    "model": "aputils.country",
-    "fields": {
-        "code": "IDN",
-        "name": "Indonesia"
-    }
-},
-{
-    "pk": 12,
-    "model": "aputils.country",
-    "fields": {
-        "code": "ARG",
-        "name": "Argentina"
-    }
-},
-{
-    "pk": 13,
-    "model": "aputils.country",
-    "fields": {
-        "code": "KOR",
-        "name": "Republic of Korea"
-    }
-},
-{
-    "pk": 14,
-    "model": "aputils.country",
-    "fields": {
-        "code": "PHL",
-        "name": "Philppines"
-    }
-},
-{
-    "pk": 15,
-    "model": "aputils.country",
-    "fields": {
-        "code": "CHL",
-        "name": "Chile"
-    }
-},
-{
-    "pk": 1,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Los Angeles"
-    }
-},
-{
-    "pk": 2,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Anaheim"
-    }
-},
-{
-    "pk": 3,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Alhambra"
-    }
-},
-{
-    "pk": 4,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "San Gabriel"
-    }
-},
-{
-    "pk": 5,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Berkeley"
-    }
-},
-{
-    "pk": 6,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Irvine"
-    }
-},
-{
-    "pk": 7,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "San Diego"
-    }
-},
-{
-    "pk": 8,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "New York",
-        "name": "New York City"
-    }
-},
-{
-    "pk": 9,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Illinois",
-        "name": "Chicago"
-    }
-},
-{
-    "pk": 10,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Massachusetts",
-        "name": "Boston"
-    }
-},
-{
-    "pk": 11,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Georgia",
-        "name": "Atlanta"
-    }
-},
-{
-    "pk": 12,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Arcadia"
-    }
-},
-{
-    "pk": 13,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Texas",
-        "name": "Houston"
-    }
-},
-{
-    "pk": 14,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Texas",
-        "name": "Austin"
-    }
-},
-{
-    "pk": 15,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Louisiana",
-        "name": "Baton Rouge"
-    }
-},
-{
-    "pk": 16,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Washington",
-        "name": "Seattle"
-    }
-},
-{
-    "pk": 17,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Washington",
-        "name": "Spokane"
-    }
-},
-{
-    "pk": 18,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Portland"
-    }
-},
-{
-    "pk": 19,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Utah",
-        "name": "Salt Lake City"
-    }
-},
-{
-    "pk": 20,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Illinois",
-        "name": "Champaign"
-    }
-},
-{
-    "pk": 21,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Wisconsin",
-        "name": "Madison"
-    }
-},
-{
-    "pk": 22,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Wisconsin",
-        "name": "Milwaukee"
-    }
-},
-{
-    "pk": 23,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Torrance"
-    }
-},
-{
-    "pk": 24,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Pasadena"
-    }
-},
-{
-    "pk": 25,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "East Los Angeles"
-    }
-},
-{
-    "pk": 26,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Monterey Park"
-    }
-},
-{
-    "pk": 27,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "El Monte"
-    }
-},
-{
-    "pk": 28,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Cerritos"
-    }
-},
-{
-    "pk": 29,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "San Francisco"
-    }
-},
-{
-    "pk": 30,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Texas",
-        "name": "College Station"
-    }
-},
-{
-    "pk": 31,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Oregon",
-        "name": "Eugene"
-    }
-},
-{
-    "pk": 32,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Colorado",
-        "name": "Fort Collins"
-    }
-},
-{
-    "pk": 33,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Colorado",
-        "name": "Denver"
-    }
-},
-{
-    "pk": 34,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Texas",
-        "name": "Denton"
-    }
-},
-{
-    "pk": 35,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Texas",
-        "name": "Dallas"
-    }
-},
-{
-    "pk": 36,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Georgia",
-        "name": "Athens"
-    }
-},
-{
-    "pk": 37,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Connecticut",
-        "name": "Newington"
-    }
-},
-{
-    "pk": 38,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Massachusetts",
-        "name": "Cambridge"
-    }
-},
-{
-    "pk": 39,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Virginia",
-        "name": "Charlottesville"
-    }
-},
-{
-    "pk": 40,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Florida",
-        "name": "Orlando"
-    }
-},
-{
-    "pk": 41,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Florida",
-        "name": "Gainesville"
-    }
-},
-{
-    "pk": 42,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Washington",
-        "name": "Bellingham"
-    }
-},
-{
-    "pk": 43,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "San Luis Obispo"
-    }
-},
-{
-    "pk": 44,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Fresno"
-    }
-},
-{
-    "pk": 45,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Pleasanton"
-    }
-},
-{
-    "pk": 46,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Pennsylvania",
-        "name": "Philadelphia"
-    }
-},
-{
-    "pk": 47,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Pennsylvania",
-        "name": "Pittsburgh"
-    }
-},
-{
-    "pk": 48,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Michigan",
-        "name": "Ann Arbor"
-    }
-},
-{
-    "pk": 49,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Minnesota",
-        "name": "Minneapolis"
-    }
-},
-{
-    "pk": 50,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Washington",
-        "name": "Pullman"
-    }
-},
-{
-    "pk": 51,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Huntington Beach"
-    }
-},
-{
-    "pk": 52,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Fullerton"
-    }
-},
-{
-    "pk": 53,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Diamond Bar"
-    }
-},
-{
-    "pk": 54,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Cupertino"
-    }
-},
-{
-    "pk": 55,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "San Jose"
-    }
-},
-{
-    "pk": 56,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Palo Alto"
-    }
-},
-{
-    "pk": 57,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Santa Clara"
-    }
-},
-{
-    "pk": 58,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Burlingame"
-    }
-},
-{
-    "pk": 59,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Washington",
-        "name": "Tacoma"
-    }
-},
-{
-    "pk": 60,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Maryland",
-        "name": "Beltsville"
-    }
-},
-{
-    "pk": 61,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Texas",
-        "name": "Arlington"
-    }
-},
-{
-    "pk": 62,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Baldwin Park"
-    }
-},
-{
-    "pk": 63,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Riverside"
-    }
-},
-{
-    "pk": 64,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Ohio",
-        "name": "Fairborn"
-    }
-},
-{
-    "pk": 65,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "New Mexico",
-        "name": "Albuquerque"
-    }
-},
-{
-    "pk": 66,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Long Beach"
-    }
-},
-{
-    "pk": 67,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Davis"
-    }
-},
-{
-    "pk": 68,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Alabama",
-        "name": "Birmingham"
-    }
-},
-{
-    "pk": 69,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "New Jersey",
-        "name": "Piscataway"
-    }
-},
-{
-    "pk": 70,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Virginia",
-        "name": "Richmond"
-    }
-},
-{
-    "pk": 71,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Orange"
-    }
-},
-{
-    "pk": 72,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Florida",
-        "name": "Miami"
-    }
-},
-{
-    "pk": 73,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Texas",
-        "name": "Irving"
-    }
-},
-{
-    "pk": 74,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Kansas",
-        "name": "Manhattan"
-    }
-},
-{
-    "pk": 75,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Ontario"
-    }
-},
-{
-    "pk": 76,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Connecticut",
-        "name": "Storrs"
-    }
-},
-{
-    "pk": 77,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Oklahoma",
-        "name": "Oklahoma City"
-    }
-},
-{
-    "pk": 78,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Florida",
-        "name": "Tallahassee"
-    }
-},
-{
-    "pk": 79,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Virginia",
-        "name": "Dunn Loring"
-    }
-},
-{
-    "pk": 80,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "North Carolina",
-        "name": "Raleigh"
-    }
-},
-{
-    "pk": 81,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "New Jersey",
-        "name": "Nutley"
-    }
-},
-{
-    "pk": 82,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "New Jersey",
-        "name": "Lawrence"
-    }
-},
-{
-    "pk": 83,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Arizona",
-        "name": "Phoenix"
-    }
-},
-{
-    "pk": 84,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Washington",
-        "name": "Bellevue"
-    }
-},
-{
-    "pk": 85,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Rhode Island",
-        "name": "North Providence"
-    }
-},
-{
-    "pk": 86,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Iowa",
-        "name": "Ames"
-    }
-},
-{
-    "pk": 87,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Ohio",
-        "name": "Columbus"
-    }
-},
-{
-    "pk": 88,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Texas",
-        "name": "Beaumont"
-    }
-},
-{
-    "pk": 89,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "San Bernardino"
-    }
-},
-{
-    "pk": 90,
-    "model": "aputils.city",
-    "fields": {
-        "country": 2,
-        "region": "British Columbia",
-        "name": "Vancouver"
-    }
-},
-{
-    "pk": 91,
-    "model": "aputils.city",
-    "fields": {
-        "country": 2,
-        "region": "Ontario",
-        "name": "Toronto"
-    }
-},
-{
-    "pk": 92,
-    "model": "aputils.city",
-    "fields": {
-        "country": 2,
-        "region": "British Columbia",
-        "name": "Surrey"
-    }
-},
-{
-    "pk": 93,
-    "model": "aputils.city",
-    "fields": {
-        "country": 2,
-        "region": "British Columbia",
-        "name": "Burnaby"
-    }
-},
-{
-    "pk": 94,
-    "model": "aputils.city",
-    "fields": {
-        "country": 2,
-        "region": "Quebec",
-        "name": "Montreal"
-    }
-},
-{
-    "pk": 95,
-    "model": "aputils.city",
-    "fields": {
-        "country": 2,
-        "region": "Ontario",
-        "name": "Sault Ste. Marie"
-    }
-},
-{
-    "pk": 96,
-    "model": "aputils.city",
-    "fields": {
-        "country": 6,
-        "region": "Federal District",
-        "name": "Brasilia"
-    }
-},
-{
-    "pk": 97,
-    "model": "aputils.city",
-    "fields": {
-        "country": 3,
-        "region": "Macau",
-        "name": "Macau"
-    }
-},
-{
-    "pk": 98,
-    "model": "aputils.city",
-    "fields": {
-        "country": 8,
-        "region": "Singapore",
-        "name": "Singapore"
-    }
-},
-{
-    "pk": 99,
-    "model": "aputils.city",
-    "fields": {
-        "country": 3,
-        "region": "Shanghai",
-        "name": "Shanghai"
-    }
-},
-{
-    "pk": 100,
-    "model": "aputils.city",
-    "fields": {
-        "country": 9,
-        "region": "Bangkok",
-        "name": "Bangkok"
-    }
-},
-{
-    "pk": 101,
-    "model": "aputils.city",
-    "fields": {
-        "country": 7,
-        "region": "Saint George",
-        "name": "St. George's"
-    }
-},
-{
-    "pk": 102,
-    "model": "aputils.city",
-    "fields": {
-        "country": 5,
-        "region": "Gauteng",
-        "name": "Pretoria"
-    }
-},
-{
-    "pk": 103,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Puerto Rico",
-        "name": "Arecibo"
-    }
-},
-{
-    "pk": 104,
-    "model": "aputils.city",
-    "fields": {
-        "country": 10,
-        "region": "Auckland",
-        "name": "Auckland"
-    }
-},
-{
-    "pk": 105,
-    "model": "aputils.city",
-    "fields": {
-        "country": 11,
-        "region": "West Java",
-        "name": "Bandung"
-    }
-},
-{
-    "pk": 106,
-    "model": "aputils.city",
-    "fields": {
-        "country": 3,
-        "region": "Beijing",
-        "name": "Beijing"
-    }
-},
-{
-    "pk": 107,
-    "model": "aputils.city",
-    "fields": {
-        "country": 12,
-        "region": "Buenos Aires",
-        "name": "Buenos Aires"
-    }
-},
-{
-    "pk": 108,
-    "model": "aputils.city",
-    "fields": {
-        "country": 3,
-        "region": "Zhejiang",
-        "name": "Hangzhou"
-    }
-},
-{
-    "pk": 109,
-    "model": "aputils.city",
-    "fields": {
-        "country": 13,
-        "region": "Sudogwon",
-        "name": "Incheon"
-    }
-},
-{
-    "pk": 110,
-    "model": "aputils.city",
-    "fields": {
-        "country": 4,
-        "region": "Community of Madrid",
-        "name": "Madrid"
-    }
-},
-{
-    "pk": 111,
-    "model": "aputils.city",
-    "fields": {
-        "country": 14,
-        "region": "Lanao del Norte",
-        "name": "Iligan City"
-    }
-},
-{
-    "pk": 112,
-    "model": "aputils.city",
-    "fields": {
-        "country": 14,
-        "region": "National Capital Region",
-        "name": "Malabon"
-    }
-},
-{
-    "pk": 113,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "San Juan Capistrano"
-    }
-},
-{
-    "pk": 114,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "San Marco"
-    }
-},
-{
-    "pk": 115,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Santa Barbara"
-    }
-},
-{
-    "pk": 116,
-    "model": "aputils.city",
-    "fields": {
-        "country": 15,
-        "region": "Santiago Province",
-        "name": "Santiago"
-    }
-},
-{
-    "pk": 117,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Yorba Linda"
-    }
-},
-{
-    "pk": 118,
-    "model": "aputils.city",
-    "fields": {
-        "country": 2,
-        "region": "Manitoba",
-        "name": "Winnipeg"
-    }
-},
-{
-    "pk": 119,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Kansas",
-        "name": "Wichita"
-    }
-},
-{
-    "pk": 120,
-    "model": "aputils.city",
-    "fields": {
-        "country": 6,
-        "region": "Minas Gerais",
-        "name": "Uberlandia"
-    }
-},
-{
-    "pk": 121,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Arizona",
-        "name": "Tucson"
-    }
-},
-{
-    "pk": 122,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Puerto Rico",
-        "name": "San German"
-    }
-},
-{
-    "pk": 123,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Texas",
-        "name": "San Antonio"
-    }
-},
-{
-    "pk": 124,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Santa Ana"
-    }
-},
-{
-    "pk": 125,
-    "model": "aputils.city",
-    "fields": {
-        "country": 2,
-        "region": "Ontario",
-        "name": "Markham"
-    }
-},
-{
-    "pk": 126,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Kentucky",
-        "name": "Louisville"
-    }
-},
-{
-    "pk": 127,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Michigan",
-        "name": "Kalamazoo"
-    }
-},
-{
-    "pk": 128,
-    "model": "aputils.city",
-    "fields": {
-        "country": 2,
-        "region": "Ontario",
-        "name": "Kitchener"
-    }
-},
-{
-    "pk": 129,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Florida",
-        "name": "Jacksonville"
-    }
-},
-{
-    "pk": 130,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Alabama",
-        "name": "Huntsville"
-    }
-},
-{
-    "pk": 131,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Illinois",
-        "name": "Glen Ellyn"
-    }
-},
-{
-    "pk": 132,
-    "model": "aputils.city",
-    "fields": {
-        "country": 2,
-        "region": "Alberta",
-        "name": "Calgary"
-    }
-},
-{
-    "pk": 133,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "California",
-        "name": "Chula Vista"
-    }
-},
-{
-    "pk": 134,
-    "model": "aputils.city",
-    "fields": {
-        "country": 2,
-        "region": "Alberta",
-        "name": "Edmonton"
-    }
-},
-{
-    "pk": 135,
-    "model": "aputils.city",
-    "fields": {
-        "country": 1,
-        "region": "Texas",
-        "name": "Duncanville"
-    }
-},
-{
-    "pk": 1,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "1730 W Niobe Ave",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 2,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2106 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 3,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2104 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 4,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2107 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 5,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2108 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 6,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2121 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 7,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2115 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 8,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2119 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 9,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2102 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 10,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2116 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 11,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2118 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 12,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2114 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 13,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2115 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 14,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2113 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 15,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2103 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 16,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2120 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 17,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2111 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 18,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2117 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 19,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2105 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 20,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2109 W Grace Ct",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 21,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "905 Neptune Pl",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 22,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "1827 W Beacon Ave",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 23,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "1321 S Amberwick Ln",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 24,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "1775 Castle Ave",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 25,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "1807 W Chalet Ave",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 26,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "1356 S Nutwood St",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 27,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "1240 S Nutwood St",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 28,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "1767 Minerva Ave",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 29,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "1329 S Amberwick Ln",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 30,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "1779 Colonial Ave",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 31,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "713 S Agate St",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 32,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2147 W York Cir",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-{
-    "pk": 33,
-    "model": "aputils.address",
-    "fields": {
-        "city": 2,
-        "address1": "2151 W Churchill Cir",
-        "address2": "",
-        "details": "",
-        "zip4": null,
-        "zip_code": 92804
-    }
-},
-
-
-   {
-      "pk":34,
-      "model":"aputils.address",
-      "fields":{
-         "city":2,
-         "address1":"12345 Random St.",
-         "address2":"",
-         "details":"Fictional address",
-         "zip4":null,
-         "zip_code":92804
-      }
-   },
-   {
-      "pk":35,
-      "model":"aputils.address",
-      "fields":{
-         "city":2,
-         "address1":"134 Fake Ave.",
-         "address2":"",
-         "details":"Fictional address",
-         "zip4":null,
-         "zip_code":92804
-      }
-   },
-   {
-      "pk":36,
-      "model":"aputils.address",
-      "fields":{
-         "city":1,
-         "address1":"872 Mymomshouse Dr.",
-         "address2":"",
-         "details":"Fictional address",
-         "zip4":null,
-         "zip_code":90041
-      }
-   },
-   {
-      "pk":37,
-      "model":"aputils.address",
-      "fields":{
-         "city":1,
-         "address1":"4738 Fictional Blvd.",
-         "address2":"",
-         "details":"Fictional address",
-         "zip4":null,
-         "zip_code":90029
-      }
-   },
-   {
-      "pk":38,
-      "model":"aputils.address",
-      "fields":{
-         "city":5,
-         "address1":"7843 Whereilive St.",
-         "address2":"",
-         "details":"Fictional address",
-         "zip4":null,
-         "zip_code":94720
-      }
-   },
-   {
-      "pk":39,
-      "model":"aputils.address",
-      "fields":{
-         "city":5,
-         "address1":"788 Parentshouse Ave.",
-         "address2":"",
-         "details":"Fictional address",
-         "zip4":null,
-         "zip_code":94720
-      }
-   },
-   {
-      "pk":40,
-      "model":"aputils.address",
-      "fields":{
-         "city":126,
-         "address1":"1900 Fried Chicken St.",
-         "address2":"",
-         "details":"Fictional address",
-         "zip4":null,
-         "zip_code":40213
-      }
-   },
-   {
-      "pk":41,
-      "model":"aputils.address",
-      "fields":{
-         "city":2,
-         "address1":"2 Testimony St.",
-         "address2":"",
-         "details":"Fictional address",
-         "zip4":null,
-         "zip_code":92804
-      }
-   },
-   {
-      "pk":42,
-      "model":"aputils.address",
-      "fields":{
-         "city":2,
-         "address1":"4 Brothers Rd.",
-         "address2":"",
-         "details":"Fictional address",
-         "zip4":null,
-         "zip_code":92804
-      }
-   },
-   {
-      "pk":43,
-      "model":"aputils.address",
-      "fields":{
-         "city":2,
-         "address1":"10 Commandments Way",
-         "address2":"",
-         "details":"Fictional address",
-         "zip4":null,
-         "zip_code":92804
-      }
-   },
-
-   
-   {
-      "pk":1,
-      "model":"aputils.emergencyinfo",
-      "fields":{
-         "phone2":"7145550100",
-         "phone":"7145550100",
-         "relation":"father",
-         "name":"John Doe",
-         "address":34
-      }
-   },
-   {
-      "pk":2,
-      "model":"aputils.emergencyinfo",
-      "fields":{
-         "phone2":"7145550100",
-         "phone":"7145550100",
-         "relation":"mother",
-         "name":"Jane Doe",
-         "address":34
-      }
-   },
-   {
-      "pk":3,
-      "model":"aputils.emergencyinfo",
-      "fields":{
-         "phone2":"7145550100",
-         "phone":"7145550100",
-         "relation":"uncle",
-         "name":"Uncle Bob",
-         "address":38
-      }
-   },
-   {
-      "pk":4,
-      "model":"aputils.emergencyinfo",
-      "fields":{
-         "phone2":"7145550100",
-         "phone":"7145550100",
-         "relation":"father",
-         "name":"Rich Dad",
-         "address":39
-      }
-   },
-   {
-      "pk":5,
-      "model":"aputils.emergencyinfo",
-      "fields":{
-         "phone2":"7145550100",
-         "phone":"7145550100",
-         "relation":"mother",
-         "name":"Momma Jones",
-         "address":36
-      }
-   },
-   {
-      "pk":6,
-      "model":"aputils.emergencyinfo",
-      "fields":{
-         "phone2":"7145550100",
-         "phone":"7145550100",
-         "relation":"sister",
-         "name":"Mary Martha",
-         "address":35
-      }
-   },
-   {
-      "pk":7,
-      "model":"aputils.emergencyinfo",
-      "fields":{
-         "phone2":"7145550100",
-         "phone":"7145550100",
-         "relation":"grandfather",
-         "name":"Colonel Sanders",
-         "address":40
-      }
-   },
-   {
-      "pk":8,
-      "model":"aputils.emergencyinfo",
-      "fields":{
-         "phone2":"7145550100",
-         "phone":"7145550100",
-         "relation":"grandmother",
-         "name":"Anna Simeon",
-         "address":41
-      }
-   },
-   {
-      "pk":9,
-      "model":"aputils.emergencyinfo",
-      "fields":{
-         "phone2":"7145550100",
-         "phone":"7145550100",
-         "relation":"brother",
-         "name":"Brother Hermano",
-         "address":42
-      }
-   },
-   {
-      "pk":10,
-      "model":"aputils.emergencyinfo",
-      "fields":{
-         "phone2":"7145550100",
-         "phone":"7145550100",
-         "relation":"great great great grandfather",
-         "name":"Moses Aaron",
-         "address":43
-      }
-   }
+[ { "fields" : { "code" : "USA",
+        "name" : "United States of America"
+      },
+    "model" : "aputils.country",
+    "pk" : 1
+  },
+  { "fields" : { "code" : "CAN",
+        "name" : "Canada"
+      },
+    "model" : "aputils.country",
+    "pk" : 2
+  },
+  { "fields" : { "code" : "CHN",
+        "name" : "China"
+      },
+    "model" : "aputils.country",
+    "pk" : 3
+  },
+  { "fields" : { "code" : "ESP",
+        "name" : "Spain"
+      },
+    "model" : "aputils.country",
+    "pk" : 4
+  },
+  { "fields" : { "code" : "ZAF",
+        "name" : "South Africa"
+      },
+    "model" : "aputils.country",
+    "pk" : 5
+  },
+  { "fields" : { "code" : "BRA",
+        "name" : "Brazil"
+      },
+    "model" : "aputils.country",
+    "pk" : 6
+  },
+  { "fields" : { "code" : "GRD",
+        "name" : "Grenada"
+      },
+    "model" : "aputils.country",
+    "pk" : 7
+  },
+  { "fields" : { "code" : "SGP",
+        "name" : "Singapore"
+      },
+    "model" : "aputils.country",
+    "pk" : 8
+  },
+  { "fields" : { "code" : "THA",
+        "name" : "Thailand"
+      },
+    "model" : "aputils.country",
+    "pk" : 9
+  },
+  { "fields" : { "code" : "NZL",
+        "name" : "New Zealand"
+      },
+    "model" : "aputils.country",
+    "pk" : 10
+  },
+  { "fields" : { "code" : "IDN",
+        "name" : "Indonesia"
+      },
+    "model" : "aputils.country",
+    "pk" : 11
+  },
+  { "fields" : { "code" : "ARG",
+        "name" : "Argentina"
+      },
+    "model" : "aputils.country",
+    "pk" : 12
+  },
+  { "fields" : { "code" : "KOR",
+        "name" : "Republic of Korea"
+      },
+    "model" : "aputils.country",
+    "pk" : 13
+  },
+  { "fields" : { "code" : "PHL",
+        "name" : "Philppines"
+      },
+    "model" : "aputils.country",
+    "pk" : 14
+  },
+  { "fields" : { "code" : "CHL",
+        "name" : "Chile"
+      },
+    "model" : "aputils.country",
+    "pk" : 15
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Los Angeles",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 1
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Anaheim",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 2
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Alhambra",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 3
+  },
+  { "fields" : { "country" : 1,
+        "name" : "San Gabriel",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 4
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Berkeley",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 5
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Irvine",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 6
+  },
+  { "fields" : { "country" : 1,
+        "name" : "San Diego",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 7
+  },
+  { "fields" : { "country" : 1,
+        "name" : "New York City",
+        "region" : "New York"
+      },
+    "model" : "aputils.city",
+    "pk" : 8
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Chicago",
+        "region" : "Illinois"
+      },
+    "model" : "aputils.city",
+    "pk" : 9
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Boston",
+        "region" : "Massachusetts"
+      },
+    "model" : "aputils.city",
+    "pk" : 10
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Atlanta",
+        "region" : "Georgia"
+      },
+    "model" : "aputils.city",
+    "pk" : 11
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Arcadia",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 12
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Houston",
+        "region" : "Texas"
+      },
+    "model" : "aputils.city",
+    "pk" : 13
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Austin",
+        "region" : "Texas"
+      },
+    "model" : "aputils.city",
+    "pk" : 14
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Baton Rouge",
+        "region" : "Louisiana"
+      },
+    "model" : "aputils.city",
+    "pk" : 15
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Seattle",
+        "region" : "Washington"
+      },
+    "model" : "aputils.city",
+    "pk" : 16
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Spokane",
+        "region" : "Washington"
+      },
+    "model" : "aputils.city",
+    "pk" : 17
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Portland",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 18
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Salt Lake City",
+        "region" : "Utah"
+      },
+    "model" : "aputils.city",
+    "pk" : 19
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Champaign",
+        "region" : "Illinois"
+      },
+    "model" : "aputils.city",
+    "pk" : 20
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Madison",
+        "region" : "Wisconsin"
+      },
+    "model" : "aputils.city",
+    "pk" : 21
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Milwaukee",
+        "region" : "Wisconsin"
+      },
+    "model" : "aputils.city",
+    "pk" : 22
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Torrance",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 23
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Pasadena",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 24
+  },
+  { "fields" : { "country" : 1,
+        "name" : "East Los Angeles",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 25
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Monterey Park",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 26
+  },
+  { "fields" : { "country" : 1,
+        "name" : "El Monte",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 27
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Cerritos",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 28
+  },
+  { "fields" : { "country" : 1,
+        "name" : "San Francisco",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 29
+  },
+  { "fields" : { "country" : 1,
+        "name" : "College Station",
+        "region" : "Texas"
+      },
+    "model" : "aputils.city",
+    "pk" : 30
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Eugene",
+        "region" : "Oregon"
+      },
+    "model" : "aputils.city",
+    "pk" : 31
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Fort Collins",
+        "region" : "Colorado"
+      },
+    "model" : "aputils.city",
+    "pk" : 32
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Denver",
+        "region" : "Colorado"
+      },
+    "model" : "aputils.city",
+    "pk" : 33
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Denton",
+        "region" : "Texas"
+      },
+    "model" : "aputils.city",
+    "pk" : 34
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Dallas",
+        "region" : "Texas"
+      },
+    "model" : "aputils.city",
+    "pk" : 35
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Athens",
+        "region" : "Georgia"
+      },
+    "model" : "aputils.city",
+    "pk" : 36
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Newington",
+        "region" : "Connecticut"
+      },
+    "model" : "aputils.city",
+    "pk" : 37
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Cambridge",
+        "region" : "Massachusetts"
+      },
+    "model" : "aputils.city",
+    "pk" : 38
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Charlottesville",
+        "region" : "Virginia"
+      },
+    "model" : "aputils.city",
+    "pk" : 39
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Orlando",
+        "region" : "Florida"
+      },
+    "model" : "aputils.city",
+    "pk" : 40
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Gainesville",
+        "region" : "Florida"
+      },
+    "model" : "aputils.city",
+    "pk" : 41
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Bellingham",
+        "region" : "Washington"
+      },
+    "model" : "aputils.city",
+    "pk" : 42
+  },
+  { "fields" : { "country" : 1,
+        "name" : "San Luis Obispo",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 43
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Fresno",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 44
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Pleasanton",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 45
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Philadelphia",
+        "region" : "Pennsylvania"
+      },
+    "model" : "aputils.city",
+    "pk" : 46
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Pittsburgh",
+        "region" : "Pennsylvania"
+      },
+    "model" : "aputils.city",
+    "pk" : 47
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Ann Arbor",
+        "region" : "Michigan"
+      },
+    "model" : "aputils.city",
+    "pk" : 48
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Minneapolis",
+        "region" : "Minnesota"
+      },
+    "model" : "aputils.city",
+    "pk" : 49
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Pullman",
+        "region" : "Washington"
+      },
+    "model" : "aputils.city",
+    "pk" : 50
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Huntington Beach",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 51
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Fullerton",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 52
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Diamond Bar",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 53
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Cupertino",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 54
+  },
+  { "fields" : { "country" : 1,
+        "name" : "San Jose",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 55
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Palo Alto",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 56
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Santa Clara",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 57
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Burlingame",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 58
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Tacoma",
+        "region" : "Washington"
+      },
+    "model" : "aputils.city",
+    "pk" : 59
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Beltsville",
+        "region" : "Maryland"
+      },
+    "model" : "aputils.city",
+    "pk" : 60
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Arlington",
+        "region" : "Texas"
+      },
+    "model" : "aputils.city",
+    "pk" : 61
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Baldwin Park",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 62
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Riverside",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 63
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Fairborn",
+        "region" : "Ohio"
+      },
+    "model" : "aputils.city",
+    "pk" : 64
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Albuquerque",
+        "region" : "New Mexico"
+      },
+    "model" : "aputils.city",
+    "pk" : 65
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Long Beach",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 66
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Davis",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 67
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Birmingham",
+        "region" : "Alabama"
+      },
+    "model" : "aputils.city",
+    "pk" : 68
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Piscataway",
+        "region" : "New Jersey"
+      },
+    "model" : "aputils.city",
+    "pk" : 69
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Richmond",
+        "region" : "Virginia"
+      },
+    "model" : "aputils.city",
+    "pk" : 70
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Orange",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 71
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Miami",
+        "region" : "Florida"
+      },
+    "model" : "aputils.city",
+    "pk" : 72
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Irving",
+        "region" : "Texas"
+      },
+    "model" : "aputils.city",
+    "pk" : 73
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Manhattan",
+        "region" : "Kansas"
+      },
+    "model" : "aputils.city",
+    "pk" : 74
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Ontario",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 75
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Storrs",
+        "region" : "Connecticut"
+      },
+    "model" : "aputils.city",
+    "pk" : 76
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Oklahoma City",
+        "region" : "Oklahoma"
+      },
+    "model" : "aputils.city",
+    "pk" : 77
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Tallahassee",
+        "region" : "Florida"
+      },
+    "model" : "aputils.city",
+    "pk" : 78
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Dunn Loring",
+        "region" : "Virginia"
+      },
+    "model" : "aputils.city",
+    "pk" : 79
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Raleigh",
+        "region" : "North Carolina"
+      },
+    "model" : "aputils.city",
+    "pk" : 80
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Nutley",
+        "region" : "New Jersey"
+      },
+    "model" : "aputils.city",
+    "pk" : 81
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Lawrence",
+        "region" : "New Jersey"
+      },
+    "model" : "aputils.city",
+    "pk" : 82
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Phoenix",
+        "region" : "Arizona"
+      },
+    "model" : "aputils.city",
+    "pk" : 83
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Bellevue",
+        "region" : "Washington"
+      },
+    "model" : "aputils.city",
+    "pk" : 84
+  },
+  { "fields" : { "country" : 1,
+        "name" : "North Providence",
+        "region" : "Rhode Island"
+      },
+    "model" : "aputils.city",
+    "pk" : 85
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Ames",
+        "region" : "Iowa"
+      },
+    "model" : "aputils.city",
+    "pk" : 86
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Columbus",
+        "region" : "Ohio"
+      },
+    "model" : "aputils.city",
+    "pk" : 87
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Beaumont",
+        "region" : "Texas"
+      },
+    "model" : "aputils.city",
+    "pk" : 88
+  },
+  { "fields" : { "country" : 1,
+        "name" : "San Bernardino",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 89
+  },
+  { "fields" : { "country" : 2,
+        "name" : "Vancouver",
+        "region" : "British Columbia"
+      },
+    "model" : "aputils.city",
+    "pk" : 90
+  },
+  { "fields" : { "country" : 2,
+        "name" : "Toronto",
+        "region" : "Ontario"
+      },
+    "model" : "aputils.city",
+    "pk" : 91
+  },
+  { "fields" : { "country" : 2,
+        "name" : "Surrey",
+        "region" : "British Columbia"
+      },
+    "model" : "aputils.city",
+    "pk" : 92
+  },
+  { "fields" : { "country" : 2,
+        "name" : "Burnaby",
+        "region" : "British Columbia"
+      },
+    "model" : "aputils.city",
+    "pk" : 93
+  },
+  { "fields" : { "country" : 2,
+        "name" : "Montreal",
+        "region" : "Quebec"
+      },
+    "model" : "aputils.city",
+    "pk" : 94
+  },
+  { "fields" : { "country" : 2,
+        "name" : "Sault Ste. Marie",
+        "region" : "Ontario"
+      },
+    "model" : "aputils.city",
+    "pk" : 95
+  },
+  { "fields" : { "country" : 6,
+        "name" : "Brasilia",
+        "region" : "Federal District"
+      },
+    "model" : "aputils.city",
+    "pk" : 96
+  },
+  { "fields" : { "country" : 3,
+        "name" : "Macau",
+        "region" : "Macau"
+      },
+    "model" : "aputils.city",
+    "pk" : 97
+  },
+  { "fields" : { "country" : 8,
+        "name" : "Singapore",
+        "region" : "Singapore"
+      },
+    "model" : "aputils.city",
+    "pk" : 98
+  },
+  { "fields" : { "country" : 3,
+        "name" : "Shanghai",
+        "region" : "Shanghai"
+      },
+    "model" : "aputils.city",
+    "pk" : 99
+  },
+  { "fields" : { "country" : 9,
+        "name" : "Bangkok",
+        "region" : "Bangkok"
+      },
+    "model" : "aputils.city",
+    "pk" : 100
+  },
+  { "fields" : { "country" : 7,
+        "name" : "St. George's",
+        "region" : "Saint George"
+      },
+    "model" : "aputils.city",
+    "pk" : 101
+  },
+  { "fields" : { "country" : 5,
+        "name" : "Pretoria",
+        "region" : "Gauteng"
+      },
+    "model" : "aputils.city",
+    "pk" : 102
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Arecibo",
+        "region" : "Puerto Rico"
+      },
+    "model" : "aputils.city",
+    "pk" : 103
+  },
+  { "fields" : { "country" : 10,
+        "name" : "Auckland",
+        "region" : "Auckland"
+      },
+    "model" : "aputils.city",
+    "pk" : 104
+  },
+  { "fields" : { "country" : 11,
+        "name" : "Bandung",
+        "region" : "West Java"
+      },
+    "model" : "aputils.city",
+    "pk" : 105
+  },
+  { "fields" : { "country" : 3,
+        "name" : "Beijing",
+        "region" : "Beijing"
+      },
+    "model" : "aputils.city",
+    "pk" : 106
+  },
+  { "fields" : { "country" : 12,
+        "name" : "Buenos Aires",
+        "region" : "Buenos Aires"
+      },
+    "model" : "aputils.city",
+    "pk" : 107
+  },
+  { "fields" : { "country" : 3,
+        "name" : "Hangzhou",
+        "region" : "Zhejiang"
+      },
+    "model" : "aputils.city",
+    "pk" : 108
+  },
+  { "fields" : { "country" : 13,
+        "name" : "Incheon",
+        "region" : "Sudogwon"
+      },
+    "model" : "aputils.city",
+    "pk" : 109
+  },
+  { "fields" : { "country" : 4,
+        "name" : "Madrid",
+        "region" : "Community of Madrid"
+      },
+    "model" : "aputils.city",
+    "pk" : 110
+  },
+  { "fields" : { "country" : 14,
+        "name" : "Iligan City",
+        "region" : "Lanao del Norte"
+      },
+    "model" : "aputils.city",
+    "pk" : 111
+  },
+  { "fields" : { "country" : 14,
+        "name" : "Malabon",
+        "region" : "National Capital Region"
+      },
+    "model" : "aputils.city",
+    "pk" : 112
+  },
+  { "fields" : { "country" : 1,
+        "name" : "San Juan Capistrano",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 113
+  },
+  { "fields" : { "country" : 1,
+        "name" : "San Marco",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 114
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Santa Barbara",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 115
+  },
+  { "fields" : { "country" : 15,
+        "name" : "Santiago",
+        "region" : "Santiago Province"
+      },
+    "model" : "aputils.city",
+    "pk" : 116
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Yorba Linda",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 117
+  },
+  { "fields" : { "country" : 2,
+        "name" : "Winnipeg",
+        "region" : "Manitoba"
+      },
+    "model" : "aputils.city",
+    "pk" : 118
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Wichita",
+        "region" : "Kansas"
+      },
+    "model" : "aputils.city",
+    "pk" : 119
+  },
+  { "fields" : { "country" : 6,
+        "name" : "Uberlandia",
+        "region" : "Minas Gerais"
+      },
+    "model" : "aputils.city",
+    "pk" : 120
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Tucson",
+        "region" : "Arizona"
+      },
+    "model" : "aputils.city",
+    "pk" : 121
+  },
+  { "fields" : { "country" : 1,
+        "name" : "San German",
+        "region" : "Puerto Rico"
+      },
+    "model" : "aputils.city",
+    "pk" : 122
+  },
+  { "fields" : { "country" : 1,
+        "name" : "San Antonio",
+        "region" : "Texas"
+      },
+    "model" : "aputils.city",
+    "pk" : 123
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Santa Ana",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 124
+  },
+  { "fields" : { "country" : 2,
+        "name" : "Markham",
+        "region" : "Ontario"
+      },
+    "model" : "aputils.city",
+    "pk" : 125
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Louisville",
+        "region" : "Kentucky"
+      },
+    "model" : "aputils.city",
+    "pk" : 126
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Kalamazoo",
+        "region" : "Michigan"
+      },
+    "model" : "aputils.city",
+    "pk" : 127
+  },
+  { "fields" : { "country" : 2,
+        "name" : "Kitchener",
+        "region" : "Ontario"
+      },
+    "model" : "aputils.city",
+    "pk" : 128
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Jacksonville",
+        "region" : "Florida"
+      },
+    "model" : "aputils.city",
+    "pk" : 129
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Huntsville",
+        "region" : "Alabama"
+      },
+    "model" : "aputils.city",
+    "pk" : 130
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Glen Ellyn",
+        "region" : "Illinois"
+      },
+    "model" : "aputils.city",
+    "pk" : 131
+  },
+  { "fields" : { "country" : 2,
+        "name" : "Calgary",
+        "region" : "Alberta"
+      },
+    "model" : "aputils.city",
+    "pk" : 132
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Chula Vista",
+        "region" : "California"
+      },
+    "model" : "aputils.city",
+    "pk" : 133
+  },
+  { "fields" : { "country" : 2,
+        "name" : "Edmonton",
+        "region" : "Alberta"
+      },
+    "model" : "aputils.city",
+    "pk" : 134
+  },
+  { "fields" : { "country" : 1,
+        "name" : "Duncanville",
+        "region" : "Texas"
+      },
+    "model" : "aputils.city",
+    "pk" : 135
+  },
+  { "fields" : { "address1" : "1730 W Niobe Ave",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 1
+  },
+  { "fields" : { "address1" : "2106 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 2
+  },
+  { "fields" : { "address1" : "2104 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 3
+  },
+  { "fields" : { "address1" : "2107 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 4
+  },
+  { "fields" : { "address1" : "2108 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 5
+  },
+  { "fields" : { "address1" : "2121 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 6
+  },
+  { "fields" : { "address1" : "2115 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 7
+  },
+  { "fields" : { "address1" : "2119 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 8
+  },
+  { "fields" : { "address1" : "2102 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 9
+  },
+  { "fields" : { "address1" : "2116 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 10
+  },
+  { "fields" : { "address1" : "2118 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 11
+  },
+  { "fields" : { "address1" : "2114 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 12
+  },
+  { "fields" : { "address1" : "2115 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 13
+  },
+  { "fields" : { "address1" : "2113 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 14
+  },
+  { "fields" : { "address1" : "2103 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 15
+  },
+  { "fields" : { "address1" : "2120 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 16
+  },
+  { "fields" : { "address1" : "2111 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 17
+  },
+  { "fields" : { "address1" : "2117 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 18
+  },
+  { "fields" : { "address1" : "2105 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 19
+  },
+  { "fields" : { "address1" : "2109 W Grace Ct",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 20
+  },
+  { "fields" : { "address1" : "905 Neptune Pl",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 21
+  },
+  { "fields" : { "address1" : "1827 W Beacon Ave",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 22
+  },
+  { "fields" : { "address1" : "1321 S Amberwick Ln",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 23
+  },
+  { "fields" : { "address1" : "1775 Castle Ave",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 24
+  },
+  { "fields" : { "address1" : "1807 W Chalet Ave",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 25
+  },
+  { "fields" : { "address1" : "1356 S Nutwood St",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 26
+  },
+  { "fields" : { "address1" : "1240 S Nutwood St",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 27
+  },
+  { "fields" : { "address1" : "1767 Minerva Ave",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 28
+  },
+  { "fields" : { "address1" : "1329 S Amberwick Ln",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 29
+  },
+  { "fields" : { "address1" : "1779 Colonial Ave",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 30
+  },
+  { "fields" : { "address1" : "713 S Agate St",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 31
+  },
+  { "fields" : { "address1" : "2147 W York Cir",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 32
+  },
+  { "fields" : { "address1" : "2151 W Churchill Cir",
+        "address2" : "",
+        "city" : 2,
+        "details" : "",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 33
+  },
+  { "fields" : { "address1" : "12345 Random St.",
+        "address2" : "",
+        "city" : 2,
+        "details" : "Fictional address",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 34
+  },
+  { "fields" : { "address1" : "134 Fake Ave.",
+        "address2" : "",
+        "city" : 2,
+        "details" : "Fictional address",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 35
+  },
+  { "fields" : { "address1" : "872 Mymomshouse Dr.",
+        "address2" : "",
+        "city" : 1,
+        "details" : "Fictional address",
+        "zip4" : null,
+        "zip_code" : 90041
+      },
+    "model" : "aputils.address",
+    "pk" : 36
+  },
+  { "fields" : { "address1" : "4738 Fictional Blvd.",
+        "address2" : "",
+        "city" : 1,
+        "details" : "Fictional address",
+        "zip4" : null,
+        "zip_code" : 90029
+      },
+    "model" : "aputils.address",
+    "pk" : 37
+  },
+  { "fields" : { "address1" : "7843 Whereilive St.",
+        "address2" : "",
+        "city" : 5,
+        "details" : "Fictional address",
+        "zip4" : null,
+        "zip_code" : 94720
+      },
+    "model" : "aputils.address",
+    "pk" : 38
+  },
+  { "fields" : { "address1" : "788 Parentshouse Ave.",
+        "address2" : "",
+        "city" : 5,
+        "details" : "Fictional address",
+        "zip4" : null,
+        "zip_code" : 94720
+      },
+    "model" : "aputils.address",
+    "pk" : 39
+  },
+  { "fields" : { "address1" : "1900 Fried Chicken St.",
+        "address2" : "",
+        "city" : 126,
+        "details" : "Fictional address",
+        "zip4" : null,
+        "zip_code" : 40213
+      },
+    "model" : "aputils.address",
+    "pk" : 40
+  },
+  { "fields" : { "address1" : "2 Testimony St.",
+        "address2" : "",
+        "city" : 2,
+        "details" : "Fictional address",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 41
+  },
+  { "fields" : { "address1" : "4 Brothers Rd.",
+        "address2" : "",
+        "city" : 2,
+        "details" : "Fictional address",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 42
+  },
+  { "fields" : { "address1" : "10 Commandments Way",
+        "address2" : "",
+        "city" : 2,
+        "details" : "Fictional address",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 43
+  },
+  { "fields" : { "address1" : "1813 W Ball Road",
+        "address2" : "",
+        "city" : 2,
+        "details" : "Ball Apartments",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 44
+  },
+  { "fields" : { "address1" : "1841 W. Ball Road",
+        "address2" : "",
+        "city" : 2,
+        "details" : "Hall Apartments",
+        "zip4" : null,
+        "zip_code" : 92804
+      },
+    "model" : "aputils.address",
+    "pk" : 45
+  },
+  { "fields" : { "address" : 34,
+        "name" : "John Doe",
+        "phone" : "7145550100",
+        "phone2" : "7145550100",
+        "relation" : "father"
+      },
+    "model" : "aputils.emergencyinfo",
+    "pk" : 1
+  },
+  { "fields" : { "address" : 34,
+        "name" : "Jane Doe",
+        "phone" : "7145550100",
+        "phone2" : "7145550100",
+        "relation" : "mother"
+      },
+    "model" : "aputils.emergencyinfo",
+    "pk" : 2
+  },
+  { "fields" : { "address" : 38,
+        "name" : "Uncle Bob",
+        "phone" : "7145550100",
+        "phone2" : "7145550100",
+        "relation" : "uncle"
+      },
+    "model" : "aputils.emergencyinfo",
+    "pk" : 3
+  },
+  { "fields" : { "address" : 39,
+        "name" : "Rich Dad",
+        "phone" : "7145550100",
+        "phone2" : "7145550100",
+        "relation" : "father"
+      },
+    "model" : "aputils.emergencyinfo",
+    "pk" : 4
+  },
+  { "fields" : { "address" : 36,
+        "name" : "Momma Jones",
+        "phone" : "7145550100",
+        "phone2" : "7145550100",
+        "relation" : "mother"
+      },
+    "model" : "aputils.emergencyinfo",
+    "pk" : 5
+  },
+  { "fields" : { "address" : 35,
+        "name" : "Mary Martha",
+        "phone" : "7145550100",
+        "phone2" : "7145550100",
+        "relation" : "sister"
+      },
+    "model" : "aputils.emergencyinfo",
+    "pk" : 6
+  },
+  { "fields" : { "address" : 40,
+        "name" : "Colonel Sanders",
+        "phone" : "7145550100",
+        "phone2" : "7145550100",
+        "relation" : "grandfather"
+      },
+    "model" : "aputils.emergencyinfo",
+    "pk" : 7
+  },
+  { "fields" : { "address" : 41,
+        "name" : "Anna Simeon",
+        "phone" : "7145550100",
+        "phone2" : "7145550100",
+        "relation" : "grandmother"
+      },
+    "model" : "aputils.emergencyinfo",
+    "pk" : 8
+  },
+  { "fields" : { "address" : 42,
+        "name" : "Brother Hermano",
+        "phone" : "7145550100",
+        "phone2" : "7145550100",
+        "relation" : "brother"
+      },
+    "model" : "aputils.emergencyinfo",
+    "pk" : 9
+  },
+  { "fields" : { "address" : 43,
+        "name" : "Moses Aaron",
+        "phone" : "7145550100",
+        "phone2" : "7145550100",
+        "relation" : "great great great grandfather"
+      },
+    "model" : "aputils.emergencyinfo",
+    "pk" : 10
+  }
 ]
