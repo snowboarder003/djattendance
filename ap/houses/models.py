@@ -58,13 +58,13 @@ class Room(models.Model):
         return "("+str(self.id)+") "+self.house.name + " " + self.type
 
 
-class BedFrame(models.Model):
+class BedFrameType(models.Model):
     name = models.CharField(max_length=50)
     
     def __unicode__(self):
         return self.name
     
-class Mattress(models.Model):
+class MattressType(models.Model):
     name = models.CharField(max_length=50)
     
     def __unicode__(self):
@@ -94,9 +94,9 @@ class Bunk(models.Model):
     
     length = models.CharField(max_length=1, choices=LENGTH)
     
-    bed_frame = models.ForeignKey(BedFrame, null=True, blank=True)
+    bed_frame_type = models.ForeignKey(BedFrameType, null=True, blank=True)
     
-    mattress = models.ForeignKey(Mattress, null=True, blank=True)
+    mattress_type = models.ForeignKey(MattressType, null=True, blank=True)
     #End of MS access db fields
     
 

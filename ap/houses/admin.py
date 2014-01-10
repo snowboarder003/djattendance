@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 
-from houses.models import House, Room, Bunk, Mattress, BedFrame
+from houses.models import House, Room, Bunk, MattressType, BedFrameType
 from aputils.models import Address
 
 class HouseAdminForm(forms.ModelForm):
@@ -26,5 +26,5 @@ class HouseAdmin(admin.ModelAdmin):
 admin.site.register(House, HouseAdmin)
 admin.site.register(Room)
 admin.site.register(Bunk)
-admin.site.register(Mattress)
-admin.site.register(BedFrame)
+admin.site.register(MattressType)
+admin.site.register(BedFrameType)

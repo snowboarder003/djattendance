@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from houses.models import House, Room, BedFrame, Mattress, Bunk 
+from houses.models import House, Room, BedFrameType, MattressType, Bunk 
 
 import os
 import csv
@@ -37,7 +37,7 @@ def import_bunks(request):
 #                                 continue;
 #                     if house is None:
 #                         continue
-#                     
+#                      
 #                     room_type=row[9]
 #                     if room_type!=last_room_type:
 #                         last_room_type=room_type
@@ -60,15 +60,17 @@ def import_bunks(request):
 #                         room_cap=0
 #                     for_trainees=True if row[6]=='Yes' else False
 #                     has_protector=True if row[13]=='1' else False
-#                     
+#                      
 #                     try:
-#                         bed_frame = BedFrame.objects.get(name=row[11])
-#                     except BedFrame.DoesNotExist:
-#                         bed_frame = None
+#                         bed_frame_type = BedFrameType.objects.get(name=row[11])
+#                     except BedFrameType.DoesNotExist:
+#                         if row[11]!='':
+#                             log.append("Row #"+str(count+1)+" has invalid bed frame type: "+row[11])
+#                         bed_frame_type = None
 #                     try:
-#                         mattress = Mattress.objects.get(name=row[12])
-#                     except Mattress.DoesNotExist:
-#                         mattress = None
+#                         mattress_type = MattressType.objects.get(name=row[12])
+#                     except MattressType.DoesNotExist:
+#                         mattress_type = None
 #                     length='L' if row[5]=='Long' else 'R'
 #                     bunk_no=int(row[2])
 #                     if row[7]=='1':
@@ -82,9 +84,9 @@ def import_bunks(request):
 #                     else:
 #                         position='T'
 #                     notes = row[10]
-#                     
+#                      
 #                     other_no=int(row[4])
-#                     
+#                      
 #                     if position=='T' or position=='q':
 #                         other_bunk=Bunk.objects.get(room__house=house,number=other_no)
 #                         room=other_bunk.room;
@@ -100,8 +102,8 @@ def import_bunks(request):
 # #                         continue;
 #                     bunk = Bunk(for_trainees=for_trainees,
 #                                 has_protector=has_protector,
-#                                 bed_frame=bed_frame,
-#                                 mattress=mattress,
+#                                 bed_frame_type=bed_frame_type,
+#                                 mattress_type=mattress_type,
 #                                 length=length,
 #                                 number=bunk_no,
 #                                 position=position,
