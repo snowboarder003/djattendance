@@ -3,11 +3,13 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.db.models import Q
+from django.views.generic import ListView
  
 from .forms import UploadBadgeForm
 from .models import Badge
 
 from accounts.models import User
+from terms.models import Term
  
 def index(request):
 
@@ -17,6 +19,7 @@ def batch(request):
     if request.method == 'POST':
         b = Badge(type='T')
         b.original = request.FILES['file']
+        b.created = Term.current_term()
         b.save()
 
         # grab the trainee name
@@ -33,3 +36,10 @@ def batch(request):
         
 
     return render_to_response('badges/batch.html', context_instance=RequestContext(request))
+
+class TermView(ListView):
+
+    model = Badge
+
+    def get_queryset(self, **kwargs):
+        return Badge.objects.filter()
