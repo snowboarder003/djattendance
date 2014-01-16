@@ -11,6 +11,7 @@ from teams.models import Team
 from houses.models import House, Bunk
 from services.models import Service
 from badges.models import Badge
+from localities.models import Locality
 
 """ accounts models.py
 The user accounts module takes care of user accounts and
@@ -179,6 +180,7 @@ class Trainee(Profile):
     TA = models.ForeignKey(TrainingAssistant, null=True, blank=True)
     mentor = models.ForeignKey('self', related_name='mentee', null=True, blank=True)
 
+    locality = models.ManyToManyField(Locality, null=True, blank=True)
     team = models.ForeignKey(Team, null=True, blank=True)
     house = models.ForeignKey(House, null=True, blank=True)
     bunk = models.ForeignKey(Bunk, null=True, blank=True)
