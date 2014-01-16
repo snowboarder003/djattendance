@@ -49,7 +49,7 @@ class Term(models.Model):
             return Term.objects.get(Q(start__lte=datetime.date.today()), Q(end__gte=datetime.date.today()))
         # this will happen in cases such as in-between terms (or empty DB, possibly)
         except ObjectDoesNotExist:
-            # 
+            # return an obviously fake term object
             return Term.objects.filter(start__gte=datetime.date.today())[0]
 
     def getDate(self, week, day):
