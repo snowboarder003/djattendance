@@ -18,11 +18,12 @@ def index(request):
 def batch(request):
     if request.method == 'POST':
         b = Badge(type='T')
+        b.term_created = Term.current_term()
         b.original = request.FILES['file']
-        b.created = Term.current_term()
         b.save()
 
-        # grab the trainee name
+        # grab the trainee name. filename in form of:
+        # /path/to/Ellis_Armad.jpg or /path/to/Ellis_Armad_1.jpg
         name = b.original.name.split('/')[-1].split('.')[0].split('_')
 
         user = User.objects.get(Q(is_active=True), 
@@ -30,7 +31,7 @@ def batch(request):
                                 Q(lastname__exact=name[0]))
 
         user.trainee.badge = b
-
+        user.save()
 
         return HttpResponseRedirect(reverse('badges:index'))
         
@@ -41,5 +42,8 @@ class TermView(ListView):
 
     model = Badge
 
+    def get_template_names(self):
+        return ['badges/term.html']
+
     def get_queryset(self, **kwargs):
-        return Badge.objects.filter()
+        return Badge.objects.filter(term_created__exact=Term.current_term())

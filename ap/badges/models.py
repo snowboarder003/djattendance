@@ -33,7 +33,7 @@ class Badge(models.Model):
     def get_upload_path(self, filename):
         path = "badges/"
         if self.type == 'T':
-            path += "trainees/" + term_created.code + '/'
+            path += "trainees/" + self.term_created.code + '/'
         elif self.type == 'S':
             path += "staff/"
         return path + filename
