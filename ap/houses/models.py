@@ -30,6 +30,12 @@ class House(models.Model):
 
     # whether this house is actively used by the training
     used = models.BooleanField()
+    
+    #returns a query set of the empty bunks for this house
+    def empty_bunk_count(self,position_list=[]):
+        if len(position_list)==0:
+            return Bunk.objects.filter(room__house=self).exclude(trainee__active=True).count()
+        return Bunk.objects.filter(room__house=self,position__in=position_list).exclude(trainee__active=True).count()
 
     def __unicode__(self):
         return u' %s' % (self.name)
@@ -112,7 +118,8 @@ class Bunk(models.Model):
     room = models.ForeignKey(Room)
     
     #from Access db
-    notes = models.TextField()
+    notes = models.TextField(blank=True)
 
     def __unicode__(self):
         return self.room.house.name + " Bunk " + str(self.number)
+    

@@ -1,13 +1,98 @@
 from django.shortcuts import render
-from houses.models import House, Room, BedFrameType, MattressType, Bunk 
+from houses.models import House, Room, BedFrameType, MattressType, Bunk
+from accounts.models import Trainee
+import django_tables2 as tables
+from django import forms
 
+from django.db import models
+
+#import_bunks dependencies
 import os
 import csv
-import re
+
+class HouseTable(tables.Table):
+    house=tables.Column()
+    gender=tables.Column()
+    bottom=tables.Column()
+    top=tables.Column()
+    couple=tables.Column()
+    link=tables.LinkColumn('houses.views.bunk_selector', args=(tables.utils.A('pk'),))
+
+def CompareBunk(bunk1,bunk2):
+    num1=min(bunk1.number,bunk1.link.number)
+    num2=min(bunk2.number,bunk2.link.number)
+    if num1!=num2:
+        return num1-num2
+    else:
+        return bunk1.number-bunk2.number
+
+class BunkTraineeForm(forms.Form):
+    bunk=forms.ModelChoiceField(queryset=Bunk.objects.filter(for_trainees=True),widget=forms.HiddenInput())
+    trainee=forms.ModelChoiceField(queryset=Trainee.objects.filter(active=True).order_by('account__lastname','account__firstname'),required=False, 
+        widget=forms.Select(attrs={"onChange":'submit()'}))
+
+def bunk_selector(request,house__pk):
+    log = []
+    if request.method == 'POST': # If the form has been submitted...
+        #log.append(str(request.POST));
+        form = BunkTraineeForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            try:
+                bunk = form.cleaned_data['bunk']
+                for trainee in Trainee.objects.filter(active=True,bunk=bunk):
+                    trainee.bunk=None;
+                    trainee.save();
+                trainee = form.cleaned_data['trainee']
+                if not trainee is None:
+                    trainee.bunk = bunk;
+                    trainee.save()
+            except Trainee.DoesNotExist:
+                log.append("Invalid Trainee ID");
+            #log.append("Valid form post");
+    
+    if house__pk is None or house__pk=='':
+        list = (Trainee.objects.filter(account__gender='B',bunk__isnull=True,spouse__isnull=True),
+                Trainee.objects.filter(account__gender='S',bunk__isnull=True,spouse__isnull=True),
+                Trainee.objects.filter(bunk__isnull=True,spouse__isnull=False))
+        log.append(str(list))
+        house_data=[]
+        for house in House.objects.filter(used=True):
+            house_data.append({'house':house.name,
+                'gender':house.get_gender_display(),
+                'bottom':str(house.empty_bunk_count(['B'])),
+                'top':str(house.empty_bunk_count(['T'])),
+                'couple':str(house.empty_bunk_count(['q','Q'])),
+                'link':'edit',
+                'pk':house.pk})
+        house_table=HouseTable(house_data)
+        tables.RequestConfig(request,paginate=None).configure(house_table)
+        data = {'import_results': "\n".join(log),
+                'houses':house_table}
+        return render(request, 'houses/index.html', dictionary=data)
+    else:
+        try:
+            house=House.objects.get(pk=house__pk)
+            rooms_with_bunks = []
+            for room in Room.objects.filter(house=house).annotate(min_bunk=models.Min('bunk__number')).order_by('min_bunk'):
+                bunks = sorted(Bunk.objects.filter(room=room,for_trainees=True).prefetch_related('link'), cmp=CompareBunk)
+                bunk_list=[]
+                for bunk in bunks:
+                    try:
+                        trainee=Trainee.objects.get(bunk=bunk)
+                        bunk_list.append((bunk,BunkTraineeForm(initial={'bunk':bunk.id,'trainee':trainee.id})))
+                    except Trainee.DoesNotExist:
+                        bunk_list.append((bunk,BunkTraineeForm(initial={'bunk':bunk.id})))
+                rooms_with_bunks.append((room,bunk_list))
+        except House.DoesNotExist:
+            None
+        data = {'house':house,
+            'room_list':rooms_with_bunks,
+            'import_results': "\n".join(log)}
+        return render(request, 'houses/bunk_table.html', dictionary=data)
+
 
 def import_bunks(request):
     file_path = os.path.join(os.path.dirname(__file__), 'Bunks.csv')
-    header = []
     log = []
     count = 0
 #     with open(file_path, 'rb') as csvfile:

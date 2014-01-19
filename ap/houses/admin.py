@@ -39,7 +39,7 @@ class HouseAdmin(admin.ModelAdmin):
     
 
 class BunkInlineForm(forms.ModelForm):
-    trainee = forms.ModelChoiceField(queryset=Trainee.objects.filter(active=True).order_by('account__lastname','account__firstname'))
+    trainee = forms.ModelChoiceField(queryset=Trainee.objects.filter(active=True).order_by('account__lastname','account__firstname'),required=False)
     
     class Meta:
         model = Bunk
