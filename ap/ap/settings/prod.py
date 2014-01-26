@@ -3,13 +3,6 @@ from .base import *
 DEBUG = False
 TEMPLATE_DEBUG = False
 
-DATABASES = {
-    "default": {
-       "ENGINE": "django.db.backends.postgresql_psycopg2",
-    }
-}
-
-
 # # Allow all host hosts/domain names for this site
 ALLOWED_HOSTS = ['*']
 
