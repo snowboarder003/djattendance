@@ -1,1 +1,1 @@
-web: gunicorn -b 0.0.0.0:8000 --pythonpath=./ap ap.wsgi:application
+web: gunicorn ap.wsgi
