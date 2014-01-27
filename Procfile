@@ -1,1 +1,1 @@
-web: gunicorn -b 127.0.0.1:8000 --pythonpath=./ap ap.wsgi:application
+web: gunicorn -b 0.0.0.0:$PORT --pythonpath=./ap ap.wsgi:application
