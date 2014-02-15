@@ -1,4 +1,5 @@
 # coding: utf-8
+from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.views import login, logout
 
@@ -27,7 +28,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    (r’^static/(?P.*)$’, ‘django.views.static.serve’, {‘document_root’: settings.STATIC_ROOT}),
+    (r'^static/(?P.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
 )
 
 urlpatterns += staticfiles_urlpatterns()
