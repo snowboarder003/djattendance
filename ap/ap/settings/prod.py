@@ -1,7 +1,7 @@
 from .base import *
 
-DEBUG = True
-TEMPLATE_DEBUG = True
+DEBUG = False
+TEMPLATE_DEBUG = False
 
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
@@ -15,11 +15,10 @@ ALLOWED_HOSTS = ['*']
 
 # Static asset configuration
 import os
-#BASE_DIR = os.path.dirname(os.path.abspath(__name__))
+BASE_DIR = os.path.dirname(os.path.abspath(__name__))
 STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static/'
+STATIC_URL = '/ap/static/'
 
 STATICFILES_DIRS = (
-    #os.path.join(BASE_DIR, 'static'),
-    '/home/david/Documents/djattendance/ap/static'
+    os.path.join(BASE_DIR, 'ap/static'),
 )
