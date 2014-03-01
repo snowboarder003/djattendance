@@ -45,7 +45,7 @@ class Syllabus (models.Model):
     #     return reverse('self.classSyllabus.code')
 
     def get_absolute_url(self):
-        return reverse_lazy('detail-view', kwargs={'after': self.classSyllabus.code}) 
+        return "hello/" #reverse_lazy('detail-view', kwargs={'after': self.classSyllabus.code}) 
 
     def get_url(self):
         return '%s/' % self.classSyllabus.code
