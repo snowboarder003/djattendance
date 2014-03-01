@@ -61,7 +61,7 @@ def setup_southeast_tables():
 
 def setup_main_brothers_tables():
     """
-        Creates all the table's in the south cafeteria
+        Creates all the brothers only tables in the main cafeteria
     """
     tables = []
     tables.append(Table(name="M-23", capacity=7, location="M", genderType="B").save())
@@ -69,6 +69,28 @@ def setup_main_brothers_tables():
     tables.append(Table(name="M-25", capacity=9, location="M", genderType="B").save())
     tables.append(Table(name="M-26", capacity=9, location="M", genderType="B").save())
     
+    return tables
+
+def setup_main_sisters_tables():
+    """
+        Creates all the sisters only tables in the main cafeteria.
+    """
+    tables = []
+    tables.append(Table(name="M-01", capacity=8, location="M", genderType="S").save())
+    tables.append(Table(name="M-02", capacity=8, location="M", genderType="S").save())
+    tables.append(Table(name="M-03", capacity=8, location="M", genderType="S").save())
+    tables.append(Table(name="M-04", capacity=8, location="M", genderType="S").save())
+    tables.append(Table(name="M-05", capacity=8, location="M", genderType="S").save())
+    tables.append(Table(name="M-06", capacity=8, location="M", genderType="S").save())
+    tables.append(Table(name="M-07", capacity=8, location="M", genderType="S").save())
+    tables.append(Table(name="M-08", capacity=8, location="M", genderType="S").save())
+    tables.append(Table(name="M-09", capacity=8, location="M", genderType="S").save())
+    tables.append(Table(name="M-10", capacity=6, location="M", genderType="S").save())
+    tables.append(Table(name="M-11", capacity=6, location="M", genderType="S").save())
+    tables.append(Table(name="M-12", capacity=6, location="M", genderType="S").save())
+    tables.append(Table(name="M-13", capacity=6, location="M", genderType="S").save())
+    tables.append(Table(name="M-14", capacity=6, location="M", genderType="S").save())
+        
     return tables
 
 def setup_west_tables():
@@ -205,3 +227,23 @@ class TestTableOverflow(TestCase):
 
         self.assertEqual(146, len(myList))
         self.assertEqual(7, s05[0].getSeatedTrainees().count())
+        
+class TestMixedCafeteriaSeating(TestCase):
+    '''
+        This test will check the table restriction for seating a cafeteria with mixed gender.
+    '''
+    def test_seat_brothers_and_sisters(self):
+        setup_main_brothers_tables()
+        setup_main_sisters_tables()
+
+        setup_traineeBrothers_autofixture(33)
+        setup_traineeSisters_autofixture(102)
+        trainees = Trainee.objects.all().order_by('account__firstname')
+        tables = Table.objects.all()
+
+        myList = Table.seatTables(trainees, tables)
+
+        m05 = Table.objects.filter(name="M-05")
+
+        self.assertEqual(135, len(myList))
+        self.assertEqual("S", m05[0].getSeatedTrainees()[0].account.gender)

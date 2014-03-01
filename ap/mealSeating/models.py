@@ -71,16 +71,30 @@ class Table(models.Model):
         seatingList = []
         brothers = 0
         sisters = 1
+        broCounter = 0
+        sisCounter = 0
+        firstPass = True
 
         for trainee in traineeList:
             if trainee.account.gender == "B":
                 gender = brothers
+                tableToAddTo = broCounter
             else:
-                gender = sisters
+                gender = sisters 
+                tableToAddTo = sisCounter
 
-            if tables[gender][tableToAddTo].isFull() & (tableToAddTo < len(tables[gender])):
-                tableToAddTo +=1
+            if(firstPass is False):
+                if tables[gender][tableToAddTo].isFull() & (tableToAddTo <= (len(tables[gender])-1)):
+                    if trainee.account.gender == "B":
+                        broCounter += 1
+                        tableToAddTo = broCounter
+                    else:
+                        sisCounter += 1
+                        tableToAddTo = sisCounter
+                    firstPass = True
+
             tables[gender][tableToAddTo].seatTrainee(trainee)
             seatingList.append([trainee.account.get_full_name(),tables[gender][tableToAddTo].name])
+            firstPass = False
 
         return seatingList
