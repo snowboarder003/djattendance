@@ -134,7 +134,7 @@ class Profile(models.Model):
     """
 
     # each user should only have one of each profile
-    account = models.OneToOneField(User, related_name = "profile")
+    account = models.OneToOneField(User)
 
     # whether this profile is still active
     # ex: if a trainee becomes a TA, they no longer need a service worker profile

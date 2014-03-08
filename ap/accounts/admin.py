@@ -91,7 +91,8 @@ class TraineeAdmin(admin.ModelAdmin):
         VehicleInline,
         EmergencyInfoInline,    
     ]
-	"""
+    
+    """
 	#overriding save function to add user to house_coordinator group if applicable
 	def save_model(self, request, obj, form, change):
         
