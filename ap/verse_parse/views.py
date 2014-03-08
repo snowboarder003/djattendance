@@ -18,12 +18,15 @@ from pdfminer.layout import LAParams
 from cStringIO import StringIO
 import re
 
+from verse_parse import references
+
 
 def handle_uploaded_file(f):
 	data = pdf_to_text(f)
 	title, rest = tsplit(data)
+	refs = references.extract(data)
 	return data
-			
+
 
 def upload_file(request):
 	if request.method == 'POST':
