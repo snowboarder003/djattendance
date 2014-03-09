@@ -13,7 +13,7 @@ urlpatterns = patterns('',
 	url(r'^accounts/logout/$', logout),
     url(r'^$', 'ap.views.home'),
     url(r'^base_example/$', 'ap.views.base_example'),
-
+    url(r'^accounts/', include ('accounts.urls')),
     url(r'^terms/', include('terms.urls', namespace="terms")),
     url(r'^dailybread/', include('dailybread.urls', namespace="dailybread")),
     # Examples:
