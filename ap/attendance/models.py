@@ -30,7 +30,7 @@ class Roll(models.Model):
 
     event = models.ForeignKey(Event)
 
-    trainee = models.ForeignKey(Trainee)
+    trainee = models.ForeignKey(Trainee, related_name='rolls')
 
     status = models.CharField(max_length=1, choices=ROLL_STATUS, default='P')
 
@@ -41,7 +41,7 @@ class Roll(models.Model):
     notes = models.CharField(max_length=200, blank=True)
 
     # the one who submitted this roll
-    monitor = models.ForeignKey(Trainee, null=True)
+    monitor = models.ForeignKey(Trainee, null=True, related_name='submitted_rolls')
 
     # when the roll was last updated
     timestamp = models.DateTimeField(auto_now=True)
