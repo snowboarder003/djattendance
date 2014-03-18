@@ -10,6 +10,8 @@ from terms.models import Term
 from teams.models import Team
 from houses.models import House, Bunk
 from services.models import Service
+from django.forms import ModelForm
+from os.path import join as pjoin
 
 """ accounts models.py
 The user accounts module takes care of user accounts and
@@ -198,4 +200,43 @@ class Trainee(Profile):
     	return num_terms
     
     current_term = property(_calculate_term)
-    	
+
+"""
+Trial to see what generic "profile" brings to the table, need much modification to adjust to the
+"new" user model described above
+"""
+class UserProfile(models.Model):
+    posts = models.IntegerField(default=0)
+    user = models.ForeignKey(User, unique=True)
+
+    def __unicode__(self):
+        return unicode(self.user)
+
+User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+
+class ProfileForm(ModelForm):
+    class Meta:
+        model = UserProfile
+        exclude = ["posts", "user"]
+
+#@login_required
+def get_profile(request, pk):
+    """Edit user profile."""
+    profile = UserProfile.objects.get(user=pk)
+    img = None
+
+    if request.method == "POST":
+        pf = ProfileForm(request.POST, request.FILES, instance=profile)
+        if pf.is_valid():
+            pf.save()
+            # resize and save image under same filename
+            imfn = pjoin(MEDIA_ROOT, profile.avatar.name)
+            im = PImage.open(imfn)
+            im.thumbnail((160,160), PImage.ANTIALIAS)
+            im.save(imfn, "JPEG")
+    else:
+        pf = ProfileForm(instance=profile)
+
+    if profile.avatar:
+        img = "/media/" + profile.avatar.name
+    return render_to_response("forum/profile.html", add_csrf(request, pf=pf, img=img))
