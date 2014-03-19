@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block references %}
+
+<!-- <link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/start/jquery-ui.css' /> -->
+<link rel='stylesheet' type='text/css' href='{% static "schedules/libs/css/reset.css" %}' />
+
+<link rel='stylesheet' type='text/css' href='{% static "schedules/libs/css/smoothness/jquery-ui-1.8rc3.custom.css" %}' />
+<link rel='stylesheet' type='text/css' href='{% static "schedules/jquery.weekcalendar.css" %}' />
+<link rel='stylesheet' type='text/css' href='{% static "schedules/libs/css/schedule.css" %}' />
+
+<script type='text/javascript' src='{% static "schedules/libs/jquery-1.4.2.min.js" %}'></script>
+<script type='text/javascript' src='{% static "schedules/schedule.js" %}'></script>
+
+<script type='text/javascript' src='{% static "schedules/libs/jquery-ui-1.8rc3.custom.min.js" %}'></script>
+<script type='text/javascript' src='{% static "schedules/jquery.weekcalendar.js" %}'></script>
+
+{% endblock %}
+
+
+{% block title %}Home {% endblock %}
+
+{% block content %}
+	<h3>Create a New Schedule</h3>
+
+	<form action="" method="post">{% csrf_token %}
+	    {{ form.as_p }}<input type="submit" value="Save Schedule" />
+
+		<div id='calendar'></div>
+			<div id="event_edit_container">
+				<form>
+					<input type="hidden" />
+					<ul>
+						<li>
+							<span>Date: </span><span class="date_holder"></span> 
+						</li>
+						<li>
+							<label for="start">Start Time: </label><select name="start"><option value="">Select Start Time</option></select>
+						</li>
+						<li>
+							<label for="end">End Time: </label><select name="end"><option value="">Select End Time</option></select>
+						</li>
+						<li>
+							<label for="title">Title: </label><input type="text" name="title" />
+						</li>
+						<li>
+							<label for="body">Body: </label><textarea name="body"></textarea>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+	</form>
+{% endblock %}
+
