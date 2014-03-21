@@ -13,7 +13,13 @@
  *   http://www.gnu.org/licenses/gpl.html
  *   
  *   If you're after a monthly calendar plugin, check out http://arshaw.com/fullcalendar/
+ *
+ *
  */
+
+/*
+* March 2014 Slight modifications for FTTA djattendance - testing.
+*/
 
 (function($) {
 
