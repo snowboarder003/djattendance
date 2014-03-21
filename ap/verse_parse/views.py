@@ -19,13 +19,24 @@ from cStringIO import StringIO
 import re
 
 from verse_parse import references
+from verses import print_reference, get_verses
 
 
 def handle_uploaded_file(f):
 	data = pdf_to_text(f)
-	title, rest = tsplit(data)
-	refs = references.extract(data)
-	return data
+	# title, rest = tsplit(data)
+	outline = references.extract(data.partition('Scripture Reading:')[2])
+	for outline_pt in outline:
+		indent = ' '*((outline_pt[0]-1)*4)
+		print(indent + outline_pt[1])
+		for ref in outline_pt[2]:
+			if ref[1] is not None:
+				ref_string = print_reference(ref)
+				print(indent + ref_string)
+				# verses = get_verses(ref)
+				# for verse in verses.values():
+				# 	print verse
+	return outline
 
 
 def upload_file(request):

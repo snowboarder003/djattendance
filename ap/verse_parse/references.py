@@ -22,17 +22,80 @@ def get_book(name):
 
 def extract(text):
     """
-    Extract a list of tupled scripture references from a block of text
+    Extract from a block of text a list of 2-tuples
+    containing an outline point and a list of normalized, tupled verse references under that outline point.
     """
     references = []
     for r in re.finditer(scripture_re, text):
         try:
-            print(r.group())
-            references.append(r.group())
+            # find Roman numerals / outline points
+            is_bullet = False
+            for i in range(1,5): 
+                if r.group(i):
+
+                    # if the previous outline point had no verses, delete it from the references list
+                    if len(references[-1][2]) == 0:
+                        del(references[-1])
+
+                    references.append((i, r.group(i), [],))
+                    is_bullet = True
+
+
+            if is_bullet == False:
+
+                # if no outline points yet, verses are from Scripture Reading
+                if len(references) == 0:
+                    references.append((0, 'Scripture Reading', [],))
+
+                if r.group('book'): # reference contains book name
+                    references[-1][2].append(normalize_reference(bookname=r.group('book'), chapter=r.group('chapter'), 
+                                            verse=r.group('verse'), end_chapter=r.group('end_chapter'), end_verse=r.group('end_verse')))
+                    if r.group('more_verses'): # reference contains multiple non-consecutive verse numbers
+                        verses = extract_more_verses(r.group('more_verses')) # get extra verses in a list
+                        for verse in verses: # append one reference for each extra verse
+                           references[-1][2].append(normalize_reference(bookname=r.group('book'), chapter=r.group('chapter'), 
+                                                 verse=verse[0], end_verse=verse[1]))
+                else:
+                    # get book from previous reference
+                    if len(references[-1][2]) > 0:
+                        book = references[-1][2][-1][0] 
+                    else: # if this is the first verse reference under an outline point, look at the last reference in the previous outline point
+                        book = references[-2][2][-1][0]
+                    if r.group('headless_chapter'): # headless reference
+                        references[-1][2].append(normalize_reference(bookname=book, chapter=r.group('headless_chapter'),
+                            verse=r.group('headless_verse'), end_chapter=r.group('headless_end_chapter'), end_verse=r.group('headless_end_verse')))
+                        if r.group('more_headless_verses'):
+                            verses = extract_more_verses(r.group('more_headless_verses'))
+                            for verse in verses:
+                                references[-1][2].append(normalize_reference(bookname=book, chapter=r.group('headless_chapter'), 
+                                                 verse=verse[0], end_verse=verse[1]))
+                    else:
+                        if r.group('lonely_verse'):
+                            if len(references[-1][2]) > 0:
+                                chapter = references[-1][2][-1][1]
+                            else:
+                                chapter = references[-2][2][-1][1]
+                            references[-1][2].append(normalize_reference(bookname=book, chapter=chapter, verse=r.group('lonely_verse'), end_chapter=chapter, end_verse=r.group('lonely_end_verse')))
+                            if r.group('more_lonely_verses'):
+                                verses = extract_more_verses(r.group('more_lonely_verses'))
+                                for verse in verses:
+                                    references[-1][2].append(normalize_reference(bookname=book, chapter=chapter, verse=verse[0], end_verse=verse[1]))
+
+
             # references.append(normalize_reference(*r.groups()))
         except InvalidReferenceException:
             pass
     return references
+
+
+def extract_more_verses(text):
+    """
+    Extract a list of verse numbers from a string of verse numbers, i.e. '3, 7, 10-14, 16'.
+    Returns a list of tuples: (verse, end_verse,).
+    e.g. '3, 7, 10-14, 16' --> [('3', '',), ('7', '',), ('10', '14',), ('16', '',)]
+    """
+    verses = re.findall(re.compile(r'(?P<verse>\d{1,3})(?:-(?P<end_verse>\d{1,3}))?'), text)
+    return verses
 
 def is_valid_reference(bookname, chapter, verse=None,
                                  end_chapter=None, end_verse=None, more_verses=None):
@@ -79,8 +142,9 @@ def reference_to_string(bookname, chapter, verse=None,
     else: # start and end chapters are different
         return '{0} {1}:{2}-{3}:{4}'.format(*normalized)
 
+# prev - previous reference (to fill in missing information for headless/lonely verses)
 def normalize_reference(bookname=None, chapter=None, verse=None,
-                                  end_chapter=None, end_verse=None, more_verses=None):
+                                  end_chapter=None, end_verse=None):
     """
     Get a complete five value tuple scripture reference with full book name
     from partial data
@@ -106,28 +170,30 @@ def normalize_reference(bookname=None, chapter=None, verse=None,
     # Convert to integers or leave as None
     chapter = int(chapter) if chapter else None
     verse = int(verse) if verse else None
-    end_chapter = int(end_chapter) if end_chapter else chapter
     end_verse = int(end_verse) if end_verse else None
-    if not book \
-    or (chapter is None or chapter < 1 or chapter > len(book[3])) \
-    or (verse is not None and (verse < 1 or verse > book[3][chapter-1])) \
-    or (end_chapter is not None and (
-        end_chapter < 1
-        or end_chapter < chapter
-        or end_chapter > len(book[3]))) \
-    or (end_verse is not None and(
-        end_verse < 1
-        or (end_chapter and end_verse > book[3][end_chapter-1])
-        or (chapter == end_chapter and end_verse < verse))):
-        raise InvalidReferenceException()
-    
-    if not verse:
-        return (book[0], chapter, 1, chapter, book[3][chapter-1])
-    if not end_verse: 
-        if end_chapter and end_chapter != chapter:
-            end_verse = book[3][end_chapter-1]
-        else:
-            end_verse = verse
-    if not end_chapter:
-        end_chapter = chapter
-    return (book[0], chapter, verse, end_chapter, end_verse)
+    if end_verse is not None:
+        end_chapter = int(end_chapter) if end_chapter else chapter
+
+    # if (chapter < 1 or chapter > len(book[3])) \
+    # or (verse is not None and (verse < 1 or verse > book[3][chapter-1])) \
+    # or (end_chapter is not None and (
+    #     end_chapter < 1
+    #     or end_chapter < chapter
+    #     or end_chapter > len(book[3]))) \
+    # or (end_verse is not None and(
+    #     end_verse < 1
+    #     or (end_chapter and end_verse > book[3][end_chapter-1])
+    #     or (chapter == end_chapter and end_verse < verse))):
+    #     raise InvalidReferenceException()
+
+    # if not verse:
+    #     return (book[0], chapter, 1, chapter, book[3][chapter-1])
+    # if not end_verse: 
+    #     if end_chapter and end_chapter != chapter:
+    #         end_verse = book[3][end_chapter-1]
+    #     else:
+    #         end_verse = verse
+    # if not end_chapter:
+    #     end_chapter = chapter
+
+    return (book[1], chapter, verse, end_chapter, end_verse)
