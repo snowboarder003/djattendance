@@ -76,6 +76,10 @@ class Event(models.Model):
     # days 0-6 (LD through Saturday)
     day = models.PositiveSmallIntegerField()
 
+    start = models.TimeField()
+
+    end = models.TimeField()
+
     def _week(self):
         self.term.reverseDate(self.date)[0]
     week = property(_week)
@@ -83,7 +87,6 @@ class Event(models.Model):
     def _day(self):
         self.term.reverseDate(self.date)[1]
     day = property(_day)
-
 
 
 class EventGroup(models.Model):
@@ -112,17 +115,8 @@ class Schedule(models.Model):
     # which events are on this schedule
     events = models.ManyToManyField(Event, null=True, blank=True)
 
-    def _startDate(self):
-        return self.term.getDate(0, 0)
-    startDate = property(_startDate)
-
-    def _endDate(self):
-        return self.term.getDate(19, 6)
-    endDate = property(_endDate)
-
     def todays_events(self):
-        today = date.today()
-        return self.events.filter(date__)
+        return self.events.filter(date__exact=date.today())
 
     class Meta:
         # a trainee should only have one schedule per term
