@@ -109,7 +109,7 @@ class Schedule(models.Model):
     term = models.ForeignKey(Term)
 
     # which events are on this schedule
-    events = models.ManyToManyField(Event)
+    events = models.ManyToManyField(Event, null=True, blank=True)
 
 
 class ScheduleTemplate(models.Model):
