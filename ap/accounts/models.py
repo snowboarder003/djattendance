@@ -10,8 +10,11 @@ from terms.models import Term
 from teams.models import Team
 from houses.models import House, Bunk
 from services.models import Service
+from django import forms
 from django.forms import ModelForm
 from os.path import join as pjoin
+
+from django.views.generic.detail import DetailView
 
 """ accounts models.py
 The user accounts module takes care of user accounts and
@@ -214,14 +217,16 @@ class UserProfile(models.Model):
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
-class ProfileForm(ModelForm):
+class ProfileForm(forms.ModelForm, DetailView):
+    email = forms.CharField(max_length=50, help_text='Please enter the name to change email address')
+    firstname = forms.CharField(max_length=50, help_text='Please enter the name to change firstname')
     class Meta:
-        model = UserProfile
-        exclude = ["posts", "user"]
+        model = User
+        fields = ('email', 'firstname', 'lastname')
 
+"""
 #@login_required
 def get_profile(request, pk):
-    """Edit user profile."""
     profile = UserProfile.objects.get(user=pk)
     img = None
 
@@ -240,3 +245,4 @@ def get_profile(request, pk):
     if profile.avatar:
         img = "/media/" + profile.avatar.name
     return render_to_response("forum/profile.html", add_csrf(request, pf=pf, img=img))
+"""
