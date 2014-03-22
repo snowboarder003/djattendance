@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db import models
 
 from terms.models import Term
@@ -76,13 +78,9 @@ class Event(models.Model):
 
     end = models.TimeField()
 
-    def _startDate(self):
-        return self.term.getDate(0, 0)
-    startDate = property(_startDate)
-
-    def _endDate(self):
-        return self.term.getDate(19, 6)
-    endDate = property(_endDate)
+    def _date(self):
+        return self.term.getDate(week, day)
+    date = property(_date)
 
 
 class EventGroup(models.Model):
@@ -110,6 +108,14 @@ class Schedule(models.Model):
 
     # which events are on this schedule
     events = models.ManyToManyField(Event, null=True, blank=True)
+
+    def _startDate(self):
+        return self.term.getDate(0, 0)
+    startDate = property(_startDate)
+
+    def _endDate(self):
+        return self.term.getDate(19, 6)
+    endDate = property(_endDate)
 
     class Meta:
         # a trainee should only have one schedule per term
