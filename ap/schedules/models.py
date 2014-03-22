@@ -68,19 +68,22 @@ class Event(models.Model):
     # which term this event is active in
     term = models.ForeignKey(Term)
 
+    date = models.DateField()
+
     # weeks 0-19 for the 20 weeks of the training
     week = models.PositiveSmallIntegerField()
 
     # days 0-6 (LD through Saturday)
     day = models.PositiveSmallIntegerField()
 
-    start = models.TimeField()
+    def _week(self):
+        self.term.reverseDate(self.date)[0]
+    week = property(_week)
+    
+    def _day(self):
+        self.term.reverseDate(self.date)[1]
+    day = property(_day)
 
-    end = models.TimeField()
-
-    def _date(self):
-        return self.term.getDate(week, day)
-    date = property(_date)
 
 
 class EventGroup(models.Model):
