@@ -139,6 +139,7 @@ INSTALLED_APPS = (
     'terms',
     # ap modules
     'dailybread',  # daily nourishment
+    'report_builder',
 )
 
 # A sample logging configuration. The only tangible logging

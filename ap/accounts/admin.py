@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib import admin
+from django.contrib.admin import SimpleListFilter
 from django.contrib.auth.admin import UserAdmin
 
 from accounts.models import User, Trainee, TrainingAssistant
@@ -77,7 +78,17 @@ class APUserAdmin(UserAdmin):
         ),
     )
     
-
+"""class Mentor(SimpleListFilter):
+	title = _('is mentor')
+	
+	def lookups(self, request, model_admin):
+		return(
+			('mentor', _('all mentor')),
+		)
+	
+	def queryset(self, request, queryset):
+		return queryset.filter()
+	"""
 class TraineeAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
@@ -85,6 +96,7 @@ class TraineeAdmin(admin.ModelAdmin):
         }),
     )
     list_display = ('__unicode__', 'current_term')
+    list_filter = ['mentor']
     inlines = [
         VehicleInline,
     ]
