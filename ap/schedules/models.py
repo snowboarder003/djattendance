@@ -54,16 +54,16 @@ class Event(models.Model):
     description = models.CharField(max_length=250, blank=True)
 
     # a groupID. used to group repeating events
-    group = models.ForeignKey('EventGroup')
+    group = models.ForeignKey('EventGroup', blank=True, null=True)
 
     # if this event is a class, relate it
-    classs = models.ForeignKey(Class)  # class is a reserved keyword :(
+    classs = models.ForeignKey(Class, blank=True, null=True)  # class is a reserved keyword :(
 
     # the type of event
     type = models.CharField(max_length=1, choices=EVENT_TYPES)
 
     # who takes roll for this event
-    monitor = models.CharField(max_length=2, choices=MONITOR_TYPES)
+    monitor = models.CharField(max_length=2, choices=MONITOR_TYPES, blank=True, null=True)
 
     # which term this event is active in
     term = models.ForeignKey(Term)
@@ -116,6 +116,10 @@ class Schedule(models.Model):
     def _endDate(self):
         return self.term.getDate(19, 6)
     endDate = property(_endDate)
+
+    def todays_events(self):
+        today = date.today()
+        return self.events.filter(date__)
 
     class Meta:
         # a trainee should only have one schedule per term
