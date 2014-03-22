@@ -44,7 +44,22 @@
 							<label for="title">Title: </label><input type="text" name="title" />
 						</li>
 						<li>
-							<label for="body">Body: </label><textarea name="body"></textarea>
+							<label for="eventType">Type: </label>
+							<select name="eventType">
+								<option value="class">Class</option>
+								<option value="gospel">Study</option>
+								<option value="meal">Meal</option>
+								<option value="house">House</option>
+								<option value="team">Team</option>
+							</select>
+						</li>
+						<li>
+							<label for="is_roll">Roll? </label>
+							Yes&nbsp;<input type="radio" name="is_roll" value="true" checked> 
+							No&nbsp;<input type="radio" name="is_roll" value="false"> 
+						</li>						
+						<li>
+							<label for="body">Notes: </label><textarea name="body"></textarea>
 						</li>
 					</ul>
 				</form>

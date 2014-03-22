@@ -6,4 +6,5 @@ from schedules import views
 urlpatterns = patterns('',
     url(r'list/$', views.ScheduleListView.as_view(), name='list'),
     url(r'create/$', views.ScheduleCreateView.as_view(), name='create'),
+    url(r'update_event/$', views.update_event, name='update_event'),
 )

@@ -42,10 +42,8 @@ jQuery(document).ready(function($) {
          var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
          var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
          var titleField = $dialogContent.find("input[name='title']");
-         // var typeField = $dialogContent.find("input[name='eventType']");
-         // TODO: add type dropdown, (class, study, etc), roll option, etc
+         var typeField = $dialogContent.find("input[name='eventType']");
          var bodyField = $dialogContent.find("textarea[name='body']");
-
 
          $dialogContent.dialog({
             modal: true,
@@ -63,7 +61,7 @@ jQuery(document).ready(function($) {
                   calEvent.end = new Date(endField.val());
                   calEvent.title = titleField.val();
                   calEvent.body = bodyField.val();
-                  // calEvent.eventType = typeField.val();
+                  calEvent.eventType = typeField.val();
 
                   $calendar.weekCalendar("removeUnsavedEvents");
                   $calendar.weekCalendar("updateEvent", calEvent);
@@ -98,7 +96,7 @@ jQuery(document).ready(function($) {
          var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
          var titleField = $dialogContent.find("input[name='title']").val(calEvent.title);
          var bodyField = $dialogContent.find("textarea[name='body']");
-         // var typeField = $dialogContent.find("input[name='eventType']");
+         var typeField = $dialogContent.find("input[name='eventType']");
 
          bodyField.val(calEvent.body);
 
@@ -117,7 +115,14 @@ jQuery(document).ready(function($) {
                   calEvent.end = new Date(endField.val());
                   calEvent.title = titleField.val();
                   calEvent.body = bodyField.val();
-                  // calEvent.eventType = typeField.val();
+
+                  console.log("Saving event...");
+
+                  $.get('/schedules/update_event/', {title: calEvent.title}, function(data){
+                     console.log( data );
+                  });
+
+                  calEvent.eventType = typeField.val();
 
                   $calendar.weekCalendar("updateEvent", calEvent);
                   $dialogContent.dialog("close");
@@ -170,14 +175,14 @@ jQuery(document).ready(function($) {
          events : [
             {
                "id":1,
-               "start": new Date(year, month, day, 12),
-               "end": new Date(year, month, day, 13, 30),
-               "title":"Lunch"
+               "start": new Date(year, month, day - 1, 12),
+               "end": new Date(year, month, day - 1, 13, 30),
+               "title":"Gospel time!"
             },
             {
                "id":2,
-               "start": new Date(year, month, day, 14),
-               "end": new Date(year, month, day, 14, 45),
+               "start": new Date(year, month, day - 3, 14),
+               "end": new Date(year, month, day - 3, 14, 45),
                "title":"Meeting"
             },
             {
@@ -194,14 +199,14 @@ jQuery(document).ready(function($) {
             },
             {
                "id":5,
-               "start": new Date(year, month, day + 1, 14),
-               "end": new Date(year, month, day + 1, 15),
+               "start": new Date(year, month, day - 3, 14),
+               "end": new Date(year, month, day - 3, 15),
                "title":"Team time"
             },
             {
                "id":6,
                "start": new Date(year, month, day, 10),
-               "end": new Date(year, month, day, 11),
+               "end": new Date(year, month, day, 12),
                "title":"I'm read-only - for marking attendance",
                readOnly : true
             }
