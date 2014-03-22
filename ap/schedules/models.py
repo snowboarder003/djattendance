@@ -111,6 +111,10 @@ class Schedule(models.Model):
     # which events are on this schedule
     events = models.ManyToManyField(Event, null=True, blank=True)
 
+    class Meta:
+        # a trainee should only have one schedule per term
+        unique_together = (('trainee', 'term'))
+
 
 class ScheduleTemplate(models.Model):
 
