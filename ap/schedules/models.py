@@ -70,12 +70,6 @@ class Event(models.Model):
 
     date = models.DateField()
 
-    # weeks 0-19 for the 20 weeks of the training
-    week = models.PositiveSmallIntegerField()
-
-    # days 0-6 (LD through Saturday)
-    day = models.PositiveSmallIntegerField()
-
     start = models.TimeField()
 
     end = models.TimeField()
