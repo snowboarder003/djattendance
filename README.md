@@ -1,6 +1,9 @@
 # djattendance
 ---
 
+Branch for the March 29th demo.
+Sarah and Rebecca are working directly on this branch with the attendance/schedules, so **please do not merge into this branch unless it works.** Thank you.
+
 ## Summary
 Djattendance is a rewrite of the original FTTA attendance server in Python/Django. It supports many internal functions of the FTTA, for both trainees and administrators, such as:
 * Attendance

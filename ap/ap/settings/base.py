@@ -138,6 +138,8 @@ INSTALLED_APPS = (
     'teams',
     'terms',
     # ap modules
+    'schedules',
+    'attendance',
     'dailybread',  # daily nourishment
     'report_builder',
 )
