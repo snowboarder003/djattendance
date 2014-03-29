@@ -16,6 +16,8 @@ urlpatterns = patterns('',
     
     url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^admin/', include(admin.site.urls)), # admin site
+    
+    url(r'^adminactions/', include('adminactions.urls')), #django-adminactions pluggable app
 
     url(r'^terms/', include('terms.urls', namespace="terms")),
     url(r'^dailybread/', include('dailybread.urls', namespace="dailybread")),

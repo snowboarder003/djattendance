@@ -118,6 +118,9 @@ TEMPLATE_DIRS = (
 AUTH_USER_MODEL = 'accounts.User'
 
 INSTALLED_APPS = (
+    #admin third-party modules
+    'adminactions',
+    'grappelli',# needs to be in front of 'django.contrib.admin'
     # django contrib
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -125,13 +128,13 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'grappelli',
     'django.contrib.admin',
     'django.contrib.admindocs',
     # third-party modules
     'autofixture',
     'braces',
     'django_reset',
+    'import_export',
     # ap CORE
     'accounts',
     'aputils',
