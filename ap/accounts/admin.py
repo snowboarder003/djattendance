@@ -2,6 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib.admin import SimpleListFilter
 from django.contrib.auth.admin import UserAdmin
+from django.utils.translation import ugettext_lazy as _
 
 from accounts.models import User, Trainee, TrainingAssistant
 from aputils.admin import VehicleInline, EmergencyInfoInline
@@ -62,7 +63,7 @@ class APUserAdmin(UserAdmin):
                             ("email",)}),
 
         ("Personal info", {"fields": 
-                            ("firstname", "lastname")}),
+                            ("firstname", "lastname","date_of_birth")}),
         ("Permissions", {"fields": 
                             ("is_active",
                             "is_staff",
@@ -77,29 +78,115 @@ class APUserAdmin(UserAdmin):
             "fields": ("email", "firstname", "lastname", "password", "password_repeat")}
         ),
     )
-    
-"""class Mentor(SimpleListFilter):
-	title = _('is mentor')
+ 
+class CurrentTermListFilter(SimpleListFilter):
+	#Lists the trainees by term
+	title = _('current term')
+	
+	parameter_name = 'current term'
 	
 	def lookups(self, request, model_admin):
-		return(
-			('mentor', _('all mentor')),
+		"""
+		Returns a list of tuples. The first element in each tuple is the coded value
+		for the option that will appear in the URL query. The second element is the human-
+		readable name for the option that will appear in the right sidebar.
+		"""
+		return (
+			('1term', _('1st term')),
+			('2term', _('2nd term')),
+			('3term', _('3rd term')),
+			('4term', _('4th term')),
 		)
 	
 	def queryset(self, request, queryset):
-		return queryset.filter()
-	"""
+		"""
+		"""
+		if self.value() == '1term':
+			q=queryset
+			q_ids = [person.id for person in q if person.current_term==1]
+			q = q.filter(id__in=q_ids)
+			return q
+			
+		if self.value() == '2term':
+			q=queryset
+			q_ids = [person.id for person in q if person.current_term==2]
+			q = queryset.filter(id__in=q_ids)
+			return q
+			
+		if self.value() == '3term':
+			q=queryset
+			q_ids = [person.id for person in q if person.current_term==3]
+			q = queryset.filter(id__in=q_ids)
+			return q
+			
+		if self.value() == '4term':
+			q=queryset
+			q_ids = [person.id for person in q if person.current_term==4]
+			q = queryset.filter(id__in=q_ids)
+			return q
+			   
+class FirstTermMentorListFilter(SimpleListFilter):
+	#Make list of 1st term mentors for email notifications
+	title = _('mentors')
+	
+	parameter_name = 'mentor'
+	
+	def lookups(self, request, model_admin):
+		"""
+		Returns a list of tuples. The first element in each tuple is the coded value
+		for the option that will appear in the URL query. The second element is the human-
+		readable name for the option that will appear in the right sidebar.
+		"""
+		return (
+			('1termmentor', _('1st term mentors')),
+			('2termmentor', _('2nd term mentors')),
+			('3termmentor', _('3rd term mentors')),
+			('4termmentor', _('4th term mentors')),
+		)
+	
+	def queryset(self, request, queryset):
+		"""
+		"""
+		if self.value() == '1termmentor':
+			"""queryset of 1st term mentors """
+			q=queryset.filter(mentor__isnull=False)
+			q_ids = [person.mentor.id for person in q if person.current_term==1]
+			q = q.filter(id__in=q_ids)
+			return q
+		
+		if self.value() == '2termmentor':
+			"""queryset of 2nd term mentors """
+			q=queryset.filter(mentor__isnull=False)
+			q_ids = [person.mentor.id for person in q if person.current_term==2]
+			q = q.filter(id__in=q_ids)
+			return q
+			
+		if self.value() == '3termmentor':
+			"""queryset of 3rd term mentors """
+			q=queryset.filter(mentor__isnull=False)
+			q_ids = [person.mentor.id for person in q if person.current_term==3]
+			q = q.filter(id__in=q_ids)
+			return q
+			
+		if self.value() == '4termmentor':
+			"""queryset of 4th term mentors """
+			q=queryset.filter(mentor__isnull=False)
+			q_ids = [person.mentor.id for person in q if person.current_term==4]
+			q = q.filter(id__in=q_ids)
+			return q
+		
 class TraineeAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (('account', 'active',), 'type', 'term', ('date_begin', 'date_end',), ('married', 'spouse',), ('TA', 'mentor',), 'team', ('house', 'bunk',), 'address', 'self_attendance',)
         }),
     )
-    list_display = ('__unicode__', 'current_term')
-    list_filter = ['mentor']
+    list_display = ('__unicode__','current_term','_trainee_email',)
+    list_filter = ('active', CurrentTermListFilter,FirstTermMentorListFilter,)
     inlines = [
-        VehicleInline,
+        VehicleInline, EmergencyInfoInline,
     ]
+    
 
 # Register the new Admin
 admin.site.register(User, APUserAdmin)

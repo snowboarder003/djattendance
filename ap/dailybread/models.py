@@ -27,9 +27,8 @@ class Portion(models.Model):
     @staticmethod
     def today():
         """ returns random daily portion for each day """
-        try:
-            portions = list(Portion.objects.filter(approved=True))
-        except:
+        portions = list(Portion.objects.filter(approved=True))
+        if portions is not None:
             """ Return an empty portion if there are no portions. """
             return Portion()
         random.seed(date.today())
