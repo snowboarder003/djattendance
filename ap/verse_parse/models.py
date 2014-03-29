@@ -54,7 +54,7 @@ class Reference(models.Model):
 			verses = data[0]['verses']
 			return verses
 		except:
-			return False
+			return {}
 
 
 	def __unicode__(self):
