@@ -1,19 +1,18 @@
 <h1>Welcome to the Syllabus Home Page</h1>
 
-<h2><a href="{% url 'classlist-view' "Fa13" %}">Term List harro</a></h2> 
 <!-- <h1> Option 1: </h1> -->
 
 <h2>Term list: Please Choose a Term</h2>
 
-	{% if termlist %}
-		<ul>
-			{% for term in termlist %}
-				<li><a href="{{ term.code }}">{{ term.name }}</a></li>
-			{% endfor %}
-		</ul>
-	{% else %}
-		<p>No terms.</p>
-	{% endif %}
+{% if termlist %}
+	<ul>
+		{% for term in termlist %}
+			<li><a href="{{ term.code }}">{{ term.name }}</a></li>
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>No terms.</p>
+{% endif %}
 
 
 

@@ -20,7 +20,6 @@ class HomeView(ListView):
     context_object_name = 'termlist'
 
 class CLView(ListView):
-
     template_name = "syllabus/classlist.html"
     context_object_name = 'list'
     model = Syllabus
@@ -42,18 +41,13 @@ class AddSyllabusView(CreateView):
     template_name = 'syllabus/new_syllabus_form.html'
     form_class = NewSyllabusForm
 
-class DeleteSyllabusView(DeleteView):
+'''TODO change this to DeleteView'''
+class DeleteSyllabusView(ListView):
     model = Syllabus
     template_name = 'syllabus/delete_syllabus_confirm.html'
-    slug_field = 'after' # REPLACE_3
-    slug_url_kwarg = 'after' # REPLACE_4
+    #slug_field = 'after' # REPLACE_3
+    #slug_url_kwarg = 'after' # REPLACE_4
     success_url = reverse_lazy('classlist-view') 
-
-
-
-
-
-
 
 class TestView(ListView):
     template_name = "syllabus/detail.html"

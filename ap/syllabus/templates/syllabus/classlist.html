@@ -1,5 +1,6 @@
 </br>
-<!-- <a href="{% url 'home-view' %}"> Back to Home page</a> -->
+
+<a href="{% url 'home-view' %}">Back to term list.</a>
 
 <h1> Class List: </h1>
 
@@ -24,10 +25,12 @@
 	<p>No syllabus.</p>
 {% endif %} -->
 
+
+
 {% if list %}
 	<ul>
 		{% for syllabus in list %}
-			<li> <a href="{{syllabus.get_url}}" > {{ syllabus.classSyllabus.name }} </a> </li>
+			<li> <a href="{{syllabus.get_url}}" > {{ syllabus.classSyllabus.name }} : {{syllabus.classSyllabus.term.code }} </a> </li>
 		{% endfor %}
 	</ul>
 {% else %}

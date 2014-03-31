@@ -4,6 +4,9 @@ from .models import Syllabus
 
 class NewSyllabusForm(forms.ModelForm):
     
+    '''TODO: need to change the Fa|Sp\d{2} thing for each syllabus added
+    apparently they all get added with Fa13,perhaps to overwrite 
+    syllabus.classSyllabus.term or just fix the model'''
     class Meta:
         model = Syllabus
         #fields = ('season', 'start', 'end')
@@ -32,3 +35,5 @@ class NewSyllabusForm(forms.ModelForm):
         if commit:
             syllabus.save()
         return syllabus
+
+

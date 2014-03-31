@@ -14,11 +14,11 @@ urlpatterns = patterns('',
 	url(r'^(?P<term>(Fa|Sp)\d{2})/$', CLView.as_view(model=Syllabus,
 			context_object_name="list"), name='classlist-view'),
 
-	url(r'^(?P<term>(Fa|Sp)\d{2})/(?P<kode>\D{0,4})/$', DetailView.as_view(model=Syllabus), name='detail-view'),
+	url(r'^(?P<term>(Fa|Sp)\d{2})/(?P<kode>\D{0,5})/$', DetailView.as_view(model=Syllabus), name='detail-view'),
 
 	url(r'^add_syllabus.html$', AddSyllabusView.as_view(), name='add-syllabus'),
 
-	url(r'^delete$', DeleteSyllabusView.as_view(), name='delete-syllabus'),	
+	url(r'^delete.html$', DeleteSyllabusView.as_view(context_object_name="list"), name='delete-syllabus'),	
 
 	# url(r'^Term/(?P<kode>\D+)/$', DetailView.as_view(model=Syllabus), name='detail-view'),
 

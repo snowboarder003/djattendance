@@ -1,6 +1,17 @@
-Delete syllabus {{ syllabus.classSyllabus.name }}?
+{{ form.media }}
+
+<h1>Delete syllabus</h1>
 
 <form action="" method="post">
+    {% if list %}
+    <table>
+        {% for syllabus in list%}
+            <li> {{ syllabus.classSyllabus.name}} </li>
+        {% endfor %}    
+    </table>
+    {% else %}
+        <p>No syllabus.</p>
+    {% endif %}
 	{% csrf_token %}
 	<input type="submit" value="Delete">
 </form>
