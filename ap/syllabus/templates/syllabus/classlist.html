@@ -30,7 +30,12 @@
 {% if list %}
 	<ul>
 		{% for syllabus in list %}
-			<li> <a href="{{syllabus.get_url}}" > {{ syllabus.classSyllabus.name }} : {{syllabus.classSyllabus.term.code }} </a> </li>
+		<table>
+			<tr>
+				<td><a href="{{syllabus.get_url}}" > {{ syllabus.classSyllabus.name }} : {{syllabus.classSyllabus.term.code }} </a> </td>
+        		<td><a href="delete/{{syllabus.id}}" >Delete</a></td>
+        	</tr>
+        </table>
 		{% endfor %}
 	</ul>
 {% else %}
@@ -42,4 +47,3 @@
 <p> Click to: </p>
 <a href="{% url 'add-syllabus' %}"> Add a Syllabus </a>
 </br>
-<a href="{% url 'delete-syllabus' %}"> Delete a Syllabus </a>

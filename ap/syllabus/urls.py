@@ -18,7 +18,7 @@ urlpatterns = patterns('',
 
 	url(r'^add_syllabus.html$', AddSyllabusView.as_view(), name='add-syllabus'),
 
-	url(r'^delete.html$', DeleteSyllabusView.as_view(context_object_name="list"), name='delete-syllabus'),	
+	url(r'^(?P<term>(Fa|Sp)\d{2})/delete/(?P<pk>\d+)$', DeleteSyllabusView.as_view(), name='delete-syllabus'),	
 
 	# url(r'^Term/(?P<kode>\D+)/$', DetailView.as_view(model=Syllabus), name='detail-view'),
 

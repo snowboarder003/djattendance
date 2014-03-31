@@ -8,8 +8,6 @@ from .forms import NewSyllabusForm
 from django.core.urlresolvers import reverse_lazy
 
 
-
-
 # class HomeView(ListView):
 #     template_name = "syllabus/home.html"
 #     model = Syllabus
@@ -23,6 +21,8 @@ class CLView(ListView):
     template_name = "syllabus/classlist.html"
     context_object_name = 'list'
     model = Syllabus
+    # def get_queryset(self):
+    #     term = self.kwargs['term']
 
 class DetailView(ListView):
     template_name = "syllabus/details.html"
@@ -40,14 +40,22 @@ class AddSyllabusView(CreateView):
     model = Syllabus
     template_name = 'syllabus/new_syllabus_form.html'
     form_class = NewSyllabusForm
+    # def get_queryset(self):
+    #     term = self.kwargs['term']
 
-'''TODO change this to DeleteView'''
-class DeleteSyllabusView(ListView):
+class DeleteSyllabusView(DeleteView):
     model = Syllabus
     template_name = 'syllabus/delete_syllabus_confirm.html'
+    # def get_queryset(self):
+    #     term = self.kwargs['term']
+    """TODO need to get the term from named group into reverse_lazy"""
+    term = None
+    def get_success_url(self):
+        term = self.kwargs['term']
+        return reverse_lazy('classlist-view', args=[term])
     #slug_field = 'after' # REPLACE_3
     #slug_url_kwarg = 'after' # REPLACE_4
-    success_url = reverse_lazy('classlist-view') 
+    #success_url = reverse_lazy('classlist-view', kwargs={'term': 'Fa13'}) 
 
 class TestView(ListView):
     template_name = "syllabus/detail.html"

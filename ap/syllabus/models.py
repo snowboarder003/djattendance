@@ -50,7 +50,6 @@ class Syllabus (models.Model):
     def get_url(self):
         return '%s/' % self.classSyllabus.code
 
-    
     def get_id(self):
         slug = self.id
         return slug
@@ -73,8 +72,6 @@ class Syllabus (models.Model):
     # def get_code(self):
     #     code = self.classSyllabus.term.name
     #     return code
-
-    
 
 
 class Session(models.Model):
