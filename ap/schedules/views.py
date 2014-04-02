@@ -11,6 +11,14 @@ class ScheduleCreateView(generic.CreateView):
     template_name = 'schedules/new_schedule.html'
     fields = ['name']
 
+class ScheduleDetailView(generic.DetailView):
+	model = Schedule
+	template_name = 'schedules/view.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(ScheduleDetailView, self).get_context_data(**kwargs)
+		return context
+
 class ScheduleListView(generic.ListView):
 	model = ScheduleTemplate
 	template_name = 'schedules/list.html'
@@ -30,3 +38,11 @@ def update_event(request):
 	# Do the update on the model here...
 
 	return HttpResponse(request.GET['title'] + ' returned from view.')
+
+# @login_required
+def create_event(request):
+	context = RequestContext(request)
+
+	# create new EventGroup here and link it to the schedule
+
+	return HttpResponse('Created new event... TODO.')
