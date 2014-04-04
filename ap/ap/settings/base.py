@@ -123,8 +123,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     # third-party modules
-    'autofixture',
-    'braces',
+    'autofixture', # easily generate dummy/test data
+    'bootstrap3', # easy-to-use bootstrap integration
+    'braces', # Mixins for Django's class-based views.
     'django_reset',
     # ap CORE
     'accounts',
@@ -171,3 +172,14 @@ LOGGING = {
         },
     }
 }
+
+BOOTSTRAP3 = {
+    'jquery_url': '/static/jquery/js/jquery-1.10.1.min.js',
+    'base_url': '/static/bootstrap/css/',
+    'css_url': None,
+    'theme_url': None,
+    'javascript_url': None,
+    'horizontal_label_class': 'col-md-2',
+    'horizontal_field_class': 'col-md-4',
+}
+
