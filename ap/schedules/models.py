@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.db import models
+from django.core.urlresolvers import reverse
 
 from terms.models import Term
 from classes.models import Class
@@ -66,7 +67,7 @@ class Event(models.Model):
     monitor = models.CharField(max_length=2, choices=MONITOR_TYPES, blank=True, null=True)
 
     # which term this event is active in
-    term = models.ForeignKey(Term)
+    term = models.ForeignKey(Term, default=Term.current_term())
 
     date = models.DateField()
 
@@ -81,6 +82,9 @@ class Event(models.Model):
     def _day(self):
         self.term.reverseDate(self.date)[1]
     day = property(_day)
+
+    def get_absolute_url(self):
+        return reverse('event-detail', kwargs={'pk': self.pk})
 
 
 class EventGroup(models.Model):
