@@ -16,8 +16,8 @@ urlpatterns = patterns('',
 
 	url(r'^(?P<term>(Fa|Sp)\d{2})/(?P<kode>\D{0,5})/$', DetailView.as_view(model=Syllabus), name='detail-view'),
 
-	url(r'^add_syllabus.html$', AddSyllabusView.as_view(), name='add-syllabus'),
-
+	url(r'^(?P<term>(Fa|Sp)\d{2})/add_syllabus.html$', AddSyllabusView.as_view(), name='add-syllabus'),
+ 
 	url(r'^(?P<term>(Fa|Sp)\d{2})/delete/(?P<pk>\d+)$', DeleteSyllabusView.as_view(), name='delete-syllabus'),	
 
 	# url(r'^Term/(?P<kode>\D+)/$', DetailView.as_view(model=Syllabus), name='detail-view'),

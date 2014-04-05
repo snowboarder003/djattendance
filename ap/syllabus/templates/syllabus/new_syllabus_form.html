@@ -1,9 +1,9 @@
 {{ form.media }}
 
 <!-- TODO to feed in the args for 'classlist-view' -->
-<a href="{% url 'classlist-view' "Fa12" %}">Back to syllabus list.</a>
+<a href="{% url 'classlist-view' term %}">{{term}}Back to syllabus list.</a>
 
-<h1>{{term}} Add new syllabus</h1>
+<h1>Add new syllabus</h1>
 
 {% if form.errors %}
 	<p style="color: red;">

@@ -25,15 +25,13 @@
 	<p>No syllabus.</p>
 {% endif %} -->
 
-
-
 {% if list %}
 	<ul>
 		{% for syllabus in list %}
 		<table>
 			<tr>
-				<td><a href="{{syllabus.get_url}}" > {{ syllabus.classSyllabus.name }} : {{syllabus.classSyllabus.term.code }} </a> </td>
-        		<td><a href="delete/{{syllabus.id}}" >Delete</a></td>
+				<td><a href="{{syllabus.get_url}}" > {{ syllabus.classSyllabus.name }}: {{syllabus.classSyllabus.term.code }} </a> </td>
+        		<td><a href="delete/{{syllabus.id}}">Delete</a></td>
         	</tr>
         </table>
 		{% endfor %}
@@ -42,8 +40,7 @@
 	<p>No syllabus.</p>
 {% endif %}
 
-
-<br><br>
+<br>
 <p> Click to: </p>
-<a href="{% url 'add-syllabus' %}"> Add a Syllabus </a>
+<a href="{% url 'add-syllabus' term %}"> {{syllabus.classSyllabus.term.code}} Add a Syllabus </a>
 </br>

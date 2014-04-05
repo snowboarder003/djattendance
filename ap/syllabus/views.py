@@ -21,6 +21,14 @@ class CLView(ListView):
     template_name = "syllabus/classlist.html"
     context_object_name = 'list'
     model = Syllabus
+
+    """this is to get ?P<term> from urls.py 
+    and make it accessible to the template classlist.html 
+    by using {{term}}"""
+    def get_context_data(self, **kwargs):
+        context = super(CLView, self).get_context_data(**kwargs)
+        context['term'] = self.kwargs['term']
+        return context
     # def get_queryset(self):
     #     term = self.kwargs['term']
 
@@ -30,6 +38,11 @@ class DetailView(ListView):
     context_object_name = 'list'
     slug_url_kwarg = 'term','kode'
  
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        context['term'] = self.kwargs['term']
+        return context
+
     def get_queryset(self):
         kode = self.kwargs['kode']
         term = self.kwargs['term']
@@ -40,16 +53,22 @@ class AddSyllabusView(CreateView):
     model = Syllabus
     template_name = 'syllabus/new_syllabus_form.html'
     form_class = NewSyllabusForm
-    # def get_queryset(self):
-    #     term = self.kwargs['term']
+
+    def get_context_data(self, **kwargs):
+        context = super(AddSyllabusView, self).get_context_data(**kwargs)
+        context['term'] = self.kwargs['term']
+        return context
+        
+    def get_success_url(self):
+        term = self.kwargs['term']
+        return reverse_lazy('classlist-view', args=[term])
+
 
 class DeleteSyllabusView(DeleteView):
     model = Syllabus
     template_name = 'syllabus/delete_syllabus_confirm.html'
     # def get_queryset(self):
     #     term = self.kwargs['term']
-    """TODO need to get the term from named group into reverse_lazy"""
-    term = None
     def get_success_url(self):
         term = self.kwargs['term']
         return reverse_lazy('classlist-view', args=[term])
