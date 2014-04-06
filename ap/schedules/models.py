@@ -86,6 +86,9 @@ class Event(models.Model):
     def get_absolute_url(self):
         return reverse('event-detail', kwargs={'pk': self.pk})
 
+    def __unicode__(self):
+        return self.name
+
 
 class EventGroup(models.Model):
 
@@ -119,6 +122,9 @@ class Schedule(models.Model):
     class Meta:
         # a trainee should only have one schedule per term
         unique_together = (('trainee', 'term'))
+
+    def __unicode__(self):
+        return self.trainee.account.get_full_name() + " " + self.term.code + " schedule"
 
 
 class ScheduleTemplate(models.Model):
