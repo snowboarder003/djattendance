@@ -1,12 +1,9 @@
 from django import forms
-from .models import Syllabus
+from .models import Syllabus, Session
 #from .widgets import DatepickerWidget, HorizRadioRenderer
 
 class NewSyllabusForm(forms.ModelForm):
     
-    """TODO: need to change the Fa|Sp\d{2} thing for each syllabus added
-                apparently they all get added with Fa13,perhaps to overwrite 
-                syllabus.classSyllabus.term or just fix the model"""
     class Meta:
         model = Syllabus
         #fields = ('season', 'start', 'end')
@@ -36,4 +33,12 @@ class NewSyllabusForm(forms.ModelForm):
             syllabus.save()
         return syllabus
 
+class NewSessionForm(forms.ModelForm):
+    class Meta:
+        model = Session
+    def save(self, commit=True):
+        session = super(NewSessionForm, self).save(commit=False)
+        if commit:
+            session.save()
+        return session
 

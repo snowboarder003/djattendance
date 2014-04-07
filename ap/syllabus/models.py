@@ -61,9 +61,6 @@ class Syllabus (models.Model):
     
     # codes = property(_get_code)
 
-
-
-
     def __unicode__(self):
         return (self.classSyllabus.name + " | " + self.classSyllabus.term.name)
 

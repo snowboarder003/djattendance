@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, TemplateView, DetailView, ArchiveIndexView, CreateView, DeleteView
-from .models import Syllabus
+from .models import Syllabus, Session
 from terms.models import Term
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -41,13 +41,14 @@ class DetailView(ListView):
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
         context['term'] = self.kwargs['term']
+        context['kode'] = self.kwargs['kode']
         return context
 
-    def get_queryset(self):
-        kode = self.kwargs['kode']
-        term = self.kwargs['term']
-        return Syllabus.objects.filter(classSyllabus__code= kode)
-        # .filter(classSyllabus__term = term)
+    # def get_queryset(self):
+    #     kode = self.kwargs['kode']
+    #     term = self.kwargs['term']
+    #     return Syllabus.objects.filter(classSyllabus__code= kode)
+    #     # .filter(classSyllabus__term = term)
 
 class AddSyllabusView(CreateView):
     model = Syllabus
@@ -58,7 +59,7 @@ class AddSyllabusView(CreateView):
         context = super(AddSyllabusView, self).get_context_data(**kwargs)
         context['term'] = self.kwargs['term']
         return context
-        
+
     def get_success_url(self):
         term = self.kwargs['term']
         return reverse_lazy('classlist-view', args=[term])
@@ -88,4 +89,14 @@ class SyllabusDetailView(ListView):
     context_object_name = 'syllabus'
     slug_field = 'code'
     slug_url_kwarg = 'code'
+
+class SLView(ListView):
+    model = Session
+    template_name = 'session/sessionlist.html'
+    context_object_name = 'ses_list'
+
+class AddSessionView(CreateView):
+    model = Session
+    template_name = 'session/new_session_form.html'
+
 
