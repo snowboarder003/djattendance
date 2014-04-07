@@ -30,7 +30,7 @@
 		{% for syllabus in list %}
 		<table>
 			<tr>
-				<td><a href="{{syllabus.get_url}}" > {{ syllabus.classSyllabus.name }}: {{syllabus.classSyllabus.term.code }} </a> </td>
+				<td><a href="{{syllabus.get_url}}{{syllabus.id}}" > {{ syllabus.classSyllabus.name }}: {{syllabus.classSyllabus.term.code }} </a> </td>
         		<td><a href="delete/{{syllabus.id}}">Delete</a></td>
         	</tr>
         </table>

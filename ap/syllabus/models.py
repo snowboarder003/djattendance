@@ -9,9 +9,6 @@ from djorm_expressions.models import ExpressionManager
 
 from django.core.urlresolvers import reverse, reverse_lazy
 
-
-
-
 """ SYLLABUS models.py
 
 This module catalogs all pertinent data associated with classes in the FTTA
@@ -31,7 +28,6 @@ Data Models:
         exam (boolean, HIDDEN)
         syllabus (ForeignKey: Syllabus)
 """
-
 
 class Syllabus (models.Model):
 

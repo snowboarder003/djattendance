@@ -32,10 +32,10 @@ class CLView(ListView):
     # def get_queryset(self):
     #     term = self.kwargs['term']
 
-class DetailView(ListView):
+class DetailView(DetailView):
     template_name = "syllabus/details.html"
     model = Syllabus
-    context_object_name = 'list'
+    context_object_name = 'syllabus'
     slug_url_kwarg = 'term','kode'
  
     def get_context_data(self, **kwargs):
@@ -64,7 +64,6 @@ class AddSyllabusView(CreateView):
         term = self.kwargs['term']
         return reverse_lazy('classlist-view', args=[term])
 
-
 class DeleteSyllabusView(DeleteView):
     model = Syllabus
     template_name = 'syllabus/delete_syllabus_confirm.html'
@@ -81,7 +80,6 @@ class TestView(ListView):
     template_name = "syllabus/detail.html"
     model = Syllabus
     context_object_name = 'syl_list'
-
 
 class SyllabusDetailView(ListView):
     model = Syllabus

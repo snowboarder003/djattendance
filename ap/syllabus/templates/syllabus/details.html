@@ -4,49 +4,36 @@
 <br>
 <a href="{% url 'classlist-view' term %}"> Back to syllabus list.</a>
 
-<p> {{list}} </p>
-<p> {{kode}} </p>
-<p> {{term}} </p>
 <p> {{ syllabus.classSyllabus.code }}</p>
 
-{% if list %}
-	<ul>
-		{% for syllabus in list %}
-			<!-- <li><a href="{{ syllabus.classSyllabus.code }}">{{ syllabus.classSyllabus }}</a></li> -->
-			<li> <a href="{{ syllabus.get_url_path }}" >{{ syllabus.classSyllabus }} </a> </li>
-			<!-- <p> {{syllabus.classSyllabus.code}} </p> -->
-		{% endfor %}
+{% if syllabus %}
+	<ul>	
+		<!-- <li><a href="{{ syllabus.classSyllabus.code }}">{{ syllabus.classSyllabus }}</a></li> -->
+		<li> <a href="{{ syllabus.get_url_path }}" >{{ syllabus.classSyllabus }} </a> </li>
+		<!-- <p> {{syllabus.classSyllabus.code}} </p> -->
 	</ul>
 {% else %}
 	<p>No syllabus.</p>
 {% endif %}
 
 
-
-
-
-{% for syllabus in list %}
-
-	{% if kode == syllabus.classSyllabus.code %}
-
-		<h1>{{ syllabus.classSyllabus }}</h1>
-		<p>Course Code: {{ syllabus.classSyllabus.code }}</p>
-		<p>Course Name: {{ syllabus.classSyllabus.name }}</p>
-		<p>Course Term: {{ syllabus.classSyllabus.term }}</p>
-		<p>When to Read: 
-		{% if syllabus.after %}
-					Complete the assigned reading AFTER each class section
-		{% else %}	
-					Complete the assigned reading BEFORE each class section
-		{% endif %}
-		</p>
+{% if kode == syllabus.classSyllabus.code %}
+	<h1>{{ syllabus.classSyllabus }}</h1>
+	<p>Course Code: {{ syllabus.classSyllabus.code }}</p>
+	<p>Course Name: {{ syllabus.classSyllabus.name }}</p>
+	<p>Course Term: {{ syllabus.classSyllabus.term }}</p>
+	<p>When to Read: 
+	{% if syllabus.after %}
+				Complete the assigned reading AFTER each class section
+	{% else %}	
+				Complete the assigned reading BEFORE each class section
 	{% endif %}
-{% endfor %}
+	</p>
+{% endif %}
 
 <p> {{session.date}} </p>
 
 <h5>// (debug) # of Sessions: {{ syllabus.session_set.all|length }}</h5>
-			
 
 <!-- GET A REALLY WEIRD ERROR - CAN ONLY ACCESS SYLLABUS.CLASSSYLLABUS.CODE IF ITS INSIDE A IF / FOR LOOP. DOESN'T WORK STAND ALONE?! -->
 {% if syllabus.session_set.all %}
