@@ -3,19 +3,19 @@
 <a href="{% url 'home-view' %}"> Back to term list.</a>
 <br>
 <a href="{% url 'classlist-view' term %}"> Back to syllabus list.</a>
-
-<p> {{ syllabus.classSyllabus.code }}</p>
-
+<br>
+<a href="{% url 'add-session' term kode pk %}"> Add a session.</a>
+<!--
 {% if syllabus %}
 	<ul>	
-		<!-- <li><a href="{{ syllabus.classSyllabus.code }}">{{ syllabus.classSyllabus }}</a></li> -->
+		<li><a href="{{ syllabus.classSyllabus.code }}">{{ syllabus.classSyllabus }}</a></li>
 		<li> <a href="{{ syllabus.get_url_path }}" >{{ syllabus.classSyllabus }} </a> </li>
-		<!-- <p> {{syllabus.classSyllabus.code}} </p> -->
+		<p> {{syllabus.classSyllabus.code}} </p>
 	</ul>
 {% else %}
 	<p>No syllabus.</p>
 {% endif %}
-
+-->
 
 {% if kode == syllabus.classSyllabus.code %}
 	<h1>{{ syllabus.classSyllabus }}</h1>
@@ -33,13 +33,13 @@
 
 <p> {{session.date}} </p>
 
-<h5>// (debug) # of Sessions: {{ syllabus.session_set.all|length }}</h5>
+<!-- <h5>// (debug) # of Sessions: {{ syllabus.session_set.all|length }}</h5> -->
 
 <!-- GET A REALLY WEIRD ERROR - CAN ONLY ACCESS SYLLABUS.CLASSSYLLABUS.CODE IF ITS INSIDE A IF / FOR LOOP. DOESN'T WORK STAND ALONE?! -->
 {% if syllabus.session_set.all %}
 	<h4>
 	{% for session in syllabus.session_set.all %}
-	<p>		
+	<li>		
 		Date: {{ session.date | date:"m" }}/{{ session.date | date:"d" }} |
 		{% if session.exam %}
 			Topic: EXAM |
@@ -47,7 +47,9 @@
 			Topic: {{ session.topic }} |	
 		{% endif %}
 		{% if session.exam %}
-			{{ session.assignment }}
+			{% for x in session.assignment %}
+				{{x}}
+			{% endfor %}
 		{% else %}	
 			{% if session.book %}
 				Reading Assignment: {{ session.book.code }},
@@ -56,11 +58,13 @@
 				{{x}}
 			{% endfor %}
 		{% endif %}
-	</p>
+		<td><a href="{% url 'delete-session' term kode syllabus.id session.id%}">Delete</a></td>
+	</li>
 	{% endfor %}
 	</h4>
 	
 	<p>
+		<!--TO DO: make this display unique books-->
 	{% for session in syllabus.session_set.all %}
 		{{ session.book.code }} - {{ session.book }}<br>
 	{% endfor %}	

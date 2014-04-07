@@ -42,6 +42,7 @@ class DetailView(DetailView):
         context = super(DetailView, self).get_context_data(**kwargs)
         context['term'] = self.kwargs['term']
         context['kode'] = self.kwargs['kode']
+        context['pk'] = self.kwargs['pk']
         return context
 
     # def get_queryset(self):
@@ -88,13 +89,28 @@ class SyllabusDetailView(ListView):
     slug_field = 'code'
     slug_url_kwarg = 'code'
 
-class SLView(ListView):
-    model = Session
-    template_name = 'session/sessionlist.html'
-    context_object_name = 'ses_list'
+# class SLView(ListView):
+#     model = Session
+#     template_name = 'session/sessionlist.html'
+#     context_object_name = 'ses_list'
 
 class AddSessionView(CreateView):
     model = Session
     template_name = 'session/new_session_form.html'
 
+    def get_success_url(self):
+        term = self.kwargs['term']
+        kode = self.kwargs['kode']
+        pk = self.kwargs['pk']
+        return reverse_lazy('detail-view', args=[term,kode,pk])
 
+class DeleteSessionView(DeleteView):
+    model = Session
+    template_name = 'session/delete_session_confirm.html'
+    # def get_queryset(self):
+    #     term = self.kwargs['term']
+    def get_success_url(self):
+        term = self.kwargs['term']
+        kode = self.kwargs['kode']
+        syllabus_pk = self.kwargs['syllabus_pk']
+        return reverse_lazy('detail-view', args=[term,kode,syllabus_pk])

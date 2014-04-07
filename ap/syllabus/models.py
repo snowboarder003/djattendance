@@ -77,6 +77,7 @@ class Session(models.Model):
 
     # book name, code
     """ TO DO: Make this OPTIONAL. """
+    """and make this multiple"""
     book = models.ForeignKey(Book) #, blank=True, null=True)
 
     # assignment info (pages; chapters; msgs; lessons; verses; exam: "FINAL, MIDTERM, ETC")
