@@ -81,9 +81,7 @@ class Session(models.Model):
 
     # assignment info (pages; chapters; msgs; lessons; verses; exam: "FINAL, MIDTERM, ETC")
         # can list multiple assigments, e.g. memory verses
-    """ TO DO:  Make this Array list work
-                Fix formatting to remove (u'assignment') 'u + single quotes'
-    """
+    """this works now, comma is its delimeter"""
     assignment = ArrayField(dbtype="varchar(255)")
 
     # exam (HIDDEN)

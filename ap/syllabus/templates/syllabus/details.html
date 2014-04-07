@@ -40,9 +40,6 @@
 	<h4>
 	{% for session in syllabus.session_set.all %}
 	<p>		
-		<!-- TO DO:
-			 add leading zero to session.date.month
-		-->
 		Date: {{ session.date | date:"m" }}/{{ session.date | date:"d" }} |
 		{% if session.exam %}
 			Topic: EXAM |
@@ -55,9 +52,9 @@
 			{% if session.book %}
 				Reading Assignment: {{ session.book.code }},
 			{% endif %}	
-			{% filter title %}
-			{{ session.assignment }}
-			{% endfilter %}
+			{% for x in session.assignment %}
+				{{x}}
+			{% endfor %}
 		{% endif %}
 	</p>
 	{% endfor %}
