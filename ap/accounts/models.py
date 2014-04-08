@@ -204,45 +204,8 @@ class Trainee(Profile):
     
     current_term = property(_calculate_term)
 
-"""
-Trial to see what generic "profile" brings to the table, need much modification to adjust to the
-"new" user model described above
-"""
-class UserProfile(models.Model):
-    posts = models.IntegerField(default=0)
-    user = models.ForeignKey(User, unique=True)
-
-    def __unicode__(self):
-        return unicode(self.user)
-
-User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
-
-class ProfileForm(forms.ModelForm, DetailView):
-    email = forms.CharField(max_length=50, help_text='Please enter the name to change email address')
-    firstname = forms.CharField(max_length=50, help_text='Please enter the name to change firstname')
+class EmailForm(forms.ModelForm, DetailView):
+    email = forms.CharField(max_length=50, help_text='Please enter your new email address to change email address')
     class Meta:
         model = User
-        fields = ('email', 'firstname', 'lastname')
-
-"""
-#@login_required
-def get_profile(request, pk):
-    profile = UserProfile.objects.get(user=pk)
-    img = None
-
-    if request.method == "POST":
-        pf = ProfileForm(request.POST, request.FILES, instance=profile)
-        if pf.is_valid():
-            pf.save()
-            # resize and save image under same filename
-            imfn = pjoin(MEDIA_ROOT, profile.avatar.name)
-            im = PImage.open(imfn)
-            im.thumbnail((160,160), PImage.ANTIALIAS)
-            im.save(imfn, "JPEG")
-    else:
-        pf = ProfileForm(instance=profile)
-
-    if profile.avatar:
-        img = "/media/" + profile.avatar.name
-    return render_to_response("forum/profile.html", add_csrf(request, pf=pf, img=img))
-"""
+        fields = ('email',)
