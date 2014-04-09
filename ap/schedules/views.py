@@ -14,6 +14,7 @@ class EventCreate(generic.CreateView):
     template_name = 'schedules/event_create.html'
     form_class =  modelform_factory(Event,
                                     widgets = { "date": AdminDateWidget() })
+    success_url = reverse_lazy('event-create')
 
 
 class EventDetail(generic.DetailView):
