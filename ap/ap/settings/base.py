@@ -122,6 +122,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    #'django.contrib.formtools',
     # third-party modules
     'autofixture', # easily generate dummy/test data
     'bootstrap3', # easy-to-use bootstrap integration
@@ -143,6 +144,7 @@ INSTALLED_APPS = (
     'attendance',
     'dailybread',  # daily nourishment
     'syllabus', # class syllabus
+    'verse_parse', # parse outlines for PSRP verses
 )
 
 # A sample logging configuration. The only tangible logging

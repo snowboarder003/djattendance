@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC >
+<html>
+<head>
+	<title>Verse Sheet</title>
+</head>
+
+<body>
+
+	{% for outline_pt in outline %}
+		<p>
+			<!--use css indents instead of this-->
+			{% for i in ""|ljust:outline_pt.0.level %}
+				&nbsp&nbsp&nbsp&nbsp
+			{% endfor %}
+
+			<b>{{ outline_pt.0.string }}</b>
+			{% if forloop.first %}<br>{% endif %}
+
+			{% for ref in outline_pt.1 %}
+				{% if ref.string %}
+					{% if not forloop.first %}
+						<!--use css indents instead of this-->
+						{% for i in ""|ljust:outline_pt.0.level %}
+							&nbsp&nbsp&nbsp&nbsp
+						{% endfor %}
+					{% endif %}
+					<b>{{ ref.string }}</b>
+					{% if ref.chapter %}
+						{% for verse in ref.get_verses.values %}
+							{{ verse }}<br>
+						{% endfor %}
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		</p>
+	{% endfor %}
+</body>
+</html>
