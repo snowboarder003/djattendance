@@ -142,6 +142,7 @@ INSTALLED_APPS = (
     'schedules',
     'attendance',
     'dailybread',  # daily nourishment
+    'syllabus', # class syllabus
 )
 
 # A sample logging configuration. The only tangible logging
@@ -173,6 +174,7 @@ LOGGING = {
     }
 }
 
+<<<<<<< HEAD
 BOOTSTRAP3 = {
     'jquery_url': '/static/jquery/js/jquery-1.10.1.min.js',
     'base_url': '/static/bootstrap/css/',
@@ -183,3 +185,9 @@ BOOTSTRAP3 = {
     'horizontal_field_class': 'col-md-4',
 }
 
+=======
+try:
+    from local_settings import *
+except ImportError:
+    pass
+>>>>>>> syllabus
