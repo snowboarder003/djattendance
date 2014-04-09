@@ -18,34 +18,7 @@ from pdfminer.layout import LAParams
 from cStringIO import StringIO
 import re
 
-from verse_parse import references_objects as references
-# from verses_objects import print_reference, get_verses
-
-# from django.template import Context
-# from django.http import HttpResponse
-# import cStringIO as StringIO
-# import xhtml2pdf.pisa as pisa
-# from django.template.loader import get_template
-# from cgi import escape
-
-# def render_to_pdf(template_src, context_dict):
-# 	template = get_template(template_src)
-# 	context = Context(context_dict)
-# 	html = template.render(context)
-# 	result = StringIO.StringIO()
-
-# 	pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("utf-8")), result)
-# 	if not pdf.err:
-# 		return HttpResponse(result.getvalue(), mimetype = 'application/pdf')
-# 	return HttpResponse('We had some errors<pre>%s</pre>' % escape(html))
-
-# def generate_pdf(self, outline):
-# 	return render_to_pdf(
-# 		'verse_parse/verse_sheet.html',
-# 		{
-# 			'outline': outline,
-# 		})
-
+from verse_parse import references
 
 def handle_uploaded_file(f):
 	'''
@@ -54,20 +27,26 @@ def handle_uploaded_file(f):
 	Basically gets all needed data for HTML template.
 	'''
 	data = pdf_to_text(f)
-	# title, rest = tsplit(data)
-	outline = references.extract(data.partition('Scripture Reading:')[2])
-	# for outline_pt in outline:
-	# 	point = outline_pt[0]
-	# 	indent = ' '*((point.level-1)*4)
-	# 	print(indent + point.string)
 
-	# 	for ref in outline_pt[1]:
-	# 		if ref.chapter is not None:
-	# 			print(indent + ' '*len(point.string) + ref.string)
-	# 			verses = ref.get_verses()
-	# 			if verses:
-	# 				for verse in verses.values():
-	# 					print(verse)
+	outline = references.extract(data.partition('Scripture Reading:')[2])
+	for i in range(len(outline)):
+		outline_pt = outline[i]
+		# point = outline_pt[0]
+		# indent = ' '*((outline_pt['level']-1)*4)
+		# print(indent + outline_pt['string'])
+
+		for ref in outline_pt['refs']:				
+			ref['string'] = references.reference_to_string(ref)
+
+			if ref['chapter'] is not None:
+				ref['repeat'] = references.find_repeat(outline, ref, i)
+
+				# print(indent + ' '*len(outline_pt['string']) + ref['string'] + ' -- ' + str(ref['repeat']))
+
+				if ref['repeat'] == False:
+					ref['verses'] = references.get_verses(ref)
+					# for verse in verses.values():
+					# 	print(verse)
 	return outline
 
 
@@ -123,18 +102,3 @@ def pdf_to_text(fname):
     device.close()
     #outfp.close()
     return outfp.getvalue()
-
-
-# split outline by Roman Numerals and alphabets
-def tsplit(text):
-	list=re.split('\n(?P<bullet>[0-9A-Z-a-z][0-9A-Z]*\.)\s',text)
-	title=list.pop(0)
-	title=re.split('Scripture Reading:', title)
-	dict={'title': title[0], 'Scripture Reading': title[1]}
-	"""
-	x=0
-	for x in range(len(list)/2):
-		dict[list[(x)]]=list[(x+1)]
-		x=x+2
-	"""
-	return dict,list

@@ -1,6 +1,8 @@
 # adapted from python-scriptures
 
 import re
+import urllib2
+import json
 
 from bible_re import testaments, book_re, scripture_re
 
@@ -25,7 +27,7 @@ def extract(text):
     Extract from a block of text a list of 2-tuples
     containing an outline point and a list of normalized, tupled verse references under that outline point.
     """
-    references = []
+    outline = []
     for r in re.finditer(scripture_re, text):
         try:
             # find Roman numerals / outline points
@@ -33,59 +35,58 @@ def extract(text):
             for i in range(1,5): 
                 if r.group(i):
 
-                    # if the previous outline point had no verses, delete it from the references list
-                    if len(references[-1][2]) == 0:
-                        del(references[-1])
-
-                    references.append((i, r.group(i), [],))
+                    outline.append({'string': r.group(i), 
+                        'level': i, 
+                        'refs': []})
                     is_bullet = True
 
 
             if is_bullet == False:
 
                 # if no outline points yet, verses are from Scripture Reading
-                if len(references) == 0:
-                    references.append((0, 'Scripture Reading', [],))
+                if len(outline) == 0:
+                    outline.append({'string': 'Scripture Reading', 
+                        'level': 0, 
+                        'refs': []})
 
                 if r.group('book'): # reference contains book name
-                    references[-1][2].append(normalize_reference(bookname=r.group('book'), chapter=r.group('chapter'), 
+                    outline[-1]['refs'].append(normalize_reference(bookname=r.group('book'), chapter=r.group('chapter'), 
                                             verse=r.group('verse'), end_chapter=r.group('end_chapter'), end_verse=r.group('end_verse')))
                     if r.group('more_verses'): # reference contains multiple non-consecutive verse numbers
                         verses = extract_more_verses(r.group('more_verses')) # get extra verses in a list
                         for verse in verses: # append one reference for each extra verse
-                           references[-1][2].append(normalize_reference(bookname=r.group('book'), chapter=r.group('chapter'), 
+                           outline[-1]['refs'].append(normalize_reference(bookname=r.group('book'), chapter=r.group('chapter'), 
                                                  verse=verse[0], end_verse=verse[1]))
                 else:
                     # get book from previous reference
-                    if len(references[-1][2]) > 0:
-                        book = references[-1][2][-1][0] 
-                    else: # if this is the first verse reference under an outline point, look at the last reference in the previous outline point
-                        book = references[-2][2][-1][0]
+                    i = -1
+                    while len(outline[i]['refs']) == 0:
+                        i -= 1
+                    book = outline[i]['refs'][-1]['book']
                     if r.group('headless_chapter'): # headless reference
-                        references[-1][2].append(normalize_reference(bookname=book, chapter=r.group('headless_chapter'),
+                        outline[-1]['refs'].append(normalize_reference(bookname=book, chapter=r.group('headless_chapter'),
                             verse=r.group('headless_verse'), end_chapter=r.group('headless_end_chapter'), end_verse=r.group('headless_end_verse')))
                         if r.group('more_headless_verses'):
                             verses = extract_more_verses(r.group('more_headless_verses'))
                             for verse in verses:
-                                references[-1][2].append(normalize_reference(bookname=book, chapter=r.group('headless_chapter'), 
+                                outline[-1]['refs'].append(normalize_reference(bookname=book, chapter=r.group('headless_chapter'), 
                                                  verse=verse[0], end_verse=verse[1]))
                     else:
                         if r.group('lonely_verse'):
-                            if len(references[-1][2]) > 0:
-                                chapter = references[-1][2][-1][1]
-                            else:
-                                chapter = references[-2][2][-1][1]
-                            references[-1][2].append(normalize_reference(bookname=book, chapter=chapter, verse=r.group('lonely_verse'), end_chapter=chapter, end_verse=r.group('lonely_end_verse')))
+                            i = -1
+                            while len(outline[i]['refs']) == 0:
+                                i -= 1
+                            chapter = outline[i]['refs'][-1]['chapter']
+                            outline[-1]['refs'].append(normalize_reference(bookname=book, chapter=chapter, verse=r.group('lonely_verse'), end_verse=r.group('lonely_end_verse')))
+
                             if r.group('more_lonely_verses'):
                                 verses = extract_more_verses(r.group('more_lonely_verses'))
                                 for verse in verses:
-                                    references[-1][2].append(normalize_reference(bookname=book, chapter=chapter, verse=verse[0], end_verse=verse[1]))
+                                    outline[-1]['refs'].append(normalize_reference(bookname=book, chapter=chapter, verse=verse[0], end_verse=verse[1]))
 
-
-            # references.append(normalize_reference(*r.groups()))
         except InvalidReferenceException:
             pass
-    return references
+    return outline
 
 
 def extract_more_verses(text):
@@ -108,46 +109,36 @@ def is_valid_reference(bookname, chapter, verse=None,
     except InvalidReferenceException:
         return False
 
-def reference_to_string(bookname, chapter, verse=None,
-                        end_chapter=None, end_verse=None, more_verses=None):
-    """
-    Get a display friendly string from a scripture reference
-    """
-    book=None
-
-    normalized = normalize_reference(bookname, chapter, verse,
-        end_chapter, end_verse)
-
-    # if start and end chapters are the same
-    if normalized[1] == normalized[3]:
-        book = get_book(normalized[0])
-
-        if len(book[3]) == 1: # single chapter book
-            # If start and end verses are the same
-            if normalized[2] == normalized[4]:
-                return '{0} {1}'.format(*normalized[0::2])
+def reference_to_string(ref):
+    '''
+    Takes tupled verse reference (book, chapter, verse, end_chapter, end_verse)
+    and formats verse reference as a string.
+    e.g. ('John', 3, 16,) --> 'John 3:16'
+    ('2 Cor.', 3, 16, 3, 18) --> '2 Cor. 3:16-18'
+    '''
+    if ref['chapter'] is not None:
+        ref_string = ref['book'] + ' ' + str(ref['chapter']) + ':' + str(ref['verse'])
+        if ref['end_chapter'] is not None:
+            ref_string += '-'
+            if ref['end_chapter'] == ref['chapter']:
+                ref_string += str(ref['end_verse'])
             else:
-                return '{0} {1}-{2}'.format(*normalized[0::2])
-        else: # multichapter book
-            # If the start verse is one and the end verse is the last verse in
-            # the chapter
-            if normalized[2] == 1 and normalized[4] == book[3][normalized[1]-1]:
-                return '{0} {1}'.format(*normalized[:2])
-            # If start and end verses are the same
-            elif normalized[2] == normalized[4]:
-                return '{0} {1}:{2}'.format(*normalized[:3])
-            else:
-                return '{0} {1}:{2}-{3}'.format(
-                    *(normalized[:3] + normalized[-1:]))
-    else: # start and end chapters are different
-        return '{0} {1}:{2}-{3}:{4}'.format(*normalized)
+                ref_string += str(ref['end_chapter']) + ':' + str(ref['end_verse'])
+        return ref_string
+    else:
+        return ''
 
-# prev - previous reference (to fill in missing information for headless/lonely verses)
 def normalize_reference(bookname=None, chapter=None, verse=None,
                                   end_chapter=None, end_verse=None):
     """
-    Get a complete five value tuple scripture reference with full book name
-    from partial data
+    Get a complete scripture reference with full book name
+    from partial data.
+    Reference is returned as a dictionary with keys:
+    -book (book abbreviation)
+    -chapter
+    -verse
+    -end_chapter
+    -end_verse
     """
     book = get_book(bookname)
 
@@ -196,4 +187,55 @@ def normalize_reference(bookname=None, chapter=None, verse=None,
     # if not end_chapter:
     #     end_chapter = chapter
 
-    return (book[1], chapter, verse, end_chapter, end_verse)
+    return {'book': book[1], 
+            'chapter': chapter,
+            'verse': verse,
+            'end_chapter': end_chapter,
+            'end_verse': end_verse}
+    # return (book[1], chapter, verse, end_chapter, end_verse)
+
+def get_verses(ref):
+    ''' 
+    Returns a dictionary {reference: verse} of a verse (or multiple consecutive verses) 
+    from a tupled verse reference (book, chapter, verse, end_chapter, end_verse)
+    '''
+    book_abbrev = ref['book'].strip('.').replace(' ', '')
+    try: 
+        if ref['end_chapter'] is None:
+            response = urllib2.urlopen("http://rcvapi.herokuapp.com/v/%s/%d/%d" % (book_abbrev, ref['chapter'], ref['verse'],))
+        else:
+            response = urllib2.urlopen("http://rcvapi.herokuapp.com/vv/%s/%d/%d/%s/%d/%d" % (book_abbrev, ref['chapter'], ref['verse'], book_abbrev, ref['end_chapter'], ref['end_verse'],) )
+        data = json.loads('[%s]' % response.read())
+        verses = data[0]['verses']
+        print(verses)
+        return verses
+    except:
+        return {}
+
+def find_repeat(outline, reference, i):
+    '''
+    Finds the first occurrence of the given reference in the outline, 
+    from the beginning of the outline until outline[i].
+    Returns False if there are no occurrences before outline[i], 
+    otherwise returns the outline point of the first occurrence as a string (e.g. 'II.A.').
+    '''
+    for j in range(i):
+        outline_pt = outline[j]
+        for ref in outline_pt['refs']:
+            if ref['book'] == reference['book']:
+                if ref['chapter'] == reference['chapter']:
+                    if ref['verse'] == reference['verse']:
+                        if ref['end_chapter'] == reference['end_chapter']:
+                            if ref['end_verse'] == reference['end_verse']:
+                                repeat_point = outline_pt['string']
+
+                                level = outline_pt['level']
+                                k = j-1
+                                while level > 1 and k >= 0:
+                                    if outline[k]['level'] == level-1:
+                                        repeat_point = outline[k]['string'].strip() + repeat_point
+                                        level = outline[k]['level']
+                                    k -= 1
+
+                                return repeat_point
+    return False
