@@ -198,4 +198,6 @@ class Trainee(Profile):
     	return num_terms
     
     current_term = property(_calculate_term)
-    	
+     
+    def _trainee_email(self):
+		return self.account

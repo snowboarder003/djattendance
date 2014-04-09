@@ -110,9 +110,11 @@ class EmergencyInfo(models.Model):
 
     phone = models.CharField(max_length=15)
 
-    phone2 = models.CharField(max_length=15)
+    phone2 = models.CharField(max_length=15, blank=True, null=True)
 
     address = models.ForeignKey(Address)
+    
+    trainee = models.OneToOneField('accounts.Trainee', blank=True, null=True)
 
     def __unicode__(self):
         return self.name + '(' + self.relation + ')'

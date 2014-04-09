@@ -103,6 +103,11 @@ ROOT_URLCONF = 'ap.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'ap.wsgi.application'
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+	'django.contrib.auth.context_processors.auth',
+	'django.core.context_processors.request',
+)
+
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
@@ -113,6 +118,9 @@ TEMPLATE_DIRS = (
 AUTH_USER_MODEL = 'accounts.User'
 
 INSTALLED_APPS = (
+    #admin third-party modules
+    'adminactions',
+    'grappelli',# needs to be in front of 'django.contrib.admin'
     # django contrib
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -128,6 +136,7 @@ INSTALLED_APPS = (
     'bootstrap3', # easy-to-use bootstrap integration
     'braces', # Mixins for Django's class-based views.
     'django_reset',
+    'import_export',
     # ap CORE
     'accounts',
     'aputils',
@@ -145,6 +154,7 @@ INSTALLED_APPS = (
     'dailybread',  # daily nourishment
     'syllabus', # class syllabus
     'verse_parse', # parse outlines for PSRP verses
+    'report_builder',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -176,7 +186,6 @@ LOGGING = {
     }
 }
 
-<<<<<<< HEAD
 BOOTSTRAP3 = {
     'jquery_url': '/static/jquery/js/jquery-1.10.1.min.js',
     'base_url': '/static/bootstrap/css/',
@@ -187,9 +196,3 @@ BOOTSTRAP3 = {
     'horizontal_field_class': 'col-md-4',
 }
 
-=======
-try:
-    from local_settings import *
-except ImportError:
-    pass
->>>>>>> syllabus
