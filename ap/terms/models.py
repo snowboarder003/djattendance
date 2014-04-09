@@ -46,8 +46,9 @@ class Term(models.Model):
         """ Return the current term """
         try:
             return Term.objects.get(Q(start__lte=datetime.date.today()), Q(end__gte=datetime.date.today()))
-        # this will happen in cases such as in-between terms (or empty DB, possibly)
-        except ObjectDoesNotExist:
+        except ObjectDoesNotExist:  # usually happens in-between terms
+            return Term.objects.filter(start__gte=datetime.date.today()).order_by('-start')[0]  # return upcoming term
+        except:  # stop-gap solution for now
             # return an obviously fake term object
             return Term(name="Temp 0000", code="TM00", start=datetime.date.today(), end=datetime.date.today())
 
