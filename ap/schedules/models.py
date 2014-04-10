@@ -67,7 +67,7 @@ class Event(models.Model):
     monitor = models.CharField(max_length=2, choices=MONITOR_TYPES, blank=True, null=True)
 
     # which term this event is active in
-    term = models.ForeignKey(Term, default=Term.current_term())
+    term = models.ForeignKey(Term)
 
     date = models.DateField()
 
@@ -78,7 +78,7 @@ class Event(models.Model):
     def _week(self):
         self.term.reverseDate(self.date)[0]
     week = property(_week)
-    
+
     def _day(self):
         self.term.reverseDate(self.date)[1]
     day = property(_day)
@@ -132,7 +132,7 @@ class ScheduleTemplate(models.Model):
     name = models.CharField(max_length=20)
 
     eventgroup = models.ManyToManyField(EventGroup)  # TODO: consider refactor using postgres arrays
-    
+
     def apply(schedule, self):
         """ applies a schedule template to a schedule """
         for eventgrp in EventGroup.objects.filter(scheduletemplate=self.id):
