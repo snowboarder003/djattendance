@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 
-
 from dailybread.models import Portion
 from schedules.models import Schedule
 from terms.models import Term

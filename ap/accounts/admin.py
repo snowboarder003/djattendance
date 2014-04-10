@@ -12,9 +12,9 @@ from aputils.admin import VehicleInline, EmergencyInfoInline
 class APUserCreationForm(forms.ModelForm):
     """ A form for creating a new user """
 
-    password = forms.CharField(label="Password", 
+    password = forms.CharField(label="Password",
                                widget=forms.PasswordInput)
-    password_repeat = forms.CharField(label="Password confirmation", 
+    password_repeat = forms.CharField(label="Password confirmation",
                                       widget=forms.PasswordInput)
 
     class Meta:
@@ -59,12 +59,12 @@ class APUserAdmin(UserAdmin):
     ordering = ("email",)
     filter_horizontal = ("groups", "user_permissions")
     fieldsets = (
-        (None, {"fields": 
+        (None, {"fields":
                             ("email",)}),
 
-        ("Personal info", {"fields": 
+        ("Personal info", {"fields":
                             ("firstname", "lastname","date_of_birth")}),
-        ("Permissions", {"fields": 
+        ("Permissions", {"fields":
                             ("is_active",
                             "is_staff",
                             "is_superuser",
@@ -78,13 +78,13 @@ class APUserAdmin(UserAdmin):
             "fields": ("email", "firstname", "lastname", "password", "password_repeat")}
         ),
     )
- 
+
 class CurrentTermListFilter(SimpleListFilter):
 	#Lists the trainees by term
 	title = _('current term')
-	
+
 	parameter_name = 'current term'
-	
+
 	def lookups(self, request, model_admin):
 		"""
 		Returns a list of tuples. The first element in each tuple is the coded value
@@ -97,7 +97,7 @@ class CurrentTermListFilter(SimpleListFilter):
 			('3term', _('3rd term')),
 			('4term', _('4th term')),
 		)
-	
+
 	def queryset(self, request, queryset):
 		"""
 		"""
@@ -106,31 +106,31 @@ class CurrentTermListFilter(SimpleListFilter):
 			q_ids = [person.id for person in q if person.current_term==1]
 			q = q.filter(id__in=q_ids)
 			return q
-			
+
 		if self.value() == '2term':
 			q=queryset
 			q_ids = [person.id for person in q if person.current_term==2]
 			q = queryset.filter(id__in=q_ids)
 			return q
-			
+
 		if self.value() == '3term':
 			q=queryset
 			q_ids = [person.id for person in q if person.current_term==3]
 			q = queryset.filter(id__in=q_ids)
 			return q
-			
+
 		if self.value() == '4term':
 			q=queryset
 			q_ids = [person.id for person in q if person.current_term==4]
 			q = queryset.filter(id__in=q_ids)
 			return q
-			   
+
 class FirstTermMentorListFilter(SimpleListFilter):
 	#Make list of 1st term mentors for email notifications
 	title = _('mentors')
-	
+
 	parameter_name = 'mentor'
-	
+
 	def lookups(self, request, model_admin):
 		"""
 		Returns a list of tuples. The first element in each tuple is the coded value
@@ -143,7 +143,7 @@ class FirstTermMentorListFilter(SimpleListFilter):
 			('3termmentor', _('3rd term mentors')),
 			('4termmentor', _('4th term mentors')),
 		)
-	
+
 	def queryset(self, request, queryset):
 		"""
 		"""
@@ -153,32 +153,33 @@ class FirstTermMentorListFilter(SimpleListFilter):
 			q_ids = [person.mentor.id for person in q if person.current_term==1]
 			q = q.filter(id__in=q_ids)
 			return q
-		
+
 		if self.value() == '2termmentor':
 			"""queryset of 2nd term mentors """
 			q=queryset.filter(mentor__isnull=False)
 			q_ids = [person.mentor.id for person in q if person.current_term==2]
 			q = q.filter(id__in=q_ids)
 			return q
-			
+
 		if self.value() == '3termmentor':
 			"""queryset of 3rd term mentors """
 			q=queryset.filter(mentor__isnull=False)
 			q_ids = [person.mentor.id for person in q if person.current_term==3]
 			q = q.filter(id__in=q_ids)
 			return q
-			
+
 		if self.value() == '4termmentor':
 			"""queryset of 4th term mentors """
 			q=queryset.filter(mentor__isnull=False)
 			q_ids = [person.mentor.id for person in q if person.current_term==4]
 			q = q.filter(id__in=q_ids)
 			return q
-		
+
 class TraineeAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': (('account', 'active',), 'type', 'term', ('date_begin', 'date_end',), ('married', 'spouse',), ('TA', 'mentor',), 'team', ('house', 'bunk',), 'address', 'self_attendance',)
+            # add 'bunk' back in once db behaves
+            'fields': (('account', 'active',), 'type', 'term', ('date_begin', 'date_end',), ('married', 'spouse',), ('TA', 'mentor',), 'team', 'house', 'address', 'self_attendance',)
         }),
     )
     list_display = ('__unicode__','current_term','_trainee_email',)
@@ -186,7 +187,8 @@ class TraineeAdmin(admin.ModelAdmin):
     inlines = [
         VehicleInline, EmergencyInfoInline,
     ]
-    
+
+
 
 # Register the new Admin
 admin.site.register(User, APUserAdmin)

@@ -46,8 +46,8 @@
             <span class="icon-dot"></span>
             <span class="icon-dot"></span>
           </button>
-          <a class="navbar-brand hidden-xs" href="/">Full-Time Training in Anaheim</a>
-          <a class="navbar-brand visible-xs" href="/">FTTA</a>
+          <a class="navbar-brand hidden-xs" href="{% url 'home' %}">Full-Time Training in Anaheim</a>
+          <a class="navbar-brand visible-xs" href="#">FTTA</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -72,6 +72,7 @@
                 {% block attendance_links %}
                 <li class="active"><a href="/schedules/schedule">View Schedule</a></li>
                 <li><a href="/schedules/event/create">Create Event</a></li>
+                <li><a href="{% url 'absent_trainee_roster:absent_trainee_form' %}">Absent Trainee Roster</a></li>
                 {% endblock %}
               <hr style="border-top: 1px solid #dddddd;">
               <li>Classes</li>
@@ -85,7 +86,7 @@
 
         <!--CONTENT-->
         <div class="col-xs-12 col-sm-9 content">
-          
+
           {% block content %}{% endblock %}
         </div><!--/content-->
       </div>
@@ -101,5 +102,6 @@
     <script src="{% static "js/modernizr-2.6.2-respond-1.1.0.min.js" %}"></script>
     <script src="{% static "bootstrap/js/offcanvas.js" %}"></script>
     {% block scripts %}{% endblock %}
+
   </body>
 </html>

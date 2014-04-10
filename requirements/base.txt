@@ -4,3 +4,8 @@ django-braces==1.2.2
 django-import-export
 django-adminactions
 django-grappelli==2.5.3
+South==0.7.6
+django-autofixture==0.4.0
+django-reset==0.2.0
+django-debug-toolbar==0.9.4
+xhtml2pdf==0.0.5

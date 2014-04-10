@@ -8,8 +8,10 @@ DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
 SITE_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 print(SITE_ROOT)
 
+import djcelery
+djcelery.setup_loader()
+
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
     ('Attendance Project', 'attendanceproj@gmail.com')
 )
 
@@ -84,6 +86,7 @@ SECRET_KEY = 'h%)g$1=j)_(lozsexfe*=$iwj9l#8mfaszohyg5n0azz691r#b'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
+#    'apptemplates.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
 
@@ -118,7 +121,7 @@ TEMPLATE_DIRS = (
 AUTH_USER_MODEL = 'accounts.User'
 
 INSTALLED_APPS = (
-    #admin third-party modules
+    # admin third-party modules
     'adminactions',
     'grappelli',# needs to be in front of 'django.contrib.admin'
     # django contrib
@@ -137,6 +140,7 @@ INSTALLED_APPS = (
     'braces', # Mixins for Django's class-based views.
     'django_reset',
     'import_export',
+    'debug_toolbar',
     # ap CORE
     'accounts',
     'aputils',
@@ -151,11 +155,14 @@ INSTALLED_APPS = (
     # ap modules
     'schedules',
     'attendance',
+    'absent_trainee_roster',
     'dailybread',  # daily nourishment
     'syllabus', # class syllabus
     'verse_parse', # parse outlines for PSRP verses
     'report_builder',
 )
+
+INTERNAL_IPS = ('127.0.0.1',)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -196,3 +203,18 @@ BOOTSTRAP3 = {
     'horizontal_field_class': 'col-md-4',
 }
 
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+}
+
+BROKER_URL = 'amqp://guest:guest@localhost:5672/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+#Host for sending email.
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'djattendanceproject@gmail.com'
+EMAIL_HOST_PASSWORD = 'test4now'
+#Port for sending email.
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

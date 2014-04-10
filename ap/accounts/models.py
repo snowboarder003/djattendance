@@ -17,7 +17,7 @@ utilizes/extends Django's auth system to handle user authentication.
 
 USER ACCOUNTS
     Because we want to use the user's email address as the unique
-    identifier, we have chosen to implement a custom User model, 
+    identifier, we have chosen to implement a custom User model,
 
     ...
 
@@ -28,7 +28,7 @@ PROFILES
         - every Trainee is also a service worker, so those user accounts also
         have a ServiceWorker profile that contains information needed for the
         ServiceScheduler algorithm
-        - before coming to the FTTA, a trainee may have come to short-term. 
+        - before coming to the FTTA, a trainee may have come to short-term.
         These trainees will have a Short-Term profile at that time, and later
         also have a Trainee  profile when they come for the full-time.
 
@@ -67,7 +67,7 @@ class APUserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """ A basic user account, containing all common user information.
-    This is a custom-defined User, but inherits from Django's classes to integrate with 
+    This is a custom-defined User, but inherits from Django's classes to integrate with
     Django's other provided User tools/functionality
     AbstractBaseUser provides Django's basic authentication backend.
     PermissionsMixin provides compatability with Django's built-in permissions system.
@@ -190,14 +190,14 @@ class Trainee(Profile):
 
     def __unicode__(self):
         return self.account.get_full_name()
-    
+
     #calculates what term the trainee is in
     def _calculate_term(self):
     	num_terms = self.term.all().count()
-    	
+
     	return num_terms
-    
+
     current_term = property(_calculate_term)
-     
+
     def _trainee_email(self):
-		return self.account
+		    return self.account.email
