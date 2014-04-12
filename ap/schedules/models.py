@@ -92,7 +92,7 @@ class Event(models.Model):
     day = property(_day)
 
     def get_absolute_url(self):
-        return reverse('event-detail', kwargs={'pk': self.pk})
+        return reverse('schedules:event-detail', kwargs={'pk': self.pk})
 
     def __unicode__(self):
         return self.name
