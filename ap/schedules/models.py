@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime, date, time, timedelta
 
 from django.db import models
 from django.core.urlresolvers import reverse
@@ -69,16 +69,24 @@ class Event(models.Model):
     # which term this event is active in
     term = models.ForeignKey(Term, default=Term.current_term())
 
-    date = models.DateField()
+    # date = models.DateField()
 
-    start = models.TimeField()
+    start = models.DateTimeField()
 
-    end = models.TimeField()
+    end = models.DateTimeField()
+
+    def _unixstarttime(self):
+        return int(self.start.strftime('%s')) * 1000
+    unixstarttime = property(_unixstarttime)
+
+    def _unixendtime(self):
+        return int(self.end.strftime('%s')) * 1000
+    unixendtime = property(_unixendtime)
 
     def _week(self):
         self.term.reverseDate(self.date)[0]
     week = property(_week)
-    
+
     def _day(self):
         self.term.reverseDate(self.date)[1]
     day = property(_day)
@@ -117,7 +125,9 @@ class Schedule(models.Model):
     events = models.ManyToManyField(Event, null=True, blank=True)
 
     def todays_events(self):
-        return self.events.filter(date__exact=date.today())
+        today = datetime.combine(date.today(), time(0,0))
+        tomorrow = today + timedelta(days=1)
+        return self.events.filter(start__gte=today).filter(end__lte=tomorrow).order_by('start')
 
     class Meta:
         # a trainee should only have one schedule per term
@@ -132,7 +142,7 @@ class ScheduleTemplate(models.Model):
     name = models.CharField(max_length=20)
 
     eventgroup = models.ManyToManyField(EventGroup)  # TODO: consider refactor using postgres arrays
-    
+
     def apply(schedule, self):
         """ applies a schedule template to a schedule """
         for eventgrp in EventGroup.objects.filter(scheduletemplate=self.id):
