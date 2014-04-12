@@ -10,6 +10,24 @@
 
     <div id="calendar"></div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="events-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" id="event-modal-label">Event</h3>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block scripts %}
@@ -17,17 +35,23 @@
     <script type="text/javascript" src="{% static "calendar/js/calendar.js" %}"></script>
     <script type="text/javascript">
         var calendar = $('#calendar').calendar({
+            tmpl_path: "{% static "calendar/tmpls/" %}",
+            view: 'week',
+            modal: "#events-modal",
+            modal_type : "ajax",
+            modal_title : function (event) { return event.title },
             events_source: [
                 {% for event in schedule.events.all %}
                 {
                     "id": {{ event.id }},
                     "title": "{{ event.name }}",
-                    "url": "",
+                    "url": "{{ event.get_absolute_url }}",
                     "class": "",
                     "start": "{{ event.unixstarttime }}",
                     "end": "{{ event.unixendtime }}",
                 },
                 {% endfor %}
-            ]});
+            ],
+        });
     </script>
 {% endblock %}
