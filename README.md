@@ -1,8 +1,4 @@
 # djattendance
----
-
-Branch for the March 29th demo.
-Sarah and Rebecca are working directly on this branch with the attendance/schedules, so **please do not merge into this branch unless it works.** Thank you.
 
 ## Summary
 Djattendance is a rewrite of the original FTTA attendance server in Python/Django. It supports many internal functions of the FTTA, for both trainees and administrators, such as:
@@ -41,9 +37,9 @@ A more detailed guide to running djattendance on your local machine can be found
 
 ## Loading Autofixtures
 
-The autofixture module is included in the requirements for dev environment. 
+The autofixture module is included in the requirements for dev environment.
 
-The order is very important because of the relationships between models. 
+The order is very important because of the relationships between models.
 To load random test data in the db:
 
 python manage.py loadtestdata aputils.country:10 --settings=ap.settings.local
