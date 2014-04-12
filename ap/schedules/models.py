@@ -1,4 +1,7 @@
+from datetime import date
+
 from django.db import models
+from django.core.urlresolvers import reverse
 
 from terms.models import Term
 from classes.models import Class
@@ -52,37 +55,39 @@ class Event(models.Model):
     description = models.CharField(max_length=250, blank=True)
 
     # a groupID. used to group repeating events
-    group = models.ForeignKey('EventGroup')
+    group = models.ForeignKey('EventGroup', blank=True, null=True)
 
     # if this event is a class, relate it
-    classs = models.ForeignKey(Class)  # class is a reserved keyword :(
+    classs = models.ForeignKey(Class, blank=True, null=True)  # class is a reserved keyword :(
 
     # the type of event
     type = models.CharField(max_length=1, choices=EVENT_TYPES)
 
     # who takes roll for this event
-    monitor = models.CharField(max_length=2, choices=MONITOR_TYPES)
+    monitor = models.CharField(max_length=2, choices=MONITOR_TYPES, blank=True, null=True)
 
     # which term this event is active in
-    term = models.ForeignKey(Term)
+    term = models.ForeignKey(Term, default=Term.current_term())
 
-    # weeks 0-19 for the 20 weeks of the training
-    week = models.PositiveSmallIntegerField()
-
-    # days 0-6 (LD through Saturday)
-    day = models.PositiveSmallIntegerField()
+    date = models.DateField()
 
     start = models.TimeField()
 
     end = models.TimeField()
 
-    def _startDate(self):
-        return self.term.getDate(0, 0)
-    startDate = property(_startDate)
+    def _week(self):
+        self.term.reverseDate(self.date)[0]
+    week = property(_week)
+    
+    def _day(self):
+        self.term.reverseDate(self.date)[1]
+    day = property(_day)
 
-    def _endDate(self):
-        return self.term.getDate(19, 6)
-    endDate = property(_endDate)
+    def get_absolute_url(self):
+        return reverse('event-detail', kwargs={'pk': self.pk})
+
+    def __unicode__(self):
+        return self.name
 
 
 class EventGroup(models.Model):
@@ -109,7 +114,17 @@ class Schedule(models.Model):
     term = models.ForeignKey(Term)
 
     # which events are on this schedule
-    events = models.ManyToManyField(Event)
+    events = models.ManyToManyField(Event, null=True, blank=True)
+
+    def todays_events(self):
+        return self.events.filter(date__exact=date.today())
+
+    class Meta:
+        # a trainee should only have one schedule per term
+        unique_together = (('trainee', 'term'))
+
+    def __unicode__(self):
+        return self.trainee.account.get_full_name() + " " + self.term.code + " schedule"
 
 
 class ScheduleTemplate(models.Model):
