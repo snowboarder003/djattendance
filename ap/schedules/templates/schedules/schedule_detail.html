@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block references %}
+    <link href="{% static "calendar/css/calendar.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <h2>{{ schedule.trainee }}'s Schedule</h2><br>
+
+    <div id="calendar"></div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static "js/underscore-min.js" %}"></script>
+    <script type="text/javascript" src="{% static "calendar/js/calendar.js" %}"></script>
+    <script type="text/javascript">
+        var calendar = $('#calendar').calendar({
+            events_source: [
+                {% for event in schedule.events.all %}
+                {
+                    "id": {{ event.id }},
+                    "title": "{{ event.name }}",
+                    "url": "",
+                    "class": "",
+                    "start": "{{ event.unixstarttime }}",
+                    "end": "{{ event.unixendtime }}",
+                },
+                {% endfor %}
+            ]});
+    </script>
+{% endblock %}
