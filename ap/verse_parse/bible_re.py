@@ -119,3 +119,13 @@ scripture_re = re.compile(
      '(?P<lonely_end_verse>\d{1,3}))?'
      '(?P<more_lonely_verses>(?:,\s*\d{1,3}(?:\s*-\s*\d{1,3})?)+)?)' \
      '' % (book_re_string,))
+
+def get_book(name):
+    """
+    Get a book from its name or None if not found
+    """
+    for books in testaments.itervalues():
+        for book in books:
+            if re.match(book[2], name, re.IGNORECASE):
+                return book
+    return None

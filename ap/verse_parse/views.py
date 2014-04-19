@@ -18,7 +18,7 @@ from pdfminer.layout import LAParams
 from cStringIO import StringIO
 import re
 
-from verse_parse import references
+from verse_parse import outline, references
 
 def handle_uploaded_file(f):
 	'''
@@ -27,10 +27,12 @@ def handle_uploaded_file(f):
 	Basically gets all needed data for HTML template.
 	'''
 	data = pdf_to_text(f)
-
-	outline = references.extract(data.partition('Scripture Reading:')[2])
-	for i in range(len(outline)):
-		outline_pt = outline[i]
+	partition = data.partition('Scripture Reading:')
+	title = outline.get_title(partition[0])
+	print(title)
+	ref_outline = outline.extract_references(partition[2])
+	for i in range(len(ref_outline)):
+		outline_pt = ref_outline[i]
 		# point = outline_pt[0]
 		# indent = ' '*((outline_pt['level']-1)*4)
 		# print(indent + outline_pt['string'])
@@ -39,7 +41,7 @@ def handle_uploaded_file(f):
 			ref['string'] = references.reference_to_string(ref)
 
 			if ref['chapter'] is not None:
-				ref['repeat'] = references.find_repeat(outline, ref, i)
+				ref['repeat'] = outline.find_repeat(ref_outline, ref, i)
 
 				# print(indent + ' '*len(outline_pt['string']) + ref['string'] + ' -- ' + str(ref['repeat']))
 
@@ -47,8 +49,7 @@ def handle_uploaded_file(f):
 					ref['verses'] = references.get_verses(ref)
 					# for verse in verses.values():
 					# 	print(verse)
-	return outline
-
+	return ref_outline
 
 def upload_file(request):
 	if request.method == 'POST':
