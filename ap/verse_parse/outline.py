@@ -72,7 +72,7 @@ def extract_references(text):
                                 verses = extract_more_verses(r.group('more_lonely_verses'))
                                 for verse in verses:
                                     outline[-1]['refs'].append(normalize_reference(bookname=book, chapter=chapter, verse=verse[0], end_verse=verse[1]))
-
+                
         except InvalidReferenceException:
             pass
     return outline

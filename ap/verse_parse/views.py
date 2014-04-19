@@ -31,6 +31,7 @@ def handle_uploaded_file(f):
 	title = outline.get_title(partition[0])
 	print(title)
 	ref_outline = outline.extract_references(partition[2])
+
 	for i in range(len(ref_outline)):
 		outline_pt = ref_outline[i]
 		# point = outline_pt[0]
@@ -47,19 +48,20 @@ def handle_uploaded_file(f):
 
 				if ref['repeat'] == False:
 					ref['verses'] = references.get_verses(ref)
-					# for verse in verses.values():
+					# for verse in ref['verses'].values():
 					# 	print(verse)
-	return ref_outline
+	return (title, ref_outline)
 
 def upload_file(request):
 	if request.method == 'POST':
 		form = UploadFileForm(request.POST, request.FILES)
 
 		if form.is_valid():
-			data=handle_uploaded_file(request.FILES['file'])
+			(title, ref_outline)=handle_uploaded_file(request.FILES['file'])
 			
 			display_template = loader.get_template('verse_parse/verse_sheet.html')
-			context = Context({'outline': data,})
+			context = Context({'outline': ref_outline,
+							   'title': title,})
 			return HttpResponse(display_template.render(context))
 			
 		else:
