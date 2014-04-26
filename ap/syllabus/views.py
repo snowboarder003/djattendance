@@ -7,6 +7,13 @@ from django.template import RequestContext
 from .forms import NewSyllabusForm
 from django.core.urlresolvers import reverse_lazy
 
+from django.shortcuts import get_object_or_404
+from django.template.loader import get_template
+from django import http
+from django.template import Context
+import ho.pisa as pisa
+import cStringIO as StringIO
+import cgi
 
 # class HomeView(ListView):
 #     template_name = "syllabus/home.html"
@@ -114,3 +121,24 @@ class DeleteSessionView(DeleteView):
         kode = self.kwargs['kode']
         syllabus_pk = self.kwargs['syllabus_pk']
         return reverse_lazy('detail-view', args=[term,kode,syllabus_pk])
+
+def pdf_view(request, term, kode, syllabus_pk):
+    syllabus = get_object_or_404(Syllabus, pk=syllabus_pk)
+    return write_pdf('syllabus/syllabus_pdf.html',{
+        'pagesize' : 'A4',
+        'syllabus' : syllabus})
+
+def write_pdf(template_src, template_context):
+    template = get_template(template_src)
+    context = Context(template_context)
+    html = template.render(context)
+    result = StringIO.StringIO()
+    pdf = pisa.pisaDocument(StringIO.StringIO(
+        html.encode("UTF-8")), result)
+    if not pdf.err:
+        return http.HttpResponse(result.getvalue(), \
+            mimetype='application/pdf')
+    else:
+        return http.HttpResponse('Yesh! %s' % cgi.escape(html))
+
+
