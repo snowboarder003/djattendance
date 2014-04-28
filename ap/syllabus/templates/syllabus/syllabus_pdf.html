@@ -2,6 +2,7 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head> 
+    <h1> {{ syllabus }} </h1>
 <style type="text/css">
     @page {
         size: ;
@@ -18,10 +19,21 @@
 </style>
 </head>
 <body>
-<div>
-    <h2></h2>
-    <div></div>
-</div>
+{% if syllabus.session_set.all %} 
+    {% for session in syllabus.session_set.all %}
+    <div>
+        <h2> {{ session.topic }} ({{ session.date | date:"m/d/y" }})</h2>
+        {% if session.exam %}
+            None.
+        {% else %}
+            {{ session.book.code }}:
+            {% for x in session.assignment %}
+                {{x}} 
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% endfor %}
+{% endif %}
 <div id="footerblock">
     <pdf:pagenumber>
 </div>
