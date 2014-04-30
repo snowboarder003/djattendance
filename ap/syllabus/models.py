@@ -76,7 +76,7 @@ class Session(models.Model):
     topic = models.CharField(max_length=200)
 
     # book name, code
-    """ TO DO: Make this OPTIONAL. """
+    """ TODO: Make this OPTIONAL. """
     """and make this multiple"""
     book = models.ForeignKey(Book) #, blank=True, null=True)
 

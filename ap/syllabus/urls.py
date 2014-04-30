@@ -1,12 +1,10 @@
 from django.conf.urls import patterns, url
-from syllabus.views import CLView, SyllabusDetailView, HomeView, DetailView, TestView, DeleteSyllabusView, AddSyllabusView, AddSessionView, DeleteSessionView, pdf_view
+from syllabus.views import CLView, SyllabusDetailView, HomeView, DetailView, DeleteSyllabusView, AddSyllabusView, AddSessionView, DeleteSessionView, pdf_view
 from syllabus.models import Syllabus, Session
 from terms.models import Term
 from terms import views
 
 urlpatterns = patterns('',
-
-	# url(r'^$', HomeView.as_view(), name='home-view'),
 
 	url(r'^$', HomeView.as_view(model=Term), name='home-view'),	
 
@@ -30,8 +28,6 @@ urlpatterns = patterns('',
 
     url(r'^(?P<term>(Fa|Sp)\d{2})/(?P<kode>\D{0,5})/(?P<syllabus_pk>\d+)/pdf$', 
         pdf_view, name='pdf-view'),
-
-	# url(r'^Term/(?P<kode>\D+)/$', DetailView.as_view(model=Syllabus), name='detail-view'),
 
 )
 

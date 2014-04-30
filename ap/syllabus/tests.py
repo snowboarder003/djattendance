@@ -72,7 +72,7 @@ class SyllabusTests(TestCase):
         self.assertEqual(r1.assignment[1], '1 John 5:12; Col 3:4; John 11:25; 14:6; 10:10')
 
         # self assert
-        """ TO DO: FIX __UNICODE__ SELF TEST """
+        """ TODO: FIX __UNICODE__ SELF TEST """
         #self.assertEqual(r1, "Class: Full Ministry of Christ")#; Term: Fall 2013; Date: 2013-09-10; Topic: Bringing the Infinite God Into the Finite Man")
         #self.assertEqual(r1, "test")
 

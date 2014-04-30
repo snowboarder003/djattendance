@@ -5,17 +5,6 @@
 <a href="{% url 'classlist-view' term %}"> Back to syllabus list.</a>
 <br>
 <a href="{% url 'add-session' term kode pk %}"> Add a session.</a>
-<!--
-{% if syllabus %}
-	<ul>	
-		<li><a href="{{ syllabus.classSyllabus.code }}">{{ syllabus.classSyllabus }}</a></li>
-		<li> <a href="{{ syllabus.get_url_path }}" >{{ syllabus.classSyllabus }} </a> </li>
-		<p> {{syllabus.classSyllabus.code}} </p>
-	</ul>
-{% else %}
-	<p>No syllabus.</p>
-{% endif %}
--->
 
 {% if kode == syllabus.classSyllabus.code %}
 	<h1>{{ syllabus.classSyllabus }}</h1>
@@ -33,14 +22,11 @@
 
 <p> {{session.date}} </p>
 
-<!-- <h5>// (debug) # of Sessions: {{ syllabus.session_set.all|length }}</h5> -->
-
-<!-- GET A REALLY WEIRD ERROR - CAN ONLY ACCESS SYLLABUS.CLASSSYLLABUS.CODE IF ITS INSIDE A IF / FOR LOOP. DOESN'T WORK STAND ALONE?! -->
 {% if syllabus.session_set.all %}
 	<h4>
 	{% for session in syllabus.session_set.all %}
 	<li>		
-		Date: {{ session.date | date:"m" }}/{{ session.date | date:"d" }} |
+		Date: {{ session.date | date:"m/d" }} |
 		{% if session.exam %}
 			Topic: EXAM |
 		{% else %}
