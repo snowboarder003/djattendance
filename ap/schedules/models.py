@@ -71,6 +71,7 @@ class Event(models.Model):
 
     # date = models.DateField()
 
+    # datetime.datetime(YYYY, MM, DD, HH, MM)
     start = models.DateTimeField()
 
     end = models.DateTimeField()
@@ -90,6 +91,12 @@ class Event(models.Model):
     def _day(self):
         self.term.reverseDate(self.start.date)[1]
     day = property(_day)
+
+    # for display as a block with height variable to length
+    # TODO replace by self.end - self.start to an int
+    # def _eventheight(self):
+        # return int((self.end - self.start)/30000)
+    # eventheight = property(_eventheight)
 
     def get_absolute_url(self):
         return reverse('schedules:event-detail', kwargs={'pk': self.pk})
