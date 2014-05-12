@@ -1,7 +1,8 @@
 from django.db import models
 
 from schedules.models import Event
-from accounts.models import Trainee
+from accounts.models import Trainee, TrainingAssistant
+
 
 """ leaveslips models.py
 The leavelslip module takes care of all logic related to... you guessed it, leave slips.
@@ -55,6 +56,7 @@ class LeaveSlip(models.Model):
 
     type = models.CharField(max_length=5, choices=LS_TYPES)
     status = models.CharField(max_length=1, choices=LS)
+    TA = models.ForeignKey(TrainingAssisatant)
 
     submitted = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
@@ -67,7 +69,7 @@ class LeaveSlip(models.Model):
     informed = models.BooleanField(blank=True, null=True)  # not sure, need to ask
 
     def _late(self):
-        pass
+        pass  # TODO
 
     late = property(_late) # whether this leave slip was submitted late or not
 
