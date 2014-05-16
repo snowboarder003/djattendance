@@ -93,7 +93,7 @@ class GroupSlip(LeaveSlip):
 class MealOutSlip(models.Model):
 
     name = models.CharField(max_length=255)
-    localtion = models.CharField(max_length=255)
+    location = models.CharField(max_length=255)
 
 
 class NightOutSlip(models.Model):
