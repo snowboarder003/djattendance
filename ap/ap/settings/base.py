@@ -133,6 +133,7 @@ INSTALLED_APPS = (
     'books',
     'classes',
     'houses',
+    'leaveslips',
     'localities',
     'rooms',
     'services',

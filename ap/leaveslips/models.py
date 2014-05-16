@@ -34,7 +34,7 @@ class LeaveSlip(models.Model):
         ('FWSHP', 'Fellowship'),
         ('FUNRL', 'Funeral'),
         ('GOSP', 'Gospel'),
-        ('INTVW' 'Grad School/Job Interview'),
+        ('INTVW', 'Grad School/Job Interview'),
         ('GRAD', 'Graduation'),
         ('MEAL', 'Meal Out'),
         ('NIGHT', 'Night Out'),
@@ -55,9 +55,9 @@ class LeaveSlip(models.Model):
     )
 
     type = models.CharField(max_length=5, choices=LS_TYPES)
-    status = models.CharField(max_length=1, choices=LS)
-    TA = models.ForeignKey(TrainingAssisatant)
-
+    status = models.CharField(max_length=1, choices=LS_STATUS)
+    TA = models.ForeignKey(TrainingAssistant)
+    
     submitted = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     finalized = models.DateTimeField(blank=True, null=True) # when this leave-slip was approved/denied
@@ -66,7 +66,7 @@ class LeaveSlip(models.Model):
     comments = models.TextField(blank=True, null=True)  # for TA comments
 
     texted = models.BooleanField(default=False)  # for sisters only
-    informed = models.BooleanField(blank=True, null=True)  # not sure, need to ask
+    informed = models.BooleanField(blank=True, default=False)  # not sure, need to ask
 
     def _late(self):
         pass  # TODO
@@ -93,7 +93,7 @@ class GroupSlip(LeaveSlip):
 class MealOutSlip(models.Model):
 
     name = models.CharField(max_length=255)
-    localtion = models.CharField(max_lenght=255)
+    localtion = models.CharField(max_length=255)
 
 
 class NightOutSlip(models.Model):
