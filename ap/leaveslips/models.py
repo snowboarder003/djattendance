@@ -33,13 +33,13 @@ class LeaveSlip(models.Model):
         ('FWSHP', 'Fellowship'),
         ('FUNRL', 'Funeral'),
         ('GOSP', 'Gospel'),
-        ('INTVW' 'Grad School/Job Interview'),
+        ('INTVW', 'Grad School/Job Interview'),
         ('GRAD', 'Graduation'),
         ('MEAL', 'Meal Out'),
         ('NIGHT', 'Night Out'),
         ('OTHER', 'Other'),
         ('SERV', 'Service'),
-        ('SICK' , 'Sickness'),
+        ('SICK', 'Sickness'),
         ('SPECL', 'Special'),
         ('WED', 'Wedding'),
         ('NOTIF', 'Notification Only'),
@@ -53,23 +53,26 @@ class LeaveSlip(models.Model):
         ('S', 'TA sister approved'),
     )
 
+    #add id as primary key
+    #add assigned to TA
+
     type = models.CharField(max_length=5, choices=LS_TYPES)
-    status = models.CharField(max_length=1, choices=LS)
+    status = models.CharField(max_length=1, choices=LS_STATUS)
 
     submitted = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
-    finalized = models.DateTimeField(blank=True, null=True) # when this leave-slip was approved/denied
+    finalized = models.DateTimeField(blank=True, null=True)  # when this leave-slip was approved/denied
 
     description = models.TextField(blank=True, null=True)  # trainee-supplied
     comments = models.TextField(blank=True, null=True)  # for TA comments
 
     texted = models.BooleanField(default=False)  # for sisters only
-    informed = models.BooleanField(blank=True, null=True)  # not sure, need to ask
+    informed = models.BooleanField(blank=True)  # not sure, need to ask
 
     def _late(self):
         pass
 
-    late = property(_late) # whether this leave slip was submitted late or not
+    late = property(_late)  # whether this leave slip was submitted late or not
 
     class Meta:
         abstract = True
@@ -91,7 +94,7 @@ class GroupSlip(LeaveSlip):
 class MealOutSlip(models.Model):
 
     name = models.CharField(max_length=255)
-    localtion = models.CharField(max_lenght=255)
+    localtion = models.CharField(max_length=255)
 
 
 class NightOutSlip(models.Model):

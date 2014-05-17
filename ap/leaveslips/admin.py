@@ -1,3 +1,4 @@
 from django.contrib import admin
+from leaveslips.models import LeaveSlip, IndividualSlip, GroupSlip, MealOutSlip, NightOutSlip
 
-# Register your models here.
+admin.site.register(IndividualSlip)
