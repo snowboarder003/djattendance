@@ -1,3 +1,4 @@
+from django import forms
 from django.db import models
 
 from schedules.models import Event
@@ -57,7 +58,7 @@ class LeaveSlip(models.Model):
     type = models.CharField(max_length=5, choices=LS_TYPES)
     status = models.CharField(max_length=1, choices=LS_STATUS)
     TA = models.ForeignKey(TrainingAssistant)
-    
+
     submitted = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     finalized = models.DateTimeField(blank=True, null=True) # when this leave-slip was approved/denied
@@ -93,7 +94,7 @@ class GroupSlip(LeaveSlip):
 class MealOutSlip(models.Model):
 
     name = models.CharField(max_length=255)
-    localtion = models.CharField(max_length=255)
+    location = models.CharField(max_length=255)
 
 
 class NightOutSlip(models.Model):
@@ -102,3 +103,15 @@ class NightOutSlip(models.Model):
     phone = models.PositiveIntegerField()
     hostaddress = models.CharField(max_length=255)
     HC = models.ForeignKey(Trainee)
+
+
+# Form classes
+class IndividualSlipForm(forms.ModelForm):
+    class Meta:
+        model = IndividualSlip
+        fields = ['type', 'description', 'comments', 'texted', 'informed']
+
+class GroupSlipForm(forms.ModelForm):
+    class Meta:
+        model = GroupSlip
+        fields = ['type', 'trainee', 'description', 'comments', 'texted', 'informed']
