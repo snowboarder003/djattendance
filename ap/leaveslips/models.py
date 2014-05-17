@@ -54,9 +54,6 @@ class LeaveSlip(models.Model):
         ('S', 'TA sister approved'),
     )
 
-    #add id as primary key
-    #add assigned to TA
-
     type = models.CharField(max_length=5, choices=LS_TYPES)
     status = models.CharField(max_length=1, choices=LS_STATUS)
 
