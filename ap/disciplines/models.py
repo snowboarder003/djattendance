@@ -3,7 +3,7 @@ import datetime
 from django.db import models
 from accounts.models import Trainee
 from books.models import Book
-
+from django.core.exceptions import ValidationError
 
 """ DISCIPLINE models.py
 
@@ -17,8 +17,14 @@ Data Models
 
 
 class Discipline(models.Model):
-    MO = 'Monday Offense'
-    RO = 'Regular Offense'
+    
+    MONDAYOFFENSE = 'MO'
+    REGULAROFFENSE = 'RO'
+
+    TYPE_OFFENSE_CHOICES = (
+        (MONDAYOFFENSE, 'Monday Offense'),
+        (REGULAROFFENSE, 'Regular Offense'),
+    )
 
     # an infraction is the reason for the trainee to be assigned discipline
     # The longest string will be "Additional Monday Discipline" (28 characters)
@@ -28,14 +34,14 @@ class Discipline(models.Model):
     quantity = models.PositiveSmallIntegerField(blank=False, null=False)
 
 	# the date of the assignment of the discipline.
-    date_assigned = models.datetime.datetime.now()
+    date_assigned = datetime.datetime.now()
 
     # the due date and time for the discipline to be submitted by
     due = models.DateTimeField(blank=False, null=False)
 
     # the type of offense being assigned
-    """TODO use choices here"""
-    offense = models.CharField(default=RO, blank=False, null=False, max_length=20)
+    offense = models.CharField(choices=TYPE_OFFENSE_CHOICES, default=REGULAROFFENSE, 
+        blank=False, null=False, max_length=20)
 
     # the last day of the term, the sat of semiannual
     trainee = models.ForeignKey(Trainee)
@@ -43,25 +49,35 @@ class Discipline(models.Model):
     def __unicode__(self):
         return self.offense + " | " + self.infraction + " | " + self.trainee.name
 
-    """TODO: fix the syntax of this code, this code doesn't compile"""
+    # To add the specified number of life-studies to a trainee
+    # See information manual for when to add additional discipline
+    #   When you automatically assign discipline
     def addSummary(self, num):
         self.quantity += num
         if num < 0 :
-            #raise exception or return error?
+            #raise exception or return error
+            return self
+        return self
+
+    # for TAs to change discipline count (post-assignment case)
+    def editSummary(self, num):
+        if num < 0 :
+            #raise exception or return error
+            return self
+        self.quantity = num
+        return self    
+    
+    def changeDueDate(self, date):
+        if date < datetime.today().date():
+            #raise exception or return error
             return self
         else :
-            for i in range(num) :
-                self.summary_set.create()
-        return self
-
-    """TODO: to check if the date is in the past"""
-    def changeDueDate(self, date):
-        self.due = date
-        return self
+            self.due = date
+            return self
 
     """TODO: This also needs to be tested to see if it works"""
-    def getIncompleteSummary(self):
-        return self.summary_set.all().filter(date_submitted != Null).count()
+    def getNumIncompleteSummary(self):
+        return quantity - self.summary_set.all().count()
 
     # comments: method to calculate period. Do they need to be editable by TA?
 
@@ -81,20 +97,26 @@ class Summary(models.Model):
 	# which discipline this summary is associated with
     discipline = models.ForeignKey(Discipline)
 
+    # automatically generated date when summary is submitted
+    date_submitted = models.DateTimeField(blank=False, null=True)
+
     def __unicode__(self):
         return self.book + " | " + self.chapter + " | " + self.discipline.trainee.name
 
     """TODO: to do these methods"""
-    # def updateContent(self, string):
-    #     self.content = string
-    #     return self
+    def updateContent(string):
+        self.content = string
+        return self
 
-    # def approve(self):
-    #     self.approved = True
-    #     return self
+    def approve(self):
+        self.approved = True
+        return self
 
-    # def submit(self):
-
+    def submit(self, string):
+        # check the word count (<250 or not)
+        self.updateContent(string)
+        self.date_submitted = datetime.datetime.now()
+        return self
 
     """These methods were from the original file"""
     # @staticmethod
