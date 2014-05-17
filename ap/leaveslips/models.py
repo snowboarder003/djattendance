@@ -1,7 +1,8 @@
 from django.db import models
 
 from schedules.models import Event
-from accounts.models import Trainee
+from accounts.models import Trainee, TrainingAssistant
+
 
 """ leaveslips models.py
 The leavelslip module takes care of all logic related to... you guessed it, leave slips.
@@ -59,6 +60,8 @@ class LeaveSlip(models.Model):
     type = models.CharField(max_length=5, choices=LS_TYPES)
     status = models.CharField(max_length=1, choices=LS_STATUS)
 
+    TA = models.ForeignKey(TrainingAssistant)
+    
     submitted = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     finalized = models.DateTimeField(blank=True, null=True)  # when this leave-slip was approved/denied
@@ -67,10 +70,11 @@ class LeaveSlip(models.Model):
     comments = models.TextField(blank=True, null=True)  # for TA comments
 
     texted = models.BooleanField(default=False)  # for sisters only
-    informed = models.BooleanField(blank=True)  # not sure, need to ask
+
+    informed = models.BooleanField(blank=True, default=False)  # not sure, need to ask
 
     def _late(self):
-        pass
+        pass  # TODO
 
     late = property(_late)  # whether this leave slip was submitted late or not
 
@@ -94,7 +98,7 @@ class GroupSlip(LeaveSlip):
 class MealOutSlip(models.Model):
 
     name = models.CharField(max_length=255)
-    localtion = models.CharField(max_length=255)
+    location = models.CharField(max_length=255)
 
 
 class NightOutSlip(models.Model):
