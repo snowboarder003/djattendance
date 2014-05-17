@@ -67,19 +67,19 @@ class Discipline(models.Model):
 
 class Summary(models.Model):
 	# the content of the summary (> 250 words)
-	content = models.TextField()
+    content = models.TextField()
 
 	# the book assigned to summary
-	book = models.ForeignKey(Book)
+    book = models.ForeignKey(Book)
 
 	# the chapter assigned to summary
-	chapter = models.PositiveSmallIntegerField(blank=False, null=False)
+    chapter = models.PositiveSmallIntegerField(blank=False, null=False)
 
 	# if the summary has been approved
-	approved = models.BooleanField(default=False)
+    approved = models.BooleanField(default=False)
 
 	# which discipline this summary is associated with
-	discipline = models.ForeignKey(Discipline)
+    discipline = models.ForeignKey(Discipline)
 
     def __unicode__(self):
         return self.book + " | " + self.chapter + " | " + self.discipline.trainee.name
