@@ -24,7 +24,7 @@ class Table(models.Model):
         ('S', 'Sister'),
     )
 
-    seatedTrainees = models.ManyToManyField(Trainee)
+    seatedTrainees = models.ManyToManyField(Trainee, blank=True, null=True)
     location = models.CharField(max_length=2, choices=LOCATIONS)
     genderType = models.CharField(max_length=1, choices=GENDERS)
 
@@ -35,12 +35,21 @@ class Table(models.Model):
     def isFull(self):
         return self.getEmptySeats() == 0
 
+    def clearTables(self):
+        self.seatedTrainees = []
+        return True
+
     def seatTrainee(self, trainee):
         if(self.getEmptySeats() != 0):
             self.seatedTrainees.add(trainee)
             return True
         else:
             return False
+
+    def clearTrainees(self):
+        for tables in Table.objects.all():
+            tables.seatedTrainees.clear()
+        return True
 
     def splitTablesByGender(self, tables):
         brothersTables = []
@@ -67,6 +76,9 @@ class Table(models.Model):
     @staticmethod
     def seatTables(traineeList, tableList):
         tables = Table().splitTablesByGender(tableList)
+
+        Table().clearTrainees()
+
         tableToAddTo = 0
         seatingList = []
         brothers = 0
@@ -94,7 +106,9 @@ class Table(models.Model):
                     firstPass = True
 
             tables[gender][tableToAddTo].seatTrainee(trainee)
-            seatingList.append([trainee.account.get_full_name(),tables[gender][tableToAddTo].name])
+            entry = []
+            entry.append([trainee.account.get_full_name(),tables[gender][tableToAddTo].name])
+            seatingList.append(entry)
             firstPass = False
 
         return seatingList
