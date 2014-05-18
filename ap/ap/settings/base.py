@@ -93,7 +93,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -125,6 +125,7 @@ INSTALLED_APPS = (
     # third-party modules
     'autofixture', # easily generate dummy/test data
     'bootstrap3', # easy-to-use bootstrap integration
+    'bootstrap3_datetime', # datetime picker widget
     'braces', # Mixins for Django's class-based views.
     'django_reset',
     # ap CORE

@@ -5,8 +5,11 @@ from django.template import RequestContext
 from django.forms.models import modelform_factory
 from django.contrib.admin.widgets import AdminDateWidget
 
+from bootstrap3_datetime.widgets import DateTimePicker
+
 from .models import Schedule, ScheduleTemplate, Event, EventGroup
 from terms.models import Term
+from .forms import CreateEventForm
 
 
 class ScheduleDetail(generic.DetailView):
@@ -37,11 +40,8 @@ class ScheduleList(generic.ListView):
 
 class EventCreate(generic.CreateView):
     model = Event
-    fields = ['name', 'code', 'description', 'group', 'classs', 'type', 'date', 'start', 'end']
     template_name = 'schedules/event_create.html'
-    form_class =  modelform_factory(Event,
-                                    widgets = { "date": AdminDateWidget() })
-    success_url = reverse_lazy('event-create')
+    form_class = CreateEventForm
 
 
 class EventDetail(generic.DetailView):

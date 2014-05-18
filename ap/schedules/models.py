@@ -58,7 +58,7 @@ class Event(models.Model):
     group = models.ForeignKey('EventGroup', blank=True, null=True)
 
     # if this event is a class, relate it
-    classs = models.ForeignKey(Class, blank=True, null=True)  # class is a reserved keyword :(
+    classs = models.ForeignKey(Class, blank=True, null=True, verbose_name='class')  # class is a reserved keyword :(
 
     # the type of event
     type = models.CharField(max_length=1, choices=EVENT_TYPES)
@@ -71,6 +71,7 @@ class Event(models.Model):
 
     # date = models.DateField()
 
+    # datetime.datetime(YYYY, MM, DD, HH, MM)
     start = models.DateTimeField()
 
     end = models.DateTimeField()
@@ -84,12 +85,18 @@ class Event(models.Model):
     unixendtime = property(_unixendtime)
 
     def _week(self):
-        self.term.reverseDate(self.date)[0]
+        self.term.reverseDate(self.start.date)[0]
     week = property(_week)
 
     def _day(self):
-        self.term.reverseDate(self.date)[1]
+        self.term.reverseDate(self.start.date)[1]
     day = property(_day)
+
+    # for display as a block with height variable to length
+    # TODO replace by self.end - self.start to an int
+    # def _eventheight(self):
+        # return int((self.end - self.start)/30000)
+    # eventheight = property(_eventheight)
 
     def get_absolute_url(self):
         return reverse('schedules:event-detail', kwargs={'pk': self.pk})

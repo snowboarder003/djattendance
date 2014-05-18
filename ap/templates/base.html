@@ -19,7 +19,13 @@
     <link href="{% static "bootstrap/css/navbar-static-top.css" %}" rel="stylesheet">
     <link href="{% static "bootstrap/css/offcanvas.css" %}" rel="stylesheet">
 
-    {% block references %}{% endblock %}
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static "jquery/js/jquery-1.10.1.min.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/modernizr-2.6.2-respond-1.1.0.min.js" %}"></script>
+    <script src="{% static "bootstrap/js/offcanvas.js" %}"></script>
+
+    {% block media %}{% endblock %}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -93,13 +99,6 @@
     </div> <!-- /container -->
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{% static "jquery/js/jquery-1.10.1.min.js" %}"></script>
-    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
-    <script src="{% static "js/modernizr-2.6.2-respond-1.1.0.min.js" %}"></script>
-    <script src="{% static "bootstrap/js/offcanvas.js" %}"></script>
-    {% block scripts %}{% endblock %}
+
   </body>
 </html>
