@@ -24,6 +24,7 @@ urlpatterns = patterns('',
     url(r'^terms/', include('terms.urls', namespace="terms")),
     url(r'^absent_trainee_roster/', include('absent_trainee_roster.urls', namespace="absent_trainee_roster")),
     url(r'^select2/', include('django_select2.urls')),
+    url(r'^disciplines/', include('disciplines.urls')),
     # Examples:
     # url(r'^$', 'ap.views.home', name='home'),
     # url(r'^ap/', include('ap.foo.urls')),

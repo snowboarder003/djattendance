@@ -37,17 +37,21 @@ class Discipline(models.Model):
     date_assigned = datetime.datetime.now()
 
     # the due date and time for the discipline to be submitted by
-    due = models.DateTimeField(blank=False, null=False)
+    due = models.DateField(blank=False, null=False)
 
     # the type of offense being assigned
     offense = models.CharField(choices=TYPE_OFFENSE_CHOICES, default=REGULAROFFENSE, 
         blank=False, null=False, max_length=20)
 
-    # the last day of the term, the sat of semiannual
+    # relationship: many discplines to one specific trainee
+    # even for assigning house, each trainee has one discipline
     trainee = models.ForeignKey(Trainee)
 
     def __unicode__(self):
-        return self.offense + " | " + self.infraction + " | " + self.trainee.name
+        return self.trainee.account.get_full_name() + " | " + self.infraction + " | " + self.offense
+    
+    def displayForTrainee(self):
+        return "Life-Study Summary due as " + self.offense + "for " + self.infraction + " infraction"
 
     # To add the specified number of life-studies to a trainee
     # See information manual for when to add additional discipline
@@ -86,6 +90,7 @@ class Summary(models.Model):
     content = models.TextField()
 
 	# the book assigned to summary
+    # relationship: many summaries to one book
     book = models.ForeignKey(Book)
 
 	# the chapter assigned to summary
@@ -101,7 +106,7 @@ class Summary(models.Model):
     date_submitted = models.DateTimeField(blank=False, null=True)
 
     def __unicode__(self):
-        return self.book + " | " + self.chapter + " | " + self.discipline.trainee.name
+        return self.trainee.account.get_full_name()  + " | " + self.book + " | " + self.chapter
 
     """TODO: to do these methods"""
     def updateContent(string):
