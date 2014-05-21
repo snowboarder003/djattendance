@@ -1,4 +1,4 @@
 from django.contrib import admin
-from disciplines.models import Discipline, Summary
+from lifestudies.models import LifeStudy, Summary
 
-admin.site.register(Discipline)
+admin.site.register(LifeStudy)

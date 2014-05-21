@@ -1,8 +1,8 @@
 from django.http import HttpResponse
-from disciplines.models import Discipline, Summary
+from lifestudies.models import LifeStudy, Summary
 
-def discipline(request):
-    latest_summaries = Discipline.objects.order_by('offense')
+def lifestudy(request):
+    latest_summaries = LifeStudy.objects.order_by('offense')
     output = ', '.join(["Life-Study Summary due as " + d.offense + " for " + d.infraction + " infraction ; " for d in latest_summaries])
     return HttpResponse(output)
 

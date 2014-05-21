@@ -5,13 +5,13 @@ from accounts.models import Trainee
 from books.models import Book
 from django.core.exceptions import ValidationError
 
-""" DISCIPLINE models.py
+""" LifeStudy models.py
 
-This discipline module handles the assigning of reading (mainly life-studies) summaries for disciplinary purposes.
+This LifeStudy module handles the assigning of reading (mainly life-studies) summaries for disciplinary purposes.
 
 Data Models
-- Discipline:
-    a discipline assigned to a trainee
+- LifeStudy:
+    a LifeStudy assigned to a trainee
 
 """
 
@@ -100,7 +100,7 @@ class Summary(models.Model):
     approved = models.BooleanField(default=False)
 
 	# which discipline this summary is associated with
-    discipline = models.ForeignKey(Discipline)
+    lifeStudy = models.ForeignKey(LifeStudy)
 
     # automatically generated date when summary is submitted
     date_submitted = models.DateTimeField(blank=False, null=True)

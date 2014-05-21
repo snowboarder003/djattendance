@@ -1,9 +1,9 @@
 from django.conf.urls import patterns, url
-from disciplines import views
+from lifestudies import views
 
 urlpatterns = [
     # ex: /discipline/
-    url(r'^$', views.discipline, name='discipline'),
+    url(r'^$', views.lifestudy, name='lifestudy'),
     # ex: /discipline/write/
     url(r'write/$', views.write, name='write'),
     # ex: /discpline/result/
