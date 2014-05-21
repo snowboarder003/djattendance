@@ -2,41 +2,43 @@
 {% load staticfiles %}
 
 {% block references %}
-    <link href="{% static "calendar/css/calendar.css" %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
     <h2>{{ schedule.trainee }}'s Schedule</h2><br>
     <div id="clndr">
+
     </div>
 
-
-{% endblock %}
-
-{% block scripts %}
-    <script type="text/javascript" src="{% static "js/underscore-min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/moment.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/clndr.min.js" %}"></script>
-
-    <script type="text/template" id="clndr_template">
-        <div class="controls">
-            <button class="clndr-previous-button">Prev.</button>
-            <div class="month"><%= days[extras.currentWeek * 7].date.format('YYYY-MM-DD') %> - <%= days[extras.currentWeek * 7 + 6].date.format('YYYY-MM-DD') %></div>
-            <button class="clndr-next-button">Next</button>
+    <!-- SCHEDULE TEMPLATE -->
+    <script type="text/template" id="week-template">
+        <div class="btn-toolbar" role="toolbar">
+            <div class="controls btn-group">
+                <button class="btn btn-info"><span class="glyphicon glyphicon-calendar"></span></button>
+            </div>
+            <div class="controls btn-group">
+                <button class="btn btn-default clndr-previous-button">Prev</button>
+                <div class="daterange btn btn-default disabled"><%= days[extras.currentWeek * 7].date.format('M/DD/YY') %> to <%= days[extras.currentWeek * 7 + 6].date.format('M/DD/YY') %></div>
+                <button class="btn btn-default clndr-next-button">Next</button>
+            </div>
         </div>
 
-        <div class="days-of-the-week clearfix">
-            <% _.each(daysOfTheWeek, function(day) { %>
-                <div class="header-day"><%= day %></div>
-            <% }); %>
-        </div>
+        <hr>
 
-        <div class="days clearfix">
+        <div class="row">
+            <div class="col-md-1">
+                Time
+            </div>
             <% for(var i = extras.currentWeek * 7; i < extras.currentWeek * 7 + 7; i++) { %>
-                <div class="<%= days[i].classes %>" id="<%= days[i].id %>"><%= days[i].day %></div>
+                <div class="<%= days[i].classes %> col-md-1" id="<%= days[i].id %>">
+                    <%= days[i].date.format("M/D") %><br>
+                    <%= days[i].date.format("ddd") %>
+                </div>
             <% } %>
         </div>
+
     </script>
+
 
     <script type="text/javascript">
         function weeksInMonth(month) {
@@ -44,10 +46,24 @@
         }
 
         var clndr = $('#clndr').clndr({
-            template: $('#clndr_template').html(),
+            template: $('#week-template').html(),
+            events: [
+                {% for event in schedule.events.all %}
+                    {
+                        id: "{{ event.id }}",
+                        date: "{{ event.start | date:"Y-d-m"}}",
+                        start: "{{ event.start | date:"Hi" }}",
+                        end: "{{ event.end | date:"Hi" }}",
+                        name: "{{ event.name }}",
+                        code: "{{ event.code }}",
+                    },
+                {% endfor %}
+                {}
+            ],
             extras: {
                 currentWeek: Math.floor( ( ( (moment().date() + moment().startOf('month').weekday() ) - 1 ) / ( weeksInMonth(moment() ) * 7) ) * weeksInMonth( moment() ) )
             },
+            daysOfTheWeek: ['LD', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
             constraints: {
                 startDate: '2014-02-16',
                 endDate: '2014-07-05'
@@ -97,4 +113,10 @@
             }
         });
     </script>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static "js/underscore-min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/moment.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/clndr.min.js" %}"></script>
 {% endblock %}
