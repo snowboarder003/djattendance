@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block references %}
+    <link href="{% static "css/schedule.css" %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -25,16 +26,23 @@
 
         <hr>
 
-        <div class="row">
+        <div class="row scheduler-header">
             <div class="col-md-1">
-                Time
             </div>
             <% for(var i = extras.currentWeek * 7; i < extras.currentWeek * 7 + 7; i++) { %>
                 <div class="<%= days[i].classes %> col-md-1" id="<%= days[i].id %>">
-                    <%= days[i].date.format("M/D") %><br>
                     <%= days[i].date.format("ddd") %>
+                    <%= days[i].date.format("M/D") %><br>
                 </div>
             <% } %>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1">
+                <% for(var i = 6; i < 24; i++) { %>
+                    <div class="hour"><%= moment({hour: i}).format("h A") %></div>
+                <% } %>
+            </div>
         </div>
 
     </script>

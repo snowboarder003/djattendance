@@ -1,0 +1,5 @@
+.hour {
+    height: 30px;
+    border-bottom: dotted thin #cccccc;
+    font-size: 10px;
+}
