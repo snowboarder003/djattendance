@@ -16,7 +16,7 @@ Data Models
 """
 
 
-class Discipline(models.Model):
+class LifeStudy(models.Model):
     
     MONDAYOFFENSE = 'MO'
     REGULAROFFENSE = 'RO'

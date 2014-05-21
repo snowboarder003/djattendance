@@ -160,7 +160,7 @@ INSTALLED_APPS = (
     'syllabus', # class syllabus
     'verse_parse', # parse outlines for PSRP verses
     'report_builder',
-    'disciplines'
+    'lifestudies',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)

@@ -9,3 +9,5 @@ urlpatterns = [
     # ex: /discpline/result/
     url(r'result/$', views.result, name='result'),
 ]
+
+
