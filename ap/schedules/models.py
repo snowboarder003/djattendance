@@ -143,6 +143,9 @@ class Schedule(models.Model):
     def __unicode__(self):
         return self.trainee.account.get_full_name() + " " + self.term.code + " schedule"
 
+    def get_absolute_url(self):
+        return reverse('schedules:schedule-detail', kwargs={'pk': self.pk})
+
 
 class ScheduleTemplate(models.Model):
 
