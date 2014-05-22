@@ -1,5 +1,23 @@
+.schedule-header {
+    border-bottom: solid thin #cccccc;
+    text-align: center;
+}
+
+.today {
+    background-color: #d0d37d;
+}
+
 .hour {
     height: 30px;
     border-bottom: dotted thin #cccccc;
     font-size: 10px;
+}
+
+.schedule-event {
+    position: absolute;
+    width: 100%;
+}
+
+.col-md-1 {
+
 }

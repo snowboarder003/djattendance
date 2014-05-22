@@ -26,11 +26,11 @@
 
         <hr>
 
-        <div class="row scheduler-header">
+        <div class="row">
             <div class="col-md-1">
             </div>
             <% for(var i = extras.currentWeek * 7; i < extras.currentWeek * 7 + 7; i++) { %>
-                <div class="<%= days[i].classes %> col-md-1" id="<%= days[i].id %>">
+                <div class="<%= days[i].classes %> col-md-1 schedule-header" id="<%= days[i].id %>">
                     <%= days[i].date.format("ddd") %>
                     <%= days[i].date.format("M/D") %><br>
                 </div>
@@ -38,11 +38,23 @@
         </div>
 
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-1 timebar">
                 <% for(var i = 6; i < 24; i++) { %>
                     <div class="hour"><%= moment({hour: i}).format("h A") %></div>
                 <% } %>
             </div>
+            <% for(var i = extras.currentWeek * 7; i < extras.currentWeek * 7 + 7; i++) { %>
+                <div class="<%= days[i].classes %> col-md-1" id="">
+                    <% _.each(days[i].events, function(event) { %>
+                        <div class="schedule-event alert alert-success"
+                             style="top: <%= moment.duration(moment(event.start).format('H:m')).subtract(6, 'hours').asMinutes()/2 %>px;
+                                    height: <%= moment(event.end).diff(moment(event.start), 'minutes')/2 %>px ">
+                            <%= event.code %>
+
+                        </div>
+                    <% }); %>
+                </div>
+            <% } %>
         </div>
 
     </script>
@@ -59,9 +71,9 @@
                 {% for event in schedule.events.all %}
                     {
                         id: "{{ event.id }}",
-                        date: "{{ event.start | date:"Y-d-m"}}",
-                        start: "{{ event.start | date:"Hi" }}",
-                        end: "{{ event.end | date:"Hi" }}",
+                        date: "{{ event.start | date:"Y-m-d"}}",
+                        start: "{{ event.start | date:"r" }}",
+                        end: "{{ event.end | date:"r" }}",
                         name: "{{ event.name }}",
                         code: "{{ event.code }}",
                     },
@@ -69,7 +81,10 @@
                 {}
             ],
             extras: {
-                currentWeek: Math.floor( ( ( (moment().date() + moment().startOf('month').weekday() ) - 1 ) / ( weeksInMonth(moment() ) * 7) ) * weeksInMonth( moment() ) )
+                currentWeek: Math.floor( ( ( (moment().date() + moment().startOf('month').weekday() ) - 1 ) / ( weeksInMonth(moment() ) * 7) ) * weeksInMonth( moment() ) ),
+                eventsThisWeek: function() {
+                    return clndr.eventsThisMonth;
+                }
             },
             daysOfTheWeek: ['LD', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
             constraints: {
