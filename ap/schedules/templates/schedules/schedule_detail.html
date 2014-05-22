@@ -31,8 +31,8 @@
             </div>
             <% for(var i = extras.currentWeek * 7; i < extras.currentWeek * 7 + 7; i++) { %>
                 <div class="<%= days[i].classes %> col-md-1 schedule-header" id="<%= days[i].id %>">
-                    <%= days[i].date.format("ddd") %>
-                    <%= days[i].date.format("M/D") %><br>
+                    <%= days[i].date.format("ddd") %><br>
+                    <%= days[i].date.format("M/D") %>
                 </div>
             <% } %>
         </div>
@@ -46,7 +46,7 @@
             <% for(var i = extras.currentWeek * 7; i < extras.currentWeek * 7 + 7; i++) { %>
                 <div class="<%= days[i].classes %> col-md-1" id="">
                     <% _.each(days[i].events, function(event) { %>
-                        <div class="schedule-event alert alert-success"
+                        <div class="schedule-event"
                              style="top: <%= moment.duration(moment(event.start).format('H:m')).subtract(6, 'hours').asMinutes()/2 %>px;
                                     height: <%= moment(event.end).diff(moment(event.start), 'minutes')/2 %>px ">
                             <%= event.code %>
