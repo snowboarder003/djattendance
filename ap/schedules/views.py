@@ -38,10 +38,25 @@ class ScheduleList(generic.ListView):
     def get_queryset(self):
         return ScheduleTemplate.objects.all
 
+
 class EventCreate(generic.CreateView):
     model = Event
     template_name = 'schedules/event_create.html'
     form_class = CreateEventForm
+
+    def form_valid(self, form):
+        event = form.save()
+        for trainee in form.cleaned_data['trainees']:
+            # add event to trainee's schedule
+            if Schedule.objects.filter(trainee=trainee).filter(term=event.term):
+                schedule = Schedule.objects.filter(trainee=trainee).filter(term=event.term)[0]
+                schedule.events.add(event)
+            else: # if trainee doesn't already have a schedule, create it
+                schedule = Schedule(trainee=trainee, term=event.term)
+                schedule.save()
+                schedule.events.add(event)
+        return super(EventCreate, self).form_valid(form)
+
 
 
 class EventDetail(generic.DetailView):

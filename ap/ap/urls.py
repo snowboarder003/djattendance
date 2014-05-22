@@ -3,6 +3,7 @@ from django.contrib.auth.views import login, logout
 
 import autocomplete_light
 # import every app/autocomplete_light_registry.py
+import accounts.autocomplete_light_registry
 autocomplete_light.autodiscover()
 
 # Uncomment the next two lines to enable the admin:
