@@ -14,12 +14,16 @@
 }
 
 .schedule-event {
+    opacity: 0.8;
     position: absolute;
-    width: 97%;
+    width: 99%;
     text-align: center;
     font-size: 10px;
     color: #468847;
     background-color: #dff0d8;
-    border-color: #d6e9c6;
-    border: 1px solid transparent;
+    border: 1px solid #a0b689;
+}
+
+.selected-event {
+    opacity: 1.0;
 }

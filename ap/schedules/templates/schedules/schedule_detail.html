@@ -30,11 +30,16 @@
             <div class="col-md-1">
             </div>
             <% for(var i = extras.currentWeek * 7; i < extras.currentWeek * 7 + 7; i++) { %>
-                <div class="<%= days[i].classes %> col-md-1 schedule-header" id="<%= days[i].id %>">
-                    <%= days[i].date.format("ddd") %><br>
-                    <%= days[i].date.format("M/D") %>
+                <div class=" col-md-1">
+                    <div class="<%= days[i].classes %> schedule-header"  id="<%= days[i].id %>">
+                        <%= days[i].date.format("ddd") %><br>
+                        <%= days[i].date.format("M/D") %>
+                    </div>
                 </div>
             <% } %>
+            <div class="col-md-4">
+
+            </div>
         </div>
 
         <div class="row">
@@ -46,15 +51,29 @@
             <% for(var i = extras.currentWeek * 7; i < extras.currentWeek * 7 + 7; i++) { %>
                 <div class="<%= days[i].classes %> col-md-1" id="">
                     <% _.each(days[i].events, function(event) { %>
-                        <div class="schedule-event"
+                        <div class="schedule-event" data-id=<%= event.id %>
                              style="top: <%= moment.duration(moment(event.start).format('H:m')).subtract(6, 'hours').asMinutes()/2 %>px;
                                     height: <%= moment(event.end).diff(moment(event.start), 'minutes')/2 %>px ">
                             <%= event.code %>
-
                         </div>
                     <% }); %>
                 </div>
             <% } %>
+            <div class="col-md-4" id="event-details">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title" id="event-title">Event Details</h3>
+                  </div>
+                  <div class="panel-body" id="event-info">
+                      <ul class="list-unstyled">
+                          <li id="date"></li>
+                          <li id="start"></li>
+                          <li id="end"></li>
+                          <li id="type"></li>
+                      </ul>
+                  </div>
+                </div>
+            </div>
         </div>
 
     </script>
@@ -71,11 +90,12 @@
                 {% for event in schedule.events.all %}
                     {
                         id: "{{ event.id }}",
-                        date: "{{ event.start | date:"Y-m-d"}}",
-                        start: "{{ event.start | date:"r" }}",
-                        end: "{{ event.end | date:"r" }}",
+                        date: "{{ event.start | date:'Y-m-d'}}",
+                        start: "{{ event.start | date:'r' }}",
+                        end: "{{ event.end | date:'r' }}",
                         name: "{{ event.name }}",
                         code: "{{ event.code }}",
+                        type: "{{ event.type }}"
                     },
                 {% endfor %}
                 {}
@@ -88,8 +108,8 @@
             },
             daysOfTheWeek: ['LD', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
             constraints: {
-                startDate: '2014-02-16',
-                endDate: '2014-07-05'
+                startDate: "{{ schedule.term.start | date:'Y-m-d' }}",
+                endDate: "{{ schedule.term.end | date:'Y-m-d' }}"
             },
             doneRendering: function() {
 
@@ -134,6 +154,28 @@
                 });
 
             }
+        });
+    </script>
+
+    <script>
+        $( document ).ready(function() {
+            $(".schedule-event").click(function() {
+                $(".schedule-event").removeClass("selected-event")
+                $(this).addClass("selected-event")
+
+                var eventid = $(this).data("id")
+                _.each(clndr.options.events, function(event) {
+                    if (event.id==eventid) {
+                        eventinfo = event
+                    }
+                });
+
+                $("#event-title").html(eventinfo.name)
+                $("#event-info #date").html("<strong>Date:</strong> " + moment(eventinfo.date).format("dddd, MMMM Do YYYY"))
+                $("#event-info #start").html("<strong>Start Time:</strong> " + moment(eventinfo.start).format("h:mm a"))
+                $("#event-info #end").html("<strong>End Time:</strong> " + moment(eventinfo.end).format("h:mm a"))
+                $("#event-info #type").html("<strong>Type:</strong> " + eventinfo.type)
+            });
         });
     </script>
 {% endblock %}
