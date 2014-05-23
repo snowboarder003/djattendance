@@ -51,9 +51,10 @@
             <% for(var i = extras.currentWeek * 7; i < extras.currentWeek * 7 + 7; i++) { %>
                 <div class="<%= days[i].classes %> col-md-1" id="">
                     <% _.each(days[i].events, function(event) { %>
-                        <div class="schedule-event" data-id=<%= event.id %>
+                        <div class="schedule-event"
                              style="top: <%= moment.duration(moment(event.start).format('H:m')).subtract(6, 'hours').asMinutes()/2 %>px;
-                                    height: <%= moment(event.end).diff(moment(event.start), 'minutes')/2 %>px ">
+                                    height: <%= moment(event.end).diff(moment(event.start), 'minutes')/2 %>px "
+                            data-id=<%= event.id %> >
                             <%= event.code %>
                         </div>
                     <% }); %>
