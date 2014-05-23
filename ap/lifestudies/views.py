@@ -1,16 +1,27 @@
 from django.http import HttpResponse
 from lifestudies.models import LifeStudy, Summary
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
+from django.core.urlresolvers import reverse_lazy
+
 
 class LifeStudyListView(ListView):
     template_name = 'lifestudies/lifestudylist.html'
     model = LifeStudy
     context_object_name = 'lifestudies'
 
+    #profile is the user that's currently logged in
     def get_context_data(self, **kwargs):
         context = super(LifeStudyListView, self).get_context_data(**kwargs)
         context['profile'] = self.request.user
         return context
+
+class CreateSummaryView(CreateView):
+    model = Summary
+    template = 'lifestudies/new_summary_form.html'
+
+    def get_success_url(self):
+        return reverse_lazy('lifestudy-list')
+
 
 # def lifestudy(request):
 #     latest_summaries = LifeStudy.objects.order_by('offense')

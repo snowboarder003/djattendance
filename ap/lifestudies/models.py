@@ -51,7 +51,7 @@ class LifeStudy(models.Model):
         return self.trainee.account.get_full_name() + ' | ' + self.infraction + ' | ' + self.offense + ' | ' + str(self.quantity)
 
     def displayForTrainee(self):
-        return 'Life-Study Summary due as ' + self.offense + 'for ' + self.infraction + ' infraction'
+        return 'Life-Study Summary due as ' + self.offense + ' for ' + self.infraction + ' infraction'
 
     # To add the specified number of life-studies to a trainee
     # See information manual for when to add additional discipline
@@ -106,7 +106,7 @@ class Summary(models.Model):
     date_submitted = models.DateTimeField(blank=False, null=True)
 
     def __unicode__(self):
-        return self.trainee.account.get_full_name()  + ' | ' + self.book + ' | ' + self.chapter
+        return self.lifeStudy.trainee.account.get_full_name()  + ' | ' + self.book.name + ' | ' + str(self.chapter)
 
     """TODO: to do these methods"""
     def updateContent(string):
@@ -122,35 +122,3 @@ class Summary(models.Model):
         self.updateContent(string)
         self.date_submitted = datetime.datetime.now()
         return self
-
-    """These methods were from the original file"""
-    # @staticmethod
-    # def current_term():
-    #     """ Return the current term """
-    #     try:
-    #         return Term.objects.get(Q(start__lte=datetime.date.today()), Q(end__gte=datetime.date.today()))
-    #     # this will happen in cases such as in-between terms (or empty DB, possibly)
-    #     except ObjectDoesNotExist:
-    #         # return an obviously fake term object
-    #         return Term(name="Temp 0000", code="TM00", start=datetime.date.today(), end=datetime.date.today())
-
-
-    # def getDate(self, week, day):
-    #     """ return an absolute date for a term week/day pair """
-    #     return self.start + datetime.timedelta(week * 7 + day)
-
-    # def reverseDate(self, date):
-    #     """ returns a term week/day pair for an absolute date """
-    #     if self.start <= date <= self.end:
-    #         # days since the term started
-    #         delta = date - self.start
-    #         return (delta / 7, delta % 7)
-    #     # if not within the dates the term, return invalid result
-    #     else:
-    #         return (-1, -1)
-
-    # def get_absolute_url(self):
-    #     return reverse('terms:detail', kwargs={'code': self.code})
-
-    # def __unicode__(self):
-    #     return self.name
