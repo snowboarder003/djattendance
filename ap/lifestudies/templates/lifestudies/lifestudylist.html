@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block title %}Life Study{% endblock %}
+
+{% block content %}
+    <h3> Life Study Summaries</h3>
+
+{% if lifestudies %}
+    {% for lifestudy in lifestudies %}
+        {% if lifestudy.trainee.pk == profile.pk %}
+            <li>{{lifestudy}}</li>
+        {% else %}
+            <!-- do nothing here -->
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% endblock %}

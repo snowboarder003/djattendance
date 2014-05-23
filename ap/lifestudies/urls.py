@@ -1,13 +1,15 @@
 from django.conf.urls import patterns, url
-from lifestudies import views
+from lifestudies.views import LifeStudyListView
 
-urlpatterns = [
-    # ex: /discipline/
-    url(r'^$', views.lifestudy, name='lifestudy'),
-    # ex: /discipline/write/
-    url(r'write/$', views.write, name='write'),
-    # ex: /discpline/result/
-    url(r'result/$', views.result, name='result'),
-]
+urlpatterns = patterns('',
+    # ex: /lifestudies/
+    url(r'^$', LifeStudyListView.as_view(), name='lifestudy-list'),
+    # ex: /lifestudies/write/
+    # url(r'^write/$', views.write, name='write'),
+    # # ex: /lifestudies/result/
+    # url(r'^result/$', views.result, name='result'),
+)
+
+
 
 

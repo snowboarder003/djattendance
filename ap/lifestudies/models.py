@@ -28,7 +28,7 @@ class LifeStudy(models.Model):
 
     # an infraction is the reason for the trainee to be assigned discipline
     # The longest string will be "Additional Monday Discipline" (28 characters)
-    infraction = models.CharField(max_length=30, default="attendance")
+    infraction = models.CharField(max_length=30, default='attendance')
 
     # a quantity refers to how many summaries are assigned
     quantity = models.PositiveSmallIntegerField(blank=False, null=False)
@@ -48,10 +48,10 @@ class LifeStudy(models.Model):
     trainee = models.ForeignKey(Trainee)
 
     def __unicode__(self):
-        return self.trainee.account.get_full_name() + " | " + self.infraction + " | " + self.offense
-    
+        return self.trainee.account.get_full_name() + ' | ' + self.infraction + ' | ' + self.offense + ' | ' + str(self.quantity)
+
     def displayForTrainee(self):
-        return "Life-Study Summary due as " + self.offense + "for " + self.infraction + " infraction"
+        return 'Life-Study Summary due as ' + self.offense + 'for ' + self.infraction + ' infraction'
 
     # To add the specified number of life-studies to a trainee
     # See information manual for when to add additional discipline
@@ -106,7 +106,7 @@ class Summary(models.Model):
     date_submitted = models.DateTimeField(blank=False, null=True)
 
     def __unicode__(self):
-        return self.trainee.account.get_full_name()  + " | " + self.book + " | " + self.chapter
+        return self.trainee.account.get_full_name()  + ' | ' + self.book + ' | ' + self.chapter
 
     """TODO: to do these methods"""
     def updateContent(string):
