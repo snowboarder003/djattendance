@@ -1,6 +1,4 @@
 {% extends "base.html" %}
-{% load staticfiles %}
-
 
 {% block title %}Life Study{% endblock %}
 
@@ -11,10 +9,10 @@
     {% for lifestudy in lifestudies %}
         {% if lifestudy.trainee.pk == profile.pk %}
             <li> {{lifestudy.displayForTrainee}} 
-                <a href="{% url 'create-summary' lifestudy.pk %}"> New </a> </li>
+                <a href="{% url 'summary-create' lifestudy.pk %}"> New </a> </li>
             <ul>
                 {% for summary in lifestudy.summary_set.all %}
-                    <li>{{summary}} <a href=""> View </a></li>
+                    <li>{{summary}} <a href="{% url 'summary-detail' summary.pk %}"> View </a></li>
                 {% endfor %}
             </ul>
         {% else %}
@@ -24,7 +22,3 @@
 {% endif %}
 
 {% endblock %}
-
-
-
-<a href="{% url 'add-session' term kode pk %}"> Add a session.</a>

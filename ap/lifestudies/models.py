@@ -103,7 +103,8 @@ class Summary(models.Model):
     lifeStudy = models.ForeignKey(LifeStudy)
 
     # automatically generated date when summary is submitted
-    date_submitted = models.DateTimeField(blank=False, null=True)
+    date_submitted = datetime.datetime.now()
+    # date_submitted = models.DateTimeField(blank=False, null=True)
 
     def __unicode__(self):
         return self.lifeStudy.trainee.account.get_full_name()  + ' | ' + self.book.name + ' | ' + str(self.chapter)
