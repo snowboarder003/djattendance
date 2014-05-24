@@ -1,5 +1,6 @@
 from django import forms
 from django.db import models
+from django.core.urlresolvers import reverse
 
 from schedules.models import Event
 from accounts.models import Trainee, TrainingAssistant
@@ -83,6 +84,9 @@ class IndividualSlip(LeaveSlip):
     events = models.ManyToManyField(Event)
     trainee = models.ForeignKey(Trainee)
 
+    def get_absolute_url(self):
+        return reverse('leaveslips:individual-detail', kwargs={'pk': self.id})
+
 
 class GroupSlip(LeaveSlip):
 
@@ -95,7 +99,7 @@ class MealOutSlip(models.Model):
 
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
-
+    leaveslip = models.OneToOneField(IndividualSlip)
 
 class NightOutSlip(models.Model):
 
@@ -103,15 +107,15 @@ class NightOutSlip(models.Model):
     phone = models.PositiveIntegerField()
     hostaddress = models.CharField(max_length=255)
     HC = models.ForeignKey(Trainee)
+    leaveslip = models.OneToOneField(IndividualSlip)
 
-
-# Form classes
+# form classes
 class IndividualSlipForm(forms.ModelForm):
     class Meta:
         model = IndividualSlip
-        fields = ['type', 'description', 'comments', 'texted', 'informed']
+        fields = ['type', 'description', 'comments', 'texted', 'informed', 'events']
 
 class GroupSlipForm(forms.ModelForm):
     class Meta:
         model = GroupSlip
-        fields = ['type', 'trainee', 'description', 'comments', 'texted', 'informed']
+        fields = ['type', 'trainee', 'description', 'comments', 'texted', 'informed', 'start', 'end']
