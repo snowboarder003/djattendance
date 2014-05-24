@@ -26,5 +26,9 @@
 
 .selected-event {
     opacity: 1.0;
-    border: 1px solid #a0b689;
+    border: 1px solid #422207;
+}
+
+.col-md-1 {
+    border: 1px solid #422207;
 }

@@ -12,7 +12,7 @@
     </div>
 
     <!-- SCHEDULE TEMPLATE -->
-    <script type="text/template" id="week-template">
+    <script type="text/template" id="clndr-template">
         <div class="btn-toolbar" role="toolbar">
             <div class="controls btn-group">
                 <button class="btn btn-info"><span class="glyphicon glyphicon-calendar"></span></button>
@@ -49,7 +49,7 @@
                 <% } %>
             </div>
             <% for(var i = extras.currentWeek * 7; i < extras.currentWeek * 7 + 7; i++) { %>
-                <div class="<%= days[i].classes %> col-md-1" id="">
+                <div class="<%= days[i].classes %> col-md-1">
                     <% _.each(days[i].events, function(event) { %>
                         <div class="schedule-event"
                              style="top: <%= moment.duration(moment(event.start).format('H:m')).subtract(6, 'hours').asMinutes()/2 %>px;
@@ -86,79 +86,70 @@
         }
 
         var clndr = $('#clndr').clndr({
-            template: $('#week-template').html(),
-            events: [
-                {% for event in schedule.events.all %}
-                    {
-                        id: "{{ event.id }}",
-                        date: "{{ event.start | date:'Y-m-d'}}",
-                        start: "{{ event.start | date:'r' }}",
-                        end: "{{ event.end | date:'r' }}",
-                        name: "{{ event.name }}",
-                        code: "{{ event.code }}",
-                        type: "{{ event.type }}"
-                    },
-                {% endfor %}
-                {}
-            ],
+            template: $('#clndr-template').html(),
+
             extras: {
                 currentWeek: Math.floor( ( ( (moment().date() + moment().startOf('month').weekday() ) - 1 ) / ( weeksInMonth(moment() ) * 7) ) * weeksInMonth( moment() ) ),
-                eventsThisWeek: function() {
-                    return clndr.eventsThisMonth;
-                }
             },
-            daysOfTheWeek: ['LD', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
-            constraints: {
-                startDate: "{{ schedule.term.start | date:'Y-m-d' }}",
-                endDate: "{{ schedule.term.end | date:'Y-m-d' }}"
-            },
-            doneRendering: function() {
 
+            daysOfTheWeek: ['LD', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
+
+            doneRendering: function() {
                 /* Next button handler */
                 $('#clndr .clndr-next-button').on('click', function() {
-
                     /* Get numbers of weeks in the month */
                     var weeks_in_month = Math.floor(clndr.month.daysInMonth() / 7) - 1;
-
                     if(clndr.options.extras.currentWeek < weeks_in_month) {
                         /* Increase the week count */
                         clndr.options.extras.currentWeek += 1;
                     } else {
                         /* Reset the week count */
                         clndr.options.extras.currentWeek = 0;
-
                         /* Go to next month */
                         clndr.next();
                     }
-
                     clndr.render();
                 });
 
                 /* Previous button handler */
                 $('#clndr .clndr-previous-button').on('click', function() {
-
                     /* Get numbers of weeks in the month */
                     var weeks_in_month = Math.floor(clndr.month.daysInMonth() / 7) - 1;
-
                     if(clndr.options.extras.currentWeek > 0) {
                         /* Decrease the week count */
                         clndr.options.extras.currentWeek -= 1;
                     } else {
                         /* Reset the week count */
                         clndr.options.extras.currentWeek = weeks_in_month;
-
                         /* Go to previous month */
                         clndr.back();
                     }
-
                     clndr.render();
                 });
-
             }
         });
     </script>
 
     <script>
+        clndr.options.constraints = {
+            startDate: "{{ schedule.term.start | date:'Y-m-d' }}",
+            endDate: "{{ schedule.term.end | date:'Y-m-d' }}"
+        };
+
+        clndr.addEvents([
+            {% for event in schedule.events.all %}
+                {
+                    id: "{{ event.id }}",
+                    date: "{{ event.start | date:'Y-m-d'}}",
+                    start: "{{ event.start | date:'r' }}",
+                    end: "{{ event.end | date:'r' }}",
+                    name: "{{ event.name }}",
+                    code: "{{ event.code }}",
+                    type: "{{ event.type }}"
+                },{% endfor %}
+                {}
+            ]);
+
         $( document ).ready(function() {
             $(".schedule-event").click(function() {
                 $(".schedule-event").removeClass("selected-event")
