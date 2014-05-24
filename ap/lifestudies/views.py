@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from lifestudies.models import LifeStudy, Summary
 from django.views.generic import ListView, CreateView, DetailView
 from django.core.urlresolvers import reverse_lazy
-
+from accounts.models import User, Profile, Trainee, TrainingAssistant
 
 class LifeStudyListView(ListView):
     template_name = 'lifestudies/lifestudylist.html'
@@ -12,7 +12,10 @@ class LifeStudyListView(ListView):
     #profile is the user that's currently logged in
     def get_context_data(self, **kwargs):
         context = super(LifeStudyListView, self).get_context_data(**kwargs)
-        context['profile'] = self.request.user
+        if self.request.user is TrainingAssistant:
+            context['ta'] = self.request.user.TrainingAssistant
+        elif self.request.user is TrainingAssistant:
+            context['trainee'] = self.request.user.Trainee
         return context
 
 class SummaryCreateView(CreateView):
