@@ -1,3 +1,4 @@
+from django import forms
 from django.db import models
 
 from datetime import datetime, timedelta
@@ -60,7 +61,7 @@ class LeaveSlip(models.Model):
     status = models.CharField(max_length=1, choices=LS_STATUS, default='P')
 
     TA = models.ForeignKey(TrainingAssistant)
-    
+
     submitted = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     finalized = models.DateTimeField(blank=True, null=True)  # when this leave-slip was approved/denied
@@ -120,3 +121,15 @@ class NightOutSlip(models.Model):
     phone = models.PositiveIntegerField()
     hostaddress = models.CharField(max_length=255)
     HC = models.ForeignKey(Trainee)
+
+
+# Form classes
+class IndividualSlipForm(forms.ModelForm):
+    class Meta:
+        model = IndividualSlip
+        fields = ['type', 'description', 'comments', 'texted', 'informed']
+
+class GroupSlipForm(forms.ModelForm):
+    class Meta:
+        model = GroupSlip
+        fields = ['type', 'trainee', 'description', 'comments', 'texted', 'informed']
