@@ -27,7 +27,7 @@ def brothertables(request):
     myList2 = myList[splitValue:splitValue*2]
     myList3 = myList[splitValue*2:]
 
-    return render(request, 'detail.html', {'myList1': myList1 , 'myList2': myList2, 'myList3' : myList3, 'today' : today})
+    return render(request, 'detail.html', {'myList1': myList1 , 'myList2': myList2, 'myList3' : myList3})
 
 
 def sistertables(request):
