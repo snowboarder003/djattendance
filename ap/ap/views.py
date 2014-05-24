@@ -5,17 +5,19 @@ from django.core.exceptions import ObjectDoesNotExist
 from dailybread.models import Portion
 from schedules.models import Schedule
 from terms.models import Term
+from accounts.models import User, Profile, Trainee
 
 @login_required
 def home(request):
     data = {'daily_nourishment': Portion.today(),
             'user': request.user}
 
-    if request.user.trainee:
-        try:
-            data['schedule'] = request.user.trainee.schedule_set.get(term=Term.current_term())
-        except ObjectDoesNotExist:
-            pass
+    if request.user is Trainee:
+        if request.user.trainee:
+            try:
+                data['schedule'] = request.user.trainee.schedule_set.get(term=Term.current_term())
+            except ObjectDoesNotExist:
+                pass
 
     return render(request, 'index.html', dictionary=data)
 

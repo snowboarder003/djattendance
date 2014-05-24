@@ -3,7 +3,13 @@
 {% block title %}Life Study{% endblock %}
 
 {% block content %}
-    <h3> Life Study Summaries</h3>
+    {% if not ta %}
+        <h3> Life Study Summaries</h3>
+    {% endif %}
+
+    {% if ta %}
+        <h3> Discipline Master View </h3>
+    {% endif %}
 
 {% if lifestudies %}
     {% for lifestudy in lifestudies %}
