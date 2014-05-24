@@ -1,6 +1,6 @@
 from django.db import models
 
-import datetime
+from datetime import datetime, timedelta
 
 from schedules.models import Event
 from accounts.models import Trainee, TrainingAssistant
@@ -72,16 +72,12 @@ class LeaveSlip(models.Model):
 
     informed = models.BooleanField(blank=True, default=False)  # not sure, need to ask
 
-    def _late(self):
-        pass  # TODO
-
-    late = property(_late)  # whether this leave slip was submitted late or not
-
     def __init__(self, *args, **kwargs):
         super(LeaveSlip, self).__init__(*args, **kwargs)
         self.old_status = self.status
 
     def save(self, force_insert=False, force_update=False):
+        #records the datetime when leaveslip is either approved or denied
         if (self.status == 'D' or self.status == 'A') and (self.old_status == 'P' or self.old_status == 'F' or self.old_status == 'S'):
             self.finalized = datetime.datetime.now()
         super(LeaveSlip, self).save(force_insert, force_update)
@@ -96,6 +92,14 @@ class IndividualSlip(LeaveSlip):
     events = models.ManyToManyField(Event)
     trainee = models.ForeignKey(Trainee)
 
+    def _late(self):
+        end_date = self.events.all().order_by('-end')[0].end
+        if self.submitted > end_date+timedelta(days=2):
+            return True
+        else:
+            return False
+
+    late = property(_late)  # whether this leave slip was submitted late or not
 
 class GroupSlip(LeaveSlip):
 
