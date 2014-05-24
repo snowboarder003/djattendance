@@ -12,10 +12,7 @@ class LifeStudyListView(ListView):
     #profile is the user that's currently logged in
     def get_context_data(self, **kwargs):
         context = super(LifeStudyListView, self).get_context_data(**kwargs)
-        if self.request.user is TrainingAssistant:
-            context['ta'] = self.request.user.TrainingAssistant
-        elif self.request.user is TrainingAssistant:
-            context['trainee'] = self.request.user.Trainee
+        context['profile'] = self.request.user
         return context
 
 class SummaryCreateView(CreateView):
@@ -27,15 +24,3 @@ class SummaryCreateView(CreateView):
 class SummaryDetailView(DetailView):
     model = Summary
     context_object_name = 'summary'
-
-# def lifestudy(request):
-#     latest_summaries = LifeStudy.objects.order_by('offense')
-#     output = ', '.join(["Life-Study Summary due as " + d.offense + " for " + d.infraction + " infraction ; " for d in latest_summaries])
-#     return HttpResponse(output)
-
-# def write(request):
-#     response = "Life-Study Summary"
-#     return HttpResponse(response)
-
-# def result(request):
-#     return HttpResponse("Your life-study summary has been successfully submitted.")

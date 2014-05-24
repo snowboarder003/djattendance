@@ -3,11 +3,10 @@
 {% block title %}Life Study{% endblock %}
 
 {% block content %}
-    {% if not ta %}
-        <h3> Life Study Summaries</h3>
-    {% endif %}
 
-    {% if ta %}
+    {% if profile.trainee %}
+        <h3> Life Study Summaries</h3>
+    {% elif profile.trainingassistant %}
         <h3> Discipline Master View </h3>
     {% endif %}
 
