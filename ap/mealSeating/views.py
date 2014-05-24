@@ -7,8 +7,9 @@ from django.shortcuts import render
 from django_tables2 import RequestConfig
 from django_tables2 import tables
 
-from .models import Table
-from .tables import TablesTable
+from mealSeating.models import Table
+#from .tables import TablesTable
+
 from accounts.models import User, Trainee, Profile
 
 # def seating(request):
