@@ -7,9 +7,10 @@ from .models import Event
 from accounts.models import Trainee
 
 
-class CreateEventForm(forms.ModelForm):
+class EventForm(forms.ModelForm):
     trainees = forms.ModelMultipleChoiceField(Trainee.objects.all(), 
-            widget = autocomplete_light.MultipleChoiceWidget('TraineeAutocomplete'))
+            widget = autocomplete_light.MultipleChoiceWidget('TraineeAutocomplete'),
+            required = False)
 
     class Meta:
         model = Event
