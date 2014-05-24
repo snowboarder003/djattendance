@@ -36,6 +36,20 @@ class ApproveFilter(SimpleListFilter):
 			q=queryset.exclude(status='A')
 			return q
 
+def make_approved(modeladmin, request, queryset):
+	queryset.update(status='A')
+make_approved.short_description = "Approve selected leaveslips"
+
+
+def mark_for_fellowship(modeladmin, request, queryset):
+	queryset.update(status='F')
+make_approved.short_description = "Mark selected leaveslips for fellowship"
+
+
+def make_denied(modeladmin, request, queryset):
+	queryset.update(status='D')
+make_approved.short_description = "Deny selected leaveslips"
+
 
 class IndividualSlipAdmin(admin.ModelAdmin):
     fieldsets = (
@@ -43,8 +57,10 @@ class IndividualSlipAdmin(admin.ModelAdmin):
             'fields': ('trainee',('type', 'status',), 'description', 'comments', ('texted', 'informed',),'events','TA',)
         }),
     )
-    list_display = ('pk', 'trainee','status','type','TA','finalized')
+    list_display = ('pk', 'trainee','status','type','submitted','TA','finalized')
+    actions = [make_approved, mark_for_fellowship, make_denied]
     list_filter = ( ApproveFilter,'TA',)
+    search_fields = ['trainee__account__firstname', 'trainee__account__lastname'] #to search up trainees
 
 
 # Register your models here.

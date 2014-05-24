@@ -1,5 +1,7 @@
 from django.db import models
 
+import datetime
+
 from schedules.models import Event
 from accounts.models import Trainee, TrainingAssistant
 
@@ -55,7 +57,7 @@ class LeaveSlip(models.Model):
     )
 
     type = models.CharField(max_length=5, choices=LS_TYPES)
-    status = models.CharField(max_length=1, choices=LS_STATUS)
+    status = models.CharField(max_length=1, choices=LS_STATUS, default='P')
 
     TA = models.ForeignKey(TrainingAssistant)
     
@@ -74,6 +76,16 @@ class LeaveSlip(models.Model):
         pass  # TODO
 
     late = property(_late)  # whether this leave slip was submitted late or not
+
+    def __init__(self, *args, **kwargs):
+        super(LeaveSlip, self).__init__(*args, **kwargs)
+        self.old_status = self.status
+
+    def save(self, force_insert=False, force_update=False):
+        if (self.status == 'D' or self.status == 'A') and (self.old_status == 'P' or self.old_status == 'F' or self.old_status == 'S'):
+            self.finalized = datetime.datetime.now()
+        super(LeaveSlip, self).save(force_insert, force_update)
+        self.old_status = self.status
 
     class Meta:
         abstract = True
