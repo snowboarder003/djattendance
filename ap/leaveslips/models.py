@@ -2,6 +2,8 @@ from django import forms
 from django.db import models
 from django.core.urlresolvers import reverse
 
+from datetime import datetime, timedelta
+
 from schedules.models import Event
 from accounts.models import Trainee, TrainingAssistant
 
@@ -42,7 +44,7 @@ class LeaveSlip(models.Model):
         ('NIGHT', 'Night Out'),
         ('OTHER', 'Other'),
         ('SERV', 'Service'),
-        ('SICK' , 'Sickness'),
+        ('SICK', 'Sickness'),
         ('SPECL', 'Special'),
         ('WED', 'Wedding'),
         ('NOTIF', 'Notification Only'),
@@ -57,23 +59,31 @@ class LeaveSlip(models.Model):
     )
 
     type = models.CharField(max_length=5, choices=LS_TYPES)
-    status = models.CharField(max_length=1, choices=LS_STATUS)
+    status = models.CharField(max_length=1, choices=LS_STATUS, default='P')
+
     TA = models.ForeignKey(TrainingAssistant)
 
     submitted = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
-    finalized = models.DateTimeField(blank=True, null=True) # when this leave-slip was approved/denied
+    finalized = models.DateTimeField(blank=True, null=True)  # when this leave-slip was approved/denied
 
     description = models.TextField(blank=True, null=True)  # trainee-supplied
     comments = models.TextField(blank=True, null=True)  # for TA comments
 
     texted = models.BooleanField(default=False)  # for sisters only
+
     informed = models.BooleanField(blank=True, default=False)  # not sure, need to ask
 
-    def _late(self):
-        pass  # TODO
+    def __init__(self, *args, **kwargs):
+        super(LeaveSlip, self).__init__(*args, **kwargs)
+        self.old_status = self.status
 
-    late = property(_late) # whether this leave slip was submitted late or not
+    def save(self, force_insert=False, force_update=False):
+        #records the datetime when leaveslip is either approved or denied
+        if (self.status == 'D' or self.status == 'A') and (self.old_status == 'P' or self.old_status == 'F' or self.old_status == 'S'):
+            self.finalized = datetime.datetime.now()
+        super(LeaveSlip, self).save(force_insert, force_update)
+        self.old_status = self.status
 
     class Meta:
         abstract = True
@@ -86,6 +96,15 @@ class IndividualSlip(LeaveSlip):
 
     def get_absolute_url(self):
         return reverse('leaveslips:individual-detail', kwargs={'pk': self.id})
+
+    def _late(self):
+        end_date = self.events.all().order_by('-end')[0].end
+        if self.submitted > end_date+timedelta(days=2):
+            return True
+        else:
+            return False
+
+    late = property(_late)  # whether this leave slip was submitted late or not
 
 
 class GroupSlip(LeaveSlip):
