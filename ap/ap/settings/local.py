@@ -4,8 +4,7 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 
 INSTALLED_APPS += ('django_extensions',
-                    'debug_toolbar',
-                    )
+                    'debug_toolbar',)
 
 DATABASES = {
     'default': {
