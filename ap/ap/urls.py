@@ -1,6 +1,11 @@
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.views import login, logout
 
+import autocomplete_light
+# import every app/autocomplete_light_registry.py
+import accounts.autocomplete_light_registry
+autocomplete_light.autodiscover()
+
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 import autofixture
@@ -28,4 +33,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+
+    # django-autocomplete-light view and staff debug view
+    url(r'^autocomplete/', include('autocomplete_light.urls')),
 )

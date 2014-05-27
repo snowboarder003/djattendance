@@ -122,6 +122,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     # third-party modules
+    'autocomplete_light', # django autocomplete widgets
     'autofixture', # easily generate dummy/test data
     'bootstrap3', # easy-to-use bootstrap integration
     'bootstrap3_datetime', # datetime picker widget

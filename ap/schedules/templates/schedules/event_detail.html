@@ -17,8 +17,12 @@
     </table>
 
     <h4>Trainees</h4>
-    {% for schedule in event.schedule_set.all %}
-        {{ schedule.trainee.account.get_full_name }}
-    {% endfor %}
+    {% if event.schedule_set.all %}
+        {% for schedule in event.schedule_set.all %}
+            {{ schedule.trainee.account.get_full_name }}<br>
+        {% endfor %}
+    {% else %}
+        None
+    {% endif %}
 
 {% endblock %}

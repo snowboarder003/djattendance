@@ -8,8 +8,8 @@ from django.contrib.admin.widgets import AdminDateWidget
 from bootstrap3_datetime.widgets import DateTimePicker
 
 from .models import Schedule, ScheduleTemplate, Event, EventGroup
+from .forms import EventForm
 from terms.models import Term
-#from .forms import CreateEventForm
 
 
 class ScheduleDetail(generic.DetailView):
@@ -33,10 +33,24 @@ class ScheduleList(generic.ListView):
     def get_queryset(self):
         return ScheduleTemplate.objects.all
 
+
 class EventCreate(generic.CreateView):
     model = Event
     template_name = 'schedules/event_create.html'
-    #form_class = CreateEventForm
+    form_class = EventForm
+
+    def form_valid(self, form):
+        event = form.save()
+        for trainee in form.cleaned_data['trainees']:
+            # add event to trainee's schedule
+            if Schedule.objects.filter(trainee=trainee).filter(term=event.term):
+                schedule = Schedule.objects.filter(trainee=trainee).filter(term=event.term)[0]
+                schedule.events.add(event)
+            else: # if trainee doesn't already have a schedule, create it
+                schedule = Schedule(trainee=trainee, term=event.term)
+                schedule.save()
+                schedule.events.add(event)
+        return super(EventCreate, self).form_valid(form)
 
 
 class EventDetail(generic.DetailView):
@@ -47,6 +61,36 @@ class EventDetail(generic.DetailView):
 class EventUpdate(generic.UpdateView):
     model = Event
     template_name = 'schedules/event_update.html'
+    form_class = EventForm
+
+    def get_initial(self):
+        trainees = []
+        for schedule in self.object.schedule_set.all():
+            trainees.append(schedule.trainee)
+        return {'trainees': trainees}
+
+    def form_valid(self, form):
+        event = form.save()
+        print(event)
+        print(event.pk)
+
+        # remove event from schedules of trainees no longer assigned to this event
+        for schedule in event.schedule_set.all():
+            if schedule.trainee not in form.cleaned_data['trainees']:
+                schedule.events.remove(event)
+
+        for trainee in form.cleaned_data['trainees']:
+            # make sure event is in each trainee's schedule
+            if Schedule.objects.filter(trainee=trainee).filter(term=event.term):
+                schedule = Schedule.objects.filter(trainee=trainee).filter(term=event.term)[0]
+                if event not in schedule.events.all():
+                    schedule.events.add(event)
+            else:
+                schedule = Schedule(trainee=trainee, term=event.term)
+                schedule.save()
+                schedule.events.add(event)
+
+        return super(EventUpdate, self).form_valid(form)
 
 
 class EventDelete(generic.DeleteView):
