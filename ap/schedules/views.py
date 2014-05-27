@@ -9,20 +9,15 @@ from bootstrap3_datetime.widgets import DateTimePicker
 
 from .models import Schedule, ScheduleTemplate, Event, EventGroup
 from terms.models import Term
-from .forms import CreateEventForm
+#from .forms import CreateEventForm
 
 
 class ScheduleDetail(generic.DetailView):
-    model = Schedule
     template_name = 'schedules/schedule_detail.html'
     context_object_name = 'schedule'
 
     def get_queryset(self):
-        if not self.args:
-            self.user = self.request.user
-        else:
-            self.user = get_object_or_404(User, pk=self.args[0])
-        return Schedule.objects.filter(trainee=self.user.trainee).filter(term=Term.current_term())
+        return Schedule.objects.filter(trainee=self.request.user.trainee).filter(term=Term.current_term())
 
 class ScheduleCreate(generic.CreateView):
     model = ScheduleTemplate
@@ -41,7 +36,7 @@ class ScheduleList(generic.ListView):
 class EventCreate(generic.CreateView):
     model = Event
     template_name = 'schedules/event_create.html'
-    form_class = CreateEventForm
+    #form_class = CreateEventForm
 
 
 class EventDetail(generic.DetailView):
