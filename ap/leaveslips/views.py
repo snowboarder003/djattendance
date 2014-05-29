@@ -28,7 +28,7 @@ class IndividualSlipDetail(generic.DetailView):
 class IndividualSlipUpdate(generic.UpdateView):
 	model = IndividualSlip
 	template_name = 'leaveslips/individual_update.html'
-	context_object_name = 'leaveslip'
+	form_class = IndividualSlipForm
 
 # group slips
 class GroupSlipCreate(generic.CreateView):
