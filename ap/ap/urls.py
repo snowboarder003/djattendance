@@ -22,6 +22,7 @@ urlpatterns = patterns('',
     url(r'^terms/', include('terms.urls', namespace="terms")),
     url(r'^dailybread/', include('dailybread.urls', namespace="dailybread")),
     url(r'^schedules/', include('schedules.urls', namespace="schedules")),
+	url(r'^attendance/', include('attendance.urls', namespace="attendance")),
 
     # Examples:
     # url(r'^$', 'ap.views.home', name='home'),
@@ -36,4 +37,3 @@ urlpatterns = patterns('',
     # django-autocomplete-light view and staff debug view
     url(r'^autocomplete/', include('autocomplete_light.urls')),
 )
-

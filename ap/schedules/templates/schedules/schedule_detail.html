@@ -2,85 +2,178 @@
 {% load staticfiles %}
 
 {% block references %}
-    <link href="{% static "calendar/css/calendar.css" %}" rel="stylesheet">
+    <link href="{% static "css/schedule.css" %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
     <h2>{{ schedule.trainee }}'s Schedule</h2><br>
+    <div id="clndr">
 
-    <div class="navbar">
-            <div class="btn-group">
-                <button class="btn btn-primary" data-calendar-nav="prev">&lt;&lt; Prev</button>
-                <button class="btn btn-default" data-calendar-nav="today">Today</button>
-                <button class="btn btn-primary" data-calendar-nav="next">Next &gt;&gt;</button>
-            </div>
-            <div class="btn-group">
-                <button class="btn btn-warning" data-calendar-view="year">Year</button>
-                <button class="btn btn-warning" data-calendar-view="month">Month</button>
-                <button class="btn btn-warning" data-calendar-view="week">Week</button>
-                <button class="btn btn-warning" data-calendar-view="day">Day</button>
-            </div>
     </div>
 
-    <div id="calendar"></div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="events-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3 class="modal-title" id="event-modal-label">Event</h3>
+    <!-- SCHEDULE TEMPLATE -->
+    <script type="text/template" id="clndr-template">
+        <div class="btn-toolbar" role="toolbar">
+            <div class="controls btn-group">
+                <button class="btn btn-info"><span class="glyphicon glyphicon-calendar"></span></button>
             </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <div class="controls btn-group">
+                <button class="btn btn-default clndr-previous-button">Prev</button>
+                <div class="daterange btn btn-default disabled"><%= days[extras.currentWeek * 7].date.format('M/DD/YY') %> to <%= days[extras.currentWeek * 7 + 6].date.format('M/DD/YY') %></div>
+                <button class="btn btn-default clndr-next-button">Next</button>
             </div>
         </div>
-        </div>
-    </div>
 
+        <hr>
+
+        <div class="row">
+            <div class="col-md-1">
+            </div>
+            <% for(var i = extras.currentWeek * 7; i < extras.currentWeek * 7 + 7; i++) { %>
+                <div class=" col-md-1">
+                    <div class="<%= days[i].classes %> schedule-header"  id="<%= days[i].id %>">
+                        <%= days[i].date.format("ddd") %><br>
+                        <%= days[i].date.format("M/D") %>
+                    </div>
+                </div>
+            <% } %>
+            <div class="col-md-4">
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1 timebar">
+                <% for(var i = 6; i < 24; i++) { %>
+                    <div class="hour"><%= moment({hour: i}).format("h A") %></div>
+                <% } %>
+            </div>
+            <% for(var i = extras.currentWeek * 7; i < extras.currentWeek * 7 + 7; i++) { %>
+                <div class="<%= days[i].classes %> col-md-1">
+                    <% _.each(days[i].events, function(event) { %>
+                        <div class="schedule-event"
+                             style="top: <%= moment.duration(moment(event.start).format('H:m')).subtract(6, 'hours').asMinutes()/2 %>px;
+                                    height: <%= moment(event.end).diff(moment(event.start), 'minutes')/2 %>px "
+                            data-id=<%= event.id %> >
+                            <%= event.code %>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } %>
+            <div class="col-md-4" id="event-details">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title" id="event-title">Event Details</h3>
+                  </div>
+                  <div class="panel-body" id="event-info">
+                      <ul class="list-unstyled">
+                          <li id="date"></li>
+                          <li id="start"></li>
+                          <li id="end"></li>
+                          <li id="type"></li>
+                      </ul>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+    </script>
+
+
+    <script type="text/javascript">
+        function weeksInMonth(month) {
+            return Math.floor((month.daysInMonth() + moment(month).startOf('month').weekday()) / 7);
+        }
+
+        var clndr = $('#clndr').clndr({
+            template: $('#clndr-template').html(),
+
+            extras: {
+                currentWeek: Math.floor( ( ( (moment().date() + moment().startOf('month').weekday() ) - 1 ) / ( weeksInMonth(moment() ) * 7) ) * weeksInMonth( moment() ) ),
+            },
+
+            daysOfTheWeek: ['LD', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
+
+            doneRendering: function() {
+                /* Next button handler */
+                $('#clndr .clndr-next-button').on('click', function() {
+                    /* Get numbers of weeks in the month */
+                    var weeks_in_month = Math.floor(clndr.month.daysInMonth() / 7) - 1;
+                    if(clndr.options.extras.currentWeek < weeks_in_month) {
+                        /* Increase the week count */
+                        clndr.options.extras.currentWeek += 1;
+                    } else {
+                        /* Reset the week count */
+                        clndr.options.extras.currentWeek = 0;
+                        /* Go to next month */
+                        clndr.next();
+                    }
+                    clndr.render();
+                });
+
+                /* Previous button handler */
+                $('#clndr .clndr-previous-button').on('click', function() {
+                    /* Get numbers of weeks in the month */
+                    var weeks_in_month = Math.floor(clndr.month.daysInMonth() / 7) - 1;
+                    if(clndr.options.extras.currentWeek > 0) {
+                        /* Decrease the week count */
+                        clndr.options.extras.currentWeek -= 1;
+                    } else {
+                        /* Reset the week count */
+                        clndr.options.extras.currentWeek = weeks_in_month;
+                        /* Go to previous month */
+                        clndr.back();
+                    }
+                    clndr.render();
+                });
+            }
+        });
+    </script>
+
+    <script>
+        clndr.options.constraints = {
+            startDate: "{{ schedule.term.start | date:'Y-m-d' }}",
+            endDate: "{{ schedule.term.end | date:'Y-m-d' }}"
+        };
+
+        clndr.addEvents([
+            {% for event in schedule.events.all %}
+                {
+                    id: "{{ event.id }}",
+                    date: "{{ event.start | date:'Y-m-d'}}",
+                    start: "{{ event.start | date:'r' }}",
+                    end: "{{ event.end | date:'r' }}",
+                    name: "{{ event.name }}",
+                    code: "{{ event.code }}",
+                    type: "{{ event.type }}"
+                },{% endfor %}
+                {}
+            ]);
+
+        $( document ).ready(function() {
+            $(".schedule-event").click(function() {
+                $(".schedule-event").removeClass("selected-event")
+                $(this).addClass("selected-event")
+
+                var eventid = $(this).data("id")
+                _.each(clndr.options.events, function(event) {
+                    if (event.id==eventid) {
+                        eventinfo = event
+                    }
+                });
+
+                $("#event-title").html(eventinfo.name)
+                $("#event-info #date").html("<strong>Date:</strong> " + moment(eventinfo.date).format("dddd, MMMM Do YYYY"))
+                $("#event-info #start").html("<strong>Start Time:</strong> " + moment(eventinfo.start).format("h:mm a"))
+                $("#event-info #end").html("<strong>End Time:</strong> " + moment(eventinfo.end).format("h:mm a"))
+                $("#event-info #type").html("<strong>Type:</strong> " + eventinfo.type)
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block scripts %}
     <script type="text/javascript" src="{% static "js/underscore-min.js" %}"></script>
-    <script type="text/javascript" src="{% static "calendar/js/calendar.js" %}"></script>
-    <script type="text/javascript">
-        var calendar = $('#calendar').calendar({
-            tmpl_path: "{% static "calendar/tmpls/" %}",
-            view: 'week',
-            modal: "#events-modal",
-            modal_type : "ajax",
-            modal_title : function (event) { return event.title },
-            events_source: [
-                {% for event in schedule.events.all %}
-                {
-                    "id": {{ event.id }},
-                    "title": "{{ event.name }}",
-                    "url": "{{ event.get_absolute_url }}",
-                    "class": "",
-                    "start": "{{ event.unixstarttime }}",
-                    "end": "{{ event.unixendtime }}",
-                },
-                {% endfor %}
-            ],
-        });
-
-        $('.btn-group button[data-calendar-nav]').each(function() {
-            var $this = $(this);
-            $this.click(function() {
-                calendar.navigate($this.data('calendar-nav'));
-            });
-        });
-
-        $('.btn-group button[data-calendar-view]').each(function() {
-            var $this = $(this);
-            $this.click(function() {
-                calendar.view($this.data('calendar-view'));
-            });
-        });
-
-    </script>
+    <script type="text/javascript" src="{% static "js/moment.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/clndr.min.js" %}"></script>
 {% endblock %}

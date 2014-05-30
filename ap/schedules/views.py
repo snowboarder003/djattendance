@@ -8,21 +8,16 @@ from django.contrib.admin.widgets import AdminDateWidget
 from bootstrap3_datetime.widgets import DateTimePicker
 
 from .models import Schedule, ScheduleTemplate, Event, EventGroup
-from terms.models import Term
 from .forms import EventForm
+from terms.models import Term
 
 
 class ScheduleDetail(generic.DetailView):
-    model = Schedule
     template_name = 'schedules/schedule_detail.html'
     context_object_name = 'schedule'
 
     def get_queryset(self):
-        if not self.args:
-            self.user = self.request.user
-        else:
-            self.user = get_object_or_404(User, pk=self.args[0])
-        return Schedule.objects.filter(trainee=self.user.trainee).filter(term=Term.current_term())
+        return Schedule.objects.filter(trainee=self.request.user.trainee).filter(term=Term.current_term())
 
 class ScheduleCreate(generic.CreateView):
     model = ScheduleTemplate
@@ -56,7 +51,6 @@ class EventCreate(generic.CreateView):
                 schedule.save()
                 schedule.events.add(event)
         return super(EventCreate, self).form_valid(form)
-
 
 
 class EventDetail(generic.DetailView):
