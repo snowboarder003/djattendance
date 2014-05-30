@@ -5,25 +5,43 @@
 {% block content %}
 
     {% if profile.trainee %}
+
         <h3> Life Study Summaries</h3>
+
+        {% if lifestudies %}
+            {% for lifestudy in lifestudies %}
+                {% if lifestudy.trainee.pk == profile.pk %}
+                    <li> {{lifestudy.displayForTrainee}} 
+                        <a href="{% url 'summary-create' lifestudy.pk %}"> New </a> </li>
+                    <ul>
+                        {% for summary in lifestudy.summary_set.all %}
+                            <li>{{summary}} <a href="{% url 'summary-detail' summary.pk %}"> View </a></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+
     {% elif profile.trainingassistant %}
-        <h3> Discipline Master View </h3>
+
+        <h3> Life Study TA View </h3>
+
+        {% if lifestudies %}
+            {% for lifestudy in lifestudies %}
+                <div>
+                {{ lifestudy }} 
+                {% for summary in lifestudy.summary_set.all %}
+                    {% if summary.approved == False %}
+                        <a href="{% url 'summary-detail' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div><a href="{% url 'lifestudy-create' %}"> Assign life-study to single trainee </a></div>
     {% endif %}
 
-{% if lifestudies %}
-    {% for lifestudy in lifestudies %}
-        {% if lifestudy.trainee.pk == profile.pk %}
-            <li> {{lifestudy.displayForTrainee}} 
-                <a href="{% url 'summary-create' lifestudy.pk %}"> New </a> </li>
-            <ul>
-                {% for summary in lifestudy.summary_set.all %}
-                    <li>{{summary}} <a href="{% url 'summary-detail' summary.pk %}"> View </a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <!-- do nothing here -->
-        {% endif %}
-    {% endfor %}
-{% endif %}
+    
 
 {% endblock %}

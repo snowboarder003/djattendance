@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from dailybread.models import Portion
 from schedules.models import Schedule
 from terms.models import Term
-from accounts.models import User, Profile, Trainee
+from accounts.models import Trainee
 
 @login_required
 def home(request):

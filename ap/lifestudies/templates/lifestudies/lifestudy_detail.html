@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Life Study{% endblock %}
+
+{% block content %}
+    <h3> {{lifestudy}} </h3>
+
+    {% for summary in lifestudy.summary_set.all %}
+        <div>{{summary}}</div>
+    {% endfor %}
+
+    <a href="{% url 'lifestudy-list' %}"> Back </a>
+
+{% endblock %}
