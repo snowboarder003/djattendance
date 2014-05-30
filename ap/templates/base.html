@@ -26,7 +26,10 @@
     <script src="{% static "bootstrap/js/offcanvas.js" %}"></script>
 
     <!-- put other refs and scripts here -->
-    {% block media %}{% endblock %}
+    {% block media %}
+      {% block refs %}{% endblock refs %}
+      {% block scripts %}{% endblock scripts %}
+    {% endblock %}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
