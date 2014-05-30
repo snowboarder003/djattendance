@@ -77,9 +77,7 @@ class EventUpdate(generic.UpdateView):
 
     def form_valid(self, form):
         event = form.save()
-        print(event)
-        print(event.pk)
-
+        
         # remove event from schedules of trainees no longer assigned to this event
         for schedule in event.schedule_set.all():
             if schedule.trainee not in form.cleaned_data['trainees']:
