@@ -66,5 +66,5 @@ class IndividualSlipAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(IndividualSlip, IndividualSlipAdmin)
 admin.site.register(GroupSlip)
-admin.site.register(MealOutSlip)
-admin.site.register(NightOutSlip)
+# admin.site.register(MealOutSlip)
+# admin.site.register(NightOutSlip)
