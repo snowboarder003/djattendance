@@ -21,3 +21,13 @@ class NewSummaryForm(forms.ModelForm):
         if commit:
             summary.save()
         return summary
+
+class EditSummaryForm(forms.ModelForm):
+    class Meta:
+        model = Summary
+        exclude = ('book','chapter','lifeStudy','approved',)
+    def save(self, commit=True):
+        summary = super(EditSummaryForm, self).save(commit=False)
+        if commit:
+            summary.save()
+        return summary

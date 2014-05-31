@@ -3,9 +3,14 @@
 {% block title %}Life Study{% endblock %}
 
 {% block content %}
-    <h3> Summary </h3>
+<h3> Summary </h3>
 
-{{summary.content}}
+<form action="" method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <input type="submit" value="Update">
+</form>
+
 <li>Book: "{{summary.book.name}}" Ch. {{summary.chapter}}</li>
 <li>Date Time submitted: {{summary.date_submitted}}</li>
 
