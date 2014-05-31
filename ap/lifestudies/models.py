@@ -97,8 +97,7 @@ class Summary(models.Model):
     chapter = models.PositiveSmallIntegerField(blank=False, null=False)
 
 	# if the summary has been approved
-    # NOTE: will not appear in admin or form fields (editable=false)
-    approved = models.BooleanField(default=False, editable=False)
+    approved = models.BooleanField(default=False)
 
 	# which discipline this summary is associated with
     lifeStudy = models.ForeignKey(LifeStudy)

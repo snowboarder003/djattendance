@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from lifestudies.models import LifeStudy, Summary
 from django.views.generic import ListView, CreateView, DetailView, FormView
+from lifestudies.forms import NewSummaryForm
 from django.core.urlresolvers import reverse_lazy
 from accounts.models import User, Profile, Trainee, TrainingAssistant
 
@@ -30,6 +31,7 @@ class LifeStudyDetailView(DetailView):
 
 class SummaryCreateView(CreateView):
     model = Summary
+    form_class = NewSummaryForm
 
     def get_success_url(self):
         return reverse_lazy('lifestudy-list')
