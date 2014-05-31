@@ -53,7 +53,7 @@
           <ul class="nav navbar-nav navbar-right">
             {% block navbar-right %}
               <li><a href="#account">User Name</a></li>
-              <li><a href="accounts/login/?next=/">Logout</a></li>
+              <li><a href="{% url 'login' %}">Logout</a></li>
             {% endblock %}
           </ul>
         </div><!--/.nav-collapse -->
