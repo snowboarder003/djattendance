@@ -8,19 +8,18 @@
 <link rel="stylesheet" type="text/css" href="{% static 'leaveslips/style.css' %}" />
 {% endblock %}
 
-
 {% block content %}
 
     <h2>New Individual Leave Slip</h2>
     <div class="leaveslip-form">
 	    <form action="" method="post">{% csrf_token %}
-	        {% bootstrap_form form %}
+	        {{ form.as_p }}
 
 	        <div class="mealout-form">
-	        	{% bootstrap_form mealout_form %}   
+	        	{{ mealout_form.as_p }}   
 	    	</div>
 	    	<div class="nightout-form">
-		        {% bootstrap_form nightout_form %}      
+		        {{ nightout_form.as_p }}     
 		    </div>  
 
 	        {% buttons %}

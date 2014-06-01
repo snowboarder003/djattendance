@@ -20,20 +20,47 @@ class IndividualSlipCreate(generic.CreateView):
         return self.render_to_response(
             self.get_context_data(form=form, mealout_form=mealout_form, nightout_form=nightout_form))
 
-    def form_valid(self, form, mealout_form, nightout_form):
-        if form.is_valid():
-            # if self.object.type == 'MEAL':
-            #     break
-            # else:
-            #     if self.object.type == 'NIGHT':
-            #         break
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
 
-			self.object = form.save(commit=False)
-			self.object.status = 'P'
-			self.object.trainee = Profile.get_trainee(self.request.user.id)
-			self.object.TA = self.object.trainee.TA
-			self.object.save()
-			return super(generic.CreateView, self).form_valid(form)
+        mealout_form = MealOutForm(self.request.POST)
+        nightout_form = NightOutForm(self.request.POST)
+
+        slip_type = self.request.POST['type']
+
+        # working around the validation depending on the type
+        if ((slip_type == 'MEAL') and form.is_valid() and mealout_form.is_valid()):
+                return self.form_valid(form, mealout_form, False)
+        else:
+            if ((slip_type == 'NIGHT') and form.is_valid() and nightout_form.is_valid()):
+                return self.form_valid(form, False, nightout_form)
+            else:
+                if form.is_valid():
+                    return self.form_valid(form, False, False)
+
+        return self.form_invalid(form, mealout_form, nightout_form)
+
+
+    def form_valid(self, form, mealout_form, nightout_form):
+        self.object = form.save(commit=False)
+        self.object.status = 'P'
+        self.object.trainee = Profile.get_trainee(self.request.user.id)
+        self.object.TA = self.object.trainee.TA
+        self.object.save()
+
+        if mealout_form:
+            mealout = mealout_form.save(commit=False)
+            mealout.leaveslip = self.object
+            mealout.save()
+        else:
+            if nightout_form:
+                nightout = nightout_form.save(commit=False)
+                nightout.leaveslip = self.object
+                nightout.save()
+
+        return super(generic.CreateView, self).form_valid(form)
 
     def form_invalid(self, form, mealout_form, nightout_form):
         return self.render_to_response(

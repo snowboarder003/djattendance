@@ -116,8 +116,16 @@ class GroupSlip(LeaveSlip):
 
 class MealOutSlip(models.Model):
 
+    # MEAL_TYPE = (
+    #         ('BST', 'Breakfast'),
+    #         ('LUN', 'Lunch'),
+    #         ('DIN', 'Dinner'),
+    #     )
+
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
+    # date = models.DateTimeField(auto_now=True)
+    # meal = models.CharField(max_length=3, choices=MEAL_TYPE, default='DIN')
     leaveslip = models.OneToOneField(IndividualSlip)
 
 class NightOutSlip(models.Model):
@@ -133,7 +141,6 @@ class IndividualSlipForm(forms.ModelForm):
     class Meta:
         model = IndividualSlip
         fields = ['type', 'description', 'comments', 'texted', 'informed', 'events']
-
 
 class MealOutForm(forms.ModelForm):
     class Meta:
