@@ -56,6 +56,28 @@
     }
 },
 {
+    "pk": 6, 
+    "model": "lifestudies.lifestudy", 
+    "fields": {
+        "offense": "RO", 
+        "infraction": "attendance", 
+        "trainee": 2, 
+        "due": "2014-06-14", 
+        "quantity": 3
+    }
+},
+{
+    "pk": 7, 
+    "model": "lifestudies.lifestudy", 
+    "fields": {
+        "offense": "RO", 
+        "infraction": "attendance", 
+        "trainee": 4, 
+        "due": "2014-06-06", 
+        "quantity": 1
+    }
+},
+{
     "pk": 1, 
     "model": "lifestudies.summary", 
     "fields": {
@@ -107,6 +129,61 @@
         "chapter": 2, 
         "book": 870830880, 
         "lifeStudy": 4, 
+        "approved": true
+    }
+},
+{
+    "pk": 7, 
+    "model": "lifestudies.summary", 
+    "fields": {
+        "content": "created by dennis lu at time 6/2/14 2:46pm", 
+        "chapter": 5, 
+        "book": 870832158, 
+        "lifeStudy": 5, 
+        "approved": false
+    }
+},
+{
+    "pk": 8, 
+    "model": "lifestudies.summary", 
+    "fields": {
+        "content": "created by 6/2/14 3:07pm", 
+        "chapter": 1, 
+        "book": 870832417, 
+        "lifeStudy": 7, 
+        "approved": true
+    }
+},
+{
+    "pk": 9, 
+    "model": "lifestudies.summary", 
+    "fields": {
+        "content": "created on 6/2/2014 3:37 pm", 
+        "chapter": 3, 
+        "book": 870835459, 
+        "lifeStudy": 6, 
+        "approved": false
+    }
+},
+{
+    "pk": 10, 
+    "model": "lifestudies.summary", 
+    "fields": {
+        "content": "created by dennis lu 6/2/14 2:38 pm", 
+        "chapter": 2, 
+        "book": 870837761, 
+        "lifeStudy": 6, 
+        "approved": false
+    }
+},
+{
+    "pk": 11, 
+    "model": "lifestudies.summary", 
+    "fields": {
+        "content": "asdfsd", 
+        "chapter": 4, 
+        "book": 870834282, 
+        "lifeStudy": 6, 
         "approved": false
     }
 }
