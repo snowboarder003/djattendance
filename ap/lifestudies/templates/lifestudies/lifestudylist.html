@@ -28,9 +28,11 @@
         <h3> Life Study TA View </h3>
 
         {% if lifestudies %}
+        <form action="{% url 'lifestudy-list' %}" method="post">
+            {% csrf_token %}
             {% for lifestudy in lifestudies %}
                 <div>
-                {{ lifestudy }} 
+                <input type="checkbox"> {{ lifestudy }} </input>
                 {% for summary in lifestudy.summary_set.all %}
                     {% if summary.approved == False %}
                         <a href="{% url 'summary-detail' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
@@ -38,9 +40,10 @@
                 {% endfor %}
                 </div>
             {% endfor %}
+        <input type="submit" value="approve selected"/>
+        </form>
         {% endif %}
         <div><a href="{% url 'lifestudy-create' %}"> Assign life-study to single trainee </a></div>
-        <div><button>HI</button></div>
     {% endif %}
 
     
