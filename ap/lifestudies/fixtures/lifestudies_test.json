@@ -1,0 +1,113 @@
+/Users/attendanceproject/git/ap_life-study_branch/djattendance/ap
+[
+{
+    "pk": 1, 
+    "model": "lifestudies.lifestudy", 
+    "fields": {
+        "offense": "RO", 
+        "infraction": "attendance", 
+        "trainee": 3, 
+        "due": "2014-05-31", 
+        "quantity": 3
+    }
+},
+{
+    "pk": 2, 
+    "model": "lifestudies.lifestudy", 
+    "fields": {
+        "offense": "RO", 
+        "infraction": "attendance", 
+        "trainee": 4, 
+        "due": "2014-05-31", 
+        "quantity": 1
+    }
+},
+{
+    "pk": 3, 
+    "model": "lifestudies.lifestudy", 
+    "fields": {
+        "offense": "MO", 
+        "infraction": "attendance", 
+        "trainee": 4, 
+        "due": "2014-05-31", 
+        "quantity": 3
+    }
+},
+{
+    "pk": 4, 
+    "model": "lifestudies.lifestudy", 
+    "fields": {
+        "offense": "RO", 
+        "infraction": "attendance", 
+        "trainee": 2, 
+        "due": "2014-12-04", 
+        "quantity": 5
+    }
+},
+{
+    "pk": 5, 
+    "model": "lifestudies.lifestudy", 
+    "fields": {
+        "offense": "RO", 
+        "infraction": "attendance", 
+        "trainee": 2, 
+        "due": "2014-06-06", 
+        "quantity": 5
+    }
+},
+{
+    "pk": 1, 
+    "model": "lifestudies.summary", 
+    "fields": {
+        "content": "asdfal;jf\r\nsadf;kj", 
+        "chapter": 14, 
+        "book": 870834290, 
+        "lifeStudy": 2, 
+        "approved": false
+    }
+},
+{
+    "pk": 2, 
+    "model": "lifestudies.summary", 
+    "fields": {
+        "content": "YES it works!", 
+        "chapter": 14, 
+        "book": 870834290, 
+        "lifeStudy": 2, 
+        "approved": false
+    }
+},
+{
+    "pk": 3, 
+    "model": "lifestudies.summary", 
+    "fields": {
+        "content": "asffsd", 
+        "chapter": 5, 
+        "book": 870836250, 
+        "lifeStudy": 2, 
+        "approved": false
+    }
+},
+{
+    "pk": 4, 
+    "model": "lifestudies.summary", 
+    "fields": {
+        "content": "This is a testing summary. To test whether this will work. But i am just going to text as much as I can because I need to fill it up to 250 words and have a constant word count on the corner of this box.", 
+        "chapter": 5, 
+        "book": 870836226, 
+        "lifeStudy": 2, 
+        "approved": false
+    }
+},
+{
+    "pk": 5, 
+    "model": "lifestudies.summary", 
+    "fields": {
+        "content": "this is just a test from dennis Lu. This summary should be created at 5/29/14 9:12 pm", 
+        "chapter": 2, 
+        "book": 870830880, 
+        "lifeStudy": 4, 
+        "approved": false
+    }
+}
+]
