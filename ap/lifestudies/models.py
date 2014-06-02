@@ -47,9 +47,6 @@ class LifeStudy(models.Model):
     # even for assigning house, each trainee has one discipline
     trainee = models.ForeignKey(Trainee)
 
-    def __unicode__(self):
-        return self.trainee.account.get_full_name() + ' | ' + self.infraction + ' | ' + self.offense + ' | ' + str(self.quantity)
-
     def displayForTrainee(self):
         return 'Life-Study Summary due as ' + self.offense + ' for ' + self.infraction + ' infraction'
 
@@ -63,14 +60,13 @@ class LifeStudy(models.Model):
             return self
         return self
 
-    # for TAs to change discipline count (post-assignment case)
-    def editSummary(self, num):
-        if num < 0 :
-            #raise exception or return error
-            return self
-        self.quantity = num
-        return self    
-    
+    def approveAllSummary(self):
+        for summary in self.summary_set.all():
+            summary.approve()
+        self.save()
+        return self.summary_set.all()
+
+    """TODO"""
     def changeDueDate(self, date):
         if date < datetime.today().date():
             #raise exception or return error
@@ -79,9 +75,25 @@ class LifeStudy(models.Model):
             self.due = date
             return self
 
-    """TODO: This also needs to be tested to see if it works"""
-    def getNumIncompleteSummary(self):
-        return quantity - self.summary_set.all().count()
+    #get the number of summary that still needs to be submitted
+    def getNumSummaryDue(self):
+        return self.quantity - self.summary_set.count()
+
+    #if this is True it means all the lifestudies has been approved and all have been submitted
+    #this assume num of summary submitted not larger than num of summary assigned
+    def isCompleted(self):
+        if self.getNumSummaryDue() > 0:
+            return False
+        else: 
+            for summary in self.summary_set.all():
+                if summary.approved == False:
+                    return False
+        return True
+
+
+    def __unicode__(self):
+        return self.trainee.account.get_full_name() + ' | ' + self.infraction + ' | ' + self.offense + ' | ' + str(self.quantity) + ' | ' + str(self.getNumSummaryDue()) + ' | ' + str(self.isCompleted())
+
 
     # comments: method to calculate period. Do they need to be editable by TA?
 
@@ -107,19 +119,9 @@ class Summary(models.Model):
     # date_submitted = models.DateTimeField(blank=False, null=True)
 
     def __unicode__(self):
-        return self.lifeStudy.trainee.account.get_full_name()  + ' | ' + self.book.name + ' | ' + str(self.chapter)
-
-    """TODO: to do these methods"""
-    def updateContent(string):
-        self.content = string
-        return self
+        return self.lifeStudy.trainee.account.get_full_name()  + ' | ' + self.book.name + ' | ' + str(self.chapter) + ' | ' + str(self.approved)
 
     def approve(self):
         self.approved = True
-        return self
-
-    def submit(self, string):
-        # check the word count (<250 or not)
-        self.updateContent(string)
-        self.date_submitted = datetime.datetime.now()
+        self.save()
         return self
