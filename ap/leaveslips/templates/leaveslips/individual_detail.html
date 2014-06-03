@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Individual Leave Slip<br>
+    <h2>Individual {{ leaveslip.type }} Leave Slip<br>
     <small>Submitted on {{ leaveslip.submitted }} by {{ leaveslip.trainee }}</small>
     </h2>
 
@@ -23,10 +23,32 @@
         <tr><td>Comments:</td>
             <td>{{ leaveslip.comments }}</td></tr>
         <tr>
-            <td>Texted? </td>
+            <td>Texted the attendance number? </td>
             <td>{{ leaveslip.texted }}</td></tr>
         <tr>
-            <td>Informed? </td>
+            <td>Informed a TA? </td>
             <td>{{ leaveslip.informed }}</td></tr>
+        {% if leaveslip.type == 'MEAL' %}
+        <tr>
+            <td>Name: </td>
+            <td>{{ mealout_slip.name }}</td></tr>
+        <tr>
+            <td>Location: </td>
+            <td>{{ mealout_slip.location }}</td></tr>
+        <tr>
+            <td>Meal: </td>
+            <td>{{ mealout_slip.meal }}</td></tr>
+        {% elif leaveslip.type == 'NIGHT' %}
+        <tr>
+            <td>Host name: </td>
+            <td>{{ nightout_slip.hostname }}</td></tr>
+         <tr>
+            <td>Phone: </td>
+            <td>{{ nightout_slip.phone }}</td></tr>
+         <tr>
+            <td>Host address: </td>
+            <td>{{ nightout_slip.hostaddress }}</td></tr>
+        {% endif %}
+
     </table>	
 {% endblock %}

@@ -116,16 +116,16 @@ class GroupSlip(LeaveSlip):
 
 class MealOutSlip(models.Model):
 
-    # MEAL_TYPE = (
-    #         ('BST', 'Breakfast'),
-    #         ('LUN', 'Lunch'),
-    #         ('DIN', 'Dinner'),
-    #     )
+    MEAL_TYPE = (
+            ('BST', 'Breakfast'),
+            ('LUN', 'Lunch'),
+            ('DIN', 'Dinner'),
+        )
 
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
-    # date = models.DateTimeField(auto_now=True)
-    # meal = models.CharField(max_length=3, choices=MEAL_TYPE, default='DIN')
+    date = models.DateField(auto_now=True)
+    meal = models.CharField(max_length=3, choices=MEAL_TYPE, default='DIN')
     leaveslip = models.OneToOneField(IndividualSlip)
 
 class NightOutSlip(models.Model):
@@ -134,6 +134,7 @@ class NightOutSlip(models.Model):
     phone = models.PositiveIntegerField()
     hostaddress = models.CharField(max_length=255)
     HC = models.ForeignKey(Trainee)
+    night = models.DateField(auto_now=True)
     leaveslip = models.OneToOneField(IndividualSlip)
 
 # form classes
@@ -145,12 +146,12 @@ class IndividualSlipForm(forms.ModelForm):
 class MealOutForm(forms.ModelForm):
     class Meta:
         model = MealOutSlip
-        fields = ['name', 'location']
+        fields = ['name', 'location', 'meal']
 
 class NightOutForm(forms.ModelForm):
     class Meta:
         model = NightOutSlip
-        fields = ['hostname', 'phone', 'HC']
+        fields = ['hostname', 'phone', 'hostaddress', 'HC']
 
 class GroupSlipForm(forms.ModelForm):
     class Meta:

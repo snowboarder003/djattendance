@@ -74,6 +74,20 @@ class IndividualSlipDetail(generic.DetailView):
     template_name = 'leaveslips/individual_detail.html'
     context_object_name = 'leaveslip'
 
+    def get_context_data(self, **kwargs):
+        context = super(IndividualSlipDetail, self).get_context_data(**kwargs)
+        slip_id = kwargs['object'].id
+        slip = IndividualSlip.objects.get(pk=slip_id)
+        if slip.type == 'MEAL':
+            slip = MealOutSlip.objects.get(leaveslip_id=slip_id)
+            context['mealout_slip'] = slip
+        else:
+            if slip.type == 'NIGHT':
+                slip = NightOutSlip.objects.get(leaveslip_id=slip_id)
+                context['nightout_slip'] = slip
+                
+        return context
+
 class IndividualSlipUpdate(generic.UpdateView):
 	model = IndividualSlip
 	template_name = 'leaveslips/individual_update.html'
