@@ -15,7 +15,10 @@
                         <a href="{% url 'summary-create' lifestudy.pk %}"> New </a> </li>
                     <ul>
                         {% for summary in lifestudy.summary_set.all %}
-                            <li> {{summary}} <a href="{% url 'summary-detail' summary.pk %}"> View </a></li>
+                            <li> 
+                                {{summary}} 
+                                <a href="{% url 'summary-detail' summary.pk %}"> Edit </a>
+                            </li>
                         {% endfor %}
                     </ul>
                 {% endif %}
@@ -31,19 +34,23 @@
         <form action="{% url 'lifestudy-list' %}" method="post">
             {% csrf_token %}
             {% for lifestudy in lifestudies %}
-                <div>
-                <input type="checkbox"> {{ lifestudy }} </input>
-                {% for summary in lifestudy.summary_set.all %}
-                    {% if summary.approved == False %}
-                        <a href="{% url 'summary-detail' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
-                    {% endif %}
-                {% endfor %}
-                </div>
+                {% if lifestudy.isCompleted == False %}    
+                    <div>
+                    <input type="checkbox" name="{{lifestudy.pk}}" value="True"> {{ lifestudy }} </input>
+                    {% for summary in lifestudy.summary_set.all %}
+                        {% if summary.approved == False %}
+                            <a href="{% url 'summary-detail' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                {% endif %}
             {% endfor %}
         <input type="submit" value="approve selected"/>
         </form>
         {% endif %}
-        <div><a href="{% url 'lifestudy-create' %}"> Assign life-study to single trainee </a></div>
+            <form action="{% url 'lifestudy-create' %}">
+                <input type="submit" value="Assign life-study to single trainee">
+            </form>
     {% endif %}
 
     

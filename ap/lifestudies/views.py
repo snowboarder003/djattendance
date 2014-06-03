@@ -12,10 +12,19 @@ class LifeStudyListView(ListView):
     model = LifeStudy
     context_object_name = 'lifestudies'
 
+    #this function is called whenever 'post'
+    def post(self, request, *args, **kwargs):
+        #turning the 'post' into a 'get'
+        return self.get(request, *args, **kwargs)
+
     #profile is the user that's currently logged in
     def get_context_data(self, **kwargs):
         context = super(LifeStudyListView, self).get_context_data(**kwargs)
         context['profile'] = self.request.user
+        if self.request.method == 'POST':
+            for lifestudy in context['object_list']:
+                if lifestudy.pk in self.request.POST:
+                    lifestudy.approveAllSummary
         return context
 
 
@@ -44,9 +53,7 @@ class SummaryDetailView(UpdateView):
     model = Summary
     context_object_name = 'summary'
     template_name = 'lifestudies/summary_detail.html'
-
     fields = ['content']
-    template_name = 'lifestudies/summary_detail.html'
     form_class = EditSummaryForm
 
     def get_success_url(self):
