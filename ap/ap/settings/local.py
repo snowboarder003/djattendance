@@ -3,8 +3,8 @@ from .base import *
 DEBUG = True
 TEMPLATE_DEBUG = True
 
-INSTALLED_APPS += ('django_extensions',
-                    'debug_toolbar',)
+INSTALLED_APPS += ('debug_toolbar',
+                   'django_extensions',)
 
 DATABASES = {
     'default': {
@@ -16,4 +16,8 @@ DATABASES = {
         'HOST': 'localhost',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
+}
+
+DEBUG_TOOLBAR_CONFIG = {
+    'JQUERY_URL': '',  # use local jquery
 }
