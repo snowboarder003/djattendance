@@ -85,7 +85,7 @@ class Event(models.Model):
         return reverse('schedules:event-detail', kwargs={'pk': self.pk})
 
     def __unicode__(self):
-        return self.name
+        return "[%s] %s" % (self.start.strftime('%m/%d'), self.name)
 
 
 class EventGroup(models.Model):
