@@ -55,9 +55,7 @@ class SummaryDetailView(UpdateView):
     template_name = 'lifestudies/summary_detail.html'
     fields = ['content']
     form_class = EditSummaryForm
-    
-    myform.fields['status'].widget.attrs['readonly'] = True
-    
+        
     #profile is the user that's currently logged in
     def get_context_data(self, **kwargs):
         context = super(SummaryDetailView, self).get_context_data(**kwargs)

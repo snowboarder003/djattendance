@@ -27,6 +27,7 @@ class EditSummaryForm(forms.ModelForm):
     class Meta:
         model = Summary
         exclude = ('book','chapter','lifeStudy','approved',)
+
     def save(self, commit=True):
         summary = super(EditSummaryForm, self).save(commit=False)
         if commit:
@@ -36,6 +37,20 @@ class EditSummaryForm(forms.ModelForm):
 class ApproveSummaryForm(forms.ModelForm):
     class Meta:
          model = Summary
+
+    def __init__(self, *args, **kwargs):
+        super(ApproveSummaryForm, self).__init__(*args, **kwargs)
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            self.fields['content'].widget.attrs['readonly'] = True
+
+    # to make sure content field will not be overridden by a POST
+    def clean_content(self):
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            return instance.content
+        else:
+            return self.cleaned_data['content']
 
 """
 class ItemForm(ModelForm):
