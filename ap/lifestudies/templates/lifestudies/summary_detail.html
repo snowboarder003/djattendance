@@ -5,14 +5,22 @@
 {% block content %}
 <h3> Summary </h3>
 
+{% comment %}
 <form action="" method="post">
     {{ form.as_p }}
     {% csrf_token %}
     <input type="submit" value="Update">
 </form>
+{% endcomment %}
 
 <li>Book: "{{summary.book.name}}" Ch. {{summary.chapter}}</li>
+
 <li>Date Time submitted: {{summary.date_submitted}}</li>
+
+<form action="{% url 'lifestudy-list' %}" method="POST" name ="ApproveSummaryForm">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Approve">
+</form>
 
 <a href="{% url 'lifestudy-list' %}"> Back </a>
 

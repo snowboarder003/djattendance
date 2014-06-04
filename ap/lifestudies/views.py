@@ -55,6 +55,31 @@ class SummaryDetailView(UpdateView):
     template_name = 'lifestudies/summary_detail.html'
     fields = ['content']
     form_class = EditSummaryForm
+    
+    myform.fields['status'].widget.attrs['readonly'] = True
+    
+    #profile is the user that's currently logged in
+    def get_context_data(self, **kwargs):
+        context = super(SummaryDetailView, self).get_context_data(**kwargs)
+        context['profile'] = self.request.user
+        if self.request.method == 'POST':
+            for summary in context['object_list']:
+                if summary.pk in self.request.POST:
+                    summary.approve
+        return context
 
     def get_success_url(self):
         return reverse_lazy('lifestudy-list')
+
+"""
+    def approve(request):
+        if request.method == "POST":
+            form = ApproveSummaryForm(request.POST)
+            if form.is_valid():
+                return HttpResponseRedirect('lifestudies/lifestudylist.html')
+        else:
+            form = ApproveSummaryForm()
+
+        return render(request, 'summary_detail.html', {'form':form,
+        })
+"""
