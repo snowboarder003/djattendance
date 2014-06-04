@@ -2,7 +2,7 @@ var clndr = $('#clndr').clndr({
     template: $('#clndr-template').html(),
 
     extras: {
-        currentWeek: moment(new Date()),
+        currentWeek: moment(),
     },
 
     daysOfTheWeek: ['LD', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
