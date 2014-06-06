@@ -48,7 +48,7 @@ class LifeStudy(models.Model):
     trainee = models.ForeignKey(Trainee)
 
     def displayForTrainee(self):
-        return 'Life-Study Summary due as ' + self.offense + ' for ' + self.infraction + ' infraction'
+        return 'Life-Study Summary due as ' + self.offense + ' for ' + self.infraction + ' infraction | ' + str(self.isCompleted())
 
     # To add the specified number of life-studies to a trainee
     # See information manual for when to add additional discipline
@@ -77,7 +77,14 @@ class LifeStudy(models.Model):
 
     #get the number of summary that still needs to be submitted
     def getNumSummaryDue(self):
-        return self.quantity - self.summary_set.count()
+        return self.quantity - self.getNumSummaryApproved()
+
+    def getNumSummaryApproved(self):
+        num = 0
+        for summary in self.summary_set.all():
+            if summary.approved == True:
+                num = num + 1
+        return num
 
     #if this is True it means all the lifestudies has been approved and all have been submitted
     #this assume num of summary submitted not larger than num of summary assigned

@@ -1,11 +1,9 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from lifestudies.models import LifeStudy, Summary
-from django.views.generic import ListView, CreateView, DetailView, FormView
-from lifestudies.forms import NewSummaryForm, NewLifeStudyForm
-from django.views.generic import ListView, CreateView, DetailView, FormView, UpdateView
-from lifestudies.forms import NewSummaryForm, EditSummaryForm
-from django.core.urlresolvers import reverse_lazy
 from accounts.models import User, Profile, Trainee, TrainingAssistant
+from lifestudies.forms import NewSummaryForm, NewLifeStudyForm, EditSummaryForm
+from django.views.generic import ListView, CreateView, DetailView, FormView, UpdateView
+from django.core.urlresolvers import reverse_lazy
 
 class LifeStudyListView(ListView):
     template_name = 'lifestudies/lifestudylist.html'
@@ -49,6 +47,16 @@ class SummaryCreateView(CreateView):
         return reverse_lazy('lifestudy-list')
 
 
+class SummaryApproveView(DetailView):
+    model = Summary
+    context_object_name = 'summary'
+    template_name = 'lifestudies/summary_approve.html'
+
+    def post(self, request, *args, **kwargs):
+        self.get_object().approve()
+        return HttpResponseRedirect(reverse_lazy('lifestudy-list'))
+
+
 class SummaryDetailView(UpdateView):
     model = Summary
     context_object_name = 'summary'
@@ -60,10 +68,7 @@ class SummaryDetailView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(SummaryDetailView, self).get_context_data(**kwargs)
         context['profile'] = self.request.user
-        if self.request.method == 'POST':
-            for summary in context['object_list']:
-                if summary.pk in self.request.POST:
-                    summary.approve
+        print(self.request.POST)
         return context
 
     def get_success_url(self):

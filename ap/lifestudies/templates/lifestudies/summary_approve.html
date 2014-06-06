@@ -3,16 +3,18 @@
 {% block title %}Life Study{% endblock %}
 
 {% block content %}
-<h3> Summary </h3>
+<h3> Approve Summary </h3>
 
 <li>Book: "{{summary.book.name}}" Ch. {{summary.chapter}}</li>
 
 <li>Date Time submitted: {{summary.date_submitted}}</li>
 
-    <form action="" method="post">
-        {{ form.as_p }}
+<li>Content: {{summary.content}}</li>
+
+    <form action="" method="POST">
         {% csrf_token %}
-        <input type="submit" value="Update">
+        {{ form.as_p }}
+        <input type="submit" value="Approve">
     </form>
 
 <a href="{% url 'lifestudy-list' %}"> Back </a>

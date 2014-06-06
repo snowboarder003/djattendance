@@ -39,7 +39,7 @@
                     <input type="checkbox" name="{{lifestudy.pk}}" value="True"> {{ lifestudy }} </input>
                     {% for summary in lifestudy.summary_set.all %}
                         {% if summary.approved == False %}
-                            <a href="{% url 'summary-detail' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
+                            <a href="{% url 'summary-approve' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
                         {% endif %}
                     {% endfor %}
                     </div>
