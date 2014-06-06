@@ -57,7 +57,7 @@ class SummaryApproveView(DetailView):
         return HttpResponseRedirect(reverse_lazy('lifestudy-list'))
 
 
-class SummaryDetailView(UpdateView):
+class SummaryUpdateView(UpdateView):
     model = Summary
     context_object_name = 'summary'
     template_name = 'lifestudies/summary_detail.html'
@@ -66,7 +66,7 @@ class SummaryDetailView(UpdateView):
         
     #profile is the user that's currently logged in
     def get_context_data(self, **kwargs):
-        context = super(SummaryDetailView, self).get_context_data(**kwargs)
+        context = super(SummaryUpdateView, self).get_context_data(**kwargs)
         context['profile'] = self.request.user
         print(self.request.POST)
         return context
