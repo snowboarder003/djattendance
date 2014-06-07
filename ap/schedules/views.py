@@ -11,6 +11,15 @@ from .models import Schedule, ScheduleTemplate, Event, EventGroup
 from .forms import EventForm
 from terms.models import Term
 
+class SchedulePersonal(generic.TemplateView):
+    template_name = 'schedules/schedule_detail.html'
+    context_object_name = 'schedule'
+
+    def get_context_data(self, **kwargs):
+        context = super(SchedulePersonal, self).get_context_data(**kwargs)
+        context['schedule'] = Schedule.objects.filter(trainee=self.request.user.trainee).get(term=Term.current_term())
+        return context
+
 
 class ScheduleDetail(generic.DetailView):
     template_name = 'schedules/schedule_detail.html'
