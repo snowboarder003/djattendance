@@ -47,6 +47,13 @@ class SummaryCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy('lifestudy-list')
 
+    def get_context_data(self, **kwargs):
+        context = super(SummaryCreateView, self).get_context_data(**kwargs)
+        return context 
+
+    def form_valid(self, form):
+        form.lifeStudy = self.kwargs['pk']
+        return HttpResponseRedirect(self.get_success_url())
 
 """this is the view that TA will click into when viewing a summary and approving it"""
 class SummaryApproveView(DetailView):
