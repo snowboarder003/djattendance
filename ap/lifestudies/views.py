@@ -12,17 +12,18 @@ class LifeStudyListView(ListView):
 
     #this function is called whenever 'post'
     def post(self, request, *args, **kwargs):
-        #turning the 'post' into a 'get'
+        for value in request.POST.getlist('approve_selected'):
+            print LifeStudy.objects.get(pk=value).approveAllSummary()
         return self.get(request, *args, **kwargs)
 
     #profile is the user that's currently logged in
     def get_context_data(self, **kwargs):
         context = super(LifeStudyListView, self).get_context_data(**kwargs)
         context['profile'] = self.request.user
-        if self.request.method == 'POST':
-            for lifestudy in context['object_list']:
-                if lifestudy.pk in self.request.POST:
-                    lifestudy.approveAllSummary
+        # if self.request.method == 'POST':
+        #     for lifestudy in context['object_list']:
+        #         if lifestudy.pk in self.request.POST:
+        #             lifestudy.approveAllSummary
         return context
 
 
@@ -47,6 +48,7 @@ class SummaryCreateView(CreateView):
         return reverse_lazy('lifestudy-list')
 
 
+"""this is the view that TA will click into when viewing a summary and approving it"""
 class SummaryApproveView(DetailView):
     model = Summary
     context_object_name = 'summary'
@@ -57,6 +59,7 @@ class SummaryApproveView(DetailView):
         return HttpResponseRedirect(reverse_lazy('lifestudy-list'))
 
 
+"""this is the view that trainee click into in order to update the content of the summary"""
 class SummaryUpdateView(UpdateView):
     model = Summary
     context_object_name = 'summary'
