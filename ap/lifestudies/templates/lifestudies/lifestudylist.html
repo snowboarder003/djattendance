@@ -41,6 +41,10 @@
                         {% if summary.approved == False %}
                             <a href="{% url 'summary-approve' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
                         {% endif %}
+                        {% if summary.approved == True %}
+                            Approved:
+                            <a href="{% url 'summary-approve' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
+                        {% endif %}
                     {% endfor %}
                     </div>
                 {% endif %}
@@ -51,8 +55,8 @@
             <form action="{% url 'lifestudy-create' %}">
                 <input type="submit" value="Assign life-study to single trainee">
             </form>
+        <br>
+        <a href="{% url 'reportview' %}"> Life Study Report</a>
     {% endif %}
-
-    
 
 {% endblock %}

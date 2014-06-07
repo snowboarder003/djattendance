@@ -3,7 +3,13 @@
 {% block title %}Life Study{% endblock %}
 
 {% block content %}
+ 
+{% if summary.approved == True %} 
+<h3> Summary Details </h3>
+{% else %}
 <h3> Approve Summary </h3>
+{% endif %}
+
 
 <li>Book: "{{summary.book.name}}" Ch. {{summary.chapter}}</li>
 
@@ -11,11 +17,13 @@
 
 <li>Content: {{summary.content}}</li>
 
+{% if summary.approved == False %} 
     <form action="" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Approve">
     </form>
+{% endif %}    
 
 <a href="{% url 'lifestudy-list' %}"> Back </a>
 

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Life Study{% endblock %}
+
+{% block content %}
+
+    {% if profile.trainee %}
+
+        <h3> TA Access Only </h3>
+
+
+    {% elif profile.trainingassistant %}
+
+        <h3> Life Study Report </h3>
+
+        {% if lifestudies %}
+        <form action="{% url 'lifestudy-list' %}" method="post">
+            {% csrf_token %}
+            Incompleted Summaries
+            <ul>
+            {% for lifestudy in lifestudies %}
+                {% if lifestudy.isCompleted == False %}    
+                    <div>
+                     {{ lifestudy }} 
+                    {% for summary in lifestudy.summary_set.all %}
+                        {% if summary.approved == False %}
+                            <a href="{% url 'summary-approve' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
+                        {% endif %}
+                        {% if summary.approved == True %}
+                            Approved:
+                            <a href="{% url 'summary-approve' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            </ul>
+
+            Completed Summaries
+            <ul>
+            {% for lifestudy in lifestudies %}
+                {% if lifestudy.isCompleted == True %}    
+                    <div>
+                    {{ lifestudy }}
+                    {% for summary in lifestudy.summary_set.all %}
+                        {% if summary.approved == True %}
+                            Approved:
+                            <a href="{% url 'summary-approve' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </form>
+        {% endif %}
+    {% endif %}
+
+ <a href="{% url 'lifestudy-list' %}"> Back </a>   
+
+{% endblock %}
