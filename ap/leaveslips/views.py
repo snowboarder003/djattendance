@@ -5,6 +5,8 @@ from django.core.urlresolvers import reverse
 from .models import LeaveSlip, IndividualSlip, GroupSlip, MealOutSlip, NightOutSlip, IndividualSlipForm, GroupSlipForm, MealOutForm, NightOutForm
 from accounts.models import Profile
 
+from itertools import chain
+
 # individual slips
 class IndividualSlipCreate(generic.CreateView):
     model = IndividualSlip
@@ -107,8 +109,12 @@ class GroupSlipDetail(generic.DetailView):
 
 # viewing the leave slips
 class LeaveSlipList(generic.ListView):
-    model = IndividualSlip
+    model = IndividualSlip, GroupSlip
     template_name = 'leaveslips/list.html'
 
+
     def get_queryset(self):
-        return IndividualSlip.objects.all # TODO: filter by user
+         individual=IndividualSlip.objects.filter(trainee=self.request.user.id)
+         group=GroupSlip.objects.filter(trainee=self.request.user.id)
+         queryset= chain(individual,group) #combines two querysets
+         return queryset

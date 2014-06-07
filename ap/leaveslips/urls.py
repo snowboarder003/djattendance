@@ -10,6 +10,8 @@ urlpatterns = patterns('',
     url(r'group/create/$', views.GroupSlipCreate.as_view(), name='group-create'),
     url(r'group/(?P<pk>\d+)$', views.GroupSlipDetail.as_view(), name='group-detail'),
 
+    url(r'^$',views.LeaveSlipList.as_view(), name='leaveslips-list'),
+
 )
 
 #     url(r'schedule/list/$', views.ScheduleList.as_view(), name='schedule-list'),
