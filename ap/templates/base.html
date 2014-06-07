@@ -18,14 +18,14 @@
     <link href="{% static "css/fluid.css" %}" rel="stylesheet"> <!--right now, just a fix for small-size screens-->
     <link href="{% static "bootstrap/css/navbar-static-top.css" %}" rel="stylesheet">
     <link href="{% static "bootstrap/css/offcanvas.css" %}" rel="stylesheet">
+    {% block references %}{% endblock %}
 
     <!-- Bootstrap core JavaScript -->
     <script src="{% static "jquery/js/jquery-1.10.1.min.js" %}"></script>
     <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/modernizr-2.6.2-respond-1.1.0.min.js" %}"></script>
     <script src="{% static "bootstrap/js/offcanvas.js" %}"></script>
-
-    {% block media %}{% endblock %}
+    {% block scripts %}{% endblock %}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -76,8 +76,8 @@
               {% block sidelinks %}
               <li>Attendance</li>
                 {% block attendance_links %}
-                <li class="active"><a href="/schedules/schedule">View Schedule</a></li>
-                <li><a href="/schedules/event/create">Create Event</a></li>
+                <li><a href="{% url 'schedules:schedule' %}">View Schedule</a></li>
+                <li><a href="{% url 'schedules:event-create' %}">Create Event</a></li>
                 {% endblock %}
               <hr style="border-top: 1px solid #dddddd;">
               <li>Classes</li>
@@ -91,7 +91,7 @@
 
         <!--CONTENT-->
         <div class="col-xs-12 col-sm-9 content">
-          
+
           {% block content %}{% endblock %}
         </div><!--/content-->
       </div>
