@@ -74,11 +74,11 @@
           <div class="well sidebar-nav" style="border-radius:0px">
             <ul class="nav">
               {% block sidelinks %}
-              <li>Attendance</li>
-                {% block attendance_links %}
+              <li>Schedule</li>
                 <li><a href="{% url 'schedules:schedule' %}">View Schedule</a></li>
                 <li><a href="{% url 'schedules:event-create' %}">Create Event</a></li>
-                {% endblock %}
+              <li>Attendance</li>
+                <li><a href="{% url 'attendance:attendance-personal' %}">Personal Attendance</a></li>
               <hr style="border-top: 1px solid #dddddd;">
               <li>Classes</li>
                 <li><a href="#">A/V Requests</a></li>
