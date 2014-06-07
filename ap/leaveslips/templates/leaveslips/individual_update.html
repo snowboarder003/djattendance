@@ -8,13 +8,20 @@
 <link rel="stylesheet" type="text/css" href="{% static 'leaveslips/style.css' %}" />
 {% endblock %}
 
-
 {% block content %}
 
     <h2>Editing Individual Leave Slip</h2>
     <div class="leaveslip-form">
 	    <form action="" method="post">{% csrf_token %}
-			{% bootstrap_form form %}        
+	        {{ form.as_p }}
+
+	        <div class="mealout-form">
+	        	{{ mealout_form.as_p }}   
+	    	</div>
+	    	<div class="nightout-form">
+		        {{ nightout_form.as_p }}     
+		    </div> 
+		    
 	        {% buttons %}
 	            <button type="submit" class="btn btn-primary">
 	                Submit
@@ -22,5 +29,9 @@
 	        {% endbuttons %}
 		</form>
 	</div>
+
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="{% static 'leaveslips/scripts.js' %}"></script>
 
 {% endblock %}

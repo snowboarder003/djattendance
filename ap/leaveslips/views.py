@@ -30,7 +30,7 @@ class IndividualSlipCreate(generic.CreateView):
 
         slip_type = self.request.POST['type']
 
-        # working around the validation depending on the type
+        # working around the validation to make sure it passes based on type
         if ((slip_type == 'MEAL') and form.is_valid() and mealout_form.is_valid()):
                 return self.form_valid(form, mealout_form, False)
         else:
@@ -68,6 +68,16 @@ class IndividualSlipCreate(generic.CreateView):
                                   mealout_form=mealout_form,
                                   nightout_form=nightout_form))
 
+class IndividualSlipUpdate(generic.UpdateView):
+    model = IndividualSlip
+    template_name = 'leaveslips/individual_update.html'
+    form_class = IndividualSlipForm
+
+    # Does nothing right now, TODO
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super(generic.edit.BaseUpdateView, self).get(request, *args, **kwargs)
+
 
 class IndividualSlipDetail(generic.DetailView):
     model = IndividualSlip
@@ -85,14 +95,8 @@ class IndividualSlipDetail(generic.DetailView):
             if slip.type == 'NIGHT':
                 slip = NightOutSlip.objects.get(leaveslip_id=slip_id)
                 context['nightout_slip'] = slip
-                
+
         return context
-
-class IndividualSlipUpdate(generic.UpdateView):
-	model = IndividualSlip
-	template_name = 'leaveslips/individual_update.html'
-	form_class = IndividualSlipForm
-
 
 # group slips
 class GroupSlipCreate(generic.CreateView):
