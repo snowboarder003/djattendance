@@ -28,27 +28,5 @@
         <tr>
             <td>Informed a TA? </td>
             <td>{{ leaveslip.informed }}</td></tr>
-        {% if leaveslip.type == 'MEAL' %}
-        <tr>
-            <td>Name: </td>
-            <td>{{ mealout_slip.name }}</td></tr>
-        <tr>
-            <td>Location: </td>
-            <td>{{ mealout_slip.location }}</td></tr>
-        <tr>
-            <td>Meal: </td>
-            <td>{{ mealout_slip.meal }}</td></tr>
-        {% elif leaveslip.type == 'NIGHT' %}
-        <tr>
-            <td>Host name: </td>
-            <td>{{ nightout_slip.hostname }}</td></tr>
-         <tr>
-            <td>Phone: </td>
-            <td>{{ nightout_slip.phone }}</td></tr>
-         <tr>
-            <td>Host address: </td>
-            <td>{{ nightout_slip.hostaddress }}</td></tr>
-        {% endif %}
-
     </table>	
 {% endblock %}
