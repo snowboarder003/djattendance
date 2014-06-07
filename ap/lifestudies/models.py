@@ -125,6 +125,11 @@ class Summary(models.Model):
     date_submitted = datetime.datetime.now()
     # date_submitted = models.DateTimeField(blank=False, null=True)
 
+    def save(self, *args, **kwargs):
+        ''' On save, preserve original timestamps '''
+        self.date_submitted = self.date_submitted
+        return super(Summary, self).save(*args, **kwargs)
+
     def __unicode__(self):
         return self.lifeStudy.trainee.account.get_full_name()  + ' | ' + self.book.name + ' | ' + str(self.chapter) + ' | ' + str(self.approved)
 

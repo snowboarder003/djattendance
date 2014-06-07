@@ -15,7 +15,7 @@ class NewLifeStudyForm(forms.ModelForm):
 class NewSummaryForm(forms.ModelForm):
     class Meta:
         model = Summary
-        exclude = ('approved',)
+        exclude = ('approved', 'lifeStudy',)
     def save(self, commit=True):
         summary = super(NewSummaryForm, self).save(commit=False)
         if commit:
