@@ -29,7 +29,6 @@ def handle_uploaded_file(f):
 	data = pdf_to_text(f)
 	partition = data.partition('Scripture Reading:')
 	title = outline.get_title(partition[0])
-	print(title)
 	ref_outline = outline.extract_references(partition[2])
 
 	for i in range(len(ref_outline)):

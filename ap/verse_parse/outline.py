@@ -59,7 +59,7 @@ def extract_references(text):
                             verses = extract_more_verses(r.group('more_headless_verses'))
                             for verse in verses:
                                 outline[-1]['refs'].append(normalize_reference(bookname=book, chapter=r.group('headless_chapter'), 
-                                                 verse=verse[0], end_verse=verse[1]))
+                                                 verse=verse[0], end_chapter=verse[1], end_verse=verse[2]))
                     else:
                         if r.group('lonely_verse'):
                             i = -1
@@ -71,7 +71,7 @@ def extract_references(text):
                             if r.group('more_lonely_verses'):
                                 verses = extract_more_verses(r.group('more_lonely_verses'))
                                 for verse in verses:
-                                    outline[-1]['refs'].append(normalize_reference(bookname=book, chapter=chapter, verse=verse[0], end_verse=verse[1]))
+                                    outline[-1]['refs'].append(normalize_reference(bookname=book, chapter=chapter, verse=verse[0], end_chapter=verse[1], end_verse=verse[2]))
                 
         except InvalidReferenceException:
             pass
@@ -81,10 +81,10 @@ def extract_references(text):
 def extract_more_verses(text):
     """
     Extract a list of verse numbers from a string of verse numbers, i.e. '3, 7, 10-14, 16'.
-    Returns a list of tuples: (verse, end_verse,).
-    e.g. '3, 7, 10-14, 16' --> [('3', '',), ('7', '',), ('10', '14',), ('16', '',)]
+    Returns a list of tuples: (verse, end_chapter, end_verse,).
+    e.g. '3, 10-14, 16-5:9' --> [('3', '', '',), ('10', '', 14',), ('16', '5', '9',)]
     """
-    verses = re.findall(re.compile(r'(?P<verse>\d{1,3})(?:-(?P<end_verse>\d{1,3}))?'), text)
+    verses = re.findall(re.compile(r'(?P<verse>\d{1,3})[a-z]?(?:\s*-\s*(?:(?P<end_chapter>\d{1,3}):)?(?P<end_verse>\d{1,3}))?'), text)
     return verses
 
 def find_repeat(outline, reference, i):
