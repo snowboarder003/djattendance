@@ -1,0 +1,34 @@
+.schedule-header {
+    border-bottom: solid thin #cccccc;
+    text-align: center;
+}
+
+.today {
+    background-color: #dff0d8;
+}
+
+.hour {
+    height: 30px;
+    border-bottom: dotted thin #cccccc;
+    font-size: 10px;
+}
+
+.schedule-event {
+    opacity: 0.8;
+    position: absolute;
+    width: 99%;
+    text-align: center;
+    font-size: 10px;
+    color: #000000;
+    background-color: #cccccc;
+    border: 1px solid #8e8e8e;
+}
+
+.selected-event {
+    opacity: 1.0;
+    border: 1px solid #422207;
+}
+
+.popover {
+    min-width: 150px;
+}
