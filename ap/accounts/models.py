@@ -155,6 +155,12 @@ class Profile(models.Model):
     def autocomplete_search_fields():
         return ("id__iexact", "account__icontains", )
 
+    # gets trainee id
+    @staticmethod
+    def get_trainee(user_id):
+        return Trainee.objects.get(account_id=user_id)
+    
+
 
 class TrainingAssistant(Profile):
 
@@ -202,14 +208,17 @@ class Trainee(Profile):
     # this will be false for 1st years and true for 2nd with some exceptions.
     self_attendance = models.BooleanField(default=False)
 
+
+
     def __unicode__(self):
         return self.account.get_full_name()
 
-    #calculates what term the trainee is in
+    # calculates what term the trainee is in
     def _calculate_term(self):
-        num_terms = self.term.all().count()
-        return num_terms
-
+    	num_terms = self.term.all().count()
+    	
+    	return num_terms
+        
     current_term = property(_calculate_term)
 
     def _trainee_email(self):

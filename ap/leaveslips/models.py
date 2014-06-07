@@ -1,5 +1,6 @@
 from django import forms
 from django.db import models
+from django.core.urlresolvers import reverse
 
 from datetime import datetime, timedelta
 
@@ -93,6 +94,9 @@ class IndividualSlip(LeaveSlip):
     events = models.ManyToManyField(Event)
     trainee = models.ForeignKey(Trainee)
 
+    def get_absolute_url(self):
+        return reverse('leaveslips:individual-detail', kwargs={'pk': self.id})
+
     def _late(self):
         end_date = self.events.all().order_by('-end')[0].end
         if self.submitted > end_date+timedelta(days=2):
@@ -101,6 +105,7 @@ class IndividualSlip(LeaveSlip):
             return False
 
     late = property(_late)  # whether this leave slip was submitted late or not
+
 
 class GroupSlip(LeaveSlip):
 
@@ -111,9 +116,17 @@ class GroupSlip(LeaveSlip):
 
 class MealOutSlip(models.Model):
 
+    MEAL_TYPE = (
+            ('BST', 'Breakfast'),
+            ('LUN', 'Lunch'),
+            ('DIN', 'Dinner'),
+        )
+
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
-
+    date = models.DateField(auto_now=True)
+    meal = models.CharField(max_length=3, choices=MEAL_TYPE, default='DIN')
+    leaveslip = models.OneToOneField(IndividualSlip)
 
 class NightOutSlip(models.Model):
 
@@ -121,15 +134,26 @@ class NightOutSlip(models.Model):
     phone = models.PositiveIntegerField()
     hostaddress = models.CharField(max_length=255)
     HC = models.ForeignKey(Trainee)
+    night = models.DateField(auto_now=True)
+    leaveslip = models.OneToOneField(IndividualSlip)
 
-
-# Form classes
+# form classes
 class IndividualSlipForm(forms.ModelForm):
     class Meta:
         model = IndividualSlip
-        fields = ['type', 'description', 'comments', 'texted', 'informed']
+        fields = ['type', 'description', 'comments', 'texted', 'informed', 'events']
+
+class MealOutForm(forms.ModelForm):
+    class Meta:
+        model = MealOutSlip
+        fields = ['name', 'location', 'meal']
+
+class NightOutForm(forms.ModelForm):
+    class Meta:
+        model = NightOutSlip
+        fields = ['hostname', 'phone', 'hostaddress', 'HC']
 
 class GroupSlipForm(forms.ModelForm):
     class Meta:
         model = GroupSlip
-        fields = ['type', 'trainee', 'description', 'comments', 'texted', 'informed']
+        fields = ['type', 'trainee', 'description', 'comments', 'texted', 'informed', 'start', 'end']
