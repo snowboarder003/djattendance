@@ -25,7 +25,12 @@
     <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/modernizr-2.6.2-respond-1.1.0.min.js" %}"></script>
     <script src="{% static "bootstrap/js/offcanvas.js" %}"></script>
-    {% block scripts %}{% endblock %}
+
+    <!-- put other refs and scripts here -->
+    {% block media %}
+      {% block refs %}{% endblock refs %}
+      {% block scripts %}{% endblock scripts %}
+    {% endblock %}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
