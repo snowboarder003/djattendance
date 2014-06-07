@@ -13,14 +13,7 @@
     <h2>New Individual Leave Slip</h2>
     <div class="leaveslip-form">
 	    <form action="" method="post">{% csrf_token %}
-	        {{ form.as_p }}
-
-	        <div class="mealout-form">
-	        	{{ mealout_form.as_p }}   
-	    	</div>
-	    	<div class="nightout-form">
-		        {{ nightout_form.as_p }}     
-		    </div>  
+	        {% bootstrap_form form %}
 
 	        {% buttons %}
 	            <button type="submit" class="btn btn-primary">
@@ -29,9 +22,5 @@
 	        {% endbuttons %}
 	    </form>
 	</div>
-
-{% endblock %}
-{% block scripts %}
-<script type="text/javascript" src="{% static 'leaveslips/scripts.js' %}"></script>
 
 {% endblock %}

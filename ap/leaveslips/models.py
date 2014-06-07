@@ -134,16 +134,6 @@ class IndividualSlipForm(forms.ModelForm):
         model = IndividualSlip
         fields = ['type', 'description', 'comments', 'texted', 'informed', 'events']
 
-class MealOutForm(forms.ModelForm):
-    class Meta:
-        model = MealOutSlip
-        fields = ['name', 'location']
-
-class NightOutForm(forms.ModelForm):
-    class Meta:
-        model = NightOutSlip
-        fields = ['hostname', 'phone', 'hostaddress', 'HC']
-
 class GroupSlipForm(forms.ModelForm):
     class Meta:
         model = GroupSlip
