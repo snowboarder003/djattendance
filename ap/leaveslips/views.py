@@ -29,6 +29,10 @@ class IndividualSlipUpdate(generic.UpdateView):
     template_name = 'leaveslips/individual_update.html'
     form_class = IndividualSlipForm
 
+class IndividualSlipDelete(generic.DeleteView):
+    model = IndividualSlip
+    # template_name = 'leaveslips/'
+    form_class = IndividualSlipForm
 
 # group slips
 class GroupSlipCreate(generic.CreateView):
