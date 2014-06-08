@@ -107,7 +107,7 @@
                     end: "{{ event.end | date:'r' }}",
                     name: "{{ event.name }}",
                     code: "{{ event.code }}",
-                    type: "{{ event.type }}"
+                    type: "{{ event.get_type_display }}"
                 },{% endfor %}
                 {}
         ]);
