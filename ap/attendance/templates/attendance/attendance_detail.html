@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block references %}
+    <link href="{% static "css/schedule.css" %}" rel="stylesheet">
     <link href="{% static "css/attendance.css" %}" rel="stylesheet">
 {% endblock %}
 
@@ -59,7 +60,7 @@
                 <% var day = _.findWhere(days, {day: i.date()}) %>
                 <div class="<%= day.classes %> col-md-1">
                     <% _.each(day.events, function(event) { %>
-                        <div class="schedule-event"
+                        <div class="schedule-event present"
                              style="top: <%= moment.duration(moment(event.start).format('H:m')).subtract(6, 'hours').asMinutes()/2 %>px;
                                     height: <%= moment(event.end).diff(moment(event.start), 'minutes')/2 %>px "
                             data-id=<%= event.id %> >
@@ -68,6 +69,22 @@
                     <% }); %>
                 </div>
             <% } %>
+
+            <!-- SUBMIT ROLL -->
+            <div class="col-md-4" id="submit-roll">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title" id="event-title">Submit Roll</h3>
+                  </div>
+                  <div class="panel-body" id="event-info">
+                        <button id="present" type="button" class="btn btn-default btn-block">Present</button>
+                        <button id="absent" type="button" class="btn btn-danger btn-block">Absent</button>
+                        <button id="tardy" type="button" class="btn btn-warning btn-block">Tardy</button>
+                        <button id="uniform" type="button" class="btn btn-warning btn-block">Uniform</button>
+                        <button id="left-class" type="button" class="btn btn-warning btn-block">Left Class</button>
+                  </div>
+                </div>
+            </div>
 
         </div>
 
@@ -95,19 +112,22 @@
                 {}
         ]);
 
-        $(document).ready(function() {
-            var html = '<button type="button" class="btn btn-default btn-block">Present</button><button type="button" class="btn btn-danger btn-block">Absent</button><button type="button" class="btn btn-warning btn-block">Tardy</button><button type="button" class="btn btn-warning btn-block">Uniform</button><button type="button" class="btn btn-warning btn-block">Left Class</button>'
-
-            var options = {
-                    html: true,
-                    title: "Submit Roll",
-                    placement: "auto",
-                    content: html,
-            }
-
+        $( document ).ready(function() {
             $("#clndr").on("click", ".schedule-event", function() {
-                $(this).popover(options);
-            })
+                $(this).toggleClass("selected-event")
+            });
+
+            $("#submit-roll").on("click", "button", function () {
+                var status = $(this).attr('id')
+                var events = []
+                $(".selected-event").each(function() {
+                    $(this).removeClass("present absent tardy uniform left-class selected-event")
+                    $(this).addClass(status)
+                    events.push($(this).data("id"))
+                });
+                console.log(events)  // call API using these event IDs
+            });
+
         });
     </script>
 {% endblock %}
