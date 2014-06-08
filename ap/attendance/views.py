@@ -13,11 +13,11 @@ from accounts.models import User
 
 class AttendancePersonal(TemplateView):
     template_name = 'attendance/attendance_detail.html'
-    context_object_name = 'attendance'
+    context_object_name = 'context'
 
     def get_context_data(self, **kwargs):
         context = super(AttendancePersonal, self).get_context_data(**kwargs)
         context['trainee'] = self.request.user.trainee
         context['schedule'] = Schedule.objects.filter(term=Term.current_term()).get(trainee=self.request.user.trainee)
-        context['roll'] = Roll.objects.filter(trainee=self.request.user.trainee).filter(timestamp__gte=Term.current_term().start)
+        context['attendance'] = Roll.objects.filter(trainee=self.request.user.trainee).filter(event__term=Term.current_term())
         return context
