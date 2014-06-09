@@ -1,9 +1,10 @@
 import datetime
+import logging
 
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.db.models import Q
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 
 """ TERM models.py
@@ -18,22 +19,20 @@ Data Models
 
 
 class Term(models.Model):
-    SPRING = 'Spring'
-    FALL = 'Fall'
 
-    # a term's long name; i.e. Fall 2013, Spring 2015
-    name = models.CharField(max_length=12)
-
-    # a term's short code; i.e. Fa13, Sp15
-    code = models.CharField(max_length=4, unique=True)
+    # whether this is the current term
+    current = models.BooleanField(default=False) 
 
     # a term's season; i.e. Spring/Fall
     season = models.CharField(max_length=6,
                               choices=(
-                                  (SPRING, 'Spring'),
-                                  (FALL, 'Fall'),
+                                  ('Spring', 'Spring'),
+                                  ('Fall', 'Fall'),
                               ),
                               default=None)
+
+    # which year this term is in; e.g. 2014
+    year = models.PositiveSmallIntegerField()
 
     # first day of the term, the monday of pre-training
     start = models.DateField(verbose_name='start date')
@@ -41,16 +40,41 @@ class Term(models.Model):
     # the last day of the term, the sat of semiannual
     end = models.DateField(verbose_name='end date')
 
+    def _name(self):
+        # return term's full name; e.g. Fall 2014
+        return self.season + " " + str(self.year)
+
+    name = property(_name)
+
+    def _code(self):
+        # return term's short code; e.g. Fa14
+        return self.season[:2] + str(self.year)[2:]
+
+    code = property(_code)
+
     @staticmethod
     def current_term():
         """ Return the current term """
         try:
+            return Term.objects.get(current=True)
+        except ObjectDoesNotExist:
+            logging.critical('Could not find any terms marked as the current term!')
+            # try to return term by date (will not work for interim)
+            return Term.objects.get(Q(start__lte=datetime.date.today()), Q(end__gte=datetime.date.today()))  
+        except MultipleObjectsReturned:
+            logging.critical('More than one term marked as current term! Check your Term models')
+            # try to return term by date (will not work for interim)
             return Term.objects.get(Q(start__lte=datetime.date.today()), Q(end__gte=datetime.date.today()))
-        except ObjectDoesNotExist:  # usually happens in-between terms
-            return Term.objects.filter(start__gte=datetime.date.today()).order_by('-start')[0]  # return upcoming term
-        except:  # stop-gap solution for now
-            # return an obviously fake term object
-            return Term(name="Temp 0000", code="TM00", start=datetime.date.today(), end=datetime.date.today())
+
+    @staticmethod
+    def set_current_term(term):
+        """ Set term to current, set all other terms to not current """
+        for t in Term.objects.filter(current=True):
+            t.current = False
+            t.save()
+
+        term.current = True
+        term.save()
 
 
     def getDate(self, week, day):
