@@ -40,13 +40,13 @@ class Term(models.Model):
     # the last day of the term, the sat of semiannual
     end = models.DateField(verbose_name='end date')
 
-    _name(self):
+    def _name(self):
         # return term's full name; e.g. Fall 2014
         return self.season + " " + str(self.year)
 
     name = property(_name)
 
-    _code(self):
+    def _code(self):
         # return term's short code; e.g. Fa14
         return self.season[:2] + str(self.year)[2:]
 
