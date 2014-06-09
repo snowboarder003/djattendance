@@ -1,0 +1,13 @@
+[
+    {
+        "pk": 1, 
+        "model": "terms.term", 
+        "fields": {
+            "current": false, 
+            "season": "Spring", 
+            "end": "2014-07-05", 
+            "start": "2014-02-17", 
+            "year": 2014
+        }
+    }
+]
