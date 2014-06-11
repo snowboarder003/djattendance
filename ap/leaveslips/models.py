@@ -81,7 +81,7 @@ class LeaveSlip(models.Model):
     def save(self, force_insert=False, force_update=False):
         #records the datetime when leaveslip is either approved or denied
         if (self.status == 'D' or self.status == 'A') and (self.old_status == 'P' or self.old_status == 'F' or self.old_status == 'S'):
-            self.finalized = datetime.datetime.now()
+            self.finalized = datetime.now()
         super(LeaveSlip, self).save(force_insert, force_update)
         self.old_status = self.status
 
