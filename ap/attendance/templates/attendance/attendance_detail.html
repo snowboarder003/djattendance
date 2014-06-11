@@ -123,7 +123,7 @@
                 $(this).toggleClass("selected-event")
             });
 
-            $("#submit-roll").on("click", "button", function () {
+            $("#clndr").on("click", "#submit-roll button", function () {
                 var status = $(this).attr('id')
                 var selected_events = []
                 $(".selected-event").each(function() {
