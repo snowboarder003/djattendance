@@ -86,8 +86,17 @@
                 <li><a href="{% url 'attendance:attendance-submit' %}">Personal Attendance</a></li>
               <hr style="border-top: 1px solid #dddddd;">
               <li>Classes</li>
+                {% block classes_links %}
                 <li><a href="#">A/V Requests</a></li>
                 <li><a href="#">Class Notes</a></li>
+                {% endblock %}
+              <hr style="border-top: 1px solid #dddddd;">
+              <li>Leaveslips</li>
+                {% block leaveslips_links %}
+                 <li><a href="/leaveslips">View Leaveslips</a></li>
+                <li><a href="/leaveslips/individual/create">Submit Individual Leaveslips</a></li>
+                <li><a href="/leaveslips/group/create">Submit Group Leaveslips</a></li>
+                {% endblock %}
               {% endblock %}
             </ul>
           </div>
