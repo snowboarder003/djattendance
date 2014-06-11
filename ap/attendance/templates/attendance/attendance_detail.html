@@ -60,7 +60,7 @@
                 <% var day = _.findWhere(days, {day: i.date()}) %>
                 <div class="<%= day.classes %> col-md-1">
                     <% _.each(day.events, function(event) { %>
-                        <div class="schedule-event <%= event.roll %>"
+                        <div class="schedule-event <%= event.roll %> <%= event.leaveslip %>"
                              style="top: <%= moment.duration(moment(event.start).format('H:m')).subtract(6, 'hours').asMinutes()/2 %>px;
                                     height: <%= moment(event.end).diff(moment(event.start), 'minutes')/2 %>px "
                             data-id=<%= event.id %> >
@@ -107,7 +107,8 @@
                     end: "{{ event.end | date:'r' }}",
                     name: "{{ event.name }}",
                     code: "{{ event.code }}",
-                    type: "{{ event.type }}"
+                    type: "{{ event.type }}",
+                    leaveslip: "{% for slip in event.leaveslip.all %}{{slip.get_status_display|slugify|add:' '}}{% endfor %}",
                 },{% endfor %}
                 {}]
 
