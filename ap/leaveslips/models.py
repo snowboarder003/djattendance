@@ -91,7 +91,7 @@ class LeaveSlip(models.Model):
 
 class IndividualSlip(LeaveSlip):
 
-    events = models.ManyToManyField(Event)
+    events = models.ManyToManyField(Event, related_name='leaveslip')
     trainee = models.ForeignKey(Trainee)
 
     def get_absolute_url(self):
