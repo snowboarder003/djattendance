@@ -60,7 +60,7 @@
                 <% var day = _.findWhere(days, {day: i.date()}) %>
                 <div class="<%= day.classes %> col-md-1">
                     <% _.each(day.events, function(event) { %>
-                        <div class="schedule-event <%= event.roll %> <%= event.leaveslip %>"
+                        <div class="schedule-event <%= event.roll %> <%= event.status %>"
                              style="top: <%= moment.duration(moment(event.start).format('H:m')).subtract(6, 'hours').asMinutes()/2 %>px;
                                     height: <%= moment(event.end).diff(moment(event.start), 'minutes')/2 %>px "
                             data-id=<%= event.id %> >
@@ -108,12 +108,23 @@
                     name: "{{ event.name }}",
                     code: "{{ event.code }}",
                     type: "{{ event.type }}",
-                    leaveslip: "{% for slip in event.leaveslip.all %}{{slip.get_status_display|slugify|add:' '}}{% endfor %}",
+                    slips: [],
+                    status: "",
                 },{% endfor %}
                 {}]
 
         {% for roll in attendance %}
             _.findWhere(events, {id: "{{ roll.event.id }}" }).roll = "{{ roll.get_status_display|slugify }}";
+        {% endfor %}
+
+        {% for slip in leaveslips %}
+            {% for event in slip.events.all %}
+                var event = _.findWhere(events, {id: "{{ event.id }}" })
+                event.slips.push({{slip.id}})
+                if(event.status != "approved") {
+                    event.status = "{{ slip.get_status_display | slugify }}"
+                }
+            {% endfor %}
         {% endfor %}
 
         clndr.addEvents(events);

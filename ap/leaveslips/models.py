@@ -94,17 +94,16 @@ class IndividualSlip(LeaveSlip):
     events = models.ManyToManyField(Event, related_name='leaveslip')
     trainee = models.ForeignKey(Trainee)
 
-    def get_absolute_url(self):
-        return reverse('leaveslips:individual-detail', kwargs={'pk': self.id})
-
     def _late(self):
         end_date = self.events.all().order_by('-end')[0].end
         if self.submitted > end_date+timedelta(days=2):
             return True
         else:
             return False
-
     late = property(_late)  # whether this leave slip was submitted late or not
+
+    def get_absolute_url(self):
+        return reverse('leaveslips:individual-detail', kwargs={'pk': self.id})
 
 
 class GroupSlip(LeaveSlip):
