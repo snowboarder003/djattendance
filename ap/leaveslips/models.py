@@ -113,6 +113,11 @@ class GroupSlip(LeaveSlip):
     end = models.DateTimeField()
     trainee = models.ManyToManyField(Trainee)
 
+    def _events(self):
+        """ equivalent to IndividualSlip.events """
+        return Event.objects.filter(start__gte=self.start).filter(end__lte=self.end)
+    events = property(_events)
+
 
 class MealOutSlip(models.Model):
 
