@@ -10,7 +10,7 @@
 
         {% if lifestudies %}
             {% for lifestudy in lifestudies %}
-                {% if lifestudy.trainee.pk == profile.pk %}
+                {% if lifestudy.trainee.account_id == profile.pk %}
                     <li> {{lifestudy.displayForTrainee}} 
                         <a href="{% url 'summary-create' lifestudy.pk %}"> New </a> </li>
                     <ul>
@@ -52,9 +52,12 @@
         <input type="submit" value="approve selected"/>
         </form>
         {% endif %}
-            <form action="{% url 'lifestudy-create' %}">
-                <input type="submit" value="Assign life-study to single trainee">
-            </form>
+        <form action="{% url 'lifestudy-create' %}">
+            <input type="submit" value="Assign life-study to single trainee">
+        </form>
+        <form action="{% url 'lifestudy-house' %}">
+            <input type="submit" value="Assign life-study to house">
+        </form>
         <br>
         <a href="{% url 'reportview' %}"> Life Study Report</a>
     {% endif %}
