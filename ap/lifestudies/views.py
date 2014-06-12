@@ -1,9 +1,10 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from lifestudies.models import LifeStudy, Summary
 from accounts.models import User, Profile, Trainee, TrainingAssistant
-from lifestudies.forms import NewSummaryForm, NewLifeStudyForm, EditSummaryForm
-from django.views.generic import ListView, CreateView, DetailView, FormView, UpdateView
+from lifestudies.forms import NewSummaryForm, NewLifeStudyForm, EditSummaryForm, HouseLifeStudyForm
+from django.views.generic import ListView, CreateView, DetailView, FormView, UpdateView, TemplateView
 from django.core.urlresolvers import reverse_lazy
+from django.forms.formsets import formset_factory
 
 class LifeStudyListView(ListView):
     template_name = 'lifestudies/lifestudylist.html'
@@ -73,8 +74,9 @@ class SummaryCreateView(CreateView):
         return context 
 
     def form_valid(self, form):
-        form.lifeStudy = self.kwargs['pk']
+        form.lifeStudy = LifeStudy.objects.get(pk=self.kwargs['pk'])
         return HttpResponseRedirect(self.get_success_url())
+
 
 """this is the view that TA will click into when viewing a summary and approving it"""
 class SummaryApproveView(DetailView):
@@ -99,11 +101,47 @@ class SummaryUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(SummaryUpdateView, self).get_context_data(**kwargs)
         context['profile'] = self.request.user
-        print(self.request.POST)
+        print self.request.POST
         return context
 
     def get_success_url(self):
         return reverse_lazy('lifestudy-list')
+
+
+class HouseLifeStudyView(TemplateView):
+    template_name = 'lifestudies/lifestudy_house.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HouseLifeStudyView, self).get_context_data(**kwargs)
+        context['form'] = HouseLifeStudyForm()
+        return context
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            form = HouseLifeStudyForm(request.POST)
+            if form.is_valid():
+                print form.cleaned_data
+                listTrainee = form.cleaned_data['House'].trainee_set.all()
+                print listTrainee
+                """creating the lifestudy for each trainee manually"""
+                for trainee in listTrainee:
+                    print trainee.pk
+                    lifestudy = LifeStudy(infraction=form.cleaned_data['infraction'],
+                                          quantity=form.cleaned_data['quantity'],
+                                          due=form.cleaned_data['due'],
+                                          offense=form.cleaned_data['offense'],
+                                          trainee=trainee)
+                    lifestudy.save()
+                # formset for creating multiple LifeStudyForms for trainees in the house
+                # LifeStudyFormSet = formset_factory(NewLifeStudyForm, extra=numTrainee)
+                # formset = LifeStudyFormSet()
+                # for form in formset:
+                #     print form.as_table()
+                return HttpResponseRedirect(reverse_lazy('lifestudy-list'))
+        else:
+            form = HouseLifeStudyForm()
+
+        return HttpResponseRedirect(reverse_lazy('lifestudy-list'))
+
 
 """
     def approve(request):

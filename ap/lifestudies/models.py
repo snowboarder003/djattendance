@@ -48,7 +48,7 @@ class LifeStudy(models.Model):
     trainee = models.ForeignKey(Trainee)
 
     def displayForTrainee(self):
-        return 'Life-Study Summary due as ' + self.offense + ' for ' + self.infraction + ' infraction | ' + str(self.isCompleted())
+        return ' Life-Study Summary due as ' + self.offense + ' for ' + self.infraction + ' infraction | ' + str(self.isCompleted())
 
     # To add the specified number of life-studies to a trainee
     # See information manual for when to add additional discipline
@@ -124,11 +124,6 @@ class Summary(models.Model):
     # automatically generated date when summary is submitted
     date_submitted = datetime.datetime.now()
     # date_submitted = models.DateTimeField(blank=False, null=True)
-
-    def save(self, *args, **kwargs):
-        ''' On save, preserve original timestamps '''
-        self.date_submitted = self.date_submitted
-        return super(Summary, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.lifeStudy.trainee.account.get_full_name()  + ' | ' + self.book.name + ' | ' + str(self.chapter) + ' | ' + str(self.approved)

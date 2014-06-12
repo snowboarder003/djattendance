@@ -1,5 +1,6 @@
 from django import forms
 from lifestudies.models import LifeStudy, Summary
+from houses.models import House
 
 
 class NewLifeStudyForm(forms.ModelForm):
@@ -33,6 +34,14 @@ class EditSummaryForm(forms.ModelForm):
         if commit:
             summary.save()
         return summary
+
+
+class HouseLifeStudyForm(forms.ModelForm):
+    class Meta:
+        model = LifeStudy
+        exclude = ('trainee')
+    House = forms.ModelChoiceField(House.objects)
+    
 
 """
 class ItemForm(ModelForm):
