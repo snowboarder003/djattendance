@@ -10,6 +10,10 @@ autocomplete_light.autodiscover()
 from django.contrib import admin
 import autofixture
 
+from tastypie.api import Api
+from leaveslip_api.resources import IndividualSlipResource, GroupSlipResource, MealOutSlipResource, NightOutSlipResource
+
+
 admin.autodiscover()
 autofixture.autodiscover()
 
@@ -37,4 +41,12 @@ urlpatterns = patterns('',
 
     # django-autocomplete-light view and staff debug view
     url(r'^autocomplete/', include('autocomplete_light.urls')),
+
+
+    # leaveslips apis
+    url(r'^leaveslip-api/', include(IndividualSlipResource().urls)),
+    url(r'^leaveslip-api/', include(GroupSlipResource().urls)),
+    url(r'^leaveslip-api/', include(MealOutSlipResource().urls)),
+    url(r'^leaveslip-api/', include(NightOutSlipResource().urls)),
 )
+
