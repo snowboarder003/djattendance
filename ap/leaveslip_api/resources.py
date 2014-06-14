@@ -23,16 +23,13 @@ class LeaveSlipValidation(Validation):
 		print bundle
 		errors = {}
 		if not bundle.data:
-            return {'__all__': 'Missing leaveslip data.'}
+			return {'__all__': 'Missing leaveslip data.'}
 		
-
-        for key, value in bundle.data.items():
-            if not isinstance(value, basestring):
-                continue
-
-
-
-		return errors # + super().is_valid(self, bundle, request)
+		return errors
+  #       for key, value in bundle.data.items():
+  #           if not isinstance(value, basestring):
+  #               continue
+		# return errors # + super().is_valid(self, bundle, request)
 
 
 class IndividualSlipResource(ModelResource):

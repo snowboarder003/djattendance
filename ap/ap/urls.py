@@ -27,7 +27,6 @@ urlpatterns = patterns('',
     url(r'^dailybread/', include('dailybread.urls', namespace="dailybread")),
     url(r'^schedules/', include('schedules.urls', namespace="schedules")),
     url(r'^leaveslips/', include('leaveslips.urls', namespace="leaveslips")),
-	url(r'^attendance/', include('attendance.urls', namespace="attendance")),
 
     # Examples:
     # url(r'^$', 'ap.views.home', name='home'),
