@@ -14,8 +14,12 @@ class LifeStudyListView(ListView):
 
     #this function is called whenever 'post'
     def post(self, request, *args, **kwargs):
-        for value in request.POST.getlist('selection'):
-            print LifeStudy.objects.get(pk=value).approveAllSummary()
+        if 'approve' in request.POST:
+            for value in request.POST.getlist('selection'):
+                print LifeStudy.objects.get(pk=value).approveAllSummary()
+        if 'delete' in request.POST:
+            for value in request.POST.getlist('selection'):
+                print LifeStudy.objects.get(pk=value).delete()
         return self.get(request, *args, **kwargs)
 
     #profile is the user that's currently logged in
