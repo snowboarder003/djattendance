@@ -24,7 +24,8 @@ class LeaveSlipValidation(Validation):
 		errors = {}
 		if not bundle.data:
 			return {'__all__': 'Missing leaveslip data.'}
-		
+
+		# bundle.data['TA']	
 		return errors
   #       for key, value in bundle.data.items():
   #           if not isinstance(value, basestring):
