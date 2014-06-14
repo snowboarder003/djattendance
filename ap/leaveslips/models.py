@@ -62,6 +62,7 @@ class LeaveSlip(models.Model):
     status = models.CharField(max_length=1, choices=LS_STATUS, default='P')
 
     TA = models.ForeignKey(TrainingAssistant)
+    trainee = models.ForeignKey(Trainee)#trainee who submitted the leaveslip
 
     submitted = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
@@ -81,7 +82,7 @@ class LeaveSlip(models.Model):
     def save(self, force_insert=False, force_update=False):
         #records the datetime when leaveslip is either approved or denied
         if (self.status == 'D' or self.status == 'A') and (self.old_status == 'P' or self.old_status == 'F' or self.old_status == 'S'):
-            self.finalized = datetime.datetime.now()
+            self.finalized = datetime.now()
         super(LeaveSlip, self).save(force_insert, force_update)
         self.old_status = self.status
 
@@ -92,7 +93,9 @@ class LeaveSlip(models.Model):
 class IndividualSlip(LeaveSlip):
 
     events = models.ManyToManyField(Event)
-    trainee = models.ForeignKey(Trainee)
+
+    def get_update_url(self):
+        return reverse('leaveslips:individual-update', kwargs={'pk': self.id})
 
     def get_absolute_url(self):
         return reverse('leaveslips:individual-detail', kwargs={'pk': self.id})
@@ -111,8 +114,13 @@ class GroupSlip(LeaveSlip):
 
     start = models.DateTimeField()
     end = models.DateTimeField()
-    trainee = models.ManyToManyField(Trainee)
+    trainee_group = models.ManyToManyField(Trainee, related_name='group') #trainees included in the leaveslip
 
+    def get_update_url(self):
+        return reverse('leaveslips:group-update', kwargs={'pk': self.id})
+
+    def get_absolute_url(self):
+        return reverse('leaveslips:group-detail', kwargs={'pk': self.id})
 
 class MealOutSlip(models.Model):
 
@@ -137,4 +145,4 @@ class IndividualSlipForm(forms.ModelForm):
 class GroupSlipForm(forms.ModelForm):
     class Meta:
         model = GroupSlip
-        fields = ['type', 'trainee', 'description', 'comments', 'texted', 'informed', 'start', 'end']
+        fields = ['type', 'trainee_group', 'description', 'comments', 'texted', 'informed', 'start', 'end']

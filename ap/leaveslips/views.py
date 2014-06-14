@@ -42,10 +42,29 @@ class GroupSlipCreate(generic.CreateView):
 	template_name = 'leaveslips/group_create.html'
 	form_class = GroupSlipForm
 
+        def form_valid(self, form):
+            self.object = form.save(commit=False)
+            self.object.status = 'P'
+            self.object.trainee = Profile.get_trainee(self.request.user.id)
+            self.object.TA = self.object.trainee.TA
+            self.object.save()
+            return super(generic.CreateView, self).form_valid(form)
+
+
 class GroupSlipDetail(generic.DetailView):
     model = GroupSlip
     template_name = 'leaveslips/group_detail.html'
     context_object_name = 'leaveslip'
+
+class GroupSlipUpdate(generic.UpdateView):
+    model = GroupSlip
+    template_name = 'leaveslips/group_update.html'
+    form_class = GroupSlipForm
+
+class GroupSlipDelete(generic.DeleteView):
+    model = GroupSlip
+    # template_name = 'leaveslips/'
+    form_class = GroupSlipForm
 
 # viewing the leave slips
 class LeaveSlipList(generic.ListView):

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Leaveslips</h1>
+{% regroup object_list by get_status_display as grouped %}
+	<div class="list-group">
+	{% for leaveslip in grouped %}
+		<h4>{{leaveslip.grouper}}</h4>
+		<ul>
+			{% for leaveslip in leaveslip.list %}
+			<li>{% if leaveslip.status == 'A'%}<a href ="{{leaveslip.get_absolute_url}}">{% elif leaveslip.status != 'A' %}<a href ="{{leaveslip.get_update_url}}">{% endif %}{{leaveslip.get_type_display}}</a> (date)
+				<br>Submitted by: {{leaveslip.trainee}}
+				<br>Comments:{{leaveslip.comment}}
+				{%if leaveslip.trainee_group.exists %}
+					<br>Trainees({{leaveslip.trainee_group.count}}):
+					{% for trainee in leaveslip.trainee_group.all %}
+						{{trainee}}
+						/
+					{% endfor %}
+				{% endif %}
+				<br>Submitted on {{leaveslip.submitted}}
+			</li>
+			{% endfor %}
+		</ul>
+		</li>
+	{% endfor %}
+	</div>
+{% endblock %}
