@@ -10,16 +10,13 @@
 
         {% if lifestudies %}
             {% for lifestudy in lifestudies %}
-                {% if lifestudy.trainee.account_id == profile.pk %}
+                {% if lifestudy.trainee.account_id == profile.pk and lifestudy.isCompleted == False %}
                     <li> {{lifestudy.displayForTrainee}} 
                         {% if lifestudy.getNumSummaryDue > 0 %}
                         <a href="{% url 'summary-create' lifestudy.pk %}"> New </a>
                         {% endif %}
                     </li>
                     <ul>
-                        {% comment %}
-                        {%if not lifestudy.summary_set %}
-                        {% endcomment %}
                         {% for summary in lifestudy.summary_set.all %}
                             <li> 
                                 {{summary}} 
@@ -46,23 +43,25 @@
                 <th> Offense </th>
                 <th> Quantity </th>
                 <th> Still Due </th>
-                <th> Completed? </th>  
+                <th> Due Date </th>  
             </tr>
             {% for lifestudy in lifestudies %}
+            {% if lifestudy.isCompleted == False %}
             <tr>
                 <td> 
                     <form action="" method="post">
                     {% csrf_token %}
-                    <input type="checkbox" name="approve_selected" value="{{lifestudy.pk}}"></input>
+                        <input type="checkbox" name="selection" value="{{lifestudy.pk}}"></input>
                 </td>
                 <td>{{lifestudy.trainee.account.get_full_name}}</td>
                 <td>{{lifestudy.infraction}}</td>
                 <td>{{lifestudy.offense}}</td>
                 <td>{{lifestudy.quantity}}</td>
                 <td>{{lifestudy.getNumSummaryDue}}</td>
-                <td>{{lifestudy.isCompleted}}</td>
+                <td>{{lifestudy.due | date:"m/d/y"}}</td>
 
                 {% for summary in lifestudy.summary_set.all %}
+                {{summary.approved}}
                 <td>
                     <a href="{% url 'summary-approve' summary.pk %}"> 
                         {{summary.date_submitted | date:"m/d/y"}}
@@ -70,9 +69,11 @@
                 </td>
                 {% endfor %}
             </tr>
+            {% endif %}
             {% endfor %}
         </table>
-                    <input type="submit" value="approve selected"/></form>
+                        <input type="submit" value="approve selected"/>
+                    </form>
 
 
         <!--assign LS to single trainee botton-->

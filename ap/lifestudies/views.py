@@ -14,7 +14,7 @@ class LifeStudyListView(ListView):
 
     #this function is called whenever 'post'
     def post(self, request, *args, **kwargs):
-        for value in request.POST.getlist('approve_selected'):
+        for value in request.POST.getlist('selection'):
             print LifeStudy.objects.get(pk=value).approveAllSummary()
         return self.get(request, *args, **kwargs)
 
