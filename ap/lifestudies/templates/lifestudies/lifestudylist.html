@@ -18,7 +18,7 @@
                     </li>
                     <ul>
                         {% comment %}
-                        {% if not lifestudy.summary_set %}
+                        {%if not lifestudy.summary_set %}
                         {% endcomment %}
                         {% for summary in lifestudy.summary_set.all %}
                             <li> 
@@ -38,35 +38,54 @@
 
         <h3> Life Study TA View </h3>
 
-        {% if lifestudies %}
-        <form action="" method="post">
-            {% csrf_token %}
+        <table>
+            <tr>
+                <th> </th>
+                <th> Name </th>
+                <th> Infraction </th>
+                <th> Offense </th>
+                <th> Quantity </th>
+                <th> Still Due </th>
+                <th> Completed? </th>  
+            </tr>
             {% for lifestudy in lifestudies %}
-                {% if lifestudy.isCompleted == False %}    
-                    <div>
-                    <input type="checkbox" name="approve_selected" value="{{lifestudy.pk}}"> {{ lifestudy }} </input>
-                    {% for summary in lifestudy.summary_set.all %}
-                        {% if summary.approved == False %}
-                            <a href="{% url 'summary-approve' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
-                        {% endif %}
-                        {% if summary.approved == True %}
-                            Approved:
-                            <a href="{% url 'summary-approve' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
-                        {% endif %}
-                    {% endfor %}
-                    </div>
-                {% endif %}
+            <tr>
+                <td> 
+                    <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="checkbox" name="approve_selected" value="{{lifestudy.pk}}"></input>
+                </td>
+                <td>{{lifestudy.trainee.account.get_full_name}}</td>
+                <td>{{lifestudy.infraction}}</td>
+                <td>{{lifestudy.offense}}</td>
+                <td>{{lifestudy.quantity}}</td>
+                <td>{{lifestudy.getNumSummaryDue}}</td>
+                <td>{{lifestudy.isCompleted}}</td>
+
+                {% for summary in lifestudy.summary_set.all %}
+                <td>
+                    <a href="{% url 'summary-approve' summary.pk %}"> 
+                        {{summary.date_submitted | date:"m/d/y"}}
+                    </a>
+                </td>
+                {% endfor %}
+            </tr>
             {% endfor %}
-        <input type="submit" value="approve selected"/>
-        </form>
-        {% endif %}
+        </table>
+                    <input type="submit" value="approve selected"/></form>
+
+
+        <!--assign LS to single trainee botton-->
         <form action="{% url 'lifestudy-create' %}">
             <input type="submit" value="Assign life-study to single trainee">
         </form>
+
+        <!--assign LS to house button-->
         <form action="{% url 'lifestudy-house' %}">
             <input type="submit" value="Assign life-study to house">
         </form>
-        <br>
+
+        <!--link to report view-->
         <a href="{% url 'reportview' %}"> Life Study Report</a>
     {% endif %}
 
