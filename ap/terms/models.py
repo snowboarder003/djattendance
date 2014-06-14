@@ -69,12 +69,8 @@ class Term(models.Model):
     @staticmethod
     def set_current_term(term):
         """ Set term to current, set all other terms to not current """
-        for t in Term.objects.filter(current=True):
-            t.current = False
-            t.save()
-
+        Term.objects.filter(current=True).update(current=False)
         term.current = True
-        term.save()
 
 
     def getDate(self, week, day):
