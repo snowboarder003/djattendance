@@ -12,12 +12,20 @@
             {% for lifestudy in lifestudies %}
                 {% if lifestudy.trainee.account_id == profile.pk %}
                     <li> {{lifestudy.displayForTrainee}} 
-                        <a href="{% url 'summary-create' lifestudy.pk %}"> New </a> </li>
+                        {% if lifetudy.getNumSummaryDue > 0 %}
+                        <a href="{% url 'summary-create' lifestudy.pk %}"> New </a>
+                        {% endif %}
+                    </li>
                     <ul>
+                        {% comment %}
+                        {% if not lifestudy.summary_set %}
+                        {% endcomment %}
                         {% for summary in lifestudy.summary_set.all %}
                             <li> 
                                 {{summary}} 
+                                {% if summary.approved == False %}
                                 <a href="{% url 'summary-detail' summary.pk %}"> Edit </a>
+                                {% endif %}
                             </li>
                         {% endfor %}
                     </ul>

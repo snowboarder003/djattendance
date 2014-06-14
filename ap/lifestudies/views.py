@@ -119,10 +119,8 @@ class HouseLifeStudyView(TemplateView):
         if request.method == 'POST':
             form = HouseLifeStudyForm(request.POST)
             if form.is_valid():
-                print form.cleaned_data
                 listTrainee = form.cleaned_data['House'].trainee_set.all()
-                print listTrainee
-                """creating the lifestudy for each trainee manually"""
+                #creating the lifestudy for each trainee manually
                 for trainee in listTrainee:
                     print trainee.pk
                     lifestudy = LifeStudy(infraction=form.cleaned_data['infraction'],
@@ -131,11 +129,6 @@ class HouseLifeStudyView(TemplateView):
                                           offense=form.cleaned_data['offense'],
                                           trainee=trainee)
                     lifestudy.save()
-                # formset for creating multiple LifeStudyForms for trainees in the house
-                # LifeStudyFormSet = formset_factory(NewLifeStudyForm, extra=numTrainee)
-                # formset = LifeStudyFormSet()
-                # for form in formset:
-                #     print form.as_table()
                 return HttpResponseRedirect(reverse_lazy('lifestudy-list'))
         else:
             form = HouseLifeStudyForm()

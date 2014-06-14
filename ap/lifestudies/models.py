@@ -48,7 +48,7 @@ class LifeStudy(models.Model):
     trainee = models.ForeignKey(Trainee)
 
     def displayForTrainee(self):
-        return ' Life-Study Summary due as ' + self.offense + ' for ' + self.infraction + ' infraction | ' + str(self.isCompleted())
+        return ' Life-Study Summary due as ' + self.offense + ' for ' + self.infraction + ' infraction | ' + str(self.isCompleted()) + 'Summaries left: ' + str(self.getNumSummaryDue())
 
     # To add the specified number of life-studies to a trainee
     # See information manual for when to add additional discipline
@@ -77,7 +77,7 @@ class LifeStudy(models.Model):
 
     #get the number of summary that still needs to be submitted
     def getNumSummaryDue(self):
-        return self.quantity - self.getNumSummaryApproved()
+        return self.quantity - len(self.summary_set.all())
 
     def getNumSummaryApproved(self):
         num = 0
@@ -122,7 +122,8 @@ class Summary(models.Model):
     lifeStudy = models.ForeignKey(LifeStudy)
 
     # automatically generated date when summary is submitted
-    date_submitted = datetime.datetime.now()
+    #date_submitted = datetime.datetime.now()
+    date_submitted = models.DateTimeField(editable=False)
     # date_submitted = models.DateTimeField(blank=False, null=True)
 
     def __unicode__(self):
