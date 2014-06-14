@@ -12,7 +12,7 @@
             {% for lifestudy in lifestudies %}
                 {% if lifestudy.trainee.account_id == profile.pk %}
                     <li> {{lifestudy.displayForTrainee}} 
-                        {% if lifetudy.getNumSummaryDue > 0 %}
+                        {% if lifestudy.getNumSummaryDue > 0 %}
                         <a href="{% url 'summary-create' lifestudy.pk %}"> New </a>
                         {% endif %}
                     </li>

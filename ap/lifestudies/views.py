@@ -5,6 +5,7 @@ from lifestudies.forms import NewSummaryForm, NewLifeStudyForm, EditSummaryForm,
 from django.views.generic import ListView, CreateView, DetailView, FormView, UpdateView, TemplateView
 from django.core.urlresolvers import reverse_lazy
 from django.forms.formsets import formset_factory
+import datetime
 
 class LifeStudyListView(ListView):
     template_name = 'lifestudies/lifestudylist.html'
@@ -74,9 +75,11 @@ class SummaryCreateView(CreateView):
         return context 
 
     def form_valid(self, form):
-        form.lifeStudy = LifeStudy.objects.get(pk=self.kwargs['pk'])
-        return HttpResponseRedirect(self.get_success_url())
-
+        summary = form.save(commit=False)
+        summary.lifeStudy = LifeStudy.objects.get(pk=self.kwargs['pk'])
+        summary.date_submitted = datetime.datetime.now()
+        summary.save()
+        return super(SummaryCreateView, self).form_valid(form)
 
 """this is the view that TA will click into when viewing a summary and approving it"""
 class SummaryApproveView(DetailView):
