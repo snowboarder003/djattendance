@@ -23,7 +23,6 @@ class NewSummaryForm(forms.ModelForm):
             summary.save()
         return summary
 
-
 class EditSummaryForm(forms.ModelForm):
     class Meta:
         model = Summary
@@ -39,7 +38,7 @@ class EditSummaryForm(forms.ModelForm):
 class HouseLifeStudyForm(forms.ModelForm):
     class Meta:
         model = LifeStudy
-        exclude = ('trainee')
+        exclude = ('trainee',)
     House = forms.ModelChoiceField(House.objects)
     
 
