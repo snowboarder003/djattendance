@@ -143,6 +143,7 @@ INSTALLED_APPS = (
     'schedules',
     'attendance',
     'dailybread',  # daily nourishment
+    'leaveslip_api',
 )
 
 # A sample logging configuration. The only tangible logging
