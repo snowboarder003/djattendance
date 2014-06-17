@@ -1,5 +1,6 @@
 from django import forms
-from lifestudies.models import LifeStudy, Summary
+from accounts.models import Trainee
+from lifestudies.models import LifeStudy, Summary, TraineeTransferRequest
 from houses.models import House
 
 
@@ -41,5 +42,13 @@ class HouseLifeStudyForm(forms.ModelForm):
         exclude = ('trainee',)
     House = forms.ModelChoiceField(House.objects)
 
+class LifeStudyTransferForm(forms.Form):
+    class Meta:
+        model = TraineeTransferRequest
+        '''fields = ('originalAssignee', 'newAssignee')
+        '''
 
+    fromAssignee = forms.ModelChoiceField(queryset=Trainee.objects.all())
+    '''newAssignee = forms.ModelChoiceField(queryset=Trainee.objects.all())
+    '''
 

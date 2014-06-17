@@ -133,3 +133,8 @@ class Summary(models.Model):
         self.approved = True
         self.save()
         return self
+
+class TraineeTransferRequest(models.Model):
+    trainees = models.ManyToManyField(Trainee)
+   
+
