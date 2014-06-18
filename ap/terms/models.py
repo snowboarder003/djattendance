@@ -41,6 +41,10 @@ class Term(models.Model):
     # the last day of the term, the sat of semiannual
     end = models.DateField(verbose_name='end date')
 
+    def length():
+        """ number of weeks in the term """
+        return 20  # hardcoded until it ever changes
+
     @staticmethod
     def current_term():
         """ Return the current term """
@@ -52,11 +56,11 @@ class Term(models.Model):
             return Term(name="Temp 0000", code="TM00", start=datetime.date.today(), end=datetime.date.today())
 
 
-    def getDate(self, week, day):
+    def get_date(self, week, day):
         """ return an absolute date for a term week/day pair """
         return self.start + datetime.timedelta(week * 7 + day)
 
-    def reverseDate(self, date):
+    def reverse_date(self, date):
         """ returns a term week/day pair for an absolute date """
         if self.start <= date <= self.end:
             # days since the term started
@@ -64,7 +68,7 @@ class Term(models.Model):
             return (delta / 7, delta % 7)
         # if not within the dates the term, return invalid result
         else:
-            return (-1, -1)
+            raise ValueError('Invalid date for this term: ' + str(date)
 
     def get_absolute_url(self):
         return reverse('terms:detail', kwargs={'code': self.code})
