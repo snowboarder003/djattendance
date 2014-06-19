@@ -1,23 +1,23 @@
 from django import forms
 from accounts.models import Trainee
-from lifestudies.models import LifeStudy, Summary
+from lifestudies.models import Discipline, Summary
 from houses.models import House
 
 
-class NewLifeStudyForm(forms.ModelForm):
+class NewDisciplineForm(forms.ModelForm):
     class Meta:
-        model = LifeStudy
+        model = Discipline
     def save(self, commit=True):
-        lifestudy = super(NewLifeStudyForm, self).save(commit=False)
+        discipline = super(NewDisciplineForm, self).save(commit=False)
         if commit:
-            lifestudy.save()
-        return lifestudy
+            discipline.save()
+        return discipline
 
 
 class NewSummaryForm(forms.ModelForm):
     class Meta:
         model = Summary
-        exclude = ('approved', 'lifeStudy',)
+        exclude = ('approved', 'discipline',)
     def save(self, commit=True):
         summary = super(NewSummaryForm, self).save(commit=False)
         if commit:
@@ -27,7 +27,7 @@ class NewSummaryForm(forms.ModelForm):
 class EditSummaryForm(forms.ModelForm):
     class Meta:
         model = Summary
-        exclude = ('book','chapter','lifeStudy','approved',)
+        exclude = ('book','chapter','discipline','approved',)
 
     def save(self, commit=True):
         summary = super(EditSummaryForm, self).save(commit=False)
@@ -36,9 +36,9 @@ class EditSummaryForm(forms.ModelForm):
         return summary
 
 
-class HouseLifeStudyForm(forms.ModelForm):
+class HouseDisciplineForm(forms.ModelForm):
     class Meta:
-        model = LifeStudy
+        model = Discipline
         exclude = ('trainee',)
     House = forms.ModelChoiceField(House.objects)
 

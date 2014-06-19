@@ -8,16 +8,16 @@
 
         <h3> Life Study Summaries</h3>
 
-        {% if lifestudies %}
-            {% for lifestudy in lifestudies %}
-                {% if lifestudy.trainee.account_id == profile.pk and lifestudy.isCompleted == False %}
-                    <li> {{lifestudy.displayForTrainee}} 
-                        {% if lifestudy.getNumSummaryDue > 0 %}
-                        <a href="{% url 'summary-create' lifestudy.pk %}"> New </a>
+        {% if disciplines %}
+            {% for discipline in disciplines %}
+                {% if discipline.trainee.account_id == profile.pk and discipline.isCompleted == False %}
+                    <li> {{discipline.displayForTrainee}} 
+                        {% if discipline.getNumSummaryDue > 0 %}
+                        <a href="{% url 'summary-create' discipline.pk %}"> New </a>
                         {% endif %}
                     </li>
                     <ul>
-                        {% for summary in lifestudy.summary_set.all %}
+                        {% for summary in discipline.summary_set.all %}
                             <li> 
                                 {{summary}} 
                                 {% if summary.approved == False %}
@@ -45,22 +45,22 @@
                 <th> Still Due </th>
                 <th> Due Date </th>  
             </tr>
-            {% for lifestudy in lifestudies %}
-            {% if lifestudy.isCompleted == False %}
+            {% for discipline in disciplines %}
+            {% if discipline.isCompleted == False %}
             <tr>
                 <td> 
                     <form action="" method="post">
                     {% csrf_token %}
-                        <input type="checkbox" name="selection" value="{{lifestudy.pk}}"></input>
+                        <input type="checkbox" name="selection" value="{{discipline.pk}}"></input>
                 </td>
-                <td>{{lifestudy.trainee.account.get_full_name}}</td>
-                <td>{{lifestudy.infraction}}</td>
-                <td>{{lifestudy.offense}}</td>
-                <td>{{lifestudy.quantity}}</td>
-                <td>{{lifestudy.getNumSummaryDue}}</td>
-                <td>{{lifestudy.due | date:"m/d/y"}}</td>
+                <td>{{discipline.trainee.account.get_full_name}}</td>
+                <td>{{discipline.infraction}}</td>
+                <td>{{discipline.offense}}</td>
+                <td>{{discipline.quantity}}</td>
+                <td>{{discipline.getNumSummaryDue}}</td>
+                <td>{{discipline.due | date:"m/d/y"}}</td>
 
-                {% for summary in lifestudy.summary_set.all %}
+                {% for summary in discipline.summary_set.all %}
                 {{summary.approved}}
                 <td>
                     <a href="{% url 'summary-approve' summary.pk %}"> 
@@ -78,12 +78,12 @@
 
 
         <!--assign LS to single trainee botton-->
-        <form action="{% url 'lifestudy-create' %}">
+        <form action="{% url 'discipline-create' %}">
             <input type="submit" value="Assign life-study to single trainee">
         </form>
 
         <!--assign LS to house button-->
-        <form action="{% url 'lifestudy-house' %}">
+        <form action="{% url 'discipline-house' %}">
             <input type="submit" value="Assign life-study to house">
         </form>
 

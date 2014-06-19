@@ -1,5 +1,5 @@
 from django.contrib import admin
-from lifestudies.models import LifeStudy, Summary
+from lifestudies.models import Discipline, Summary
 
-admin.site.register(LifeStudy)
+admin.site.register(Discipline)
 admin.site.register(Summary)

@@ -13,16 +13,16 @@
 
         <h3> Life Study Report </h3>
 
-        {% if lifestudies %}
-        <form action="{% url 'lifestudy-list' %}" method="post">
+        {% if disciplines %}
+        <form action="{% url 'discipline-list' %}" method="post">
             {% csrf_token %}
             Incompleted Summaries
             <ul>
-            {% for lifestudy in lifestudies %}
-                {% if lifestudy.isCompleted == False %}    
+            {% for discipline in disciplines %}
+                {% if discipline.isCompleted == False %}    
                     <div>
-                     {{ lifestudy }} 
-                    {% for summary in lifestudy.summary_set.all %}
+                     {{ discipline }} 
+                    {% for summary in discipline.summary_set.all %}
                         {% if summary.approved == False %}
                             <a href="{% url 'summary-approve' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
                         {% endif %}
@@ -38,11 +38,11 @@
 
             Completed Summaries
             <ul>
-            {% for lifestudy in lifestudies %}
-                {% if lifestudy.isCompleted == True %}    
+            {% for discipline in disciplines %}
+                {% if discipline.isCompleted == True %}    
                     <div>
-                    {{ lifestudy }}
-                    {% for summary in lifestudy.summary_set.all %}
+                    {{ discipline }}
+                    {% for summary in discipline.summary_set.all %}
                         {% if summary.approved == True %}
                             Approved:
                             <a href="{% url 'summary-approve' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
@@ -56,6 +56,6 @@
         {% endif %}
     {% endif %}
 
- <a href="{% url 'lifestudy-list' %}"> Back </a>   
+ <a href="{% url 'discipline-list' %}"> Back </a>   
 
 {% endblock %}

@@ -1,18 +1,18 @@
 from django.conf.urls import patterns, url
-from lifestudies.views import LifeStudyListView, LifeStudyCreateView, LifeStudyDetailView, \
+from lifestudies.views import DisciplineListView, DisciplineCreateView, DisciplineDetailView, \
                             SummaryCreateView, SummaryUpdateView, SummaryApproveView, ReportListView, \
-                            HouseLifeStudyView
+                            HouseDisciplineView
 from lifestudies import views
 
 urlpatterns = patterns('',
-    url(r'^$', LifeStudyListView.as_view(), name='lifestudy-list'),
+    url(r'^$', DisciplineListView.as_view(), name='discipline-list'),
     url(r'^reportview$', ReportListView.as_view(), name='reportview'),
     url(r'^(?P<pk>\d+)/create_summary$', SummaryCreateView.as_view(), name='summary-create'),
     url(r'^(?P<pk>\d+)/detail_summary$', SummaryUpdateView.as_view(), name='summary-detail'),
     url(r'^(?P<pk>\d+)/approve_summary$', SummaryApproveView.as_view(), name='summary-approve'),
-    url(r'^create_lifestudy_house$', HouseLifeStudyView.as_view(), name='lifestudy-house'),
-    url(r'^create_lifestudy$', LifeStudyCreateView.as_view(), name='lifestudy-create'),
-    url(r'^(?P<pk>\d+)/detail_lifestudy$', LifeStudyDetailView.as_view(), name='lifestudy-detail'),
+    url(r'^create_discipline_house$', HouseDisciplineView.as_view(), name='discipline-house'),
+    url(r'^create_discipline$', DisciplineCreateView.as_view(), name='discipline-create'),
+    url(r'^(?P<pk>\d+)/detail_discipline$', DisciplineDetailView.as_view(), name='discipline-detail'),
     url(r'^transfer$', views.transfer, name ='transfer'),
 )
 

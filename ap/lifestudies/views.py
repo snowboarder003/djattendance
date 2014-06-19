@@ -1,30 +1,30 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from lifestudies.models import LifeStudy, Summary
+from lifestudies.models import Discipline, Summary
 from accounts.models import User, Profile, Trainee, TrainingAssistant
-from lifestudies.forms import NewSummaryForm, NewLifeStudyForm, EditSummaryForm, HouseLifeStudyForm
+from lifestudies.forms import NewSummaryForm, NewDisciplineForm, EditSummaryForm, HouseDisciplineForm
 from django.views.generic import ListView, CreateView, DetailView, FormView, UpdateView, TemplateView
 from django.core.urlresolvers import reverse_lazy
 from django.forms.formsets import formset_factory
 import datetime
 
-class LifeStudyListView(ListView):
-    template_name = 'lifestudies/lifestudylist.html'
-    model = LifeStudy
-    context_object_name = 'lifestudies'
+class DisciplineListView(ListView):
+    template_name = 'lifestudies/discipline_list.html'
+    model = Discipline
+    context_object_name = 'disciplines'
 
     #this function is called whenever 'post'
     def post(self, request, *args, **kwargs):
         if 'approve' in request.POST:
             for value in request.POST.getlist('selection'):
-                print LifeStudy.objects.get(pk=value).approveAllSummary()
+                print Discipline.objects.get(pk=value).approveAllSummary()
         if 'delete' in request.POST:
             for value in request.POST.getlist('selection'):
-                print LifeStudy.objects.get(pk=value).delete()
+                print Discipline.objects.get(pk=value).delete()
         return self.get(request, *args, **kwargs)
 
     #profile is the user that's currently logged in
     def get_context_data(self, **kwargs):
-        context = super(LifeStudyListView, self).get_context_data(**kwargs)
+        context = super(DisciplineListView, self).get_context_data(**kwargs)
         context['profile'] = self.request.user
         # if self.request.method == 'POST':
         #     for lifestudy in context['object_list']:
@@ -35,8 +35,8 @@ class LifeStudyListView(ListView):
 
 class ReportListView(ListView):
     template_name = 'lifestudies/reportview.html'
-    model = LifeStudy
-    context_object_name = 'lifestudies'
+    model = Discipline
+    context_object_name = 'disciplines'
 
     #this function is called whenever 'post'
     def post(self, request, *args, **kwargs):
@@ -48,23 +48,23 @@ class ReportListView(ListView):
         context = super(ReportListView, self).get_context_data(**kwargs)
         context['profile'] = self.request.user
         if self.request.method == 'POST':
-            for lifestudy in context['object_list']:
-                if lifestudy.pk in self.request.POST:
-                    lifestudy.approveAllSummary
+            for discipline in context['object_list']:
+                if discipline.pk in self.request.POST:
+                    discipline.approveAllSummary
         return context
 
 
-class LifeStudyCreateView(CreateView):
-    model = LifeStudy
-    form_class = NewLifeStudyForm
+class DisciplineCreateView(CreateView):
+    model = Discipline
+    form_class = NewDisciplineForm
 
     def get_success_url(self):
-        return reverse_lazy('lifestudy-list')
+        return reverse_lazy('discipline-list')
 
 
-class LifeStudyDetailView(DetailView):
-    model = LifeStudy
-    context_object_name = 'lifestudy'
+class DisciplineDetailView(DetailView):
+    model = Discipline
+    context_object_name = 'discipline'
 
 def transfer(request):
     fromTrainee = Trainee.objects.all().order_by('account')
@@ -76,7 +76,7 @@ class SummaryCreateView(CreateView):
     form_class = NewSummaryForm
 
     def get_success_url(self):
-        return reverse_lazy('lifestudy-list')
+        return reverse_lazy('discipline-list')
 
     def get_context_data(self, **kwargs):
         context = super(SummaryCreateView, self).get_context_data(**kwargs)
@@ -84,7 +84,7 @@ class SummaryCreateView(CreateView):
 
     def form_valid(self, form):
         summary = form.save(commit=False)
-        summary.lifeStudy = LifeStudy.objects.get(pk=self.kwargs['pk'])
+        summary.discipline = Discipline.objects.get(pk=self.kwargs['pk'])
         summary.date_submitted = datetime.datetime.now()
         summary.save()
         return super(SummaryCreateView, self).form_valid(form)
@@ -97,7 +97,7 @@ class SummaryApproveView(DetailView):
 
     def post(self, request, *args, **kwargs):
         self.get_object().approve()
-        return HttpResponseRedirect(reverse_lazy('lifestudy-list'))
+        return HttpResponseRedirect(reverse_lazy('discipline-list'))
 
 
 """this is the view that trainee click into in order to update the content of the summary"""
@@ -116,35 +116,35 @@ class SummaryUpdateView(UpdateView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('lifestudy-list')
+        return reverse_lazy('discipline-list')
 
 
-class HouseLifeStudyView(TemplateView):
-    template_name = 'lifestudies/lifestudy_house.html'
+class HouseDisciplineView(TemplateView):
+    template_name = 'lifestudies/discipline_house.html'
 
     def get_context_data(self, **kwargs):
-        context = super(HouseLifeStudyView, self).get_context_data(**kwargs)
-        context['form'] = HouseLifeStudyForm()
+        context = super(HouseDisciplineView, self).get_context_data(**kwargs)
+        context['form'] = HouseDisciplineForm()
         return context
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
-            form = HouseLifeStudyForm(request.POST)
+            form = HouseDisciplineForm(request.POST)
             if form.is_valid():
                 listTrainee = form.cleaned_data['House'].trainee_set.all()
                 #creating the lifestudy for each trainee manually
                 for trainee in listTrainee:
                     print trainee.pk
-                    lifestudy = LifeStudy(infraction=form.cleaned_data['infraction'],
+                    discipline = Discipline(infraction=form.cleaned_data['infraction'],
                                           quantity=form.cleaned_data['quantity'],
                                           due=form.cleaned_data['due'],
                                           offense=form.cleaned_data['offense'],
                                           trainee=trainee)
-                    lifestudy.save()
-                return HttpResponseRedirect(reverse_lazy('lifestudy-list'))
+                    discipline.save()
+                return HttpResponseRedirect(reverse_lazy('discipline-list'))
         else:
-            form = HouseLifeStudyForm()
+            form = HouseDisciplineForm()
 
-        return HttpResponseRedirect(reverse_lazy('lifestudy-list'))
+        return HttpResponseRedirect(reverse_lazy('discipline-list'))
 
 
 """
