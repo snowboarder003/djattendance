@@ -56,7 +56,6 @@ class Discipline(models.Model):
     def addSummary(self, num):
         self.quantity += num
         if num < 0 :
-            #raise exception or return error
             return self
         return self
 
@@ -75,7 +74,7 @@ class Discipline(models.Model):
             self.due = date
             return self
 
-    #get the number of summary that still needs to be submitted
+    """get the number of summary that still needs to be submitted"""
     def getNumSummaryDue(self):
         return self.quantity - len(self.summary_set.all())
 

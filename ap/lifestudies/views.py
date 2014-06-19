@@ -26,10 +26,6 @@ class DisciplineListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(DisciplineListView, self).get_context_data(**kwargs)
         context['profile'] = self.request.user
-        # if self.request.method == 'POST':
-        #     for lifestudy in context['object_list']:
-        #         if lifestudy.pk in self.request.POST:
-        #             lifestudy.approveAllSummary
         return context
 
 
@@ -66,10 +62,10 @@ class DisciplineDetailView(DetailView):
     model = Discipline
     context_object_name = 'discipline'
 
-def transfer(request):
-    fromTrainee = Trainee.objects.all().order_by('account')
-    output = ', '.join([t.account.lastname for t in fromTrainee])
-    return HttpResponse(output)
+    def transfer(request):
+        fromTrainee = Trainee.objects.all().order_by('account')
+        output = ', '.join([t.account.lastname for t in fromTrainee])
+        return HttpResponse(output)
 
 class SummaryCreateView(CreateView):
     model = Summary
@@ -119,11 +115,11 @@ class SummaryUpdateView(UpdateView):
         return reverse_lazy('discipline-list')
 
 
-class HouseDisciplineView(TemplateView):
+class CreateHouseDiscipline(TemplateView):
     template_name = 'lifestudies/discipline_house.html'
 
     def get_context_data(self, **kwargs):
-        context = super(HouseDisciplineView, self).get_context_data(**kwargs)
+        context = super(CreateHouseDiscipline, self).get_context_data(**kwargs)
         context['form'] = HouseDisciplineForm()
         return context
     def post(self, request, *args, **kwargs):
@@ -146,16 +142,3 @@ class HouseDisciplineView(TemplateView):
 
         return HttpResponseRedirect(reverse_lazy('discipline-list'))
 
-
-"""
-    def approve(request):
-        if request.method == "POST":
-            form = ApproveSummaryForm(request.POST)
-            if form.is_valid():
-                return HttpResponseRedirect('lifestudies/lifestudylist.html')
-        else:
-            form = ApproveSummaryForm()
-
-        return render(request, 'summary_detail.html', {'form':form,
-        })
-"""
