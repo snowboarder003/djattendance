@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from lifestudies.models import LifeStudy, Summary, TraineeTransferRequest
+from lifestudies.models import LifeStudy, Summary
 from accounts.models import User, Profile, Trainee, TrainingAssistant
-from lifestudies.forms import NewSummaryForm, NewLifeStudyForm, EditSummaryForm, HouseLifeStudyForm, LifeStudyTransferForm
+from lifestudies.forms import NewSummaryForm, NewLifeStudyForm, EditSummaryForm, HouseLifeStudyForm
 from django.views.generic import ListView, CreateView, DetailView, FormView, UpdateView, TemplateView
 from django.core.urlresolvers import reverse_lazy
 from django.forms.formsets import formset_factory
@@ -66,12 +66,10 @@ class LifeStudyDetailView(DetailView):
     model = LifeStudy
     context_object_name = 'lifestudy'
 
-class LifeStudyTransferView(CreateView):
-    model = TraineeTransferRequest
-    form_class = LifeStudyTransferForm
-
-    def get_success_url(self):
-        return reverse_lazy('lifestudy-list')
+def transfer(request):
+    fromTrainee = Trainee.objects.all().order_by('account')
+    output = ', '.join([t.account.lastname for t in fromTrainee])
+    return HttpResponse(output)
 
 class SummaryCreateView(CreateView):
     model = Summary

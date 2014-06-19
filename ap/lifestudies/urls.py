@@ -1,7 +1,8 @@
 from django.conf.urls import patterns, url
 from lifestudies.views import LifeStudyListView, LifeStudyCreateView, LifeStudyDetailView, \
                             SummaryCreateView, SummaryUpdateView, SummaryApproveView, ReportListView, \
-                            HouseLifeStudyView,LifeStudyTransferView
+                            HouseLifeStudyView
+from lifestudies import views
 
 urlpatterns = patterns('',
     url(r'^$', LifeStudyListView.as_view(), name='lifestudy-list'),
@@ -12,7 +13,7 @@ urlpatterns = patterns('',
     url(r'^create_lifestudy_house$', HouseLifeStudyView.as_view(), name='lifestudy-house'),
     url(r'^create_lifestudy$', LifeStudyCreateView.as_view(), name='lifestudy-create'),
     url(r'^(?P<pk>\d+)/detail_lifestudy$', LifeStudyDetailView.as_view(), name='lifestudy-detail'),
-    url(r'^transfer_lifestudy$', LifeStudyTransferView.as_view(), name ='lifestudy-transfer'),
+    url(r'^transfer$', views.transfer, name ='transfer'),
 )
 
 
