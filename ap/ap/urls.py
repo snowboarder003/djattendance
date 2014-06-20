@@ -29,7 +29,6 @@ urlpatterns = patterns('',
 	url(r'^attendance/', include('attendance.urls', namespace="attendance")),
     url(r'^leaveslips/', include('leaveslips.urls', namespace="leaveslips")),
 
-
     # Examples:
     # url(r'^$', 'ap.views.home', name='home'),
     # url(r'^ap/', include('ap.foo.urls')),

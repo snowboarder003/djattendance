@@ -81,7 +81,7 @@ class LeaveSlip(models.Model):
     def save(self, force_insert=False, force_update=False):
         #records the datetime when leaveslip is either approved or denied
         if (self.status == 'D' or self.status == 'A') and (self.old_status == 'P' or self.old_status == 'F' or self.old_status == 'S'):
-            self.finalized = datetime.datetime.now()
+            self.finalized = datetime.now()
         super(LeaveSlip, self).save(force_insert, force_update)
         self.old_status = self.status
 
@@ -91,11 +91,8 @@ class LeaveSlip(models.Model):
 
 class IndividualSlip(LeaveSlip):
 
-    events = models.ManyToManyField(Event)
+    events = models.ManyToManyField(Event, related_name='leaveslip')
     trainee = models.ForeignKey(Trainee)
-
-    def get_absolute_url(self):
-        return reverse('leaveslips:individual-detail', kwargs={'pk': self.id})
 
     def _late(self):
         end_date = self.events.all().order_by('-end')[0].end
@@ -103,8 +100,10 @@ class IndividualSlip(LeaveSlip):
             return True
         else:
             return False
-
     late = property(_late)  # whether this leave slip was submitted late or not
+
+    def get_absolute_url(self):
+        return reverse('leaveslips:individual-detail', kwargs={'pk': self.id})
 
 
 class GroupSlip(LeaveSlip):
@@ -112,6 +111,11 @@ class GroupSlip(LeaveSlip):
     start = models.DateTimeField()
     end = models.DateTimeField()
     trainee = models.ManyToManyField(Trainee)
+
+    def _events(self):
+        """ equivalent to IndividualSlip.events """
+        return Event.objects.filter(start__gte=self.start).filter(end__lte=self.end)
+    events = property(_events)
 
 
 class MealOutSlip(models.Model):
