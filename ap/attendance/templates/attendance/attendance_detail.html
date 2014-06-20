@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
 {% block references %}
     <link href="{% static "css/schedule.css" %}" rel="stylesheet">
     <link href="{% static "css/attendance.css" %}" rel="stylesheet">
@@ -70,9 +73,9 @@
                 </div>
             <% } %>
 
-            <!-- SUBMIT ROLL -->
-            <div class="col-md-4" id="submit-roll">
-                <div class="panel panel-default">
+            <div class="col-md-4">
+                <!-- SUBMIT ROLL -->
+                <div class="panel panel-default" id="submit-roll">
                   <div class="panel-heading">
                     <h3 class="panel-title" id="event-title">Submit Roll</h3>
                   </div>
@@ -84,8 +87,24 @@
                         <button id="left-class" type="button" class="btn btn-warning btn-block">Left Class</button>
                   </div>
                 </div>
-            </div>
 
+                <!-- SUBMIT A LEAVE SLIP -->
+                <div class="panel panel-default" id="submit-leaveslip">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" id="event-title">Submit Leave Slip</h3>
+                    </div>
+                    <div class="panel-body" id="event-info">
+                        <form id="leaveslip-form">{% csrf_token %}
+                            {% bootstrap_form leaveslipform %}
+                            {% buttons %}
+                                <button type="submit" class="btn btn-primary">
+                                    Submit
+                                </button>
+                            {% endbuttons %}
+                        </form>
+                    </div>
+                </div>
+            </div>       
         </div>
 
     </script>
@@ -118,22 +137,96 @@
         clndr.addEvents(events);
 
         $( document ).ready(function() {
-            $("#clndr").on("click", ".schedule-event", function() {
-                $(this).toggleClass("selected-event")
+
+            var selected_events = [];
+            var base_url = window.location.protocol + "//" + window.location.host + "/";
+
+            /**
+             * Calls the leaveslips API
+             * @param {JSON} data 
+             * @param {string} type - PUT, GET, POST
+             * @return {bool} success
+             */
+            function sendAttendance(form_data, type) {
+                // TODO: handle group / vs individual slips
+                var data = JSON.stringify(form_data);
+                console.log(data);
+
+                errors = $.ajax({
+                  url: base_url + 'leaveslip-api/individualslip/',
+                  type: 'POST',
+                  contentType: 'application/json',
+                  data: data,
+                  dataType: 'json',
+                  processData: false
+                });
+
+                console.log(errors);
+            }
+
+            /**
+             * Calls the roll API - called immediately after clicking roll button
+             * @param {integer array} event ids
+             * @param {string} status 
+             */
+            function sendRoll(event_ids, status) {
+
+            }
+
+            $("#submit-leaveslip form").submit(function(event) {
+                console.log('Preparing to submit leave slip with: ');
+                console.log(selected_events);
+
+                form_data = {
+                    "comments": $(this).find("textarea#id_comments").val(),
+                    "description": $(this).find("textarea#id_description").val(), 
+                    "informed": $(this).find("input#id_informed").is(":checked"), 
+                    "texted": $(this).find("input#id_texted").is(":checked"),
+                    "type": $(this).find("select#id_type").val(),
+                    "events": selected_events,
+                };
+
+                console.log(form_data);
+                sendAttendance(form_data, "POST", false);
+                return false;
             });
 
-            $("#submit-roll").on("click", "button", function () {
-                var status = $(this).attr('id')
-                var selected_events = []
+            $("#clndr").on("click", ".schedule-event", function() {
+                $(this).toggleClass("selected-event");
+            });
+
+            $("#submit-roll").on("click", "button", function() {
+                var status = $(this).attr('id');
                 $(".selected-event").each(function() {
-                    $(this).removeClass("present absent tardy uniform left-class selected-event")
-                    $(this).addClass(status)
-                    selected_events.push($(this).data("id"))
+                    $(this).removeClass("present absent tardy uniform left-class selected-event");
+                    $(this).addClass(status);
+                    selected_events.push($(this).data("id"));
                 });
-                console.log(selected_events)  // call API using these event IDs
+
+                sendRoll(selected_events, status);
+
+                switch(status) {
+                    case 'present':
+                        $("#submit-leaveslip").hide();
+                        console.log('P: no need to submit leave slip.');
+                        break;
+                    case 'absent':
+                    case 'tardy':
+                    case 'left-class':
+                        if($("#submit-leaveslip").is(':hidden')) {
+                            $("#submit-leaveslip").toggle("show");
+                        }
+                        break;
+                    case 'uniform':
+                        console.log('Uniform: give option to submit leave slip?');
+                        break;
+                    default:
+                        break;
+                }
             });
 
         });
+
     </script>
 {% endblock %}
 

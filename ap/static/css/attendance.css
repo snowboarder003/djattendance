@@ -21,3 +21,14 @@
 .pending {
     border: 1px solid #4cae4c;
 }
+
+
+/* Leave slip styles */
+
+#submit-leaveslip textarea {
+	height: 80px;
+}
+
+#submit-leaveslip {
+	display: none;
+}
