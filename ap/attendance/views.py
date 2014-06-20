@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404
 
-from .models import Roll, Period
+from .models import Roll
 from schedules.models import Schedule, Event
 from leaveslips.models import IndividualSlip, GroupSlip
 from terms.models import Term
@@ -23,9 +23,6 @@ class AttendancePersonal(TemplateView):
         context['trainee'] = self.request.user.trainee
         context['schedule'] = Schedule.objects.filter(term=Term.current_term()).get(trainee=self.request.user.trainee)
         context['attendance'] = Roll.objects.filter(trainee=self.request.user.trainee).filter(event__term=Term.current_term())
-<<<<<<< HEAD
         context['leaveslipform'] = IndividualSlipForm()
-=======
         context['leaveslips'] = chain(list(IndividualSlip.objects.filter(trainee=self.request.user.trainee).filter(events__term=Term.current_term())), list(GroupSlip.objects.filter(trainee=self.request.user.trainee).filter(start__gte=Term.current_term().start).filter(end__lte=Term.current_term().end)))
->>>>>>> 91446b92349625bc271a19f8302f8b6dec763594
         return context
