@@ -20,15 +20,41 @@ class Discipline(models.Model):
     
     MONDAYOFFENSE = 'MO'
     REGULAROFFENSE = 'RO'
+    ATTENDANCE = 'AT'
+    CELLPHONEINTERNET = 'CI'
+    MISSEDSERVICE = 'MS'
+    SPEEDING = 'S'
+    ALARMNOISE = 'AN'
+    GUARD = 'G'
+    CURFEW = 'C'
+    MISPLACED = 'M'
+    HOUSEINSPECTION = 'HI'
+    LIBRARY = 'L'
+    MISC = 'MI'
 
     TYPE_OFFENSE_CHOICES = (
         (MONDAYOFFENSE, 'Monday Offense'),
         (REGULAROFFENSE, 'Regular Offense'),
     )
 
+    TYPE_INFRACTION_CHOICES = (
+        (ATTENDANCE, 'Attendance'),
+        (CELLPHONEINTERNET, 'Cell Phone & Internet'),
+        (MISSEDSERVICE, 'Missed Service'),
+        (SPEEDING, 'Speeding'),
+        (ALARMNOISE, 'Alarm Noise'),
+        (GUARD, 'Guard'),
+        (CURFEW, 'Curfew'),
+        (MISPLACED, 'Misplaced Item'),
+        (HOUSEINSPECTION, 'House Inspection'),
+        (LIBRARY, 'Library'),
+        (MISC, 'Misc'),
+    )
+
     # an infraction is the reason for the trainee to be assigned discipline
     # The longest string will be "Additional Monday Discipline" (28 characters)
-    infraction = models.CharField(max_length=30, default='attendance')
+    infraction = models.CharField(choices=TYPE_INFRACTION_CHOICES,
+        max_length=30)
 
     # a quantity refers to how many summaries are assigned
     quantity = models.PositiveSmallIntegerField(blank=False, null=False)
@@ -95,7 +121,6 @@ class Discipline(models.Model):
                 if summary.approved == False:
                     return False
         return True
-
 
     def __unicode__(self):
         return self.trainee.account.get_full_name() + ' | ' + self.infraction + ' | ' + self.offense + ' | ' + str(self.quantity) + ' | ' + str(self.getNumSummaryDue()) + ' | ' + str(self.isCompleted())
