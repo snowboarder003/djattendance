@@ -61,15 +61,15 @@ class Term(models.Model):
         """ return an absolute date for a term week/day pair """
         return self.start + datetime.timedelta(week * 7 + day)
 
-    # def reverse_date(self, date):
-    #     """ returns a term week/day pair for an absolute date, starting from 0/0 """
-    #     if self.start <= date <= self.end:
-    #         # days since the term started
-    #         delta = date - self.start
-    #         return (delta / 7, delta % 7)
-    #     # if not within the dates the term, raise an error
-    #     else:
-    #         raise ValueError('Invalid date for this term: ' + str(date)
+    def reverse_date(self, date):
+        """ returns a term week/day pair for an absolute date, starting from 0/0 """
+        if self.start <= date <= self.end:
+            # days since the term started
+            delta = date - self.start
+            return (delta / 7, delta % 7)
+        # if not within the dates the term, raise an error
+        else:
+            raise ValueError('Invalid date for this term: ' + str(date))
 
     def get_absolute_url(self):
         return reverse('terms:detail', kwargs={'code': self.code})

@@ -15,8 +15,6 @@ DATA MODELS:
             for example, if 10 trainees are supposed to be at an event,
             then there will be 10 roll objects associated to that event,
             as well as each trainee.
-
-    - Period: a set of attendance records, generally a 2-week period
 """
 
 
