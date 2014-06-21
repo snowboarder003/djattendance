@@ -15,8 +15,8 @@ from accounts.models import User, Trainee, Profile
 # def seating(request):
 #     return HttpResponse("Hello, world. You're at the meal seating page.")
 
-def seattables(request):
-    trainees = User.objects.all().filter(gender="B").order_by('lastname')[:50]
+def seattables(request, gender):
+    trainees = User.objects.all().filter(gender=gender).order_by('lastname')[:50]
     tablesList = Table.objects.all()
 
     mydict = Table.seatinglist(trainees, "B")
