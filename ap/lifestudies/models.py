@@ -113,6 +113,9 @@ class Discipline(models.Model):
         return True
 
     #use calculateSummary(8,9,6) for now
+    """this function examines the Schedule belonging to trainee and search through all
+    the Events and Rolls. Returns the number of summary a trainee needs to be assigned
+    over the given period and term."""
     @staticmethod
     def calculateSummary(term, period, trainee):
         num_A = 0
