@@ -6,7 +6,13 @@
 
 {% block content %}
 
-          <center><b>FTTA Meal Seating List</b></center>
+
+ {% for assignment in mydict|dictsort:"last_name" %} 
+       <li>{{assignment.last_name}} , {{assignment.first_name}} - {{assignment.table}}</li>
+  {% endfor %}
+
+
+<!--           <center><b>FTTA Meal Seating List</b></center>
             <div align="right"> From: {{twoWeekStartDate}} </div>
             <div align="right"> From: {{twoWeekEndDate}} </div>
                         
@@ -36,7 +42,7 @@
                 <tr><td>{{entry.0.0}}</td><td align="center">{{entry.0.1}}</tr>
             {% endfor %}
             </table>
-            </div>
+            </div> -->
             
 {% endblock %}
 
