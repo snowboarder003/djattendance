@@ -109,6 +109,15 @@ class IndividualSlip(LeaveSlip):
 
     late = property(_late)  # whether this leave slip was submitted late or not
 
+    @property
+    def get_start(self):# determines the very first date of all the events
+        
+        events=self.events.all()
+        start=datetime.now()
+        for event in events:
+            if event.start < start:
+                start=event.start
+        return start
 
 class GroupSlip(LeaveSlip):
 

@@ -6,6 +6,7 @@ from .models import LeaveSlip, IndividualSlip, GroupSlip, IndividualSlipForm, Gr
 from accounts.models import Profile
 
 from itertools import chain
+from datetime import datetime
 
 # individual slips
 class IndividualSlipCreate(generic.CreateView):

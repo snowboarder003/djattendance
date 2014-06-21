@@ -1,15 +1,42 @@
 {% extends "base.html" %}
 
+
 {% block content %}
 <h1>Leaveslips</h1>
 {% regroup object_list by get_status_display as grouped %}
-	<div class="list-group">
+	<div>
 	{% for leaveslip in grouped %}
 		<h4>{{leaveslip.grouper}}</h4>
-		<ul>
+		{% if leaveslip.grouper == 'Approved'%}
+			<div class="panel panel-success">
+		{% elif leaveslip.grouper == 'Pending'%}
+			<div class="panel panel-warning">
+		{% elif leaveslip.grouper == 'Denied'%}
+			<div class="panel panel-danger">
+		{% elif leaveslip.grouper == 'Fellowship'%}
+			<div class="panel panel-info">
+		{% elif leaveslip.grouper == 'TA sister approved'%}
+			<div class="panel panel-primary">
+		{% endif %}
+
 			{% for leaveslip in leaveslip.list %}
-			<li>{% if leaveslip.status == 'A'%}<a href ="{{leaveslip.get_absolute_url}}">{% elif leaveslip.status != 'A' %}<a href ="{{leaveslip.get_update_url}}">{% endif %}{{leaveslip.get_type_display}}</a> (date)
-				<br>Submitted by: {{leaveslip.trainee}}
+				<div class="panel-heading">
+				{% if leaveslip.status == 'A'%}
+					<a href ="{{leaveslip.get_absolute_url}}">
+				{% elif leaveslip.status != 'A' %}
+					<a href ="{{leaveslip.get_update_url}}">
+				{% endif %}
+				<h4 class="panel-title">{{leaveslip.get_type_display}}
+				{% if leaveslip.events %}
+				 ({{leaveslip.get_start|date:"M d, Y"}})
+				{% endif %}
+				{% if leaveslip.start %}
+				 ({{leaveslip.start|date:"M d, Y"}})
+				{% endif %}
+				</h4></a></div>
+
+				<div class="panel-body">
+				Submitted by: {{leaveslip.trainee}}
 				<br>Comments:{{leaveslip.comment}}
 				{%if leaveslip.trainee_group.exists %}
 					<br>Trainees({{leaveslip.trainee_group.count}}):
@@ -19,10 +46,11 @@
 					{% endfor %}
 				{% endif %}
 				<br>Submitted on {{leaveslip.submitted}}
-			</li>
+				</div>
+			
 			{% endfor %}
-		</ul>
-		</li>
+		</div>
+		
 	{% endfor %}
 	</div>
 {% endblock %}
