@@ -7,3 +7,5 @@ ap/.pydevproject
 
 venv
 staticfiles
+*.sublime-project
+*.sublime-workspace
