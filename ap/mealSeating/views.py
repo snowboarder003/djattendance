@@ -25,6 +25,9 @@ def seattables(request, gender):
 
     return render(request, 'detail.html', {'mydict' : mydict})
 
+def newseats(request):
+    return render(request, 'newSeating.html')
+
 # def brothertables(request):
 
 #     trainees = Trainee.objects.all().filter(account__gender__contains="B").order_by('account__firstname')[:50]

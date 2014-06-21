@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <form class="form-horizontal" action="/mealSeating/viewList/B/" method="post">
+    <fieldset>
+
+    <!-- Form Name -->
+    <legend>Meal Seating Assignment Form</legend>
+
+    <!-- Multiple Radios (inline) -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="Gender">Select Trainee Gender</label>
+      <div class="col-md-4"> 
+        <label class="radio-inline" for="Gender-0">
+          <input type="radio" name="Gender" id="Gender-0" value="Brothers" checked="checked">
+          Brothers
+        </label> 
+        <label class="radio-inline" for="Gender-1">
+          <input type="radio" name="Gender" id="Gender-1" value="Sisters">
+          Sisters
+        </label>
+      </div>
+    </div>
+
+    <!-- Select Basic -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="Filter">Filter Trainees by: </label>
+      <div class="col-md-4">
+        <select id="Filter" name="Filter" class="form-control">
+          <option value="houses">Houses</option>
+          <option value="teams">Teams</option>
+          <option value="birthday">Birthday</option>
+          <option value="sendinglocality">Sending Locality</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Button -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="submit"></label>
+      <div class="col-md-4">
+        <input type="submit" name="submit" class="btn btn-success" value="Submit">
+      </div>
+    </div>
+
+    </fieldset>
+    </form>
+{% endblock %}
