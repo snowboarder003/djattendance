@@ -4,51 +4,41 @@ from django.db import models
 from accounts.models import Trainee
 from books.models import Book
 from django.core.exceptions import ValidationError
+from attendance.utils import Period
 
 """ lifestudies models.py
+This discipline module handles the assigning and managing of
+the life-study summaries from the TA side and the submitting
+from the trainees' side.
 
-This discipline module handles the assigning of reading (mainly life-studies) summaries for disciplinary purposes.
-
-Data Models
-- Discipline:
-    a discipline assigned to a trainee
+DATA MODELS:
+    - Discipline: a discipline assigned to a trainee with the
+                  infraction and with the number of summaries
+                  needed  
+    - Summary:    a summary that a trainee submit with the 
+                  content
 
 """
 
-
 class Discipline(models.Model):
-    
-    MONDAYOFFENSE = 'MO'
-    REGULAROFFENSE = 'RO'
-    ATTENDANCE = 'AT'
-    CELLPHONEINTERNET = 'CI'
-    MISSEDSERVICE = 'MS'
-    SPEEDING = 'S'
-    ALARMNOISE = 'AN'
-    GUARD = 'G'
-    CURFEW = 'C'
-    MISPLACED = 'M'
-    HOUSEINSPECTION = 'HI'
-    LIBRARY = 'L'
-    MISC = 'MI'
 
     TYPE_OFFENSE_CHOICES = (
-        (MONDAYOFFENSE, 'Monday Offense'),
-        (REGULAROFFENSE, 'Regular Offense'),
+        ('MO', 'Monday Offense'),
+        ('RO', 'Regular Offense'),
     )
 
     TYPE_INFRACTION_CHOICES = (
-        (ATTENDANCE, 'Attendance'),
-        (CELLPHONEINTERNET, 'Cell Phone & Internet'),
-        (MISSEDSERVICE, 'Missed Service'),
-        (SPEEDING, 'Speeding'),
-        (ALARMNOISE, 'Alarm Noise'),
-        (GUARD, 'Guard'),
-        (CURFEW, 'Curfew'),
-        (MISPLACED, 'Misplaced Item'),
-        (HOUSEINSPECTION, 'House Inspection'),
-        (LIBRARY, 'Library'),
-        (MISC, 'Misc'),
+        ('AT', 'Attendance'),
+        ('CI', 'Cell Phone & Internet'),
+        ('MS', 'Missed Service'),
+        ('S', 'Speeding'),
+        ('AN', 'Alarm Noise'),
+        ('G', 'Guard'),
+        ('C', 'Curfew'),
+        ('M', 'Misplaced Item'),
+        ('HI', 'House Inspection'),
+        ('L', 'Library'),
+        ('MISC', 'Misc'),
     )
 
     # an infraction is the reason for the trainee to be assigned discipline
@@ -66,7 +56,7 @@ class Discipline(models.Model):
     due = models.DateField(blank=False, null=False)
 
     # the type of offense being assigned
-    offense = models.CharField(choices=TYPE_OFFENSE_CHOICES, default=REGULAROFFENSE, 
+    offense = models.CharField(choices=TYPE_OFFENSE_CHOICES, default='RO', 
         blank=False, null=False, max_length=20)
 
     # relationship: many discplines to one specific trainee
@@ -122,6 +112,31 @@ class Discipline(models.Model):
                     return False
         return True
 
+    #use calculateSummary(8,9,6) for now
+    @staticmethod
+    def calculateSummary(term, period, trainee):
+        num_A = 0
+        num_T = 0
+        num_summary = 0
+        # trainee = Trainee.objects.get(pk=traineeID)
+        schedule = trainee.schedule_set.all().get(term=term)
+        for event in schedule.events.all():
+            print event.date
+            print Period().start(period)
+            print Period().end(period)
+            if event.date >= Period().start(period) and event.date <= Period().end(period):
+                for roll in event.roll_set.all():
+                    if roll.status == 'A':
+                        num_A += 1
+                    elif roll.status == 'L' or roll.status == 'T' or \
+                         roll.status == 'U':
+                        num_T += 1
+        if num_A >= 2:
+            num_summary += num_A
+        if num_T >= 5:
+            num_summary += num_T - 3
+        return num_A, num_T, num_summary
+
     def __unicode__(self):
         return self.trainee.account.get_full_name() + ' | ' + self.infraction + ' | ' + self.offense + ' | ' + str(self.quantity) + ' | ' + str(self.getNumSummaryDue()) + ' | ' + str(self.isCompleted())
 
@@ -146,9 +161,7 @@ class Summary(models.Model):
     discipline = models.ForeignKey(Discipline)
 
     # automatically generated date when summary is submitted
-    #date_submitted = datetime.datetime.now()
-    date_submitted = models.DateTimeField(editable=False, null=True, auto_now_add = True)
-    # date_submitted = models.DateTimeField(blank=False, null=True)
+    date_submitted = models.DateTimeField(editable=False, null=True, auto_now_add=True)
 
     def __unicode__(self):
         return self.discipline.trainee.account.get_full_name()  + ' | Book: ' + self.book.name + ' | Chapter: ' + str(self.chapter) + ' | Approved: ' + str(self.approved)
