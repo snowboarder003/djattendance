@@ -1,12 +1,13 @@
 from tastypie import fields, utils
 from tastypie.resources import ModelResource
-from tastypie.validation import Validation
+from tastypie.validation import Validation, CleanedDataFormValidation
+from tastypie.authentication import BasicAuthentication
 from tastypie.authorization import Authorization
 
 
-from leaveslips.models import LeaveSlip, IndividualSlip, GroupSlip, MealOutSlip, NightOutSlip
+from leaveslips.models import LeaveSlip, IndividualSlip, GroupSlip, MealOutSlip, NightOutSlip, IndividualSlipForm
 from schedules.models import Event
-from accounts.models import Profile
+from accounts.models import Profile, User
 
 
 ''' leaveslip_api resources.py
@@ -20,17 +21,18 @@ See schemas.txt for sample formats.
 # Custom validation of POST and PUT requests
 class LeaveSlipValidation(Validation):
 	def is_valid(self, bundle, request=None):
-		print bundle
-		errors = {}
 		if not bundle.data:
 			return {'__all__': 'Missing leaveslip data.'}
 
 		# bundle.data['TA']	
-		return errors
-  #       for key, value in bundle.data.items():
-  #           if not isinstance(value, basestring):
-  #               continue
-		# return errors # + super().is_valid(self, bundle, request)
+		# print bundle.data
+		# print bundle.request.user
+
+		trainee = Profile.get_trainee(User.objects.get(email=bundle.request.user).id)
+		bundle.data['TA'] = trainee.TA
+		bundle.data['status'] = 'P'
+		print bundle.data
+		return super(LeaveSlipValidation, self).is_valid(bundle, request)
 
 
 class IndividualSlipResource(ModelResource):
@@ -38,8 +40,9 @@ class IndividualSlipResource(ModelResource):
 	class Meta:
 		queryset = IndividualSlip.objects.all()
 		allowed_methods = ['get', 'post', 'put']
+		authentication = BasicAuthentication()
 		authorization = Authorization()
-		validation = LeaveSlipValidation()
+		form = CleanedDataFormValidation(form_class=IndividualSlipForm)
 
 	# Adding the event information to the returned data without creating an event resource
 	# data returned can be customized here
@@ -48,13 +51,14 @@ class IndividualSlipResource(ModelResource):
 		print bundle.data['events']
 		return bundle
 
+
+
 class MealOutSlipResource(ModelResource):
 	leaveslip = fields.OneToOneField(IndividualSlipResource, 'leaveslip', null=False, full=True)
 
 	class Meta:
 		queryset = MealOutSlip.objects.all()
 		allowed_methods = ['get', 'post', 'put']
-        authorization = Authorization()
 
 class NightOutSlipResource(ModelResource):
 	leaveslip = fields.OneToOneField(IndividualSlipResource, 'leaveslip', null=False, full=True)
@@ -62,10 +66,8 @@ class NightOutSlipResource(ModelResource):
 	class Meta:
 		queryset = NightOutSlip.objects.all()
 		allowed_methods = ['get', 'post', 'put']
-        authorization = Authorization()
 
 class GroupSlipResource(ModelResource):
 	class Meta:
 		queryset = GroupSlip.objects.all()
 		allowed_methods = ['get', 'post', 'put']
-		authorization = Authorization()

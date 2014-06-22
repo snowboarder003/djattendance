@@ -2,7 +2,7 @@ from django.views import generic
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 
-from .models import LeaveSlip, IndividualSlip, GroupSlip, IndividualSlipForm, GroupSlipForm
+from .models import LeaveSlip, IndividualSlip, GroupSlip, IndividualSlipForm, GroupSlipForm, Indiv
 from accounts.models import Profile
 
 from itertools import chain
@@ -14,6 +14,7 @@ class IndividualSlipCreate(generic.CreateView):
     form_class = IndividualSlipForm
 
     def form_valid(self, form):
+        print 'Make home in my heart, Lord!'
         self.object = form.save(commit=False)
         self.object.status = 'P'
         self.object.trainee = Profile.get_trainee(self.request.user.id)

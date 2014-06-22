@@ -159,14 +159,14 @@
              * @param {string} type - PUT, GET, POST
              * @return {bool} success
              */
-            function sendAttendance(form_data, type) {
+            function sendAttendance(form_data, request_type) {
                 // TODO: handle group / vs individual slips
                 var data = JSON.stringify(form_data);
                 console.log(data);
 
                 errors = $.ajax({
-                  url: base_url + 'leaveslip-api/individualslip/',
-                  type: 'POST',
+                  url: base_url + 'leaveslip-api/individualslip/create',
+                  type: request_type,
                   contentType: 'application/json',
                   data: data,
                   dataType: 'json',
@@ -219,24 +219,6 @@
 
                 sendRoll(selected_events, status);
 
-                switch(status) {
-                    case 'present':
-                        $("#submit-leaveslip").hide();
-                        console.log('P: no need to submit leave slip.');
-                        break;
-                    case 'absent':
-                    case 'tardy':
-                    case 'left-class':
-                        if($("#submit-leaveslip").is(':hidden')) {
-                            $("#submit-leaveslip").toggle("show");
-                        }
-                        break;
-                    case 'uniform':
-                        console.log('Uniform: give option to submit leave slip?');
-                        break;
-                    default:
-                        break;
-                }
             });
 
         });

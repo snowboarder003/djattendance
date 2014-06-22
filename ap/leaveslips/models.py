@@ -134,9 +134,14 @@ class NightOutSlip(models.Model):
 
 # form classes
 class IndividualSlipForm(forms.ModelForm):
+    # validation
+    type = forms.CharField(max_length=5)
+    # trainee = 
+
     class Meta:
         model = IndividualSlip
         fields = ['type', 'description', 'comments', 'texted', 'informed']
+
 
 class GroupSlipForm(forms.ModelForm):
     class Meta:
