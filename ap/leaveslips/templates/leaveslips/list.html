@@ -1,41 +1,41 @@
 {% extends "base.html" %}
 
-
 {% block content %}
 <h1>Leaveslips</h1>
-{% regroup object_list by get_status_display as grouped %}
+
+{% regroup object_list by get_status_display as sorted %}
 	<div>
-	{% for leaveslip in grouped %}
-		<h4>{{leaveslip.grouper}}</h4>
+	{% for leaveslip in sorted %}
+		
 		{% if leaveslip.grouper == 'Approved'%}
+			<h4>{{leaveslip.grouper}}</h4>
 			<div class="panel panel-success">
 		{% elif leaveslip.grouper == 'Pending'%}
+			<h4>{{leaveslip.grouper}}</h4>
 			<div class="panel panel-warning">
 		{% elif leaveslip.grouper == 'Denied'%}
+			<h4>{{leaveslip.grouper}}</h4>
 			<div class="panel panel-danger">
 		{% elif leaveslip.grouper == 'Fellowship'%}
+			<h4>Marked For Fellowship</h4>
 			<div class="panel panel-info">
 		{% elif leaveslip.grouper == 'TA sister approved'%}
+			<h4>{{leaveslip.grouper}}</h4>
 			<div class="panel panel-primary">
 		{% endif %}
 
-			{% for leaveslip in leaveslip.list %}
-				<div class="panel-heading">
-				{% if leaveslip.status == 'A'%}
-					<a href ="{{leaveslip.get_absolute_url}}">
-				{% elif leaveslip.status != 'A' %}
-					<a href ="{{leaveslip.get_update_url}}">
-				{% endif %}
+		{% for leaveslip in leaveslip.list %}
+			<div class="panel-heading">
 				<h4 class="panel-title">{{leaveslip.get_type_display}}
 				{% if leaveslip.events %}
 				 ({{leaveslip.get_start|date:"M d, Y"}})
-				{% endif %}
-				{% if leaveslip.start %}
+				{% elif leaveslip.start %}
 				 ({{leaveslip.start|date:"M d, Y"}})
 				{% endif %}
-				</h4></a></div>
+				</h4>
+			</div>
 
-				<div class="panel-body">
+			<div class="panel-body">
 				Submitted by: {{leaveslip.trainee}}
 				<br>Comments:{{leaveslip.comment}}
 				{%if leaveslip.trainee_group.exists %}
@@ -46,11 +46,40 @@
 					{% endfor %}
 				{% endif %}
 				<br>Submitted on {{leaveslip.submitted}}
+
+				<div class="btn-group" style="padding-left:33em">
+				{% if leaveslip.status == 'A'%}
+					<a href ="{{leaveslip.get_absolute_url}}"><button class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></button></a>
+				{% elif leaveslip.status != 'A' %}
+					<a href ="{{leaveslip.get_update_url}}"><button class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button></a>
+				{% endif %}
+
+				{% if leaveslip.events and leaveslip.status != 'A'%}
+					<a data-toggle ="modal" href="{% url "leaveslips:individual-delete" pk=leaveslip.id %}" data-target="#myModal"><button class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button></a>
+				{% elif leaveslip.start and leaveslip.status != 'A'%}
+				 	<a data-toggle ="modal" href="{% url "leaveslips:group-delete" pk=leaveslip.id %}" data-target="#myModal"><button class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button></a>
+				{% endif %}
+				
 				</div>
+
+				<!-- Modal -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+						</div>
+					</div>
+				</div>
+
+				
+			</div>
 			
-			{% endfor %}
+		{% endfor %}
 		</div>
-		
+	{% empty %}
+		<h4 style="padding-left:5em"><i>You have no leaveslips.</i></h4>
 	{% endfor %}
 	</div>
 {% endblock %}

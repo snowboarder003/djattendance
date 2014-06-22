@@ -1,6 +1,6 @@
 from django.views import generic
 from django.shortcuts import render, redirect
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 
 from .models import LeaveSlip, IndividualSlip, GroupSlip, IndividualSlipForm, GroupSlipForm
 from accounts.models import Profile
@@ -34,8 +34,8 @@ class IndividualSlipUpdate(generic.UpdateView):
 
 class IndividualSlipDelete(generic.DeleteView):
     model = IndividualSlip
-    # template_name = 'leaveslips/'
-    form_class = IndividualSlipForm
+    template_name= 'leaveslips/leaveslip_confirm_delete.html'
+    success_url='/leaveslips/'
 
 # group slips
 class GroupSlipCreate(generic.CreateView):
@@ -64,8 +64,9 @@ class GroupSlipUpdate(generic.UpdateView):
 
 class GroupSlipDelete(generic.DeleteView):
     model = GroupSlip
-    # template_name = 'leaveslips/'
-    form_class = GroupSlipForm
+    template_name= 'leaveslips/leaveslip_confirm_delete.html'
+    success_url='/leaveslips/'
+    
 
 # viewing the leave slips
 class LeaveSlipList(generic.ListView):
@@ -74,7 +75,7 @@ class LeaveSlipList(generic.ListView):
 
 
     def get_queryset(self):
-         individual=IndividualSlip.objects.filter(trainee=self.request.user.id)
-         group=GroupSlip.objects.filter(trainee=self.request.user.id)
+         individual=IndividualSlip.objects.filter(trainee=self.request.user.id).order_by('status')
+         group=GroupSlip.objects.filter(trainee_group=self.request.user.id).order_by('status') #if trainee is in a group leaveslip submitted by another user
          queryset= chain(individual,group) #combines two querysets
          return queryset

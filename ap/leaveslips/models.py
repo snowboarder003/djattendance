@@ -62,7 +62,7 @@ class LeaveSlip(models.Model):
     status = models.CharField(max_length=1, choices=LS_STATUS, default='P')
 
     TA = models.ForeignKey(TrainingAssistant)
-    trainee = models.ForeignKey(Trainee)#trainee who submitted the leaveslip
+    trainee = models.ForeignKey(Trainee)#trainee who submitted the leaveslip. change to submittedby
 
     submitted = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
@@ -119,17 +119,19 @@ class IndividualSlip(LeaveSlip):
                 start=event.start
         return start
 
+
 class GroupSlip(LeaveSlip):
 
     start = models.DateTimeField()
     end = models.DateTimeField()
-    trainee_group = models.ManyToManyField(Trainee, related_name='group') #trainees included in the leaveslip
+    trainee_group = models.ManyToManyField(Trainee, related_name='group') #trainees included in the leaveslip/change to trainees
 
     def get_update_url(self):
         return reverse('leaveslips:group-update', kwargs={'pk': self.id})
 
     def get_absolute_url(self):
         return reverse('leaveslips:group-detail', kwargs={'pk': self.id})
+
 
 class MealOutSlip(models.Model):
 
