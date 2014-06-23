@@ -96,6 +96,9 @@
                     <div class="panel-body" id="event-info">
                         <form id="leaveslip-form">{% csrf_token %}
                             {% bootstrap_form leaveslipform %}
+                            <input type="hidden" id="id_trainee" name="trainee" value="{{ trainee.id }}">
+                            <input type="hidden" id="id_TA" name="TA" value="{{ trainee.TA.id }}">
+
                             {% buttons %}
                                 <button type="submit" class="btn btn-primary">
                                     Submit
@@ -165,7 +168,7 @@
                 console.log(data);
 
                 errors = $.ajax({
-                  url: base_url + 'leaveslip-api/individualslip/create',
+                  url: base_url + 'leaveslip-api/individualslip/',
                   type: request_type,
                   contentType: 'application/json',
                   data: data,
@@ -196,6 +199,8 @@
                     "texted": $(this).find("input#id_texted").is(":checked"),
                     "type": $(this).find("select#id_type").val(),
                     "events": selected_events,
+                    "trainee": base_url + 'leaveslip-api/trainee/' + $(this).find("input#id_trainee").val() + "/",
+                    "TA": base_url + 'leaveslip-api/TA/' + $(this).find("input#id_TA_id").val() + "/",
                 };
 
                 console.log(form_data);

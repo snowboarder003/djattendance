@@ -2,7 +2,7 @@ from django.views import generic
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 
-from .models import LeaveSlip, IndividualSlip, GroupSlip, IndividualSlipForm, GroupSlipForm, Indiv
+from .models import LeaveSlip, IndividualSlip, GroupSlip, IndividualSlipForm, GroupSlipForm
 from accounts.models import Profile
 
 from itertools import chain

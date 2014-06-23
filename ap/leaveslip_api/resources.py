@@ -7,7 +7,7 @@ from tastypie.authorization import Authorization
 
 from leaveslips.models import LeaveSlip, IndividualSlip, GroupSlip, MealOutSlip, NightOutSlip, IndividualSlipForm
 from schedules.models import Event
-from accounts.models import Profile, User
+from accounts.models import Profile, User, Trainee, TrainingAssistant
 
 
 ''' leaveslip_api resources.py
@@ -34,9 +34,24 @@ class LeaveSlipValidation(Validation):
 		print bundle.data
 		return super(LeaveSlipValidation, self).is_valid(bundle, request)
 
+class TraineeResource(ModelResource):
+	class Meta:
+		authorization = Authorization()
+		queryset = Trainee.objects.all()
+        resource_name = 'trainee'
+
+
+class TrainingAssistantResource(ModelResource):
+	class Meta:
+		authorization = Authorization()
+		queryset = TrainingAssistant.objects.all()
+		resource_name = 'TA'
+		
 
 class IndividualSlipResource(ModelResource):
-	
+	trainee = fields.ForeignKey(TraineeResource, 'trainee')
+	TA = fields.ForeignKey(TrainingAssistantResource, 'TA')
+
 	class Meta:
 		queryset = IndividualSlip.objects.all()
 		allowed_methods = ['get', 'post', 'put']
