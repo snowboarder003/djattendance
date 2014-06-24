@@ -54,24 +54,35 @@
 					<a href ="{{leaveslip.get_update_url}}"><button class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button></a>
 				{% endif %}
 
-				{% if leaveslip.events and leaveslip.status != 'A'%}
-					<a data-toggle ="modal" href="{% url "leaveslips:individual-delete" pk=leaveslip.id %}" data-target="#myModal"><button class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button></a>
-				{% elif leaveslip.start and leaveslip.status != 'A'%}
-				 	<a data-toggle ="modal" href="{% url "leaveslips:group-delete" pk=leaveslip.id %}" data-target="#myModal"><button class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button></a>
-				{% endif %}
+				
+				<a data-toggle ="modal" href="#{{leaveslip.id}}" class="btn btn-danger" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+				
 				
 				</div>
 
 				<!-- Modal -->
-				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						</div>
-						</div>
-					</div>
+				<div class="modal fade" id="{{leaveslip.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				
+				<div class="modal-dialog">
+				<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+					<h3 id="myModalLabel">Delete Leaveslip</h3>
 				</div>
+				<div class="modal-body">
+					<p>Are you sure you want to delete?</p>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+					{% if leaveslip.events and leaveslip.status != 'A'%}
+					<a data-toggle ="modal" href="{% url "leaveslips:individual-delete" pk=leaveslip.id %}" class="btn btn-danger">Delete</a>
+					{% elif leaveslip.start and leaveslip.status != 'A'%}
+					<a data-toggle ="modal" href="{% url "leaveslips:group-delete" pk=leaveslip.id %}" class="btn btn-danger">Delete</a>
+					{% endif %}
+				</div>
+				</div>
+				</div>
+			</div>
 
 				
 			</div>
