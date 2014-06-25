@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import ListView
 
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_protect
 
 from django_tables2 import RequestConfig
 from django_tables2 import tables
@@ -15,13 +16,12 @@ from accounts.models import User, Trainee, Profile
 # def seating(request):
 #     return HttpResponse("Hello, world. You're at the meal seating page.")
 
+@csrf_protect
 def seattables(request, gender):
     trainees = User.objects.all().filter(gender=gender).order_by('lastname')[:50]
     tablesList = Table.objects.all()
 
     mydict = Table.seatinglist(trainees, gender)
-
-
 
     return render(request, 'detail.html', {'mydict' : mydict})
 
