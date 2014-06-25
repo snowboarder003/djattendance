@@ -19,7 +19,7 @@ def seattables(request, gender):
     trainees = User.objects.all().filter(gender=gender).order_by('lastname')[:50]
     tablesList = Table.objects.all()
 
-    mydict = Table.seatinglist(trainees, "B")
+    mydict = Table.seatinglist(trainees, gender)
 
 
 
