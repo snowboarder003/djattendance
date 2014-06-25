@@ -61,7 +61,6 @@
                 <td>{{discipline.due | date:"m/d/y"}}</td>
 
                 {% for summary in discipline.summary_set.all %}
-                {{summary.approved}}
                 <td>
                     <a href="{% url 'summary-approve' summary.pk %}"> 
                         {{summary.date_submitted | date:"m/d/y"}}
@@ -72,23 +71,31 @@
             {% endif %}
             {% endfor %}
         </table>
-                        <input type="submit" name="approve" value="Approve Selected"/>
-                        <input type="submit" name="delete" value="Delete Selected"/>
+
+                        <button type="submit" name="approve" class="btn btn-success">Approve Selected</button>
+                        <button type="submit" name="delete" class="btn btn-danger">Delete Selected</button>
                     </form>
 
 
+        <form action="{% url 'reportview' %}">
+            <button class="btn btn-info">Life Study Report</button>
+        </form>
+
         <!--assign LS to single trainee botton-->
         <form action="{% url 'discipline-create' %}">
-            <input type="submit" value="Assign life-study to single trainee">
+            <button class="btn btn-default">Assign life-study to single trainee</button>
         </form>
 
         <!--assign LS to house button-->
         <form action="{% url 'discipline-house' %}">
-            <input type="submit" value="Assign life-study to house">
+            <button class="btn btn-default">Assign life-study to house</button>
         </form>
 
-        <!--link to report view-->
-        <a href="{% url 'reportview' %}"> Life Study Report</a>
+        <form>
+            <button class="btn btn-default">Assign life-study according to attendance</button>
+        </form>
+
+
     {% endif %}
 
 {% endblock %}
