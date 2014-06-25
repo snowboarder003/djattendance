@@ -28,3 +28,9 @@
 #submit-leaveslip textarea {
 	height: 80px;
 }
+
+#leaveslip-alert {
+	display: none;
+	background-color: #fbeed5;
+	border: 1px solid #C5BCAD;
+}

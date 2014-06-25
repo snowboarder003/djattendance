@@ -11,6 +11,9 @@
 
 {% block content %}
     <h2>{{ trainee }}'s Schedule</h2><br>
+    <div id="leaveslip-alert" class="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
     <div id="clndr">
     </div>
 
@@ -167,16 +170,28 @@
                 var data = JSON.stringify(form_data);
                 console.log(data);
 
-                errors = $.ajax({
+                response = $.ajax({
                   url: base_url + 'leaveslip-api/individualslip/',
                   type: request_type,
                   contentType: 'application/json',
                   data: data,
                   dataType: 'json',
-                  processData: false
+                  processData: false,
+                  complete: function(xhr, textStatus) {
+                        if(xhr.status == 201 || xhr.status == 200) {
+                            // clear form
+                            $('#submit-leaveslip form')[0].reset();
+                            $("#leaveslip-alert.alert").append('Successfully submitted leaveslip.');
+                            console.log('Phi 1:20 - According to my earnest expectation and hope that in nothing I will be put to shame, but with all boldness, as always, even now Christ will be magnified in my body, whether through life or through death.');
+                        } else {
+                            $("#leaveslip-alert.alert").append('Error creating leave slip.');
+                        }
+                        // display response message
+                        $("#leaveslip-alert.alert").show();
+                    }
                 });
 
-                console.log(errors);
+                console.log(response);
             }
 
             /**
@@ -199,8 +214,8 @@
                     "texted": $(this).find("input#id_texted").is(":checked"),
                     "type": $(this).find("select#id_type").val(),
                     "events": selected_events,
-                    "trainee": base_url + 'leaveslip-api/trainee/' + $(this).find("input#id_trainee").val() + "/",
-                    "TA": base_url + 'leaveslip-api/TA/' + $(this).find("input#id_TA_id").val() + "/",
+                    "trainee": '/leaveslip-api/trainee/' + $(this).find("input#id_trainee").val() + "/",
+                    "TA": '/leaveslip-api/TA/' + $(this).find("input#id_TA").val() + "/",
                 };
 
                 console.log(form_data);
