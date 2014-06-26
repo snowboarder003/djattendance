@@ -34,6 +34,13 @@ class LeaveSlipValidation(Validation):
 		print bundle.data
 		return super(LeaveSlipValidation, self).is_valid(bundle, request)
 
+
+class EventResource(ModelResource):
+	class Meta:
+		authorization = Authorization()
+		queryset = Event.objects.all()
+        resource_name = 'events'
+
 class TraineeResource(ModelResource):
 	class Meta:
 		authorization = Authorization()
@@ -51,6 +58,7 @@ class TrainingAssistantResource(ModelResource):
 class IndividualSlipResource(ModelResource):
 	trainee = fields.ForeignKey(TraineeResource, 'trainee')
 	TA = fields.ForeignKey(TrainingAssistantResource, 'TA')
+	events = fields.ToManyField(EventResource, 'events')
 
 	class Meta:
 		queryset = IndividualSlip.objects.all()
@@ -61,10 +69,10 @@ class IndividualSlipResource(ModelResource):
 
 	# Adding the event information to the returned data without creating an event resource
 	# data returned can be customized here
-	def dehydrate(self, bundle):
-		bundle.data['events'] = IndividualSlip.objects.get(pk=bundle.data['id']).events.all()
-		print bundle.data['events']
-		return bundle
+	# def dehydrate(self, bundle):
+		# bundle.data['events'] = IndividualSlip.objects.get(pk=bundle.data['id']).events.all()
+		# print bundle.data['events']
+		# return bundle
 
 
 
