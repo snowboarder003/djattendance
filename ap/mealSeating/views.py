@@ -18,7 +18,8 @@ from accounts.models import User, Trainee, Profile
 
 @csrf_protect
 def seattables(request, gender):
-    trainees = User.objects.all().filter(gender=gender).order_by('lastname')[:50]
+    filterchoice = request.POST['Filter']
+    trainees = User.objects.all().filter(gender=gender).order_by(filterchoice)[:50]
     tablesList = Table.objects.all()
 
     mydict = Table.seatinglist(trainees, gender)
