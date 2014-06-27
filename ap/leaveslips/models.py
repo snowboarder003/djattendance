@@ -138,6 +138,7 @@ class IndividualSlipForm(forms.ModelForm):
         model = IndividualSlip
         fields = ['type', 'description', 'comments', 'texted', 'informed']
 
+
 class GroupSlipForm(forms.ModelForm):
     class Meta:
         model = GroupSlip

@@ -11,6 +11,9 @@
 
 {% block content %}
     <h2>{{ trainee }}'s Schedule</h2><br>
+    <div id="leaveslip-alert" class="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
     <div id="clndr">
     </div>
 
@@ -96,6 +99,9 @@
                     <div class="panel-body" id="event-info">
                         <form id="leaveslip-form">{% csrf_token %}
                             {% bootstrap_form leaveslipform %}
+                            <input type="hidden" id="id_trainee" name="trainee" value="{{ trainee.id }}">
+                            <input type="hidden" id="id_TA" name="TA" value="{{ trainee.TA.id }}">
+
                             {% buttons %}
                                 <button type="submit" class="btn btn-primary">
                                     Submit
@@ -149,31 +155,57 @@
         clndr.addEvents(events);
 
         $( document ).ready(function() {
-
+            var api_base = '/leaveslip-api';
             var selected_events = [];
-            var base_url = window.location.protocol + "//" + window.location.host + "/";
+            var base_url = window.location.protocol + "//" + window.location.host;
+            var form = $("#submit-leaveslip form");
 
             /**
              * Calls the leaveslips API
-             * @param {JSON} data 
+             * @param {JSON} data
              * @param {string} type - PUT, GET, POST
              * @return {bool} success
              */
-            function sendAttendance(form_data, type) {
+            function sendAttendance(form_data, request_type) {
                 // TODO: handle group / vs individual slips
                 var data = JSON.stringify(form_data);
                 console.log(data);
 
-                errors = $.ajax({
-                  url: base_url + 'leaveslip-api/individualslip/',
-                  type: 'POST',
+                response = $.ajax({
+                  url: base_url + api_base + '/individualslip/',
+                  type: request_type,
                   contentType: 'application/json',
                   data: data,
                   dataType: 'json',
-                  processData: false
+                  processData: false,
+                  complete: function(xhr, textStatus) {
+                        if(xhr.status == 201 || xhr.status == 200) {
+                            $('#submit-leaveslip form')[0].reset();
+                            $("#leaveslip-alert.alert").append('Submitted leaveslip.');
+                            console.log('Phi 1:20 - According to my earnest expectation and hope that in nothing I will be put to shame, but with all boldness, as always, even now Christ will be magnified in my body, whether through life or through death.');
+                        } else {
+                            $("#leaveslip-alert.alert").append('Error creating leave slip.');
+                        }
+                        // display response message
+                        $("#leaveslip-alert.alert").show();
+                    }
                 });
 
-                console.log(errors);
+                console.log(response);
+            }
+
+            /**
+            * @param {integer array} event ids
+            * @return {string array} prepared array for the api
+            */
+            function prepareEvents(events_array) {
+                prepared_events = [];
+
+                for(var i = 0; i < events_array.length; i++) {
+                    prepared_events[i] = api_base + "/event/" + events_array[i] + "/";
+                }
+
+                return prepared_events;
             }
 
             /**
@@ -185,26 +217,45 @@
 
             }
 
-            $("#submit-leaveslip form").submit(function(event) {
+            form.submit(function(event) {
                 console.log('Preparing to submit leave slip with: ');
                 console.log(selected_events);
+                console.log(prepareEvents(selected_events));
 
                 form_data = {
-                    "comments": $(this).find("textarea#id_comments").val(),
-                    "description": $(this).find("textarea#id_description").val(), 
-                    "informed": $(this).find("input#id_informed").is(":checked"), 
-                    "texted": $(this).find("input#id_texted").is(":checked"),
-                    "type": $(this).find("select#id_type").val(),
-                    "events": selected_events,
+                    "comments": form.find("textarea#id_comments").val(),
+                    "description": form.find("textarea#id_description").val(), 
+                    "informed": form.find("input#id_informed").is(":checked"), 
+                    "texted": form.find("input#id_texted").is(":checked"),
+                    "type": form.find("select#id_type").val(),
+                    "events": prepareEvents(selected_events),
+                    "trainee": api_base + '/trainee/' + form.find("input#id_trainee").val() + "/",
+                    "TA": api_base + '/TA/' + form.find("input#id_TA").val() + "/",
                 };
 
                 console.log(form_data);
-                sendAttendance(form_data, "POST", false);
+                sendAttendance(form_data, "POST");
                 return false;
             });
 
             $("#clndr").on("click", ".schedule-event", function() {
                 $(this).toggleClass("selected-event");
+
+                // display the leaveslip for that event, if any
+                var event_id = $(this).data("id");
+                selected_events.push($(this).data("id"));
+
+                console.log(event_id);
+                if($("div.schedule-event").hasClass("pending")) {
+                    // populate form with Update and Delete buttons
+
+
+                } else {
+                    if($("div.schedule-event").hasClass("approved")) {
+                        // populate form but no buttons
+                    }
+
+                }
             });
 
 
@@ -219,24 +270,6 @@
 
                 sendRoll(selected_events, status);
 
-                switch(status) {
-                    case 'present':
-                        $("#submit-leaveslip").hide();
-                        console.log('P: no need to submit leave slip.');
-                        break;
-                    case 'absent':
-                    case 'tardy':
-                    case 'left-class':
-                        if($("#submit-leaveslip").is(':hidden')) {
-                            $("#submit-leaveslip").toggle("show");
-                        }
-                        break;
-                    case 'uniform':
-                        console.log('Uniform: give option to submit leave slip?');
-                        break;
-                    default:
-                        break;
-                }
             });
 
         });

@@ -14,6 +14,7 @@ class IndividualSlipCreate(generic.CreateView):
     form_class = IndividualSlipForm
 
     def form_valid(self, form):
+        print 'Make home in my heart, Lord!'
         self.object = form.save(commit=False)
         self.object.status = 'P'
         self.object.trainee = Profile.get_trainee(self.request.user.id)

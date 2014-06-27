@@ -29,6 +29,8 @@
 	height: 80px;
 }
 
-#submit-leaveslip {
+#leaveslip-alert {
 	display: none;
+	background-color: #fbeed5;
+	border: 1px solid #C5BCAD;
 }

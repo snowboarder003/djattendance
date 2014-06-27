@@ -161,7 +161,6 @@ class Profile(models.Model):
         return Trainee.objects.get(account_id=user_id)
     
 
-
 class TrainingAssistant(Profile):
 
     services = models.ManyToManyField(Service, blank=True, null=True)
