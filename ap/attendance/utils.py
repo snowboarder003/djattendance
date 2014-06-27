@@ -13,7 +13,7 @@ class Period(object):
 
     def period_of_date(self, date):
         """ for a calendar date, return the period """
-        week, day = self.term.reverse_date(date)  # returns a week and a day
+        week, day = self.term.reverseDate(date)  # returns a week and a day
         return self.period_of_week(week)
 
     def start(self, n):
