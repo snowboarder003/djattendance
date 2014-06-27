@@ -83,7 +83,7 @@ class TraineeAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             # add 'bunk' back in once db behaves
-            'fields': (('account', 'active',), 'type', 'term', ('date_begin', 'date_end',), ('married', 'spouse',), ('TA', 'mentor',), 'team', 'house', 'address', 'self_attendance', 'house_coordinator')
+            'fields': (('account', 'active',), 'type', 'term', ('date_begin', 'date_end',), ('married', 'spouse',), ('TA', 'mentor',), 'team', 'house', 'address', 'self_attendance',)
         }),
     )
     list_display = ('__unicode__', 'current_term')
