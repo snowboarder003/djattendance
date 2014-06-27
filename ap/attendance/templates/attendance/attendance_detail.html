@@ -160,8 +160,18 @@
             var selected_events = [];
             var base_url = window.location.protocol + "//" + window.location.host;
             var form = $("#submit-leaveslip form");
+            var form_heading = $("#submit-leaveslip .panel-heading .panel-title");
+            var message_box = $("#leaveslip-alert.alert");
 
             $("#id_events").parent().remove();
+
+            /**
+            * Resets the form.
+            */
+            function resetForm() {
+                form[0].reset();
+                form_heading.text("Submit a leave slip");
+            }
 
             /**
              * Calls the leaveslips API to make changes
@@ -174,7 +184,7 @@
             function sendAttendance(form_data, request_type, message, slip_id) {
                 // TODO: handle group / vs individual slips
                 var data = JSON.stringify(form_data);
-                console.log(data);
+                var form_heading = $("#submit-leaveslip .panel-heading .panel-title");
 
                 response = $.ajax({
                   url: base_url + api_base + '/individualslip/' + slip_id,
@@ -185,14 +195,14 @@
                   processData: false,
                   complete: function(xhr, textStatus) {
                         if(xhr.status == 201 || xhr.status == 200 || xhr.status == 204) {
-                            form[0].reset();
-                            $("#leaveslip-alert.alert").append('Success ' + message + ' leave slip.');
+                            resetForm();
+                            message_box.append('Success ' + message + ' leave slip.');
                             console.log('Phi 1:20 - According to my earnest expectation and hope that in nothing I will be put to shame, but with all boldness, as always, even now Christ will be magnified in my body, whether through life or through death.');
                             // clndr.render(); // or something like this (this doesn't work) to re-render the events
                         } else {
-                            $("#leaveslip-alert.alert").append('Error ' + message + ' leave slip.');
+                            message_box.append('Error ' + message + ' leave slip.');
                         }
-                        $("#leaveslip-alert.alert").show();
+                        message_box.show();
                     }
                 });
 
@@ -239,7 +249,6 @@
              * @param {bool} is the leaveslip approved
              */  
              function populateSlipForm(slip, is_approved) {
-                var form_heading = $("#submit-leaveslip .panel-heading .panel-title");
                 console.log(slip);
 
                 if(typeof slip !== 'undefined') {
@@ -265,9 +274,8 @@
                         if(form_button.size() == 1) setButtons(form_button, true);
                     }
                 } else {
-                    form[0].reset();
+                    resetForm();
                     setButtons(form_button, false);
-                    form_heading.text("Submit a leave slip");
                 }
             }
 
@@ -303,7 +311,6 @@
                 var active_button = form.context.activeElement.value;
 
                 if(active_button == 'deleting') {
-                    console.log('deleting! ' + slip_id);
                     sendAttendance({}, 'DELETE', 'deleting', slip_id);
 
                 } else {
@@ -320,11 +327,10 @@
                     };
 
                     if(active_button == 'updating') {
-                        console.log('updating!');
+                        sendAttendance(form_data, 'PUT', 'updating', slip_id);
                     } else {
                         // submitting a new leave slip
                         sendAttendance(form_data, 'POST', 'submitting', '');
-                        console.log('creating.');
                     }
                 }
                 return false;
@@ -337,7 +343,6 @@
                 var event_id = $(this).data("id");
                 selected_events.push($(this).data("id"));
 
-                console.log(event_id);
                 // if pending, display the details and allow update or delete
                 if($("div.schedule-event").hasClass("pending")) {
                     getLeaveslip(event_id, false);
