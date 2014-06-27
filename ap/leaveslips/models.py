@@ -62,6 +62,7 @@ class LeaveSlip(models.Model):
     status = models.CharField(max_length=1, choices=LS_STATUS, default='P')
 
     TA = models.ForeignKey(TrainingAssistant)
+    submittedby = models.ForeignKey(Trainee)#trainee who submitted the leaveslip
 
     submitted = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
@@ -91,8 +92,11 @@ class LeaveSlip(models.Model):
 
 class IndividualSlip(LeaveSlip):
 
+
     events = models.ManyToManyField(Event, related_name='leaveslip')
-    trainee = models.ForeignKey(Trainee)
+
+    def get_update_url(self):
+        return reverse('leaveslips:individual-update', kwargs={'pk': self.id})
 
     def _late(self):
         end_date = self.events.all().order_by('-end')[0].end
@@ -100,17 +104,34 @@ class IndividualSlip(LeaveSlip):
             return True
         else:
             return False
+
     late = property(_late)  # whether this leave slip was submitted late or not
 
     def get_absolute_url(self):
         return reverse('leaveslips:individual-detail', kwargs={'pk': self.id})
+
+    @property
+    def get_start(self):# determines the very first date of all the events
+        
+        events=self.events.all()
+        start=datetime.now()
+        for event in events:
+            if event.start < start:
+                start=event.start
+        return start
 
 
 class GroupSlip(LeaveSlip):
 
     start = models.DateTimeField()
     end = models.DateTimeField()
-    trainee = models.ManyToManyField(Trainee)
+    trainees = models.ManyToManyField(Trainee, related_name='group') #trainees included in the leaveslip
+
+    def get_update_url(self):
+        return reverse('leaveslips:group-update', kwargs={'pk': self.id})
+
+    def get_absolute_url(self):
+        return reverse('leaveslips:group-detail', kwargs={'pk': self.id})
 
     def _events(self):
         """ equivalent to IndividualSlip.events """
@@ -142,4 +163,4 @@ class IndividualSlipForm(forms.ModelForm):
 class GroupSlipForm(forms.ModelForm):
     class Meta:
         model = GroupSlip
-        fields = ['type', 'trainee', 'description', 'comments', 'texted', 'informed', 'start', 'end']
+        fields = ['type', 'trainee_group', 'description', 'comments', 'texted', 'informed', 'start', 'end']
