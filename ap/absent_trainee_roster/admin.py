@@ -1,18 +1,9 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from django.template import loader, RequestContext, Context
+from django.template import loader,Context
 from django.conf.urls import patterns
-from django.shortcuts import render_to_response
 from django.core.mail import EmailMessage
 from django.conf import settings # to get admin email addresses
-
-from reportlab.pdfgen import canvas
 from django.http import HttpResponse
-
-import cStringIO as StringIO
-import xhtml2pdf.pisa as pisa
-from django.template.loader import get_template
-from cgi import escape
 
 from datetime import date, timedelta
 

@@ -187,7 +187,7 @@ class Trainee(Profile):
     self_attendance = models.BooleanField(default=False)
     
     #if the trainee is a house coordinator
-    house_coordinator = models.BooleanField(default=False)
+    #house_coordinator = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.account.get_full_name()
