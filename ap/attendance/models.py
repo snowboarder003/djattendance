@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db import models
 from schedules.models import Event
 from accounts.models import Trainee
@@ -13,8 +15,6 @@ DATA MODELS:
             for example, if 10 trainees are supposed to be at an event,
             then there will be 10 roll objects associated to that event,
             as well as each trainee.
-
-    - Period: a set of attendance records, generally a 2-week period
 """
 
 
@@ -32,7 +32,7 @@ class Roll(models.Model):
 
     trainee = models.ForeignKey(Trainee, related_name='rolls')
 
-    status = models.CharField(max_length=1, choices=ROLL_STATUS, default='P')
+    status = models.CharField(max_length=5, choices=ROLL_STATUS, default='P')
 
     # once a roll is finalized, it can no longer be edited
     # except by a TA, attendance monitor, or other admin
@@ -49,22 +49,3 @@ class Roll(models.Model):
     def __unicode__(self):
         # return status, trainee name, and event
         return "[%s] %s @ %s" % (self.status, self.trainee, self.event)
-
-
-class Period(models.Model):
-
-    # the beginning week of this period
-    start = models.SmallIntegerField()
-
-    # the ending week of this period
-    end = models.SmallIntegerField()
-
-    term = models.ForeignKey(Term)
-
-    def _period_number(self):
-        return self.start/2 - 1
-
-    num = property(_period_number)
-
-    def __unicode__(self):
-        return "period " + str(self.num) + ", " + str(self.term.code)

@@ -40,7 +40,7 @@ USE_I18N = True
 USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
-USE_TZ = False # djattendance (for now) only runs in Anaheim. 
+USE_TZ = False # djattendance (for now) only runs in Anaheim.
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
@@ -98,7 +98,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -128,8 +127,10 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     # third-party modules
+    'autocomplete_light', # django autocomplete widgets
     'autofixture', # easily generate dummy/test data
     'bootstrap3', # easy-to-use bootstrap integration
+    'bootstrap3_datetime', # datetime picker widget
     'braces', # Mixins for Django's class-based views.
     'django_reset',
     # ap CORE
@@ -138,6 +139,7 @@ INSTALLED_APPS = (
     'books',
     'classes',
     'houses',
+    'leaveslips',
     'localities',
     'rooms',
     'services',
@@ -147,6 +149,7 @@ INSTALLED_APPS = (
     'schedules',
     'attendance',
     'dailybread',  # daily nourishment
+    'leaveslip_api',
 )
 
 # A sample logging configuration. The only tangible logging
