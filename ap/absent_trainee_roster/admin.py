@@ -1,3 +1,5 @@
+from datetime import date, timedelta
+
 from django.contrib import admin
 from django.template import loader,Context
 from django.conf.urls import patterns
@@ -5,10 +7,7 @@ from django.core.mail import EmailMessage
 from django.conf import settings # to get admin email addresses
 from django.http import HttpResponse
 
-from datetime import date, timedelta
-
 from models import Absentee, Roster, Entry, House
-
 from pdf import render_to_pdf
 
 
@@ -136,7 +135,7 @@ class RosterAdmin(admin.ModelAdmin):
 				'entries': entries,
 				'bro_unreported_houses': bro_unreported_houses,
 				'sis_unreported_houses': sis_unreported_houses,
-				'days': days,
+			'days': days,
 				'unreported_list': unreported_list,
 				
 			})
@@ -149,36 +148,6 @@ class RosterAdmin(admin.ModelAdmin):
 		
 		
 		return HttpResponse("Email was sent")
-"""		
-	#using Reportlab example -- not currently used
-	def roster_pdf(self, request):
-		#Create the HttpResponse object with the appropriate PDF headers
-		response = HttpResponse(mimetype='application/pdf')
-		response['Content-Disposition'] = 'attachment; filename=roster.pdf'
-	
-		#Create the PDF object, using the response object as its "file."
-		p =canvas.Canvas(response)
-	
-		#Draw things on the PDF. Here's where the PDF generation happens.
-		p.drawString(100, 100, "Hello world.")
-	
-		#Close the PDF object
-		p.showPage()
-		p.save()
-		return response	
-		
-		
-	#not currently used
-	def generate(self, request):
-		#roster = Roster.objects.get(date=date)
-		
-		return render_to_response(self.generate_roster, {
-			#'date': roster.date,
-			#'unreported_houses': roster.unreported_houses,
-			'opts': self.model._meta,
-			#'root_path': self.admin_site.root_path,
-		}, context_instance=RequestContext(request))
-"""	
 	
 admin.site.register(Absentee)
 admin.site.register(Roster, RosterAdmin)
