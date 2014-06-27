@@ -5,6 +5,8 @@ from accounts.models import Trainee
 from books.models import Book
 from django.core.exceptions import ValidationError
 from attendance.utils import Period
+from terms.models import Term
+from schedules.models import Schedule
 
 """ lifestudies models.py
 This discipline module handles the assigning and managing of
@@ -115,36 +117,27 @@ class Discipline(models.Model):
     #use calculateSummary(8,9,6) for now
     """this function examines the Schedule belonging to trainee and search through all
     the Events and Rolls. Returns the number of summary a trainee needs to be assigned
-    over the given period and term."""
+    over the given period."""
     @staticmethod
-    def calculateSummary(term, period, trainee):
+    def calculateSummary(trainee, period):
         num_A = 0
         num_T = 0
         num_summary = 0
-        # trainee = Trainee.objects.get(pk=traineeID)
-        schedule = trainee.schedule_set.all().get(term=term)
-        for event in schedule.events.all():
-            print event.date
-            print Period().start(period)
-            print Period().end(period)
-            if event.date >= Period().start(period) and event.date <= Period().end(period):
-                for roll in event.roll_set.all():
-                    if roll.status == 'A':
-                        num_A += 1
-                    elif roll.status == 'L' or roll.status == 'T' or \
-                         roll.status == 'U':
-                        num_T += 1
+        for roll in trainee.rolls.all():
+            if roll.event.date >= Period().start(period) and roll.event.date <= Period().end(period):
+                if roll.status == 'A':
+                    num_A += 1
+                elif roll.status == 'L' or roll.status == 'T' or \
+                     roll.status == 'U':
+                    num_T += 1
         if num_A >= 2:
             num_summary += num_A
         if num_T >= 5:
             num_summary += num_T - 3
-        return num_A, num_T, num_summary
+        return num_summary
 
     def __unicode__(self):
         return self.trainee.account.get_full_name() + ' | ' + self.infraction + ' | ' + self.offense + ' | ' + str(self.quantity) + ' | ' + str(self.getNumSummaryDue()) + ' | ' + str(self.isCompleted())
-
-
-    # comments: method to calculate period. Do they need to be editable by TA?
 
 class Summary(models.Model):
 	# the content of the summary (> 250 words)

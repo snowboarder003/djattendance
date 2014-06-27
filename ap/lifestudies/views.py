@@ -5,14 +5,20 @@ from lifestudies.forms import NewSummaryForm, NewDisciplineForm, EditSummaryForm
 from django.views.generic import ListView, CreateView, DetailView, FormView, UpdateView, TemplateView
 from django.core.urlresolvers import reverse_lazy
 from django.forms.formsets import formset_factory
+from terms.models import Term
+from attendance.utils import Period
+from schedules.models import Schedule
 import datetime
+
 
 class DisciplineListView(ListView):
     template_name = 'lifestudies/discipline_list.html'
     model = Discipline
     context_object_name = 'disciplines'
 
-    #this function is called whenever 'post'
+    """'approve' when an approve button is pressed
+    'delete' when a delete button is pressed
+    'attend_assign' when assgning discipline from AttendanceAssign"""
     def post(self, request, *args, **kwargs):
         if 'approve' in request.POST:
             for value in request.POST.getlist('selection'):
@@ -20,17 +26,24 @@ class DisciplineListView(ListView):
         if 'delete' in request.POST:
             for value in request.POST.getlist('selection'):
                 print Discipline.objects.get(pk=value).delete()
+        if 'attendance_assign' in request.POST:
+            """TODO"""
+            print request.POST
+
         return self.get(request, *args, **kwargs)
 
     #profile is the user that's currently logged in
     def get_context_data(self, **kwargs):
         context = super(DisciplineListView, self).get_context_data(**kwargs)
         context['profile'] = self.request.user
+        current_date = datetime.datetime.now().date()
+        context['current_period'] = Period().period_of_date(current_date)
+
         return context
 
 
 class ReportListView(ListView):
-    template_name = 'lifestudies/reportview.html'
+    template_name = 'lifestudies/discipline_report.html'
     model = Discipline
     context_object_name = 'disciplines'
 
@@ -61,11 +74,6 @@ class DisciplineCreateView(CreateView):
 class DisciplineDetailView(DetailView):
     model = Discipline
     context_object_name = 'discipline'
-
-    def transfer(request):
-        fromTrainee = Trainee.objects.all().order_by('account')
-        output = ', '.join([t.account.lastname for t in fromTrainee])
-        return HttpResponse(output)
 
 class SummaryCreateView(CreateView):
     model = Summary
@@ -122,6 +130,8 @@ class CreateHouseDiscipline(TemplateView):
         context = super(CreateHouseDiscipline, self).get_context_data(**kwargs)
         context['form'] = HouseDisciplineForm()
         return context
+
+    """this manually creates Disciplines for each house member"""
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
             form = HouseDisciplineForm(request.POST)
@@ -131,10 +141,10 @@ class CreateHouseDiscipline(TemplateView):
                 for trainee in listTrainee:
                     print trainee.pk
                     discipline = Discipline(infraction=form.cleaned_data['infraction'],
-                                          quantity=form.cleaned_data['quantity'],
-                                          due=form.cleaned_data['due'],
-                                          offense=form.cleaned_data['offense'],
-                                          trainee=trainee)
+                                            quantity=form.cleaned_data['quantity'],
+                                            due=form.cleaned_data['due'],
+                                            offense=form.cleaned_data['offense'],
+                                            trainee=trainee)
                     discipline.save()
                 return HttpResponseRedirect(reverse_lazy('discipline-list'))
         else:
@@ -142,3 +152,24 @@ class CreateHouseDiscipline(TemplateView):
 
         return HttpResponseRedirect(reverse_lazy('discipline-list'))
 
+
+class AttendanceAssign(ListView):
+    model = Trainee
+    template_name = 'lifestudies/attendance_assign.html'
+    context_object_name = 'trainees'
+
+    """this adds outstanding_trainees, a dictionary {trainee : num_summary} for the template
+    to display the trainees who need will have outstanding summaries"""
+    def get_context_data(self, **kwargs):
+        context = super(AttendanceAssign, self).get_context_data(**kwargs)
+        period = int(self.kwargs['period'])
+        context['period'] = period
+        context['start_date'] = Period().start(period)
+        context['end_date'] = Period().end(period)
+        context['outstanding_trainees'] = {}
+        for trainee in context['trainees']:
+            num_summary = Discipline.calculateSummary(trainee,period)
+            if num_summary > 0:
+                context['outstanding_trainees'][trainee] = num_summary
+
+        return context
