@@ -6,10 +6,10 @@ from tastypie.validation import Validation, CleanedDataFormValidation
 from tastypie.authentication import BasicAuthentication
 from tastypie.authorization import Authorization
 
-
+from accounts.models import Profile, User, Trainee, TrainingAssistant
+from attendance.models import Roll
 from leaveslips.models import LeaveSlip, IndividualSlip, GroupSlip, MealOutSlip, NightOutSlip, IndividualSlipForm
 from schedules.models import Event
-from accounts.models import Profile, User, Trainee, TrainingAssistant
 
 
 ''' leaveslip_api resources.py
@@ -70,6 +70,18 @@ class IndividualSlipResource(ModelResource):
 		
 	def obj_get_list(self, bundle, **kwargs):
 		return self.get_object_list(bundle, **kwargs)
+
+class RollResource(ModelResource):
+	event = fields.ForeignKey(EventResource, 'event')
+	trainee = fields.ForeignKey(TraineeResource, 'trainee')
+	monitor = fields.ForeignKey(TraineeResource, 'monitor')
+
+	class Meta:
+		queryset = Roll.objects.all()
+		allowed_methods = ['get', 'post', 'put', 'delete']
+		authentication = BasicAuthentication()
+		authorization = Authorization()
+
 
 class MealOutSlipResource(ModelResource):
 	leaveslip = fields.OneToOneField(IndividualSlipResource, 'leaveslip', null=False, full=True)
