@@ -5,12 +5,28 @@
 {% block content %}
 
     <h3>Assign Discipline</h3> 
-       
+    
+    <form action="{% url 'attendance-assign' 1 %}" method="get">   
+        <select>
+            <option>Period 1</option>
+            <option>Period 2</option>
+            <option>Period 3</option>
+            <option>Period 4</option>
+            <option>Period 5</option>
+            <option>Period 6</option>
+            <option>Period 7</option>
+            <option>Period 8</option>
+            <option>Period 9</option>
+            <option>Period 10</option>
+        </select>
+        <button>hi</button>
+    </form>
+
     <b>Period {{period}}: {{start_date}} to {{end_date}}</b>
 
     {% for trainee, num_summary in outstanding_trainees.items %}
             <li>
-                <b>{{trainee}}</b>, Number of Summary Assigning: <b>{{num_summary}}</b>
+                <b>{{trainee}}</b>, number of life-study assigning: <b>{{num_summary}}</b>
                 <ul>
                     {% for roll in trainee.rolls.all %}
                         {% if roll.event.date >= start_date and roll.event.date <= end_date %}
