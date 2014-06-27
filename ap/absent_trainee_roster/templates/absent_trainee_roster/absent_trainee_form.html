@@ -9,23 +9,7 @@
 {% endblock %}
 
 {% block references %}
-    <style type='text/css'>
-      .comments {
-        width: 100%;
-      }
-      ul.errorlist {
-      	margin: 0;
-      	padding: 0;
-      }
-      .errorlist li {
-      	background-color: red;
-      	color: white;
-      	display: block;
-      	font-size: 10px
-      	margin 0 0 3px;
-      	padding: 4px 5px;
-      }
-    </style>
+    <link href="{% static "css/abs_trn_roster.css" %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -45,11 +29,11 @@
 <form action="" method="post" role="form">
   {% csrf_token %}
 
-  <div class="row hidden-xs" style="margin-top:10px; margin-bottom:15px">
+  <div class="row hidden-xs" style ="name">
     <div class="col-sm-3"><strong>Name</strong></div>
     <div class="col-sm-3"><strong>Reason</strong></div>
-    <div class="col-sm-2" style="padding-right:0px; margin-left:-15px; margin-bottom:-15px"><strong><small>Coming <br>to Class</small></strong></div>
-    <div class="col-sm-3" style="padding-left:0px;margin-left:-25px"><strong>Comments</strong></div>
+    <div class="col-sm-2" style="reason"><strong><small>Coming <br>to Class</small></strong></div>
+    <div class="col-sm-3" style="coming"><strong>Comments</strong></div>
   </div>
 
   {{ formset.management_form }}
@@ -57,16 +41,16 @@
   {{ formset.non_form_errors }}
   {% for form in formset %}
 
-    <div class="row entry" style="border-bottom:1px solid #e3e3e3; margin-top:15px">
+    <div class="row entry" style="form-top">
       {{ form.id }}
       <div class="form-group col-xs-6 col-sm-3">{{ form.absentee.errors }}{{ form.absentee }}</div>
       <div class="form-group col-xs-5 col-sm-3">{{ form.reason.errors }}{{ form.reason }}</div>
       <div class="hidden-xs form-group col-xs-1">{{ form.coming_to_class.errors }}<div style="margin-top:6px;">{{ form.coming_to_class }}</div></div>
-      <div class="col-xs-1 visible-xs" style="padding:0px;"><a class="delete" href="#"><span class="glyphicon glyphicon-remove" style="margin-top:8px;"></span></a></div>
+      <div class="col-xs-1 visible-xs" style="padding:0;"><a class="delete" href="#"><span class="glyphicon glyphicon-remove" style="margin-top:8px;"></span></a></div>
       <br class="visible-xs"><br class="visible-xs"> <!--This is a temporary hack to prevent the next div from overlapping the select boxes above it. It would be better to do this with Less.-->
-      <div class="form-group col-xs-8 col-sm-4 col-md-4" style="padding-right: 15px;">{{ form.comments.error }}{{ form.comments }}</div>
-      <div class="visible-xs form-group col-xs-4" style="margin-top:4px; padding-left:0px;">{{ form.coming_to_class.errors }}Coming to class: {{ form.coming_to_class }}</div>
-      <div class="col-sm-1 hidden-xs" style="padding:0px;"><a class="delete" href="#"><span class="glyphicon glyphicon-remove" style="margin-top:8px;"></span></a></div>
+      <div class="form-group col-xs-8 col-sm-4 col-md-4" style="padding-right:15px;">{{ form.comments.error }}{{ form.comments }}</div>
+      <div class="visible-xs form-group col-xs-4" style="error">{{ form.coming_to_class.errors }}Coming to class: {{ form.coming_to_class }}</div>
+      <div class="col-sm-1 hidden-xs" style="padding:0;"><a class="delete" href="#"><span class="glyphicon glyphicon-remove" style="margin-top:8px;"></span></a></div>
     </div>
 
   {% endfor %}
