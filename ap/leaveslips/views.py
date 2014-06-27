@@ -34,7 +34,6 @@ class IndividualSlipUpdate(generic.UpdateView):
 
 class IndividualSlipDelete(generic.DeleteView):
     model = IndividualSlip
-    template_name= 'leaveslips/leaveslip_confirm_delete.html'
     success_url='/leaveslips/'
 
 # group slips
@@ -64,7 +63,6 @@ class GroupSlipUpdate(generic.UpdateView):
 
 class GroupSlipDelete(generic.DeleteView):
     model = GroupSlip
-    template_name= 'leaveslips/leaveslip_confirm_delete.html'
     success_url='/leaveslips/'
     
 
