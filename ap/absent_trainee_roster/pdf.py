@@ -1,8 +1,10 @@
-from django.template import Context
-from django.http import HttpResponse
 import cStringIO as StringIO
-import xhtml2pdf.pisa as pisa
+
+from django.template import Context
 from django.template.loader import get_template
+from django.http import HttpResponse
+
+import xhtml2pdf.pisa as pisa
 from cgi import escape
 
 
