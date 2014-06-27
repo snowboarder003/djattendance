@@ -18,3 +18,7 @@ def seattables(request):
 
 def newseats(request):
     return render(request, 'newSeating.html')
+
+def signin(request):
+    trainees = User.objects.all().filter(is_active=1).values("lastname","firstname").order_by("lastname")[:50]
+    return render(request, 'mealsignin.html', {'trainees' : trainees})

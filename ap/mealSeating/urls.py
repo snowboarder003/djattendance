@@ -7,4 +7,6 @@ urlpatterns = patterns('',
         views.newseats),
     url(r'viewList/',
         views.seattables),
+    url(r'mealsignin/',
+        views.signin),
 )

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<table class="table table-striped table-bordered">
+    <tr>
+    <td></td>
+    <td colspan="2">Tuesday</td>
+    <td colspan="2">Wednessday</td>
+    <td colspan="2">Thursday</td>
+    <td>Friday</td>
+    <td colspan="3">Saturday</td>
+    <td>LD</td>
+    <td>M</td>
+    <td colspan="2">Tuesday</td>
+    <td colspan="2">Wednessday</td>
+    <td colspan="2">Thursday</td>
+    <td>Friday</td>
+    <td colspan="3">Saturday</td>
+    <td>LD</td>
+    <td>M</td>
+    </tr>
+    <tr>
+    <td></td>
+    <td>B</td>
+    <td>D</td>    
+    <td>B</td>
+    <td>D</td>
+    <td>B</td>
+    <td>D</td>
+    <td>B</td>
+    <td>B</td>
+    <td>L</td>
+    <td>D</td>
+    <td>B</td>
+    <td>D</td>
+    <td>B</td>
+    <td>D</td>    
+    <td>B</td>
+    <td>D</td>
+    <td>B</td>
+    <td>D</td>
+    <td>B</td>
+    <td>B</td>
+    <td>L</td>
+    <td>D</td>
+    <td>B</td>
+    <td>D</td>
+    </tr>
+    
+    {% for entry in trainees %}
+        <tr><td>{{entry}}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    {% endfor %}
+
+</table>
+
+
+
+{% endblock %}
+
