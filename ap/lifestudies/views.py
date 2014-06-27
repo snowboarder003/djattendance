@@ -27,8 +27,17 @@ class DisciplineListView(ListView):
             for value in request.POST.getlist('selection'):
                 print Discipline.objects.get(pk=value).delete()
         if 'attendance_assign' in request.POST:
-            """TODO"""
-            print request.POST
+            period = int(request.POST.get('attendance_assign'))
+            for trainee in Trainee.objects.all():
+                num_summary = Discipline.calculateSummary(trainee,period)
+                if num_summary > 0:
+                    print (trainee, num_summary)
+                    discipline = Discipline(infraction='attendance',
+                                            quantity=num_summary,
+                                            due=Period().end(period),
+                                            offense='MO',
+                                            trainee=trainee)
+                    discipline.save()
 
         return self.get(request, *args, **kwargs)
 
@@ -75,6 +84,7 @@ class DisciplineDetailView(DetailView):
     model = Discipline
     context_object_name = 'discipline'
 
+
 class SummaryCreateView(CreateView):
     model = Summary
     form_class = NewSummaryForm
@@ -92,6 +102,7 @@ class SummaryCreateView(CreateView):
         summary.date_submitted = datetime.datetime.now()
         summary.save()
         return super(SummaryCreateView, self).form_valid(form)
+
 
 """this is the view that TA will click into when viewing a summary and approving it"""
 class SummaryApproveView(DetailView):
@@ -149,10 +160,10 @@ class CreateHouseDiscipline(TemplateView):
                 return HttpResponseRedirect(reverse_lazy('discipline-list'))
         else:
             form = HouseDisciplineForm()
-
         return HttpResponseRedirect(reverse_lazy('discipline-list'))
 
-
+"""this view mainly displays trainees, their roll status, and the number of summary they 
+are to be assigned. The actual assigning is done by DisciplineListView"""
 class AttendanceAssign(ListView):
     model = Trainee
     template_name = 'lifestudies/attendance_assign.html'
@@ -167,9 +178,8 @@ class AttendanceAssign(ListView):
         context['start_date'] = Period().start(period)
         context['end_date'] = Period().end(period)
         context['outstanding_trainees'] = {}
-        for trainee in context['trainees']:
+        for trainee in Trainee.objects.all():
             num_summary = Discipline.calculateSummary(trainee,period)
             if num_summary > 0:
                 context['outstanding_trainees'][trainee] = num_summary
-
         return context
