@@ -180,18 +180,89 @@
                   processData: false,
                   complete: function(xhr, textStatus) {
                         if(xhr.status == 201 || xhr.status == 200) {
-                            $('#submit-leaveslip form')[0].reset();
+                            form.reset();
                             $("#leaveslip-alert.alert").append('Submitted leaveslip.');
                             console.log('Phi 1:20 - According to my earnest expectation and hope that in nothing I will be put to shame, but with all boldness, as always, even now Christ will be magnified in my body, whether through life or through death.');
+                            // clndr.render(); // or something like this (this doesn't work) to re-render the events
                         } else {
                             $("#leaveslip-alert.alert").append('Error creating leave slip.');
                         }
-                        // display response message
                         $("#leaveslip-alert.alert").show();
                     }
                 });
 
                 console.log(response);
+            }
+
+            /**
+             * Calls the leaveslips API
+             * @param {int} event id
+             * @param {bool} is the leaveslip approved
+             * @return {json} leaveslip object
+             */
+             function getLeaveslip(event_id, is_approved) {
+                var slip = [];
+                $.ajax({
+                  url: base_url + api_base + '/individualslip/?format=json&event-id=' + event_id,
+                  type: 'GET',
+                  contentType: 'application/json',
+                  processData: false,
+                  success: function(data) {
+                    populateSlipForm(data['objects'][0], is_approved);
+                  },      
+                });
+             }
+
+            /**
+            * A little button helper function which adds update/delete buttons are restores original submit.
+            * @param {bool} add_update
+            */
+            function setButtons(form_button, add_update) {
+                if(add_update) {
+                    form_button.val("updating");
+                    form_button.text("Update");
+                    form_button.before($('<button type="submit" value="deleting" class="btn btn-danger">Delete</button>'))
+                } else {
+                    form.find('button').remove();
+                    form.append('<button type="submit" class="btn btn-primary">Submit</button>');
+                }
+            }
+
+            /**
+             * Callback to the getLeaveslip ajax call
+             * @param {array} leaveslip
+             * @param {bool} is the leaveslip approved
+             */  
+             function populateSlipForm(slip, is_approved) {
+                console.log(slip);
+                var form_heading = $("#submit-leaveslip .panel-heading .panel-title");
+
+                if(typeof slip !== 'undefined') {
+                    form_heading.text("Submitted on " + slip['submitted']);
+                    form.find("select#id_type").val(slip['type']);
+                    form.find("textarea#id_comments").val(slip['comments']);
+                    form.find("textarea#id_description").val(slip['description']);
+                    form.find("input#id_trainee").val(slip['trainee']);
+                    form.find("input#id_TA").val(slip['TA']);
+
+                    if(slip['informed'] == true) {
+                        form.find("input#id_informed").prop('checked', true);
+                    }
+                    if(slip['texted'] == true) {
+                        form.find("input#id_texted").prop('checked', true);
+                    }
+
+                    var form_button = form.find("button");
+                    if(is_approved) {
+                        form_button.hide();
+                    } else {
+                        if(form_button.size() == 1) setButtons(form_button, true);
+                    }
+                } else {
+                    form[0].reset();
+                    setButtons(form_button, false);
+                    form_heading.text("Submit a leave slip");
+                }
             }
 
             /**
@@ -219,8 +290,9 @@
 
             form.submit(function(event) {
                 console.log('Preparing to submit leave slip with: ');
-                console.log(selected_events);
-                console.log(prepareEvents(selected_events));
+
+                var trainee = form.find("input#id_trainee").val();
+                var TA = form.find("input#id_TA").val();
 
                 form_data = {
                     "comments": form.find("textarea#id_comments").val(),
@@ -229,8 +301,8 @@
                     "texted": form.find("input#id_texted").is(":checked"),
                     "type": form.find("select#id_type").val(),
                     "events": prepareEvents(selected_events),
-                    "trainee": api_base + '/trainee/' + form.find("input#id_trainee").val() + "/",
-                    "TA": api_base + '/TA/' + form.find("input#id_TA").val() + "/",
+                    "trainee": (trainee === parseInt(trainee)) ? api_base + '/trainee/' + trainee + "/" : trainee,
+                    "TA": (TA === parseInt(TA)) ? api_base + '/TA/' + TA + "/" : TA,
                 };
 
                 console.log(form_data);
@@ -246,15 +318,15 @@
                 selected_events.push($(this).data("id"));
 
                 console.log(event_id);
+                // if pending, display the details and allow update or delete
                 if($("div.schedule-event").hasClass("pending")) {
-                    // populate form with Update and Delete buttons
-
-
+                    getLeaveslip(event_id, false);
                 } else {
+                    // if approved, just display the details
                     if($("div.schedule-event").hasClass("approved")) {
                         // populate form but no buttons
+                        getLeaveslip(event_id, true)
                     }
-
                 }
             });
 

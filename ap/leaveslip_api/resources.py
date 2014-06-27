@@ -1,3 +1,5 @@
+from itertools import chain
+
 from tastypie import fields, utils
 from tastypie.resources import ModelResource
 from tastypie.validation import Validation, CleanedDataFormValidation
@@ -17,23 +19,6 @@ All the API resources for leaveslips. For each model, GET, POST, and PUT are sup
 See schemas.txt for sample formats.
 
 '''
-
-# Custom validation of POST and PUT requests
-class LeaveSlipValidation(Validation):
-	def is_valid(self, bundle, request=None):
-		if not bundle.data:
-			return {'__all__': 'Missing leaveslip data.'}
-
-		# bundle.data['TA']
-		# print bundle.data
-		# print bundle.request.user
-
-		trainee = Profile.get_trainee(User.objects.get(email=bundle.request.user).id)
-		bundle.data['TA'] = trainee.TA
-		bundle.data['status'] = 'P'
-		print bundle.data
-		return super(LeaveSlipValidation, self).is_valid(bundle, request)
-
 
 class EventResource(ModelResource):
 	class Meta:
@@ -67,14 +52,25 @@ class IndividualSlipResource(ModelResource):
 		authorization = Authorization()
 		form = CleanedDataFormValidation(form_class=IndividualSlipForm)
 
-	# Adding the event information to the returned data without creating an event resource
-	# data returned can be customized here
-	# def dehydrate(self, bundle):
-		# bundle.data['events'] = IndividualSlip.objects.get(pk=bundle.data['id']).events.all()
-		# print bundle.data['events']
-		# return bundle
+	def get_object_list(self, bundle, **kwargs):
+		query = bundle.request.GET.get('event-id', None)
+		if query:
+			objects_one = IndividualSlip.objects.filter(events__id=query)[:1]
+			# Note: currently not dealing with other kinds of leave slips.
+			# GroupSlips don't have a foreign key to events, so this will need to be done differently.
+			# Still considering how best to do the other kinds of slips (meal, night).
 
-
+			# objects_two = MealOutSlip.objects.filter(events__id=query)
+			# objects_three = NightOutSlip.objects.filter(events__id=query)
+			# objects_four = GroupSlip.objects.filter(events__id=query)
+			# return chain(objects_one, objects_two, objects_three, objects_four)[:1]
+			return objects_one
+		else:
+			print 'Lord Jesus!'
+			return super(IndividualSlipResource, self).get_object_list(bundle, **kwargs)
+		
+	def obj_get_list(self, bundle, **kwargs):
+		return self.get_object_list(bundle, **kwargs)
 
 class MealOutSlipResource(ModelResource):
 	leaveslip = fields.OneToOneField(IndividualSlipResource, 'leaveslip', null=False, full=True)
