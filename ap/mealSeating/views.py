@@ -17,12 +17,14 @@ from accounts.models import User, Trainee, Profile
 #     return HttpResponse("Hello, world. You're at the meal seating page.")
 
 @csrf_protect
-def seattables(request, gender):
+def seattables(request):
     filterchoice = request.POST['Filter']
-    trainees = User.objects.all().filter(gender=gender).order_by(filterchoice)[:50]
+    genderchoice = request.POST['Gender']
+
+    trainees = User.objects.all().filter(gender=genderchoice).order_by(filterchoice)[:50]
     tablesList = Table.objects.all()
 
-    mydict = Table.seatinglist(trainees, gender)
+    mydict = Table.seatinglist(trainees,genderchoice)
 
     return render(request, 'detail.html', {'mydict' : mydict})
 

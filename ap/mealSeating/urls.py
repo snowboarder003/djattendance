@@ -4,7 +4,7 @@ from mealSeating import views
 
 urlpatterns = patterns('',
     # url(r'^$', views.seating, name='detail'),
-    url(r'viewList/(?P<gender>[A-Z]{1})/$',
+    url(r'viewList/',
         views.seattables),
      url(r'newSeating/',
         views.newseats)

@@ -5,7 +5,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <form class="form-horizontal" action="/mealSeating/viewList/B/" method="post">{% csrf_token %}
+    <form class="form-horizontal" action="/mealSeating/viewList/" method="post">{% csrf_token %}
     <fieldset>
 
     <!-- Form Name -->
@@ -16,11 +16,11 @@
       <label class="col-md-4 control-label" for="Gender">Select Trainee Gender</label>
       <div class="col-md-4"> 
         <label class="radio-inline" for="Gender-0">
-          <input type="radio" name="Gender" id="Gender-0" value="Brothers" checked="checked">
+          <input type="radio" name="Gender" id="Gender-0" value="B" checked="checked">
           Brothers
         </label> 
         <label class="radio-inline" for="Gender-1">
-          <input type="radio" name="Gender" id="Gender-1" value="Sisters">
+          <input type="radio" name="Gender" id="Gender-1" value="S">
           Sisters
         </label>
       </div>
@@ -31,11 +31,14 @@
       <label class="col-md-4 control-label" for="Filter">Filter Trainees by: </label>
       <div class="col-md-4">
         <select id="Filter" name="Filter" class="form-control">
-          <option value="houses">Houses</option>
+          <option value="trainee__address">Address</option>
+          <option value="date_of_birth">Birthday</option>
+          <option value="trainee__bunk">Bunk</option>
+          <option value="firstname">First Name</option>
+          <option value="trainee__house">Houses</option>
           <option value="lastname">Last Name</option>
-          <option value="teams">Teams</option>
-          <option value="birthday">Birthday</option>
-          <option value="sendinglocality">Sending Locality</option>
+          <option value="trainee__team">Team</option>
+          <option value="trainee__term">Term</option>          
         </select>
       </div>
     </div>
