@@ -1,8 +1,28 @@
 from django.db import models
 from django.contrib.auth.models import Group
-	
 
-#Define Service Category such as Cleaning, Guard, etc.
+
+""" services models.py
+
+The services model defines both weekly and permanent (designated) services in the
+
+Data Models:
+    - Category: This is a broad category that contains specific services. For
+    example,Cleanup is a category that contains services such as Tuesday
+    Breakfast Cleanup or Saturday Lunch Cleanup. Guard contains Guards A, B, C,
+    and D.
+
+    - Service: This refers to a specific service that repeats on a weekly basis.
+    I.e. Tuesday Breakfast Prep is a service. It repeats every week. A specific
+    instance of that service is defined in the service scheduler module as a
+    service Instance.
+
+    - Period: This is a period in which services are active and generally
+    changes with the schedule of the training. Most of the time, the regular
+    FTTA schedule will be in effect, but there are exceptions such as Service
+    Week and the semiannual training.
+"""
+
 class Category(Group):
     """
     Defines a service category such as Clean-up, Guard, Mopping, Chairs, etc.
@@ -14,7 +34,6 @@ class Category(Group):
         return self.name
 
 
-#define Service such as Breakfast Cleaning, Dinner Prep, Guard A, etc
 class Service(Group):
     """" 
 	FTTA service class to define service such as
@@ -23,10 +42,9 @@ class Service(Group):
     """
 
     category = models.ForeignKey(Category, related_name="services")
-    isActive = models.BooleanField()
+    active = models.BooleanField()
 
-    #Every service has different workload to describe its 
-	#service hours and service intensity
+    #Every service has different workload to describe its service hours and service intensity
     workload = models.IntegerField()
 	
 	#whether this service needs certain qualified trainees
@@ -39,11 +57,20 @@ class Service(Group):
     #but others brothers have the qualification to serve AV.
 	qualifiedTrainees = models.ManyToManyField('accounts.Trainee')
 
+    #whether this service needs certain qualified trainees
+    need_qualification = models.BooleanField(blank=True)
+
+    #Service qualification such as Sack lunch star,Kitchen Star,
+    #Shuttle Driver, Piano, Usher, etc
+    #Note: This is different from permanent designation. For example,
+    #two brothers are be designated as AV brothers,
+    #but others brothers have the qualification to serve AV.
+    qualifiedTrainees = models.ManyToManyField('accounts.Trainee', blank=True)
+
     def __unicode__(self):
         return self.name
 
 
-#Define Service Period such as Pre-Training, FTTA regular week, etc
 class Period(models.Model):
     """Define Service Period such as Pre-Training, FTTA regular week, etc"""
 

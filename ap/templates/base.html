@@ -1,0 +1,106 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
+
+    <title>FTTA - {% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static "css/fluid.css" %}" rel="stylesheet"> <!--right now, just a fix for small-size screens-->
+    <link href="{% static "bootstrap/css/navbar-static-top.css" %}" rel="stylesheet">
+    <link href="{% static "bootstrap/css/offcanvas.css" %}" rel="stylesheet">
+
+    {% block references %}{% endblock %}
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <!-- Static navbar -->
+    <div class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <div class="pull-left visible-xs">
+            <button type="button" class="sidebar-toggle" data-toggle="offcanvas">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-dot"></span>
+            <span class="icon-dot"></span>
+            <span class="icon-dot"></span>
+          </button>
+          <a class="navbar-brand hidden-xs" href="#">Full-Time Training in Anaheim</a>
+          <a class="navbar-brand visible-xs" href="#">FTTA</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            {% block navbar-right %}
+              <li><a href="#account">User Name</a></li>
+              <li><a href="#">Logout</a></li>
+            {% endblock %}
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    {% block sidebar %}
+    <div class="container">
+      <div class="row row-offcanvas row-offcanvas-left">
+        <!--SIDEBAR-->
+        <div class="col-xs-12 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation" style="padding:0px; margin-top:-20px">
+          <div class="well sidebar-nav" style="border-radius:0px">
+            <ul class="nav">
+              {% block sidelinks %}
+              <li>Attendance</li>
+                {% block attendance_links %}
+                <li class="active"><a href="#">View Attendance Report</a></li>
+                <li><a href="#">Submit Attendance</a></li>
+                <li><a href="#">Link 3</a></li>
+                {% endblock %}
+              <hr style="border-top: 1px solid #dddddd;">
+              <li>Classes</li>
+                <li><a href="#">A/V Requests</a></li>
+                <li><a href="#">Class Notes</a></li>
+              {% endblock %}
+            </ul>
+          </div>
+        </div><!--/sidebar-->
+    {% endblock %}
+
+        <!--CONTENT-->
+        <div class="col-xs-12 col-sm-9 content">
+          
+          {% block content %}{% endblock %}
+        </div><!--/content-->
+      </div>
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static "jquery/js/jquery-1.10.1.min.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/modernizr-2.6.2-respond-1.1.0.min.js" %}"></script>
+    <script src="{% static "bootstrap/js/offcanvas.js" %}"></script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

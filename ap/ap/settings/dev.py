@@ -3,7 +3,7 @@ from .base import *
 DEBUG = True
 TEMPLATE_DEBUG = True
 
-INSTALLED_APPS += ('gunicorn',)
+INSTALLED_APPS += ('gunicorn', 'debug_toolbar',)
 
 DATABASES = {
     'default': {
