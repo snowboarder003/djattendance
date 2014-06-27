@@ -101,9 +101,10 @@
                             {% bootstrap_form leaveslipform %}
                             <input type="hidden" id="id_trainee" name="trainee" value="{{ trainee.id }}">
                             <input type="hidden" id="id_TA" name="TA" value="{{ trainee.TA.id }}">
+                            <input type="hidden" id="id_leaveslip" name="leaveslip" value="">
 
                             {% buttons %}
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" value="creating" class="btn btn-primary">
                                     Submit
                                 </button>
                             {% endbuttons %}
@@ -163,31 +164,33 @@
             $("#id_events").parent().remove();
 
             /**
-             * Calls the leaveslips API
-             * @param {JSON} data
-             * @param {string} type - PUT, GET, POST
+             * Calls the leaveslips API to make changes
+             * @param {JSON} form_data
+             * @param {string} request_type - PUT, POST, DELETE
+             * @param {string} message (verb) to be displayed to the user
+             * @param {int} slip_id
              * @return {bool} success
              */
-            function sendAttendance(form_data, request_type) {
+            function sendAttendance(form_data, request_type, message, slip_id) {
                 // TODO: handle group / vs individual slips
                 var data = JSON.stringify(form_data);
                 console.log(data);
 
                 response = $.ajax({
-                  url: base_url + api_base + '/individualslip/',
+                  url: base_url + api_base + '/individualslip/' + slip_id,
                   type: request_type,
                   contentType: 'application/json',
                   data: data,
                   dataType: 'json',
                   processData: false,
                   complete: function(xhr, textStatus) {
-                        if(xhr.status == 201 || xhr.status == 200) {
+                        if(xhr.status == 201 || xhr.status == 200 || xhr.status == 204) {
                             form[0].reset();
-                            $("#leaveslip-alert.alert").append('Submitted leaveslip.');
+                            $("#leaveslip-alert.alert").append('Success ' + message + ' leave slip.');
                             console.log('Phi 1:20 - According to my earnest expectation and hope that in nothing I will be put to shame, but with all boldness, as always, even now Christ will be magnified in my body, whether through life or through death.');
                             // clndr.render(); // or something like this (this doesn't work) to re-render the events
                         } else {
-                            $("#leaveslip-alert.alert").append('Error creating leave slip.');
+                            $("#leaveslip-alert.alert").append('Error ' + message + ' leave slip.');
                         }
                         $("#leaveslip-alert.alert").show();
                     }
@@ -197,7 +200,7 @@
             }
 
             /**
-             * Calls the leaveslips API
+             * Reading from the leaveslips API (GET)
              * @param {int} event id
              * @param {bool} is the leaveslip approved
              * @return {json} leaveslip object
@@ -236,11 +239,12 @@
              * @param {bool} is the leaveslip approved
              */  
              function populateSlipForm(slip, is_approved) {
-                console.log(slip);
                 var form_heading = $("#submit-leaveslip .panel-heading .panel-title");
+                console.log(slip);
 
                 if(typeof slip !== 'undefined') {
                     form_heading.text("Submitted on " + slip['submitted']);
+                    form.find("#id_leaveslip").val(slip['id']);
                     form.find("select#id_type").val(slip['type']);
                     form.find("textarea#id_comments").val(slip['comments']);
                     form.find("textarea#id_description").val(slip['description']);
@@ -287,28 +291,42 @@
              * @param {string} status 
              */
             function sendRoll(event_ids, status) {
-
             }
 
+            /**
+            * Handles all form requests - creating, updating, deleting.
+            */
             form.submit(function(event) {
-                console.log('Preparing to submit leave slip with: ');
-
                 var trainee = parseInt(form.find("input#id_trainee").val());
                 var TA = parseInt(form.find("input#id_TA").val());
+                var slip_id = parseInt(form.find("input#id_leaveslip").val());
+                var active_button = form.context.activeElement.value;
 
-                form_data = {
-                    "comments": form.find("textarea#id_comments").val(),
-                    "description": form.find("textarea#id_description").val(), 
-                    "informed": form.find("input#id_informed").is(":checked"), 
-                    "texted": form.find("input#id_texted").is(":checked"),
-                    "type": form.find("select#id_type").val(),
-                    "events": prepareEvents(selected_events),
-                    "trainee": (!isNaN(trainee)) ? api_base + '/trainee/' + trainee + "/" : trainee,
-                    "TA": (!isNaN(TA)) ? api_base + '/TA/' + TA + "/" : TA,
-                };
+                if(active_button == 'deleting') {
+                    console.log('deleting! ' + slip_id);
+                    sendAttendance({}, 'DELETE', 'deleting', slip_id);
 
-                console.log(form_data);
-                sendAttendance(form_data, "POST");
+                } else {
+
+                    form_data = {
+                        "comments": form.find("textarea#id_comments").val(),
+                        "description": form.find("textarea#id_description").val(), 
+                        "informed": form.find("input#id_informed").is(":checked"), 
+                        "texted": form.find("input#id_texted").is(":checked"),
+                        "type": form.find("select#id_type").val(),
+                        "events": prepareEvents(selected_events),
+                        "trainee": (!isNaN(trainee)) ? api_base + '/trainee/' + trainee + "/" : trainee,
+                        "TA": (!isNaN(TA)) ? api_base + '/TA/' + TA + "/" : TA,
+                    };
+
+                    if(active_button == 'updating') {
+                        console.log('updating!');
+                    } else {
+                        // submitting a new leave slip
+                        sendAttendance(form_data, 'POST', 'submitting', '');
+                        console.log('creating.');
+                    }
+                }
                 return false;
             });
 
@@ -326,7 +344,6 @@
                 } else {
                     // if approved, just display the details
                     if($("div.schedule-event").hasClass("approved")) {
-                        // populate form but no buttons
                         getLeaveslip(event_id, true)
                     }
                 }

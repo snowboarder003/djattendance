@@ -47,7 +47,7 @@ class IndividualSlipResource(ModelResource):
 
 	class Meta:
 		queryset = IndividualSlip.objects.all()
-		allowed_methods = ['get', 'post', 'put']
+		allowed_methods = ['get', 'post', 'put', 'delete']
 		authentication = BasicAuthentication()
 		authorization = Authorization()
 		form = CleanedDataFormValidation(form_class=IndividualSlipForm)
@@ -57,17 +57,15 @@ class IndividualSlipResource(ModelResource):
 			query = bundle.request.GET.get('event-id', None)
 			if query:
 				objects_one = IndividualSlip.objects.filter(events__id=query)[:1]
-				# Note: currently not dealing with other kinds of leave slips.
-				# GroupSlips don't have a foreign key to events, so this will need to be done differently.
-				# Still considering how best to do the other kinds of slips (meal, night).
+				# Note: currently not dealing with other kinds of leave slips; below is roughly how it would be 
+				# done. If more than one leaveslip covers an event, we only display the first one. (All would
+				# appear if viewing the list page).
 
 				# objects_two = MealOutSlip.objects.filter(events__id=query)
 				# objects_three = NightOutSlip.objects.filter(events__id=query)
 				# objects_four = GroupSlip.objects.filter(events__id=query)
 				# return chain(objects_one, objects_two, objects_three, objects_four)[:1]
 				return objects_one
-				
-		print 'Lord Jesus!'
 		return super(IndividualSlipResource, self).get_object_list(bundle, **kwargs)
 		
 	def obj_get_list(self, bundle, **kwargs):
