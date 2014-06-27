@@ -75,6 +75,6 @@ class LeaveSlipList(generic.ListView):
 
     def get_queryset(self):
          individual=IndividualSlip.objects.filter(trainee=self.request.user.id).order_by('status')
-         group=GroupSlip.objects.filter(trainee_group=self.request.user.id).order_by('status') #if trainee is in a group leaveslip submitted by another user
+         group=GroupSlip.objects.filter(trainee=self.request.user.id).order_by('status') #if trainee is in a group leaveslip submitted by another user
          queryset= chain(individual,group) #combines two querysets
          return queryset

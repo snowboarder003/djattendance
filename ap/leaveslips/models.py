@@ -62,7 +62,7 @@ class LeaveSlip(models.Model):
     status = models.CharField(max_length=1, choices=LS_STATUS, default='P')
 
     TA = models.ForeignKey(TrainingAssistant)
-    submittedby = models.ForeignKey(Trainee)#trainee who submitted the leaveslip
+    trainee = models.ForeignKey(Trainee)#trainee who submitted the leaveslip
 
     submitted = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
@@ -157,10 +157,10 @@ class NightOutSlip(models.Model):
 class IndividualSlipForm(forms.ModelForm):
     class Meta:
         model = IndividualSlip
-        fields = ['type', 'description', 'comments', 'texted', 'informed']
+        fields = ['type', 'description', 'comments', 'texted', 'informed', 'events']
 
 
 class GroupSlipForm(forms.ModelForm):
     class Meta:
         model = GroupSlip
-        fields = ['type', 'trainee_group', 'description', 'comments', 'texted', 'informed', 'start', 'end']
+        fields = ['type', 'trainees', 'description', 'comments', 'texted', 'informed', 'start', 'end']
