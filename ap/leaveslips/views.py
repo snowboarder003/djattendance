@@ -1,11 +1,12 @@
 from django.views import generic
 from django.shortcuts import render, redirect
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 
 from .models import LeaveSlip, IndividualSlip, GroupSlip, IndividualSlipForm, GroupSlipForm
 from accounts.models import Profile
 
 from itertools import chain
+from datetime import datetime
 
 # individual slips
 class IndividualSlipCreate(generic.CreateView):
@@ -34,8 +35,7 @@ class IndividualSlipUpdate(generic.UpdateView):
 
 class IndividualSlipDelete(generic.DeleteView):
     model = IndividualSlip
-    # template_name = 'leaveslips/'
-    form_class = IndividualSlipForm
+    success_url='/leaveslips/'
 
 # group slips
 class GroupSlipCreate(generic.CreateView):
@@ -43,10 +43,29 @@ class GroupSlipCreate(generic.CreateView):
 	template_name = 'leaveslips/group_create.html'
 	form_class = GroupSlipForm
 
+        def form_valid(self, form):
+            self.object = form.save(commit=False)
+            self.object.status = 'P'
+            self.object.trainee = Profile.get_trainee(self.request.user.id)
+            self.object.TA = self.object.trainee.TA
+            self.object.save()
+            return super(generic.CreateView, self).form_valid(form)
+
+
 class GroupSlipDetail(generic.DetailView):
     model = GroupSlip
     template_name = 'leaveslips/group_detail.html'
     context_object_name = 'leaveslip'
+
+class GroupSlipUpdate(generic.UpdateView):
+    model = GroupSlip
+    template_name = 'leaveslips/group_update.html'
+    form_class = GroupSlipForm
+
+class GroupSlipDelete(generic.DeleteView):
+    model = GroupSlip
+    success_url='/leaveslips/'
+    
 
 # viewing the leave slips
 class LeaveSlipList(generic.ListView):
@@ -55,7 +74,7 @@ class LeaveSlipList(generic.ListView):
 
 
     def get_queryset(self):
-         individual=IndividualSlip.objects.filter(trainee=self.request.user.id)
-         group=GroupSlip.objects.filter(trainee=self.request.user.id)
+         individual=IndividualSlip.objects.filter(trainee=self.request.user.id).order_by('status')
+         group=GroupSlip.objects.filter(trainee=self.request.user.id).order_by('status') #if trainee is in a group leaveslip submitted by another user
          queryset= chain(individual,group) #combines two querysets
          return queryset

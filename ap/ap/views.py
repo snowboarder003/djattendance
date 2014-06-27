@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import messages
 
 
 from dailybread.models import Portion
@@ -11,6 +12,13 @@ from terms.models import Term
 def home(request):
     data = {'daily_nourishment': Portion.today(),
             'user': request.user}
+
+    #test message
+    messages.add_message(request, messages.DEBUG, 'DEBUG message')
+    messages.add_message(request, messages.INFO, 'INFO message')
+    messages.add_message(request, messages.SUCCESS, 'SUCCESS message')
+    messages.add_message(request, messages.WARNING, 'WARNING message')
+    messages.add_message(request, messages.ERROR, 'ERROR message')
 
     if request.user.trainee:
         try:

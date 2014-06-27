@@ -87,6 +87,11 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -184,4 +189,13 @@ BOOTSTRAP3 = {
     'javascript_url': None,
     'horizontal_label_class': 'col-md-2',
     'horizontal_field_class': 'col-md-4',
+}
+
+from django.contrib.messages import constants as message_constants
+MESSAGE_TAGS = {
+    message_constants.DEBUG: 'debug',
+    message_constants.INFO: 'info',#blue
+    message_constants.SUCCESS: 'success',#green
+    message_constants.WARNING: 'warning',#yellow
+    message_constants.ERROR: 'danger',#red
 }
