@@ -14,8 +14,6 @@
         <h3> Life Study Report </h3>
 
         {% if disciplines %}
-        <form action="{% url 'discipline-list' %}" method="post">
-            {% csrf_token %}
             Incompleted Summaries
             <ul>
             {% for discipline in disciplines %}
@@ -49,10 +47,9 @@
                         {% endif %}
                     {% endfor %}
                     </div>
-                {% endif %}
+                {% endif %}  
             {% endfor %}
             </ul>
-        </form>
         {% endif %}
     {% endif %}
 
