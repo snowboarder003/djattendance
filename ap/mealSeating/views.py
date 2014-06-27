@@ -21,7 +21,7 @@ def seattables(request):
     filterchoice = request.POST['Filter']
     genderchoice = request.POST['Gender']
 
-    trainees = User.objects.all().filter(gender=genderchoice).order_by(filterchoice)[:50]
+    trainees = User.objects.all().filter(is_active=1, gender=genderchoice).order_by(filterchoice)[:50]
     tablesList = Table.objects.all()
 
     mydict = Table.seatinglist(trainees,genderchoice)
