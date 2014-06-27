@@ -35,6 +35,7 @@ class NewEntryFormSet(forms.models.BaseModelFormSet):
 		for form in self.forms:
 			form.empty_permitted = True
 
+	# need this function to get self.user
 	def _construct_forms(self):
 		self.forms = []
 		for i in xrange(self.total_form_count()):
@@ -47,14 +48,14 @@ class NewEntryFormSet(forms.models.BaseModelFormSet):
 			return
 		roster = Roster.objects.filter(date=date.today())[0]
 		entries = Entry.objects.filter(roster=roster)
-		absentees = []
-		list = []
-		for i in range(0, self.total_form_count()):
-			form = self.forms[i]
-			if form.cleaned_data: # don't do this is the form is empty
-				absentee = form.cleaned_data['absentee']
-				#checks that absentee is not duplicated in formset
+		absentees = [] # list of absentee id's
+		for i in xrange(self.total_form_count()):
+			if self.data['form-' + str(i) + '-absentee']:
+				absentee = int(self.data['form-' + str(i) + '-absentee'])
+				print('ABSENTEES', absentees)
+				print('ABSENTEE', absentee)
 				if absentee in absentees:
-					raise forms.ValidationError("You're submitting entries for the same trainee.")
+					raise forms.ValidationError("You're submitting multiple entries for the same trainee.")
 				absentees.append(absentee)
+		return super(NewEntryFormSet, self).clean()
 				

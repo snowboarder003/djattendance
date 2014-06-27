@@ -74,5 +74,3 @@ class Entry(models.Model):
 
 	def __unicode__(self):
 		return self.absentee.name
-	
-	
