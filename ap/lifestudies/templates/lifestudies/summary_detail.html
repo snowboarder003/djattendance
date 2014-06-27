@@ -12,7 +12,7 @@
     <form action="" method="post">
         {{ form.as_p }}
         {% csrf_token %}
-        <input type="submit" value="Update">
+        <button type="submit" class="btn btn-success">Update</button>
     </form>
 
 <a href="{% url 'discipline-list' %}"> Back </a>

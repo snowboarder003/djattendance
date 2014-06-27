@@ -16,14 +16,14 @@
                         {% if roll.event.date >= start_date and roll.event.date <= end_date %}
                             <li>{{roll.event}} | {{roll.event.date | date:'m/d/y'}} | {{roll.status}}</li>
                         {% endif %}
-                    {% endfor %}
+                    {% endfor %}    
                 </ul>
             </li>
     {% endfor %}
 
     <form action="{% url 'discipline-list' %}" method="post">
         {% csrf_token %}
-        <button type="submit" name="attendance_assign" class="btn btn-success">Assign Summary</button>
+        <button type="submit" name="attendance_assign" value="{{period}}" class="btn btn-success">Assign</button>
     </form>
 
 
