@@ -24,6 +24,7 @@ class NewSummaryForm(forms.ModelForm):
             summary.save()
         return summary
 
+
 class EditSummaryForm(forms.ModelForm):
     class Meta:
         model = Summary

@@ -183,3 +183,10 @@ class AttendanceAssign(ListView):
             if num_summary > 0:
                 context['outstanding_trainees'][trainee] = num_summary
         return context
+
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            period = int(request.POST['period'])
+            return HttpResponseRedirect(reverse_lazy('attendance-assign', kwargs={'period': period}))
+        else:
+            return HttpResponseRedirect(reverse_lazy('attendance-assign', kwargs={'period: 1'}))
