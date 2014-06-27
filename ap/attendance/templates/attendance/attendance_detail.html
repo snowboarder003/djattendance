@@ -160,6 +160,8 @@
             var base_url = window.location.protocol + "//" + window.location.host;
             var form = $("#submit-leaveslip form");
 
+            $("#id_events").parent().remove();
+
             /**
              * Calls the leaveslips API
              * @param {JSON} data
@@ -180,7 +182,7 @@
                   processData: false,
                   complete: function(xhr, textStatus) {
                         if(xhr.status == 201 || xhr.status == 200) {
-                            form.reset();
+                            form[0].reset();
                             $("#leaveslip-alert.alert").append('Submitted leaveslip.');
                             console.log('Phi 1:20 - According to my earnest expectation and hope that in nothing I will be put to shame, but with all boldness, as always, even now Christ will be magnified in my body, whether through life or through death.');
                             // clndr.render(); // or something like this (this doesn't work) to re-render the events
@@ -291,8 +293,8 @@
             form.submit(function(event) {
                 console.log('Preparing to submit leave slip with: ');
 
-                var trainee = form.find("input#id_trainee").val();
-                var TA = form.find("input#id_TA").val();
+                var trainee = parseInt(form.find("input#id_trainee").val());
+                var TA = parseInt(form.find("input#id_TA").val());
 
                 form_data = {
                     "comments": form.find("textarea#id_comments").val(),
@@ -301,8 +303,8 @@
                     "texted": form.find("input#id_texted").is(":checked"),
                     "type": form.find("select#id_type").val(),
                     "events": prepareEvents(selected_events),
-                    "trainee": (trainee === parseInt(trainee)) ? api_base + '/trainee/' + trainee + "/" : trainee,
-                    "TA": (TA === parseInt(TA)) ? api_base + '/TA/' + TA + "/" : TA,
+                    "trainee": (!isNaN(trainee)) ? api_base + '/trainee/' + trainee + "/" : trainee,
+                    "TA": (!isNaN(TA)) ? api_base + '/TA/' + TA + "/" : TA,
                 };
 
                 console.log(form_data);

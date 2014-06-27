@@ -53,21 +53,22 @@ class IndividualSlipResource(ModelResource):
 		form = CleanedDataFormValidation(form_class=IndividualSlipForm)
 
 	def get_object_list(self, bundle, **kwargs):
-		query = bundle.request.GET.get('event-id', None)
-		if query:
-			objects_one = IndividualSlip.objects.filter(events__id=query)[:1]
-			# Note: currently not dealing with other kinds of leave slips.
-			# GroupSlips don't have a foreign key to events, so this will need to be done differently.
-			# Still considering how best to do the other kinds of slips (meal, night).
+		if hasattr(bundle, 'request'):
+			query = bundle.request.GET.get('event-id', None)
+			if query:
+				objects_one = IndividualSlip.objects.filter(events__id=query)[:1]
+				# Note: currently not dealing with other kinds of leave slips.
+				# GroupSlips don't have a foreign key to events, so this will need to be done differently.
+				# Still considering how best to do the other kinds of slips (meal, night).
 
-			# objects_two = MealOutSlip.objects.filter(events__id=query)
-			# objects_three = NightOutSlip.objects.filter(events__id=query)
-			# objects_four = GroupSlip.objects.filter(events__id=query)
-			# return chain(objects_one, objects_two, objects_three, objects_four)[:1]
-			return objects_one
-		else:
-			print 'Lord Jesus!'
-			return super(IndividualSlipResource, self).get_object_list(bundle, **kwargs)
+				# objects_two = MealOutSlip.objects.filter(events__id=query)
+				# objects_three = NightOutSlip.objects.filter(events__id=query)
+				# objects_four = GroupSlip.objects.filter(events__id=query)
+				# return chain(objects_one, objects_two, objects_three, objects_four)[:1]
+				return objects_one
+				
+		print 'Lord Jesus!'
+		return super(IndividualSlipResource, self).get_object_list(bundle, **kwargs)
 		
 	def obj_get_list(self, bundle, **kwargs):
 		return self.get_object_list(bundle, **kwargs)
