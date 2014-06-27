@@ -30,6 +30,6 @@ class Period(object):
     def start_end(n):
         return self.start(n), self.end(n)
 
-    def __init__(self, term=Term.current_term())
+    def __init__(self, term=Term.current_term()):
         self.term = term  # which term these periods apply to
         self.duration = DURATION
