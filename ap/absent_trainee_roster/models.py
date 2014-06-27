@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import timedelta
+
 from accounts.models import Profile
 from houses.models import House
 
@@ -7,7 +7,18 @@ from houses.models import House
 The absent trainee roster module takes care of generating daily absent trainee rosters
 from HC imported forms.
 
-Trainee information is extended from the user account model
+ABSENTEE 
+-represents each trainee as an absentee
+
+ROSTERMANAGER 
+-initializes each newly created roster with the list of houses that need to submit their absent trainee form
+
+ROSTER 
+-compiles all the absent trainee forms submitted on a given date
+
+ENTRY 
+-form submitted by the house coordinators to be compiled and generated as the roster
+
 """
 
 class Absentee(Profile):
@@ -15,18 +26,18 @@ class Absentee(Profile):
 	def __unicode__(self):
 		return self.account.get_full_name()
 	
-	def trainee_name(self):
+	def _trainee_name(self):
 		return self.account.get_full_name()
 	
-	def trainee_house(self):
+	def _trainee_house(self):
 		return self.account.trainee.house
 	
-	def trainee_term(self):
+	def _trainee_term(self):
 		return self.account.trainee.current_term
 	
-	name = property(trainee_name)
-	house = property(trainee_house)
-	term = property(trainee_term)
+	name = property(_trainee_name)
+	house = property(_trainee_house)
+	term = property(_trainee_term)
 
 
 class RosterManager(models.Manager):
@@ -49,7 +60,7 @@ class Roster(models.Model):
 	unreported_houses = models.ManyToManyField(House, related_name= 'rosters', blank=True, null=True)
 
 	def __unicode__(self):
-		return self.date.strftime("%m/%d/%Y")
+		return self.date.strftime("%m/%d/%Y") + "roster"
 
 
 class Entry(models.Model):
