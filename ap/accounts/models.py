@@ -194,8 +194,6 @@ class Trainee(Profile):
 
 	#calculates what term the trainee is in
     def _calculate_term(self):
-    	num_terms = self.term.all().count()
-    	
-    	return num_terms
+    	return self.term.all().count()
     
     current_term = property(_calculate_term)
