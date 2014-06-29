@@ -354,8 +354,9 @@
             * Handles all form requests - creating, updating, deleting.
             */
             form.submit(function(event) {
-                var trainee = ("input#id_trainee").val();
-                var TA = ("input#id_TA").val();
+
+                var trainee = $("input#id_trainee").val();
+                var TA = $("input#id_TA").val();
                 var slip_id = parseInt(form.find("input#id_leaveslip").val());
                 var active_button = form.context.activeElement.value;
 
