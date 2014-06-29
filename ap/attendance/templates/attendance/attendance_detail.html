@@ -69,7 +69,7 @@
                         <div class="schedule-event <%= event.roll %> <%= event.status %>"
                              style="top: <%= moment.duration(moment(event.start).format('H:m')).subtract(6, 'hours').asMinutes()/2 %>px;
                                     height: <%= moment(event.end).diff(moment(event.start), 'minutes')/2 %>px "
-                            data-id=<%= event.id %> >
+                            data-id=<%= event.id %> data-roll=<%= event.roll_id %> >
                             <%= event.code %>
                         </div>
                     <% }); %>
@@ -140,7 +140,9 @@
                 {}]
 
         {% for roll in attendance %}
-            _.findWhere(events, {id: "{{ roll.event.id }}" }).roll = "{{ roll.get_status_display|slugify }}";
+            var e = _.findWhere(events, {id: "{{ roll.event.id }}" });
+            e.roll = "{{ roll.get_status_display|slugify }}";
+            e.roll_id = "{{ roll.id }}";
         {% endfor %}
 
         {% for slip in leaveslips %}
@@ -158,7 +160,8 @@
         $( document ).ready(function() {
             var api_base = '/api';
             var selected_events = [];
-            var base_url = window.location.protocol + "//" + window.location.host;
+            var selected_rolls = [];
+            var base_url = window.location.protocol + '//' + window.location.host;
             var form = $("#submit-leaveslip form");
             var form_heading = $("#submit-leaveslip .panel-heading .panel-title");
             var message_box = $("#leaveslip-alert.alert");
@@ -182,7 +185,6 @@
              * @return {bool} success
              */
             function sendAttendance(form_data, request_type, message, slip_id) {
-                // TODO: handle group / vs individual slips
                 var data = JSON.stringify(form_data);
                 var form_heading = $("#submit-leaveslip .panel-heading .panel-title");
 
@@ -229,13 +231,13 @@
              }
 
             /**
-            * A little button helper function which adds update/delete buttons are restores original submit.
+            * Little button helper function which adds update/delete buttons are restores original submit.
             * @param {bool} add_update
             */
             function setButtons(form_button, add_update) {
                 if(add_update) {
-                    form_button.val("updating");
-                    form_button.text("Update");
+                    form_button.val('updating');
+                    form_button.text('Update');
                     form_button.before($('<button type="submit" value="deleting" class="btn btn-danger">Delete</button>'))
                 } else {
                     form.find('button').remove();
@@ -249,9 +251,9 @@
              * @param {bool} is the leaveslip approved
              */  
              function populateSlipForm(slip, is_approved) {
-                console.log(slip);
-
                 if(typeof slip !== 'undefined') {
+                    console.log(slip);
+
                     form_heading.text("Submitted on " + slip['submitted']);
                     form.find("#id_leaveslip").val(slip['id']);
                     form.find("select#id_type").val(slip['type']);
@@ -287,7 +289,7 @@
                 prepared_events = [];
 
                 for(var i = 0; i < events_array.length; i++) {
-                    prepared_events[i] = api_base + "/event/" + events_array[i] + "/";
+                    prepared_events[i] = api_base + '/event/' + events_array[i] + '/';
                 }
 
                 return prepared_events;
@@ -298,15 +300,56 @@
              * @param {integer array} event ids
              * @param {string} status 
              */
-            function sendRoll(event_ids, status) {
+            function sendRoll(event_ids, status, roll_ids) {
+
+                if(event_ids.length == 0) { return false; }
+
+                var trainee = form.find("input#id_trainee").val();
+                var TA = form.find("input#id_TA").val();
+                // console.log(isNaN(parseInt(trainee)));
+                // console.log(form.find("input#id_trainee").val());
+                console.log(event_ids);
+
+                var data = {
+                    'objects': []
+                }
+
+                for (var i = 0; i < event_ids.length; i++) {
+                    data['objects'].push({
+                        'resource_uri': api_base + '/roll/' + roll_ids[i] + '/',
+                        'status': status,
+                        'trainee': (!isNaN(parseInt(trainee))) ? api_base + '/trainee/' + parseInt(trainee) + '/' : trainee,
+                        'TA': (!isNaN(parseInt(TA))) ? api_base + '/TA/' + parseInt(TA) + '/' : TA,
+                        'event': api_base + '/event/' + event_ids[i] + '/',
+                    });
+                };
+
+                data = JSON.stringify(data);
+                console.log(data);
+
+                response = $.ajax({
+                  url: base_url + api_base + '/roll/',
+                  type: 'PATCH',
+                  contentType: 'application/json',
+                  data: data,
+                  dataType: 'json',
+                  processData: false,
+                  complete: function(xhr, textStatus) {
+                        if(xhr.status == 201 || xhr.status == 200 || xhr.status == 204) {
+                                console.log('Rolls submitted ok');  
+                        }                      
+                     }
+                });
+
+                console.log(response);
             }
 
             /**
             * Handles all form requests - creating, updating, deleting.
             */
             form.submit(function(event) {
-                var trainee = parseInt(form.find("input#id_trainee").val());
-                var TA = parseInt(form.find("input#id_TA").val());
+                var trainee = form.find("input#id_trainee").val();
+                var TA = form.find("input#id_TA").val();
                 var slip_id = parseInt(form.find("input#id_leaveslip").val());
                 var active_button = form.context.activeElement.value;
 
@@ -316,20 +359,19 @@
                 } else {
 
                     form_data = {
-                        "comments": form.find("textarea#id_comments").val(),
-                        "description": form.find("textarea#id_description").val(), 
-                        "informed": form.find("input#id_informed").is(":checked"), 
-                        "texted": form.find("input#id_texted").is(":checked"),
-                        "type": form.find("select#id_type").val(),
-                        "events": prepareEvents(selected_events),
-                        "trainee": (!isNaN(trainee)) ? api_base + '/trainee/' + trainee + "/" : trainee,
-                        "TA": (!isNaN(TA)) ? api_base + '/TA/' + TA + "/" : TA,
+                        'comments': form.find("textarea#id_comments").val(),
+                        'description': form.find("textarea#id_description").val(), 
+                        'informed': form.find("input#id_informed").is(":checked"), 
+                        'texted': form.find("input#id_texted").is(":checked"),
+                        'type': form.find("select#id_type").val(),
+                        'events': prepareEvents(selected_events),
+                        'trainee': (!isNaN(parseInt(trainee))) ? api_base + '/trainee/' + parseInt(trainee) + '/' : trainee,
+                        'TA': (!isNaN(parseInt(TA))) ? api_base + '/TA/' + parseInt(TA) + '/' : TA,
                     };
 
                     if(active_button == 'updating') {
                         sendAttendance(form_data, 'PUT', 'updating', slip_id);
                     } else {
-                        // submitting a new leave slip
                         sendAttendance(form_data, 'POST', 'submitting', '');
                     }
                 }
@@ -341,7 +383,9 @@
 
                 // display the leaveslip for that event, if any
                 var event_id = $(this).data("id");
-                selected_events.push($(this).data("id"));
+
+                selected_events.push(event_id);
+                selected_rolls.push($(this).data("roll") ? $(this).data("roll") : 0);
 
                 // if pending, display the details and allow update or delete
                 if($("div.schedule-event").hasClass("pending")) {
@@ -354,18 +398,15 @@
                 }
             });
 
-
             $("#clndr").on("click", "#submit-roll button", function () {
                 var status = $(this).attr('id')
 
                 $(".selected-event").each(function() {
                     $(this).removeClass("present absent tardy uniform left-class selected-event");
                     $(this).addClass(status);
-                    selected_events.push($(this).data("id"));
                 });
 
-                sendRoll(selected_events, status);
-
+                sendRoll(selected_events, (status.charAt(0)).toUpperCase(), selected_rolls);
             });
 
         });

@@ -56,16 +56,14 @@ class IndividualSlipResource(ModelResource):
 		if hasattr(bundle, 'request'):
 			query = bundle.request.GET.get('event-id', None)
 			if query:
-				objects_one = IndividualSlip.objects.filter(events__id=query)[:1]
-				# Note: currently not dealing with other kinds of leave slips; below is roughly how it would be 
-				# done. If more than one leaveslip covers an event, we only display the first one. (All would
-				# appear if viewing the list page).
+				individual_objects = IndividualSlip.objects.filter(events__id=query)[:1]
+				# Note: currently not dealing with other kinds of leave slips.
+				# If more than one leaveslip covers an event, we only display the first one. 
+				# (User can view all leaveslips on the list page)
 
-				# objects_two = MealOutSlip.objects.filter(events__id=query)
-				# objects_three = NightOutSlip.objects.filter(events__id=query)
-				# objects_four = GroupSlip.objects.filter(events__id=query)
-				# return chain(objects_one, objects_two, objects_three, objects_four)[:1]
-				return objects_one
+				# group_objects = GroupSlip.objects.filter(events__id=query)[:1]
+				# return chain(individual_objects, group_objects)[:1]
+				return individual_objects
 		return super(IndividualSlipResource, self).get_object_list(bundle, **kwargs)
 		
 	def obj_get_list(self, bundle, **kwargs):
@@ -75,13 +73,22 @@ class RollResource(ModelResource):
 	event = fields.ForeignKey(EventResource, 'event')
 	trainee = fields.ForeignKey(TraineeResource, 'trainee')
 	monitor = fields.ForeignKey(TraineeResource, 'monitor')
+	TA = fields.ForeignKey(TrainingAssistantResource, 'TA')
 
 	class Meta:
 		queryset = Roll.objects.all()
-		allowed_methods = ['get', 'post', 'put', 'delete']
+		allowed_methods = ['get', 'post', 'put', 'delete', 'patch']
 		authentication = BasicAuthentication()
 		authorization = Authorization()
 
+
+class GroupSlipResource(ModelResource):
+	class Meta:
+		queryset = GroupSlip.objects.all()
+		allowed_methods = ['get', 'post', 'put']
+
+
+# Not going to use these?
 
 class MealOutSlipResource(ModelResource):
 	leaveslip = fields.OneToOneField(IndividualSlipResource, 'leaveslip', null=False, full=True)
@@ -95,9 +102,4 @@ class NightOutSlipResource(ModelResource):
 
 	class Meta:
 		queryset = NightOutSlip.objects.all()
-		allowed_methods = ['get', 'post', 'put']
-
-class GroupSlipResource(ModelResource):
-	class Meta:
-		queryset = GroupSlip.objects.all()
 		allowed_methods = ['get', 'post', 'put']
