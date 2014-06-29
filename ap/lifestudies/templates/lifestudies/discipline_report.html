@@ -7,52 +7,91 @@
 {% block lifestudies_content %}
 
     {% if profile.trainee %}
-
         <h3> TA Access Only </h3>
-
-
+        
     {% elif profile.trainingassistant %}
 
-
         <h3> Life Study Report </h3>
-
         {% if disciplines %}
-            Incompleted Summaries
-            <ul>
-            {% for discipline in disciplines %}
-                {% if discipline.isCompleted == False %}    
-                    <div>
-                     {{ discipline }} 
-                    {% for summary in discipline.summary_set.all %}
-                        {% if summary.approved == False %}
-                            <a href="{% url 'summary-approve' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
-                        {% endif %}
-                        {% if summary.approved == True %}
-                            Approved:
-                            <a href="{% url 'summary-approve' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
-                        {% endif %}
-                    {% endfor %}
-                    </div>
-                {% endif %}
-            {% endfor %}
-            </ul>
+            <div class="panel panel-primary">
+              <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <h3 class="panel-title">Incompleted Life-Study</h3>
+                </div>
+                <table class="table">
+                    <tr>
+                        <th> Name </th>
+                        <th> Reason </th>
+                        <th> Type </th>
+                        <th> Quantity </th>
+                        <th> Still Due </th>
+                        <th> Date Assigned </th>
+                        <th> Due Date </th>  
+                        <th> Approved </th>
+                        <th> </th>
+                        <th> </th>
+                    </tr>
+                    {% for discipline in disciplines %}
+                    {% if discipline.isCompleted == False %}
+                    <tr>
+                        <td>{{discipline.trainee.account.get_full_name}}</td>
+                        <td>{{discipline.infraction}}</td>
+                        <td>{{discipline.offense}}</td>
+                        <td>{{discipline.quantity}}</td>
+                        <td>{{discipline.getNumSummaryDue}}</td>
+                        <td>{{discipline.due | date:"m/d/y"}}</td>
+                        <td>{{discipline.date_assigned | date:"m/d/y"}}
 
-            Completed Summaries
-            <ul>
-            {% for discipline in disciplines %}
-                {% if discipline.isCompleted == True %}    
-                    <div>
-                    {{ discipline }}
-                    {% for summary in discipline.summary_set.all %}
-                        {% if summary.approved == True %}
-                            Approved:
-                            <a href="{% url 'summary-approve' summary.pk %}"> {{summary.date_submitted | date:"m/d/y"}} </a>
-                        {% endif %}
+                        {% for summary in discipline.summary_set.all %}
+                        <td>
+                            <a href="{% url 'summary-approve' summary.pk %}"> 
+                                {{summary.date_submitted | date:"m/d/y"}}
+                            </a>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endif %}
                     {% endfor %}
-                    </div>
-                {% endif %}  
-            {% endfor %}
-            </ul>
+                </table>
+                <div class="panel-heading">
+                    <h3 class="panel-title">Completed Life-Study</h3>
+                </div>
+                <table class="table">
+                    <tr>
+                        <th> Name </th>
+                        <th> Reason </th>
+                        <th> Type </th>
+                        <th> Quantity </th>
+                        <th> Still Due </th>
+                        <th> Date Assigned </th>
+                        <th> Due Date </th>  
+                        <th> Approved </th>
+                        <th> </th>
+                        <th> </th>
+                    </tr>
+                    {% for discipline in disciplines %}
+                    {% if discipline.isCompleted == True %}
+                    <tr>
+                        <td>{{discipline.trainee.account.get_full_name}}</td>
+                        <td>{{discipline.infraction}}</td>
+                        <td>{{discipline.offense}}</td>
+                        <td>{{discipline.quantity}}</td>
+                        <td>{{discipline.getNumSummaryDue}}</td>
+                        <td>{{discipline.due | date:"m/d/y"}}</td>
+                        <td>{{discipline.date_assigned | date:"m/d/y"}}
+
+                        {% for summary in discipline.summary_set.all %}
+                        <td>
+                            <a href="{% url 'summary-approve' summary.pk %}"> 
+                                {{summary.date_submitted | date:"m/d/y"}}
+                            </a>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
         {% endif %}
     {% endif %}
 

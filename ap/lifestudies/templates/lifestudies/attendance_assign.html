@@ -1,5 +1,7 @@
 {% extends "lifestudies/base_lifestudies.html" %}
 
+{% block tab3 %} class="active" {% endblock %}
+
 {% block title %}Life Study{% endblock %}
 
 {% block lifestudies_content %}
@@ -25,20 +27,31 @@
         <button type="submit" class="btn btn-default">Select</button>
     </form>
 
-    <b>Period {{period}}</b>: {{start_date}} to {{end_date}}
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Period {{period}}: {{start_date}} to {{end_date}}</div>
 
-    {% for trainee, num_summary in outstanding_trainees.items %}
-            <li>
-                <b>{{trainee}}</b>, number of life-study assigning: <b>{{num_summary}}</b>
-                <ul>
-                    {% for roll in trainee.rolls.all %}
-                        {% if roll.event.date >= start_date and roll.event.date <= end_date %}
-                            <li>{{roll.event}} | {{roll.event.date | date:'m/d/y'}} | {{roll.status}}</li>
-                        {% endif %}
-                    {% endfor %}    
-                </ul>
-            </li>
-    {% endfor %}
+        <!-- <div class="panel-body">
+            <p>...</p>
+        </div> -->
+        <ul class="list-group">
+            {% for trainee, num_summary in outstanding_trainees.items %}
+                <li class="list-group-item">
+                    <b>{{trainee}}</b>, number of life-study assigning: <b>{{num_summary}}</b>
+                    <ul class="list-group">
+                        {% for roll in trainee.rolls.all %}
+                            {% if roll.event.date >= start_date and roll.event.date <= end_date %}
+                                <li class="list-group-item">
+                                    {{roll.event}} | {{roll.event.date | date:'m/d/y'}} | {{roll.status}}
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
 
     <form action="{% url 'discipline-list' %}" method="post">
         {% csrf_token %}
