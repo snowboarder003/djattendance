@@ -179,6 +179,14 @@
                 form_heading.text("Submit a leave slip");
             }
 
+            function getValues(object) {
+                var values = [];
+                object.each(function() {
+                    values[values.length] = $(this).attr('value');
+                })
+                return values;
+            }
+
             /**
              * Calls the leaveslips API to make changes
              * @param {JSON} form_data
@@ -308,9 +316,6 @@
                 if(event_ids.length == 0) { return false; }
 
                 var trainee = $("input#id_trainee").val();
-                var TA = $("input#id_TA").val();
-                console.log(TA);
-
                 var data = {
                     'objects': []
                 }
@@ -321,7 +326,6 @@
                         'resource_uri': api_base + '/roll/' + roll_ids[i] + '/',
                         'status': status,
                         'trainee': (!isNaN(parseInt(trainee))) ? api_base + '/trainee/' + parseInt(trainee) + '/' : trainee,
-                        // 'TA': (!isNaN(parseInt(TA))) ? api_base + '/TA/' + parseInt(TA) + '/' : TA,
                         'event': api_base + '/event/' + event_ids[i] + '/',
                         'monitor': (!isNaN(parseInt(trainee))) ? api_base + '/trainee/' + parseInt(trainee) + '/' : trainee,
                     });
@@ -338,8 +342,7 @@
                   processData: false,
                   complete: function(xhr, textStatus) {
                         if(xhr.status == 201 || xhr.status == 200 || xhr.status == 204) {
-                                console.log('Rolls submitted ok');  
-                                console.log(xhr.status);
+                            console.log(xhr.status);
                         }                      
                      }
                 });

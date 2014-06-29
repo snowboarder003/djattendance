@@ -13,13 +13,13 @@
     border: 1px solid #eea236;
 }
 
-
 .approved {
     background-color: #5cb85c;
 }
 
 .pending {
-    border: 1px solid #4cae4c;
+    border-right: 5px solid #4cae4c;
+    border-left: 5px solid #4cae4c;
 }
 
 
