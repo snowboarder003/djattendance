@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "lifestudies/base_lifestudies.html" %}
 
 {% block title %}Life Study{% endblock %}
 
@@ -14,7 +14,5 @@
         {% csrf_token %}
         <button type="submit" class="btn btn-success">Update</button>
     </form>
-
-<a href="{% url 'discipline-list' %}"> Back </a>
 
 {% endblock %}

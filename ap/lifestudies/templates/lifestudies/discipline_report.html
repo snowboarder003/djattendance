@@ -1,8 +1,10 @@
-{% extends "base.html" %}
+{% extends "lifestudies/base_lifestudies.html" %}
+
+{% block tab2 %} class="active" {% endblock %}
 
 {% block title %}Life Study{% endblock %}
 
-{% block content %}
+{% block lifestudies_content %}
 
     {% if profile.trainee %}
 
@@ -10,6 +12,7 @@
 
 
     {% elif profile.trainingassistant %}
+
 
         <h3> Life Study Report </h3>
 
@@ -52,7 +55,5 @@
             </ul>
         {% endif %}
     {% endif %}
-
- <a href="{% url 'discipline-list' %}"> Back </a>   
 
 {% endblock %}

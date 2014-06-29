@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "lifestudies/base_lifestudies.html" %}
 
 {% block title %}Life Study{% endblock %}
 
@@ -8,7 +8,5 @@
     {% for summary in discipline.summary_set.all %}
         <div>{{summary}}</div>
     {% endfor %}
-
-    <a href="{% url 'discipline-list' %}"> Back </a>
 
 {% endblock %}

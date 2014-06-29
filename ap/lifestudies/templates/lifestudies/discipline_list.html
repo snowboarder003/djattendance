@@ -1,8 +1,10 @@
-{% extends "base.html" %}
+{% extends "lifestudies/base_lifestudies.html" %}
+
+{% block tab1 %} class="active" {% endblock %}
 
 {% block title %}Life Study{% endblock %}
 
-{% block content %}
+{% block lifestudies_content %}
 
     {% if profile.trainee %}
 
@@ -75,11 +77,6 @@
                         <button type="submit" name="approve" class="btn btn-success">Approve Selected</button>
                         <button type="submit" name="delete" class="btn btn-danger">Delete Selected</button>
                     </form>
-
-
-        <form action="{% url 'discipline-report' %}">
-            <button class="btn btn-info">Life Study Report</button>
-        </form>
 
         <!--assign LS to single trainee botton-->
         <form action="{% url 'discipline-create' %}">
