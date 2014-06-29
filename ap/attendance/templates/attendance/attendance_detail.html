@@ -17,8 +17,13 @@
     <div id="clndr">
     </div>
 
+
     <!-- SCHEDULE TEMPLATE -->
     <script type="text/template" id="clndr-template">
+    <input type="hidden" id="id_trainee" name="trainee" value="{{ trainee.id }}">
+    <input type="hidden" id="id_TA" name="TA" value="{{ trainee.TA.id }}">
+
+
         <div class="btn-toolbar" role="toolbar">
             <div class="controls btn-group">
                 <button class="btn btn-info"><span class="glyphicon glyphicon-calendar"></span></button>
@@ -99,8 +104,6 @@
                     <div class="panel-body" id="event-info">
                         <form id="leaveslip-form">{% csrf_token %}
                             {% bootstrap_form leaveslipform %}
-                            <input type="hidden" id="id_trainee" name="trainee" value="{{ trainee.id }}">
-                            <input type="hidden" id="id_TA" name="TA" value="{{ trainee.TA.id }}">
                             <input type="hidden" id="id_leaveslip" name="leaveslip" value="">
 
                             {% buttons %}
@@ -304,28 +307,27 @@
 
                 if(event_ids.length == 0) { return false; }
 
-                var trainee = form.find("input#id_trainee").val();
-                var TA = form.find("input#id_TA").val();
-                // console.log(isNaN(parseInt(trainee)));
-                // console.log(form.find("input#id_trainee").val());
-                console.log(event_ids);
+                var trainee = $("input#id_trainee").val();
+                var TA = $("input#id_TA").val();
+                console.log(TA);
 
                 var data = {
                     'objects': []
                 }
 
+                // Note: this is assuming trainee is taking self-attendance (ie, trainee = monitor)
                 for (var i = 0; i < event_ids.length; i++) {
                     data['objects'].push({
                         'resource_uri': api_base + '/roll/' + roll_ids[i] + '/',
                         'status': status,
                         'trainee': (!isNaN(parseInt(trainee))) ? api_base + '/trainee/' + parseInt(trainee) + '/' : trainee,
-                        'TA': (!isNaN(parseInt(TA))) ? api_base + '/TA/' + parseInt(TA) + '/' : TA,
+                        // 'TA': (!isNaN(parseInt(TA))) ? api_base + '/TA/' + parseInt(TA) + '/' : TA,
                         'event': api_base + '/event/' + event_ids[i] + '/',
+                        'monitor': (!isNaN(parseInt(trainee))) ? api_base + '/trainee/' + parseInt(trainee) + '/' : trainee,
                     });
                 };
 
                 data = JSON.stringify(data);
-                console.log(data);
 
                 response = $.ajax({
                   url: base_url + api_base + '/roll/',
@@ -337,6 +339,7 @@
                   complete: function(xhr, textStatus) {
                         if(xhr.status == 201 || xhr.status == 200 || xhr.status == 204) {
                                 console.log('Rolls submitted ok');  
+                                console.log(xhr.status);
                         }                      
                      }
                 });
@@ -348,8 +351,8 @@
             * Handles all form requests - creating, updating, deleting.
             */
             form.submit(function(event) {
-                var trainee = form.find("input#id_trainee").val();
-                var TA = form.find("input#id_TA").val();
+                var trainee = ("input#id_trainee").val();
+                var TA = ("input#id_TA").val();
                 var slip_id = parseInt(form.find("input#id_leaveslip").val());
                 var active_button = form.context.activeElement.value;
 
@@ -393,13 +396,13 @@
                 } else {
                     // if approved, just display the details
                     if($("div.schedule-event").hasClass("approved")) {
-                        getLeaveslip(event_id, true)
+                        getLeaveslip(event_id, true);
                     }
                 }
             });
 
             $("#clndr").on("click", "#submit-roll button", function () {
-                var status = $(this).attr('id')
+                var status = $(this).attr('id');
 
                 $(".selected-event").each(function() {
                     $(this).removeClass("present absent tardy uniform left-class selected-event");

@@ -73,7 +73,6 @@ class RollResource(ModelResource):
 	event = fields.ForeignKey(EventResource, 'event')
 	trainee = fields.ForeignKey(TraineeResource, 'trainee')
 	monitor = fields.ForeignKey(TraineeResource, 'monitor')
-	TA = fields.ForeignKey(TrainingAssistantResource, 'TA')
 
 	class Meta:
 		queryset = Roll.objects.all()
