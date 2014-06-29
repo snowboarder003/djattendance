@@ -2,17 +2,18 @@
 
 {% block title %}Life Study{% endblock %}
 
-{% block content %}
-<h3> Summary </h3>
+{% block lifestudies_content %}
 
-<li>Book: "{{summary.book.name}}" Ch. {{summary.chapter}}</li>
+    <h3> Summary </h3>
 
-<li>Date Time submitted: {{summary.date_submitted}}</li>
+    <li>Book: "{{summary.book.name}}" Ch. {{summary.chapter}}</li>
 
-    <form action="" method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <button type="submit" class="btn btn-success">Update</button>
-    </form>
+    <li>Date Time submitted: {{summary.date_submitted}}</li>
+
+        <form action="" method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Update</button>
+        </form>
 
 {% endblock %}

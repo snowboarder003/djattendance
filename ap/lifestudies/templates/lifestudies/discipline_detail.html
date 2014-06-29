@@ -2,7 +2,8 @@
 
 {% block title %}Life Study{% endblock %}
 
-{% block content %}
+{% block lifestudies_content %}
+
     <h3> {{discipline}} </h3>
 
     {% for summary in discipline.summary_set.all %}
