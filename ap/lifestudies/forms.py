@@ -12,7 +12,7 @@ class NewDisciplineForm(forms.ModelForm):
         if commit:
             discipline.save()
         return discipline
-
+        
 
 class NewSummaryForm(forms.ModelForm):
     class Meta:

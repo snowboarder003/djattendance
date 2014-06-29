@@ -7,33 +7,33 @@
 {% block lifestudies_content %}
 
     <h3>Assign Discipline</h3> 
-    
-    <form action="" method="post">   
-        {% csrf_token %}
-        <div class="col-md-4">
-            <select name="period" class="form-control">
-                <option value="1">Period 1</option>
-                <option value="2">Period 2</option>
-                <option value="3">Period 3</option>
-                <option value="4">Period 4</option>
-                <option value="5">Period 5</option>
-                <option value="6">Period 6</option>
-                <option value="7">Period 7</option>
-                <option value="8">Period 8</option>
-                <option value="9">Period 9</option>
-                <option value="10">Period 10</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-default">Select</button>
-    </form>
 
     <div class="panel panel-primary">
         <!-- Default panel contents -->
         <div class="panel-heading">Period {{period}}: {{start_date}} to {{end_date}}</div>
 
-        <!-- <div class="panel-body">
-            <p>...</p>
-        </div> -->
+        <div class="panel-body">                      
+            <form action="" method="post">   
+                    {% csrf_token %}
+                    <div class="col-md-4">
+                        <select name="period" class="form-control">
+                            <option value="" selected="select">Choose a Period</option>
+                            <option value="1">Period 1</option>
+                            <option value="2">Period 2</option>
+                            <option value="3">Period 3</option>
+                            <option value="4">Period 4</option>
+                            <option value="5">Period 5</option>
+                            <option value="6">Period 6</option>
+                            <option value="7">Period 7</option>
+                            <option value="8">Period 8</option>
+                            <option value="9">Period 9</option>
+                            <option value="10">Period 10</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-default">Select</button>
+                </form>
+        </div> 
+
         <ul class="list-group">
             {% for trainee, num_summary in outstanding_trainees.items %}
                 <li class="list-group-item">
@@ -42,7 +42,7 @@
                         {% for roll in trainee.rolls.all %}
                             {% if roll.event.date >= start_date and roll.event.date <= end_date %}
                                 <li class="list-group-item">
-                                    {{roll.event}} | {{roll.event.date | date:'m/d/y'}} | {{roll.status}}
+                                    <b>[{{roll.status}}]</b> {{roll.event}} {{roll.event.date | date:'m/d/y'}} 
                                 </li>
                             {% endif %}
                         {% endfor %}

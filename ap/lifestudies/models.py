@@ -65,9 +65,6 @@ class Discipline(models.Model):
     # even for assigning house, each trainee has one discipline
     trainee = models.ForeignKey(Trainee)
 
-    def displayForTrainee(self):
-        return ' Life-Study Summary due as ' + self.offense + ' for ' + self.infraction + ' infraction | Completed Discipline: ' + str(self.isCompleted()) + '. Summaries left: ' + str(self.getNumSummaryDue())
-
     # To add the specified number of life-studies to a trainee
     # See information manual for when to add additional discipline
     #   When you automatically assign discipline

@@ -10,28 +10,41 @@
 
         <h3> Life Study Summaries</h3>
 
-        {% if disciplines %}
-            {% for discipline in disciplines %}
-                {% if discipline.trainee.account_id == profile.pk and discipline.isCompleted == False %}
-                    <li> {{discipline.displayForTrainee}} 
-                        {% if discipline.getNumSummaryDue > 0 %}
-                        <a href="{% url 'summary-create' discipline.pk %}"> New </a>
-                        {% endif %}
-                    </li>
-                    <ul>
-                        {% for summary in discipline.summary_set.all %}
-                            <li> 
-                                {{summary}} 
-                                {% if summary.approved == False %}
-                                <a href="{% url 'summary-detail' summary.pk %}"> Edit </a>
-                                {% endif %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
+        <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><b>Life-Study Due</b></div>
 
+        <!-- <div class="panel-body">
+            <p>...</p>
+        </div> -->
+            <ul class="list-group">
+                {% for discipline in disciplines %}
+                    {% if discipline.trainee.account_id == profile.pk and discipline.isCompleted == False %}
+                        <li class="list-group-item">
+                            Discipline assigned for {{discipline.infraction}}. Summaries left: <b>{{discipline.getNumSummaryDue}}</b>
+                            <ul class="list-group">
+                                {% for summary in discipline.summary_set.all %}
+                                        <a href="{% url 'summary-detail' summary.pk %}" class="list-group-item">
+                                            {{summary.book}} | 
+                                            {% if summary.approved %}
+                                                <b>approved</b>
+                                            {% else %}
+                                                <b>not approved</b>
+                                            {% endif %}
+                                        </a>
+                                {% endfor %}
+                                <!-- TODO to disable this when the summary are all submitted-->
+                                <form action="{% url 'summary-create' discipline.pk %}">
+                                    <button class="btn btn-success">New Life-Study Summary </button>
+                                </form>
+                            </ul>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+
+    # note: click to edit
 
     {% elif profile.trainingassistant %}
 
@@ -62,8 +75,9 @@
                 <td>{{discipline.offense}}</td>
                 <td>{{discipline.quantity}}</td>
                 <td>{{discipline.getNumSummaryDue}}</td>
-                <td>{{discipline.due | date:"m/d/y"}}</td>
                 <td>{{discipline.date_assigned | date:"m/d/y"}}
+                <td>{{discipline.due | date:"m/d/y"}}</td>
+
 
                 {% for summary in discipline.summary_set.all %}
                 <td>
