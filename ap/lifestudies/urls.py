@@ -1,12 +1,12 @@
 from django.conf.urls import patterns, url
 from lifestudies.views import DisciplineListView, DisciplineCreateView, DisciplineDetailView, \
-                            SummaryCreateView, SummaryUpdateView, SummaryApproveView, ReportListView, \
+                            SummaryCreateView, SummaryUpdateView, SummaryApproveView, DisciplineReportView, \
                             CreateHouseDiscipline, AttendanceAssign
 from lifestudies import views
 
 urlpatterns = patterns('',
     url(r'^$', DisciplineListView.as_view(), name='discipline-list'),
-    url(r'^discipline_report$', ReportListView.as_view(), name='discipline-report'),
+    url(r'^discipline_report$', DisciplineReportView.as_view(), name='discipline-report'),
     url(r'^(?P<pk>\d+)/create_summary$', SummaryCreateView.as_view(), name='summary-create'),
     url(r'^(?P<pk>\d+)/detail_summary$', SummaryUpdateView.as_view(), name='summary-detail'),
     url(r'^(?P<pk>\d+)/approve_summary$', SummaryApproveView.as_view(), name='summary-approve'),

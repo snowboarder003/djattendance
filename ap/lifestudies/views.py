@@ -8,6 +8,8 @@ from django.forms.formsets import formset_factory
 from terms.models import Term
 from attendance.utils import Period
 from schedules.models import Schedule
+from teams.models import Team
+from houses.models import House
 import datetime
 
 
@@ -51,7 +53,7 @@ class DisciplineListView(ListView):
         return context
 
 
-class ReportListView(ListView):
+class DisciplineReportView(ListView):
     template_name = 'lifestudies/discipline_report.html'
     model = Discipline
     context_object_name = 'disciplines'
@@ -63,8 +65,11 @@ class ReportListView(ListView):
 
     #profile is the user that's currently logged in
     def get_context_data(self, **kwargs):
-        context = super(ReportListView, self).get_context_data(**kwargs)
+        context = super(DisciplineReportView, self).get_context_data(**kwargs)
         context['profile'] = self.request.user
+        context['trainees'] = Trainee.objects.all()
+        context['teams'] = Team.objects.all()
+        context['houses'] = House.objects.all()
         if self.request.method == 'POST':
             for discipline in context['object_list']:
                 if discipline.pk in self.request.POST:
@@ -186,7 +191,7 @@ class AttendanceAssign(ListView):
 
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
-            period = int(request.POST['period'])
+            period = int(request.POST['select_period'])
             return HttpResponseRedirect(reverse_lazy('attendance-assign', kwargs={'period': period}))
         else:
             return HttpResponseRedirect(reverse_lazy('attendance-assign', kwargs={'period: 1'}))
