@@ -4,17 +4,20 @@
 
 {% block lifestudies_content %} 
 
-    <li>Book: "{{summary.book.name}}" Ch. {{summary.chapter}}</li>
-
-    <li>Date Time submitted: {{summary.date_submitted}}</li>
-
-    <li>Content: {{summary.content}}</li>
-
-    {% if summary.approved == False %}
-        <form action="" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-success">Approve</button>
-        </form>
-    {% endif %}
-
+    <div class="container">
+        <div class="col-md-12">
+            <h1>{{summary.book.name}}</h1>
+            <p>{{summary.content}}</p>
+            <div>
+                <span class="badge">{{summary.date_submitted}}</span><div class="pull-right">
+                {% if summary.approved == False %}
+                    <form action="" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">Approve</button>
+                    </form>
+                {% endif %}        
+            </div>
+        </div>
+    </div>
+ 
 {% endblock %}

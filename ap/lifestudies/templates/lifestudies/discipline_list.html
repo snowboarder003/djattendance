@@ -34,9 +34,11 @@
                                         </a>
                                 {% endfor %}
                                 <!-- TODO to disable this when the summary are all submitted-->
-                                <form action="{% url 'summary-create' discipline.pk %}">
-                                    <button class="btn btn-success">New Life-Study Summary </button>
-                                </form>
+                                {% if discipline.getNumSummaryDue > 0 %}
+                                    <form action="{% url 'summary-create' discipline.pk %}">
+                                        <button class="btn btn-success">New Life-Study Summary </button>
+                                    </form>
+                                {% endif %}
                             </ul>
                         </li>
                     {% endif %}
