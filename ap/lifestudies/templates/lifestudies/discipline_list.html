@@ -116,7 +116,6 @@
                         <td><b>{{discipline.getNumSummaryDue}}</b></td>
                         <td>{{discipline.date_assigned | date:"m/d/y"}}
                         <td>{{discipline.due | date:"m/d/y"}}</td>
-
                         <td>
                             {% for summary in discipline.summary_set.all %}
                             <a href="{% url 'summary-approve' summary.pk %}" class="tooltip-submit-date" data-toggle="tooltip" data-placement="top" title="{{summary.date_submitted | date:"m/d/y"}}">

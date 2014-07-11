@@ -22,27 +22,26 @@
 
 
         {% if disciplines %}
-            <div class="panel panel-primary filterable">
-              <!-- Default panel contents -->
-                <div class="panel-heading">
-                    <h3 class="panel-title">Incompleted Life-Study</h3>
-                    <div class="pull-right">
-                        <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
-                    </div>
-                </div>
-                <table class="table">
-                    <thead>
-                        <tr class="filters">
-                            <th><input type="text" class="form-control" placeholder="Name" disabled></th>
-                            <th><input type="text" class="form-control" placeholder="Reason" disabled></th>
-                            <th><input type="text" class="form-control" placeholder="Type" disabled></th>
-                            <th><input type="text" class="form-control" placeholder="Quantity" disabled></th>
-                            <th><input type="text" class="form-control" placeholder="Still Due" disabled></th>
-                            <th><input type="text" class="form-control" placeholder="Date Assigned" disabled></th>
-                            <th><input type="text" class="form-control" placeholder="Due Date" disabled></th>
-                            <th><input type="text" class="form-control" placeholder="Approved" disabled></th>
-                        </tr>
-                    </thead>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Incompleted Life-Study</h3>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Reason</th>
+                        <th>Type</th>
+                        <th>Quantity</th>
+                        <th>Still Due</th>
+                        <th>Date Assigned</th>
+                        <th>Due Date</th>
+                        <th>Submission(s)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
                     {% for discipline in disciplines %}
                     {% if discipline.isCompleted == False %}
                     <tr>
@@ -53,22 +52,25 @@
                         <td>{{discipline.getNumSummaryDue}}</td>
                         <td>{{discipline.due | date:"m/d/y"}}</td>
                         <td>{{discipline.date_assigned | date:"m/d/y"}}
-
-                        {% for summary in discipline.summary_set.all %}
                         <td>
-                            <a href="{% url 'summary-approve' summary.pk %}"> 
-                                {{summary.date_submitted | date:"m/d/y"}}
+                            {% for summary in discipline.summary_set.all %}
+                            <a href="{% url 'summary-approve' summary.pk %}" class="tooltip-submit-date" data-toggle="tooltip" data-placement="top" title="{{summary.date_submitted | date:"m/d/y"}}">
+                                <span class="glyphicon glyphicon-file"></span>
                             </a>
+                            {% endfor %}
                         </td>
-                        {% endfor %}
                     </tr>
                     {% endif %}
                     {% endfor %}
-                </table>
-                <div class="panel-heading">
-                    <h3 class="panel-title">Completed Life-Study</h3>
-                </div>
-                <table class="table">
+                </tbody>
+            </table>
+
+            <div class="panel-heading">
+                <h3 class="panel-title">Completed Life-Study</h3>
+            </div>
+
+            <table class="table">
+                <thead>
                     <tr>
                         <th> Name </th>
                         <th> Reason </th>
@@ -77,10 +79,11 @@
                         <th> Still Due </th>
                         <th> Date Assigned </th>
                         <th> Due Date </th>  
-                        <th> Approved </th>
-                        <th> </th>
-                        <th> </th>
+                        <th> Submission(s) </th>
                     </tr>
+                </thead>
+
+                <tbody>
                     {% for discipline in disciplines %}
                     {% if discipline.isCompleted == True %}
                     <tr>
@@ -91,19 +94,19 @@
                         <td>{{discipline.getNumSummaryDue}}</td>
                         <td>{{discipline.due | date:"m/d/y"}}</td>
                         <td>{{discipline.date_assigned | date:"m/d/y"}}
-
-                        {% for summary in discipline.summary_set.all %}
                         <td>
-                            <a href="{% url 'summary-approve' summary.pk %}"> 
-                                {{summary.date_submitted | date:"m/d/y"}}
+                            {% for summary in discipline.summary_set.all %}
+                            <a href="{% url 'summary-approve' summary.pk %}" class="tooltip-submit-date" data-toggle="tooltip" data-placement="top" title="{{summary.date_submitted | date:"m/d/y"}}">
+                                <span class="glyphicon glyphicon-file"></span>
                             </a>
+                            {% endfor %}
                         </td>
-                        {% endfor %}
                     </tr>
                     {% endif %}
                     {% endfor %}
-                </table>
-            </div>
+                </tbody>
+            </table>
+        </div>
         {% endif %}
     {% endif %}
 
