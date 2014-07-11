@@ -46,7 +46,7 @@
                     {% for discipline in disciplines %}
                     {% if discipline.isCompleted == False %}
                     <tr>
-                        <td>{{discipline.trainee.account.get_full_name}}</td>
+                        <td>{{discipline.trainee.account.firstname}} {{discipline.trainee.account.lastname|slice:"1"}}.</td>
                         <td>{{discipline.infraction}}</td>
                         <td>{{discipline.offense}}</td>
                         <td>{{discipline.quantity}}</td>
@@ -84,7 +84,7 @@
                     {% for discipline in disciplines %}
                     {% if discipline.isCompleted == True %}
                     <tr>
-                        <td>{{discipline.trainee.account.get_full_name}}</td>
+                        <td>{{discipline.trainee.account.firstname}} {{discipline.trainee.account.lastname|slice:"1"}}.</td>
                         <td>{{discipline.infraction}}</td>
                         <td>{{discipline.offense}}</td>
                         <td>{{discipline.quantity}}</td>

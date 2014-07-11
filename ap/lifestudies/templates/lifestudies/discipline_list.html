@@ -4,6 +4,7 @@
 
 {% block references %}
     <link rel="stylesheet" href="{% static "lifestudies/css/collapsePanel.css" %}" />
+    <link rel="stylesheet" href="{% static "lifestudies/css/checkboxes.css" %}" />
 {% endblock %}
 
 {% block tab1 %} class="active" {% endblock %}
@@ -14,7 +15,7 @@
 
     {% if profile.trainee %}
 
-        <h2> Life Study Summaries</h2>
+    <h2> Life Study Summaries</h2>
 
     <div class="panel-group" id="accordion">
 
@@ -23,47 +24,43 @@
 
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{discipline.id}}">
-                        Discipline assigned for {{discipline.infraction}}. Summaries left: <b>{{discipline.getNumSummaryDue}}</b>
-                    </a>
-                </h4>
+                <h3 class="panel-title">
+                    Discipline assigned for {{discipline.infraction}}. Summaries left: <b>{{discipline.getNumSummaryDue}}</b>
+                </h3>
+                <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
             </div>
-            <div id="collapse{{discipline.id}}" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <ul class="list-group">
-                        {% for summary in discipline.summary_set.all %}
-                            <a href="{% url 'summary-detail' summary.pk %}" class="list-group-item">
-                                <div class="col-md-12">
-                                    <h2>{{summary.book.name}}</h2>
-                                    <p>{{summary.content}}</p>
-                                    <div>
-                                        <span class="badge alert-info">{{summary.date_submitted}}</span>
-                                        {% if summary.approved %}
-                                        <span class="badge alert-success">approved</span>
-                                        {% else %}
-                                        <span class="badge alert-danger">not approved</span>
-                                        {% endif %}
-                                        </span>
-                                        <div class="pull-right">
-                                            {% if summary.approved == False %}
-                                                <form action="{% url 'summary-detail' summary.pk %}" method="get">
-                                                    {% csrf_token %}
-                                                    <button type="submit" class="btn btn-success btn-xs">Edit</button>
-                                                </form>
-                                            {% endif %}        
-                                        </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    {% for summary in discipline.summary_set.all %}
+                        <a href="{% url 'summary-detail' summary.pk %}" class="list-group-item">
+                            <div class="col-md-12">
+                                <h2>{{summary.book.name}}</h2>
+                                <p>{{summary.content}}</p>
+                                <div>
+                                    <span class="badge alert-info">{{summary.date_submitted}}</span>
+                                    {% if summary.approved %}
+                                    <span class="badge alert-success">approved</span>
+                                    {% else %}
+                                    <span class="badge alert-danger">not approved</span>
+                                    {% endif %}
+                                    <div class="pull-right">
+                                        {% if summary.approved == False %}
+                                            <form action="{% url 'summary-detail' summary.pk %}" method="get">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-success btn-xs">Edit</button>
+                                            </form>
+                                        {% endif %}        
                                     </div>
                                 </div>
-                            </a>
-                        {% endfor %}
-                        {% if discipline.getNumSummaryDue > 0 %}
-                            <form action="{% url 'summary-create' discipline.pk %}">
-                                <button class="btn btn-success btn-xs">New Life-Study Summary </button>
-                            </form>
-                        {% endif %}
-                    </ul>
-                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                    {% if discipline.getNumSummaryDue > 0 %}
+                        <form action="{% url 'summary-create' discipline.pk %}">
+                            <button class="btn btn-success btn-xs">New Life-Study Summary </button>
+                        </form>
+                    {% endif %}
+                </ul>
             </div>
         </div>
 
@@ -76,54 +73,67 @@
 
         <h2> Life Study TA View </h2>
 
-        <table class="table table-hover table-condensed" id="mytable">
-            <thead>
-                <tr>
-                    <th><input type="checkbox" id="checkall" /></th>
-                    <th> Name </th>
-                    <th> Reason </th>
-                    <th> Type </th>
-                    <th> Quantity </th>
-                    <th> Still Due </th>
-                    <th> Date Assigned </th>
-                    <th> Due Date </th>  
-                    <th> Submitted </th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for discipline in disciplines %}
-                {% if discipline.isCompleted == False %}
-                <tr>
-                    <td> 
-                        <form action="{% url 'discipline-list' %}" method="post">
-                            {% csrf_token %}
-                            <input type="checkbox" name="selection" value="{{discipline.pk}}"></input>
-                    </td>
-                    <td>{{discipline.trainee.account.get_full_name}}</td>
-                    <td>{{discipline.infraction}}</td>
-                    <td>{{discipline.offense}}</td>
-                    <td>{{discipline.quantity}}</td>
-                    <td>{{discipline.getNumSummaryDue}}</td>
-                    <td>{{discipline.date_assigned | date:"m/d/y"}}
-                    <td>{{discipline.due | date:"m/d/y"}}</td>
+        <form role="form" action="{% url 'discipline-list' %}" method="post">
+            {% csrf_token %}
 
-                    {% for summary in discipline.summary_set.all %}
-                    <td>
-                        <a href="{% url 'summary-approve' summary.pk %}"> 
-                            {{summary.date_submitted | date:"m/d/y"}}
-                        </a>
-                    </td>
+            <table class="table table-hover table-condensed" id="mytable">
+
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="checkall" /></th>
+                        <th> Edit </th>
+                        <th> Name </th>
+                        <th> Reason </th>
+                        <th> Type </th>
+                        <th> Quantity </th>
+                        <th> Still Due </th>
+                        <th> Date Assigned </th>
+                        <th> Due Date </th>  
+                        <th> Submitted </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for discipline in disciplines %}
+                    {% if discipline.isCompleted == False %}
+                    <tr>
+                        <td><input type="checkbox" name="selection" value="{{discipline.pk}}"></input></td>
+                        <td>
+                            <a href="{% url 'discipline-detail' discipline.pk %}" class="btn btn-primary btn-xs" role="button">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                        </td>
+                        <td>{{discipline.trainee.account.firstname}} {{discipline.trainee.account.lastname|slice:"1"}}.</td>
+                        <td>{{discipline.infraction}}</td>
+                        <td>{{discipline.offense}}</td>
+                        <td>{{discipline.quantity}}</td>
+                        <td>{{discipline.getNumSummaryDue}}</td>
+                        <td>{{discipline.date_assigned | date:"m/d/y"}}
+                        <td>{{discipline.due | date:"m/d/y"}}</td>
+
+                        {% for summary in discipline.summary_set.all %}
+                        <td>
+                            <a href="{% url 'summary-approve' summary.pk %}"> 
+                                {{summary.date_submitted | date:"m/d/y"}}
+                            </a>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endif %}
                     {% endfor %}
-                </tr>
-                {% endif %}
-                {% endfor %}
-            </tbody>        
-        </table>
-                        <button type="submit" name="approve" class="btn btn-success">Approve Selected</button>
-                        <button type="submit" name="delete" class="btn btn-danger">Delete Selected</button>
-                    </form>
+                </tbody>
+
+            </table>
+
+            <button type="submit" name="approve" class="btn btn-success">Approve Selected</button>
+            <button type="submit" name="delete" class="btn btn-danger">Delete Selected</button>
+
+        </form>
 
 
+
+
+    {% endif %}
 
 {%comment%}
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -284,14 +294,11 @@
 
 {%endcomment%}
 
-
-    {% endif %}
-
 {% endblock %}
 
 {% block scripts %}
     <script type="text/javascript" src="{% static "lifestudies/js/collapsePanel.js" %}"></script>
     <script type="text/javascript" src="{% static "lifestudies/js/clickAll.js" %}"></script>
-
+    <script type="text/javascript" src="{% static "lifestudies/js/checkboxes.js" %}"></script>
 {% endblock %}
 

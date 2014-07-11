@@ -12,6 +12,7 @@ from teams.models import Team
 from houses.models import House
 import datetime
 
+from django.db import transaction
 
 class DisciplineListView(ListView):
     template_name = 'lifestudies/discipline_list.html'
@@ -39,7 +40,11 @@ class DisciplineListView(ListView):
                                             due=Period().end(period),
                                             offense='MO',
                                             trainee=trainee)
-                    discipline.save()
+                    try:
+                        discipline.save()
+                    except IntegrityError:
+                        transaction.rollback()
+
 
         return self.get(request, *args, **kwargs)
 
@@ -49,7 +54,6 @@ class DisciplineListView(ListView):
         context['profile'] = self.request.user
         current_date = datetime.datetime.now().date()
         context['current_period'] = Period().period_of_date(current_date)
-
         return context
 
 
@@ -88,6 +92,7 @@ class DisciplineCreateView(CreateView):
 class DisciplineDetailView(DetailView):
     model = Discipline
     context_object_name = 'discipline'
+    template_name = 'lifestudies/discipline_detail.html'
 
 
 class SummaryCreateView(CreateView):
@@ -161,7 +166,11 @@ class CreateHouseDiscipline(TemplateView):
                                             due=form.cleaned_data['due'],
                                             offense=form.cleaned_data['offense'],
                                             trainee=trainee)
-                    discipline.save()
+                    try:
+                        discipline.save()
+                    except IntegrityError:
+                        transaction.rollback()
+
                 return HttpResponseRedirect(reverse_lazy('discipline-list'))
         else:
             form = HouseDisciplineForm()
