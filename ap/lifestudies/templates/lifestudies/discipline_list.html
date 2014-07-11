@@ -32,7 +32,11 @@
             <div class="panel-body">
                 <ul class="list-group">
                     {% for summary in discipline.summary_set.all %}
+                        {% if summary.approved == False %}
                         <a href="{% url 'summary-detail' summary.pk %}" class="list-group-item">
+                        {% else %}
+                        <a class="list-group-item disabled">
+                        {% endif %}
                             <div class="col-md-12">
                                 <h2>{{summary.book.name}}</h2>
                                 <p>{{summary.content}}</p>
@@ -57,7 +61,9 @@
                     {% endfor %}
                     {% if discipline.getNumSummaryDue > 0 %}
                         <form action="{% url 'summary-create' discipline.pk %}">
-                            <button class="btn btn-success btn-xs">New Life-Study Summary </button>
+                            <div class="pull-right">
+                                <button class="btn btn-success btn-xs">New Life-Study Summary </button>
+                            </div>
                         </form>
                     {% endif %}
                 </ul>
@@ -89,7 +95,7 @@
                         <th> Still Due </th>
                         <th> Date Assigned </th>
                         <th> Due Date </th>  
-                        <th> Submitted </th>
+                        <th> Unapproved </th>
                     </tr>
                 </thead>
 
@@ -107,27 +113,27 @@
                         <td>{{discipline.infraction}}</td>
                         <td>{{discipline.offense}}</td>
                         <td>{{discipline.quantity}}</td>
-                        <td>{{discipline.getNumSummaryDue}}</td>
+                        <td><b>{{discipline.getNumSummaryDue}}</b></td>
                         <td>{{discipline.date_assigned | date:"m/d/y"}}
                         <td>{{discipline.due | date:"m/d/y"}}</td>
 
-                        {% for summary in discipline.summary_set.all %}
                         <td>
-                            <a href="{% url 'summary-approve' summary.pk %}"> 
-                                {{summary.date_submitted | date:"m/d/y"}}
+                            {% for summary in discipline.summary_set.all %}
+                            <a href="{% url 'summary-approve' summary.pk %}" class="tooltip-submit-date" data-toggle="tooltip" data-placement="top" title="{{summary.date_submitted | date:"m/d/y"}}">
+                                <span class="glyphicon glyphicon-file"></span>
                             </a>
+                            {% endfor %}
                         </td>
-                        {% endfor %}
                     </tr>
                     {% endif %}
                     {% endfor %}
                 </tbody>
 
             </table>
-
-            <button type="submit" name="approve" class="btn btn-success">Approve Selected</button>
-            <button type="submit" name="delete" class="btn btn-danger">Delete Selected</button>
-
+            <div class="pull-right">
+                <button type="submit" name="approve" class="btn btn-success">Approve Selected</button>
+                <button type="submit" name="delete" class="btn btn-danger">Delete Selected</button>
+            </div>
         </form>
 
 
@@ -300,5 +306,6 @@
     <script type="text/javascript" src="{% static "lifestudies/js/collapsePanel.js" %}"></script>
     <script type="text/javascript" src="{% static "lifestudies/js/clickAll.js" %}"></script>
     <script type="text/javascript" src="{% static "lifestudies/js/checkboxes.js" %}"></script>
+    <script type="text/javascript" src="{% static "lifestudies/js/tooltip-submit-date.js" %}"></script>    
 {% endblock %}
 

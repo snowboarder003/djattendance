@@ -10,6 +10,7 @@ from attendance.utils import Period
 from schedules.models import Schedule
 from teams.models import Team
 from houses.models import House
+from books.models import Book
 import datetime
 
 from django.db import transaction
@@ -94,6 +95,19 @@ class DisciplineDetailView(DetailView):
     context_object_name = 'discipline'
     template_name = 'lifestudies/discipline_detail.html'
 
+    def post(self, request, *args, **kwargs):
+
+        print request.POST
+        if 'summary_pk' in request.POST:
+            approve_summary_pk = int(request.POST['summary_pk'])
+            print Summary.objects.get(pk=approve_summary_pk).approve()
+        if 'hard_copy' in request.POST:
+            print self.get_object().summary_set.create(content='approved hard copy summary',
+                                                       book=Book.objects.get(pk=1),
+                                                       chapter=1,
+                                                       approved=True)
+        return HttpResponseRedirect('')
+
 
 class SummaryCreateView(CreateView):
     model = Summary
@@ -137,7 +151,7 @@ class SummaryUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(SummaryUpdateView, self).get_context_data(**kwargs)
         context['profile'] = self.request.user
-        print self.request.POST
+        # print self.request.POST
         return context
 
     def get_success_url(self):

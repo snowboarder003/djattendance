@@ -22,15 +22,27 @@
                 {% endif %}
                 <div class="pull-right">
                     {% if summary.approved == False %}
-                        <form action="{% url 'summary-detail' summary.pk %}" method="get">
+                        <form action="" method="post">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                            <button type="submit" name="summary_pk" value="{{summary.pk}}" class="btn btn-success btn-sm">Approve</button>
                         </form>
                     {% endif %}        
                 </div>        
             </div>
         </div>
     </div>
+    {% empty %}
+    <div class="col-md-12">
+        <h4>No Summary Submitted</h4>
+    </div>
     {% endfor %}
+    <div class="pull-right">
+        <form action="" method="post">
+            {% csrf_token %}
+            <button type="submit" name="hard_copy" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-plus-sign"></span> Add Approved Hard-Copy Summary
+            </button>
+        </form>
+    </div>
 
 {% endblock %}

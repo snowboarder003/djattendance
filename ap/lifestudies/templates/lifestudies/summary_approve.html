@@ -17,7 +17,7 @@
                 {% endif %}
                 <div class="pull-right">
                     {% if summary.approved == False %}
-                        <form action="{% url 'summary-detail' summary.pk %}" method="get">
+                        <form action="" method="post">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-success btn-sm">Approve</button>
                         </form>

@@ -52,7 +52,7 @@ class Discipline(models.Model):
     quantity = models.PositiveSmallIntegerField(blank=False, null=False)
 
 	# the date of the assignment of the discipline.
-    date_assigned = datetime.datetime.now()
+    date_assigned = models.DateTimeField(editable=False, null=True, auto_now_add=True)
 
     # the due date and time for the discipline to be submitted by
     due = models.DateField(blank=False, null=False)
@@ -64,6 +64,10 @@ class Discipline(models.Model):
     # relationship: many discplines to one specific trainee
     # even for assigning house, each trainee has one discipline
     trainee = models.ForeignKey(Trainee)
+
+    #sort disciplines by name
+    class Meta:
+        ordering = ["-trainee__account__firstname"]
 
     # To add the specified number of life-studies to a trainee
     # See information manual for when to add additional discipline
@@ -155,6 +159,10 @@ class Summary(models.Model):
 
     # automatically generated date when summary is submitted
     date_submitted = models.DateTimeField(editable=False, null=True, auto_now_add=True)
+
+    #sort summaries by name
+    class Meta:
+        ordering = ["-discipline__trainee__account__firstname"]
 
     def __unicode__(self):
         return self.discipline.trainee.account.get_full_name()  + ' | Book: ' + self.book.name + ' | Chapter: ' + str(self.chapter) + ' | Approved: ' + str(self.approved)
