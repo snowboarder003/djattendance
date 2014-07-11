@@ -100,7 +100,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     age = property(_get_age)
 
-    phone = models.PositiveIntegerField(null=True, blank=True)
+    phone = models.CharField(null=True, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
