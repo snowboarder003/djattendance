@@ -67,7 +67,7 @@ class Discipline(models.Model):
 
     #sort disciplines by name
     class Meta:
-        ordering = ["-trainee__account__firstname"]
+        ordering = ["trainee__account__firstname"]
 
     # To add the specified number of life-studies to a trainee
     # See information manual for when to add additional discipline
@@ -162,7 +162,7 @@ class Summary(models.Model):
 
     #sort summaries by name
     class Meta:
-        ordering = ["-discipline__trainee__account__firstname"]
+        ordering = ["approved"]
 
     def __unicode__(self):
         return self.discipline.trainee.account.get_full_name()  + ' | Book: ' + self.book.name + ' | Chapter: ' + str(self.chapter) + ' | Approved: ' + str(self.approved)

@@ -95,7 +95,7 @@
                         <th> Still Due </th>
                         <th> Date Assigned </th>
                         <th> Due Date </th>  
-                        <th> Unapproved </th>
+                        <th> Unapproved Submission</th>
                     </tr>
                 </thead>
 
@@ -118,9 +118,11 @@
                         <td>{{discipline.due | date:"m/d/y"}}</td>
                         <td>
                             {% for summary in discipline.summary_set.all %}
+                            {% if summary.approved == False %}
                             <a href="{% url 'summary-approve' summary.pk %}" class="tooltip-submit-date" data-toggle="tooltip" data-placement="top" title="{{summary.date_submitted | date:"m/d/y"}}">
                                 <span class="glyphicon glyphicon-file"></span>
                             </a>
+                            {% endif %}
                             {% endfor %}
                         </td>
                     </tr>
