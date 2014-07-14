@@ -6,8 +6,9 @@ from aputils.models import Address
 This houses module is a utility model that define training housing.
 
 Data Models:
-- House: a training house
-- Bunk: a bunk (either lower of upper) in a given house
+    - House: a training house
+    - Room: a room inside a training house (any type)
+    - Bunk: a bunk (either lower of upper) in a given house
 """
 
 
@@ -25,7 +26,7 @@ class House(models.Model):
     # the house's address (defined in the utils class)
     address = models.ForeignKey(Address)
 
-    # whether this is a brother's house or a sister's house
+    # a house can designated for either brothers, sisters, or a couple
     gender = models.CharField(max_length=1, choices=GENDER)
 
     # whether this house is actively used by the training
@@ -52,9 +53,20 @@ class Room(models.Model):
         ('PAT', 'Patio'),
     )
 
+    SIZES = (
+        ('S', 'Small'),
+        ('M', 'Medium'),
+        ('L', 'Large'),
+    )
+
     type = models.CharField(max_length=4, choices=ROOM_TYPES)
 
-    capacity = models.SmallIntegerField(default=0)  # null if room is not a bedroom
+    # optional field for specifying the physical size of the room
+    # useful mainly for hospitality/short-term assignments
+    size = models.CharField(max_length=1, choices=SIZES, null=True, blank=True)
+
+    # refers to number of beds
+    capacity = models.SmallIntegerField(default=0)  # 0 if room is not a bedroom
 
     house = models.ForeignKey(House)
 
@@ -64,25 +76,13 @@ class Room(models.Model):
         return "("+str(self.id)+") "+self.house.name + " " + self.type
 
 
-class BedFrameType(models.Model):
-    name = models.CharField(max_length=50)
-    
-    def __unicode__(self):
-        return self.name
-    
-class MattressType(models.Model):
-    name = models.CharField(max_length=50)
-    
-    def __unicode__(self):
-        return self.name
-
 class Bunk(models.Model):
 
     POSITION = (
         ('B', 'Bottom'),
         ('T', 'Top'),
-        ('Q', 'Queen-A'),
-        ('q', 'Queen-B'),
+        ('L', 'Queen-Left'),  # for couples
+        ('R', 'Queen-Right'), 
         ('S', 'Single')
     )
 
@@ -90,21 +90,16 @@ class Bunk(models.Model):
         ('R', 'Regular'),
         ('L', 'Long')
     )
-    
-    #MS Access db fields
-    for_trainees = models.BooleanField(default=True)
-    
-    has_protector = models.BooleanField()
-    
-    has_ladder = models.BooleanField()
-    
-    length = models.CharField(max_length=1, choices=LENGTH)
-    
-    bed_frame_type = models.ForeignKey(BedFrameType, null=True, blank=True)
-    
-    mattress_type = models.ForeignKey(MattressType, null=True, blank=True)
-    #End of MS access db fields
-    
+
+    FRAME_TYPES = (
+        ('M', 'Metal'),
+        ('C', 'Cot'),
+        ('H', 'Wood Honey'),
+        ('W', 'Wood Walnut'),
+        ('WC', 'Wood Walnut Crown'),
+        ('O', 'Wood Oak'),
+        ('LV', 'Wood Light Vintage'),
+    )
 
     # the bunk's number
     number = models.SmallIntegerField()
@@ -112,13 +107,27 @@ class Bunk(models.Model):
     # whether this is a top or bottom bunk
     position = models.CharField(max_length=1, choices=POSITION)
 
+    # which bunk this bunk is linked to, if any
     link = models.OneToOneField('Bunk', null=True, blank=True)
 
     # which room this bunk is in
     room = models.ForeignKey(Room)
     
-    #from Access db
-    notes = models.TextField(blank=True)
+    length = models.CharField(max_length=1, choices=LENGTH)
+    
+    # type of bed frame
+    frame = models.CharField(max_length=2, choices=FRAME_TYPES, null=True, blank=True)
+    
+    # type of mattress
+    mattress = models.CharField(max_length=50, null=True, blank=True)
+
+    # whether bunk has a guardrail
+    guardrail = models.BooleanField(null=True, blank=True)
+    
+    # whether bunk has a ladder
+    ladder = models.BooleanField(null=True, blank=True)
+    
+    notes = models.TextField(blank=True, null=True)
 
     def __unicode__(self):
         return self.room.house.name + " Bunk " + str(self.number)
