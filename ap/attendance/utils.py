@@ -32,3 +32,4 @@ class Period(object):
     def __init__(self, term=Term.current_term()):
         self.term = term  # which term these periods apply to
         self.duration = 2 # number of weeks per period
+        
