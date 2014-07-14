@@ -100,7 +100,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     age = property(_get_age)
 
-    phone = models.CharField(null=True, blank=True)
+    #to accomodate phone number such as:+(yyy)yyyyyyyyyy x.yyyyyy 
+    phone = models.CharField(max_length=25,null=True, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

@@ -4,9 +4,12 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 INSTALLED_APPS += ('debug_toolbar',
-                   'django_extensions',)
+                   'django_extensions',
+                   'django_nose',)
 
 INTERNAL_IPS = ('127.0.0.1',)
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 DATABASES = {
     'default': {
