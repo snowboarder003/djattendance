@@ -113,7 +113,7 @@ class Bunk(models.Model):
     # which room this bunk is in
     room = models.ForeignKey(Room)
     
-    length = models.CharField(max_length=1, choices=LENGTH)
+    length = models.CharField(max_length=1, choices=LENGTH, default='R')
     
     # type of bed frame
     frame = models.CharField(max_length=2, choices=FRAME_TYPES, null=True, blank=True)
@@ -122,10 +122,10 @@ class Bunk(models.Model):
     mattress = models.CharField(max_length=50, null=True, blank=True)
 
     # whether bunk has a guardrail
-    guardrail = models.BooleanField(null=True, blank=True)
+    guardrail = models.NullBooleanField(blank=True)
     
     # whether bunk has a ladder
-    ladder = models.BooleanField(null=True, blank=True)
+    ladder = models.NullBooleanField(blank=True)
     
     notes = models.TextField(blank=True, null=True)
 
