@@ -53,7 +53,7 @@
           <ul class="nav navbar-nav navbar-right">
             {% block navbar-right %}
               <li><a href="#account">User Name</a></li>
-              <li><a href="#">Logout</a></li>
+              <li><a href="{% url 'login' %}">Logout</a></li>
             {% endblock %}
           </ul>
         </div><!--/.nav-collapse -->
@@ -70,9 +70,10 @@
               {% block sidelinks %}
               <li>Attendance</li>
                 {% block attendance_links %}
-                <li class="active"><a href="/schedules/schedule">View Schedule</a></li>
+                <li class="active"><a href="/schedules/schedule/list">View Schedule</a></li>
                 <li><a href="/schedules/event/create">Create Event</a></li>
                 <li><a href="{% url 'absent_trainee_roster:absent_trainee_form' %}">Absent Trainee Roster</a></li>
+                <li><a href="/lifestudies/">Life Study</a></li>
                 {% endblock %}
               <hr style="border-top: 1px solid #dddddd;">
               <li>Classes</li>

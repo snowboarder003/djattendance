@@ -9,7 +9,7 @@ admin.autodiscover()
 autofixture.autodiscover()
 
 urlpatterns = patterns('',
-	url(r'^accounts/login/$', login),
+	url(r'^accounts/login/$', login, name='login'),
 	url(r'^accounts/logout/$', logout),
     url(r'^$', 'ap.views.home', name='home'),
     url(r'^base_example/$', 'ap.views.base_example'),
@@ -35,4 +35,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^syllabus/', include('syllabus.urls')),
+    url(r'^lifestudies/', include('lifestudies.urls')),
 )

@@ -160,6 +160,7 @@ INSTALLED_APPS = (
     'syllabus', # class syllabus
     'verse_parse', # parse outlines for PSRP verses
     'report_builder',
+    'lifestudies',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
@@ -206,6 +207,9 @@ BOOTSTRAP3 = {
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
+
+#URL after login page
+LOGIN_REDIRECT_URL = '/'
 
 BROKER_URL = 'amqp://guest:guest@localhost:5672/'
 
