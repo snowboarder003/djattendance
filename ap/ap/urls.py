@@ -11,24 +11,14 @@ admin.autodiscover()
 autofixture.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^$', 'ap.views.home'),
+
 	url(r'^accounts/login/$', login),
 	url(r'^accounts/logout/$', logout),
-    url(r'^$', 'ap.views.home'),
-    url(r'^base_example/$', 'ap.views.base_example'),
-
     url(r'^terms/', include('terms.urls', namespace="terms")),
     url(r'^dailybread/', include('dailybread.urls', namespace="dailybread")),
-    # Examples:
-    # url(r'^$', 'ap.views.home', name='home'),
-    # url(r'^ap/', include('ap.foo.urls')),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    
-    
-    url(r'^houses/', include(houses_urls)),
 )
 
