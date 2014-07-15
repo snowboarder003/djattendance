@@ -111,7 +111,6 @@ TEMPLATE_DIRS = (
 )
 
 AUTH_USER_MODEL = 'accounts.User'
-AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 
 INSTALLED_APPS = (
     # django contrib

@@ -8,10 +8,19 @@ from accounts.forms import UserForm, EmailForm
 from django.core.urlresolvers import reverse
 
 
-class UpdateEmailView(UpdateView):
+class EmailUpdateView(UpdateView):
     model = User
     form_class = EmailForm
     template_name = 'accounts/email_change.html' 
+
+    def get_success_url(self):
+        return reverse_lazy('user-detail', kwargs={'pk': self.kwargs['pk']})
+
+
+class UserUpdateView(UpdateView):
+    model = User
+    form_class = UserForm
+    template_name = 'accounts/update_user.html'
 
     def get_success_url(self):
         return reverse_lazy('user-detail', kwargs={'pk': self.kwargs['pk']})
