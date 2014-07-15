@@ -1,21 +1,10 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
-
 from datetime import date
+
 from django.test import TestCase
+
 from accounts.models import User
 from absent_trainee_roster.models import Roster, Absentee
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
 
 class RosterViewTestCase(TestCase):
 	fixtures = ['initial_data.json', 'absent_trainee_roster_testdata.json']

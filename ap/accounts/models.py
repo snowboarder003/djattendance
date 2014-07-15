@@ -187,16 +187,17 @@ class Trainee(Profile):
     # flag for trainees taking their own attendance
     # this will be false for 1st years and true for 2nd with some exceptions.
     self_attendance = models.BooleanField(default=False)
+    
+    #if the trainee is a house coordinator
+    #house_coordinator = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.account.get_full_name()
 
     #calculates what term the trainee is in
     def _calculate_term(self):
-    	num_terms = self.term.all().count()
-
-    	return num_terms
-
+    	return self.term.all().count()
+    
     current_term = property(_calculate_term)
 
     def _trainee_email(self):

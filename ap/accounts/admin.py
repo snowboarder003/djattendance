@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib.admin import SimpleListFilter
 from django.contrib.auth.admin import UserAdmin
-from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.admin import Group, User
 
 from accounts.models import User, Trainee, TrainingAssistant
 from aputils.admin import VehicleInline, EmergencyInfoInline
@@ -44,7 +44,7 @@ class APUserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         exclude = ['password']
-
+    
 
 class APUserAdmin(UserAdmin):
     # Set the add/modify forms
@@ -187,6 +187,22 @@ class TraineeAdmin(admin.ModelAdmin):
     inlines = [
         VehicleInline, EmergencyInfoInline,
     ]
+    
+    """
+	#overriding save function to add user to house_coordinator group if applicable
+	def save_model(self, request, obj, form, change):
+        
+        if commit:
+        	#if user is a house_coordinator, adds user to the house_coordinator group
+        	if obj.user.profile.trainee.house_coordinator:
+        		try:
+        			group = Group.objects.get(name='house_coordinator')
+        			group.user_set.add(obj.user)
+        		else:
+        			group = Group.objects.create(name = 'house_coordinator')
+            user.save()
+        return user
+    """
 
 
 
