@@ -26,3 +26,10 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('firstname', 'lastname', 'email', 'password')
 
+
+class EmailForm(forms.ModelForm):
+    email = forms.CharField(max_length=255)
+    email_confirmation = forms.CharField(max_length=255)
+    class Meta:
+        model = User
+        fields = ('email',)

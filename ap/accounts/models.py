@@ -10,11 +10,6 @@ from terms.models import Term
 from teams.models import Team
 from houses.models import House, Bunk
 from services.models import Service
-from django import forms
-from django.forms import ModelForm
-from os.path import join as pjoin
-
-from django.views.generic.detail import DetailView
 
 """ accounts models.py
 The user accounts module takes care of user accounts and
@@ -203,9 +198,3 @@ class Trainee(Profile):
     	return num_terms
     
     current_term = property(_calculate_term)
-
-class EmailForm(forms.ModelForm, DetailView):
-    email = forms.CharField(max_length=50, help_text='Please enter your new email address to change email address')
-    class Meta:
-        model = User
-        fields = ('email',)

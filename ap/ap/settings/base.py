@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'autofixture',
     'braces',
     'django_reset',
+    'bootstrap3',
     # ap CORE
     'accounts',
     'aputils',
@@ -170,3 +171,6 @@ LOGGING = {
         },
     }
 }
+
+#URL after login page
+LOGIN_REDIRECT_URL = '/'
