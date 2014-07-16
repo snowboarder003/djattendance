@@ -9,11 +9,3 @@
 .leaveslip-form select[multiple="multiple"] {
 	height: 250px;
 }
-
-.mealout-form {
-	display: none;
-}
-
-.nightout-form {
-	display: none;
-}

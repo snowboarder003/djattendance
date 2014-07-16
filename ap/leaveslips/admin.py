@@ -2,16 +2,16 @@ from django.contrib import admin
 from django.contrib.admin import SimpleListFilter
 from django.utils.translation import ugettext_lazy as _
 
-from leaveslips.models import LeaveSlip, IndividualSlip, GroupSlip, MealOutSlip, NightOutSlip
+from leaveslips.models import LeaveSlip, IndividualSlip, GroupSlip
 
 
 
 class ApproveFilter(SimpleListFilter):
 	#Filters to separate approved from unfinalized leaveslips
 	title = _('Approved')
-	
+
 	parameter_name = 'approved'
-	
+
 	def lookups(self, request, model_admin):
 		"""
 		Returns a list of tuples. The first element in each tuple is the coded value
@@ -22,7 +22,7 @@ class ApproveFilter(SimpleListFilter):
 			('Approved', _('Approved')),
 			('Pending', _('Pending')),
 		)
-	
+
 	def queryset(self, request, queryset):
 		"""
 		"""
@@ -30,7 +30,7 @@ class ApproveFilter(SimpleListFilter):
 			"""queryset of approved leaveslips """
 			q=queryset.filter(status='A')
 			return q
-		
+
 		if self.value() == 'Pending':
 			"""queryset of pending leaveslips """
 			q=queryset.exclude(status='A')
@@ -66,5 +66,3 @@ class IndividualSlipAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(IndividualSlip, IndividualSlipAdmin)
 admin.site.register(GroupSlip)
-# admin.site.register(MealOutSlip)
-# admin.site.register(NightOutSlip)

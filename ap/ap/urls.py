@@ -6,7 +6,7 @@ from django.contrib import admin
 import autofixture
 
 from tastypie.api import Api
-from leaveslip_api.resources import IndividualSlipResource, GroupSlipResource, MealOutSlipResource, NightOutSlipResource, TraineeResource, TrainingAssistantResource, EventResource, RollResource
+from leaveslip_api.resources import IndividualSlipResource, GroupSlipResource, TraineeResource, TrainingAssistantResource, EventResource, RollResource
 
 
 admin.autodiscover()
@@ -38,10 +38,7 @@ urlpatterns = patterns('',
     url(r'^api/', include(EventResource().urls)),
     url(r'^api/', include(GroupSlipResource().urls)),
     url(r'^api/', include(IndividualSlipResource().urls)),
-    url(r'^api/', include(MealOutSlipResource().urls)),
-    url(r'^api/', include(NightOutSlipResource().urls)),
     url(r'^api/', include(TrainingAssistantResource().urls)),
     url(r'^api/', include(TraineeResource().urls)),
     url(r'^api/', include(RollResource().urls))
 )
-

@@ -8,7 +8,7 @@ from tastypie.authorization import Authorization
 
 from accounts.models import Profile, User, Trainee, TrainingAssistant
 from attendance.models import Roll
-from leaveslips.models import LeaveSlip, IndividualSlip, GroupSlip, MealOutSlip, NightOutSlip, IndividualSlipForm
+from leaveslips.models import LeaveSlip, IndividualSlip, GroupSlip, IndividualSlipForm
 from schedules.models import Event
 
 
@@ -84,21 +84,4 @@ class RollResource(ModelResource):
 class GroupSlipResource(ModelResource):
 	class Meta:
 		queryset = GroupSlip.objects.all()
-		allowed_methods = ['get', 'post', 'put']
-
-
-# Not going to use these?
-
-class MealOutSlipResource(ModelResource):
-	leaveslip = fields.OneToOneField(IndividualSlipResource, 'leaveslip', null=False, full=True)
-
-	class Meta:
-		queryset = MealOutSlip.objects.all()
-		allowed_methods = ['get', 'post', 'put']
-
-class NightOutSlipResource(ModelResource):
-	leaveslip = fields.OneToOneField(IndividualSlipResource, 'leaveslip', null=False, full=True)
-
-	class Meta:
-		queryset = NightOutSlip.objects.all()
 		allowed_methods = ['get', 'post', 'put']

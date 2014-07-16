@@ -21,12 +21,6 @@ DATA MODELS:
 
     - GroupSlip: extends LeaveSlip generic class. A leaveslip that can apply to
     a group of trainees, and covers a time range (rather than certain events).
-
-    - MealOutSlip: an extension to a leaveslip, containing information relevant
-    to a pre-excused meal out.
-
-    - NightOutSlip: an extension to a leaveslip, containing information relevant
-    to a pre-excused night out.
 """
 
 
@@ -111,8 +105,7 @@ class IndividualSlip(LeaveSlip):
         return reverse('leaveslips:individual-detail', kwargs={'pk': self.id})
 
     @property
-    def get_start(self):# determines the very first date of all the events
-        
+    def get_start(self):  # determines the very first date of all the events
         events=self.events.all()
         start=datetime.now()
         for event in events:
@@ -125,7 +118,7 @@ class GroupSlip(LeaveSlip):
 
     start = models.DateTimeField()
     end = models.DateTimeField()
-    trainees = models.ManyToManyField(Trainee, related_name='group') #trainees included in the leaveslip
+    trainees = models.ManyToManyField(Trainee, related_name='group')  #trainees included in the leaveslip
 
     def get_update_url(self):
         return reverse('leaveslips:group-update', kwargs={'pk': self.id})
@@ -136,22 +129,9 @@ class GroupSlip(LeaveSlip):
     def _events(self):
         """ equivalent to IndividualSlip.events """
         return Event.objects.filter(start__gte=self.start).filter(end__lte=self.end)
+
     events = property(_events)
 
-
-class MealOutSlip(models.Model):
-
-    name = models.CharField(max_length=255)
-    location = models.CharField(max_length=255)
-    leaveslip = models.OneToOneField(IndividualSlip)
-
-class NightOutSlip(models.Model):
-
-    hostname = models.CharField(max_length=255)
-    phone = models.PositiveIntegerField()
-    hostaddress = models.CharField(max_length=255)
-    HC = models.ForeignKey(Trainee)
-    leaveslip = models.OneToOneField(IndividualSlip)
 
 # form classes
 class IndividualSlipForm(forms.ModelForm):
