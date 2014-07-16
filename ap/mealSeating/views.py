@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_protect
 
 from mealSeating.models import Table
 from accounts.models import User
+from datetime import date, timedelta
 
 
 @csrf_protect
@@ -20,5 +21,10 @@ def newseats(request):
     return render(request, 'newSeating.html')
 
 def signin(request):
-    trainees = User.objects.all().filter(is_active=1).values("lastname","firstname").order_by("lastname")[:50]
-    return render(request, 'mealsignin.html', {'trainees' : trainees})
+    trainees = User.objects.all().filter(is_active=1).order_by("lastname")[:50]
+    startdate = date.today()
+    two_week_datelist = []
+    for x in range(0,14):
+        mydate = startdate + timedelta(days=x)
+        two_week_datelist.append(format(mydate))
+    return render(request, 'mealsignin.html', {'trainees' : trainees, 'start_date' : startdate, "two_week_datelist" : two_week_datelist})
