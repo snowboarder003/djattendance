@@ -9,7 +9,7 @@ SITE_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__f
 print(SITE_ROOT)
 
 ADMINS = (
-    ('Attendance Project', 'attendanceproj@gmail.com'), 
+    ('Attendance Project', 'attendanceproj@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -39,7 +39,7 @@ USE_I18N = True
 USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
-USE_TZ = True
+USE_TZ = False # djattendance (for now) only runs in Anaheim.
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
@@ -87,13 +87,17 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -135,17 +139,17 @@ INSTALLED_APPS = (
     # third-party modules
     'autofixture', # easily generate dummy/test data
     'bootstrap3', # easy-to-use bootstrap integration
+    'bootstrap3_datetime', # datetime picker widget
     'braces', # Mixins for Django's class-based views.
     'django_reset',
     'import_export',
-    'debug_toolbar',
-    'bootstrap3',
     # ap CORE
     'accounts',
     'aputils',
     'books',
     'classes',
     'houses',
+    'leaveslips',
     'localities',
     'rooms',
     'services',
@@ -160,6 +164,7 @@ INSTALLED_APPS = (
     'verse_parse', # parse outlines for PSRP verses
     'report_builder',
     'lifestudies',
+    'leaveslip_api',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
@@ -203,24 +208,16 @@ BOOTSTRAP3 = {
     'horizontal_field_class': 'col-md-4',
 }
 
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-}
-
 #URL after login page
 LOGIN_REDIRECT_URL = '/'
-
-BROKER_URL = 'amqp://guest:guest@localhost:5672/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-#Host for sending email.
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'djattendanceproject@gmail.com'
-EMAIL_HOST_PASSWORD = 'test4now'
-#Port for sending email.
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
-#URL after login page
-LOGIN_REDIRECT_URL = '/'
+from django.contrib.messages import constants as message_constants
+MESSAGE_TAGS = {
+    message_constants.DEBUG: 'debug',
+    message_constants.INFO: 'info',  #blue
+    message_constants.SUCCESS: 'success',  #green
+    message_constants.WARNING: 'warning',  #yellow
+    message_constants.ERROR: 'danger',  #red
+}

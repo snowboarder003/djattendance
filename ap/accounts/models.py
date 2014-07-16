@@ -68,11 +68,11 @@ class APUserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """ A basic user account, containing all common user information. This is
-    a custom-defined User, but inherits from Django's classes to integrate
-    with  Django's other provided User tools/functionality AbstractBaseUser
-    provides Django's basic authentication backend. PermissionsMixin provides
-    compatability with Django's built-in permissions system.
+    """ A basic user account, containing all common user information.
+    This is a custom-defined User, but inherits from Django's classes
+    to integrate with Django's other provided User tools/functionality
+    AbstractBaseUser provides Django's basic authentication backend.
+    PermissionsMixin provides compatability with Django's built-in permissions system.
     """
 
     email = models.EmailField(verbose_name=u'email address', max_length=255,
@@ -145,8 +145,7 @@ class Profile(models.Model):
     account = models.OneToOneField(User)
 
     # whether this profile is still active
-    # ex: if a trainee becomes a TA, they no longer need a service
-    # worker profile
+    # e.g. if a trainee becomes a TA, they no longer need a service worker profile
     active = models.BooleanField(default=True)
 
     date_created = models.DateField(auto_now_add=True)
@@ -196,19 +195,17 @@ class Trainee(Profile):
     # flag for trainees taking their own attendance
     # this will be false for 1st years and true for 2nd with some exceptions.
     self_attendance = models.BooleanField(default=False)
-    
-    #if the trainee is a house coordinator
-    #house_coordinator = models.BooleanField(default=False)
 
-    def __unicode__(self):
-        return self.account.get_full_name()
-
-    #calculates what term the trainee is in
+    # calculates what term the trainee is in
     def _calculate_term(self):
-    	num_terms = self.term.all().count()
-        return num_terms
-        
+        return self.term.all().count()
+
     current_term = property(_calculate_term)
 
     def _trainee_email(self):
-		    return self.account.email
+        return self.account.email
+
+    email = property(_trainee_email)  # should just use trainee.user.email
+
+    def __unicode__(self):
+        return self.account.get_full_name()

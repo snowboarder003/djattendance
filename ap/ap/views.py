@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import get_user_model
-
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 
 from dailybread.models import Portion
@@ -25,7 +25,7 @@ def home(request):
         pass
     else:
         #do stuff to other kinds of users (anonymous?)
-        pass        
+        pass
 
     return render(request, 'index.html', dictionary=data)
 

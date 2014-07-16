@@ -5,12 +5,16 @@
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
 
+{% block title %}Create Event{% endblock %}
+
+{% endblock %}
+
 {% block content %}
 
     <h2>Create Event</h2>
 
     <form action="" method="post">{% csrf_token %}
-        {% bootstrap_form form %}        
+        {% bootstrap_form form %}
         {% buttons %}
             <button type="submit" class="btn btn-primary">
                 Create
@@ -19,3 +23,4 @@
     </form>
 
 {% endblock %}
+

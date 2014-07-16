@@ -1,5 +1,9 @@
 import datetime
+<<<<<<< HEAD
 import logging
+=======
+from exceptions import ValueError
+>>>>>>> attendance-views
 
 from django.db import models
 from django.core.urlresolvers import reverse
@@ -40,6 +44,7 @@ class Term(models.Model):
     # the last day of the term, the sat of semiannual
     end = models.DateField(verbose_name='end date')
 
+<<<<<<< HEAD
     def _name(self):
         # return term's full name; e.g. Fall 2014
         return self.season + " " + str(self.year)
@@ -51,6 +56,11 @@ class Term(models.Model):
         return self.season[:2] + str(self.year)[2:]
 
     code = property(_code)
+=======
+    def length():
+        """ number of weeks in the term """
+        return 20  # hardcoded until it ever changes
+>>>>>>> attendance-views
 
     @staticmethod
     def current_term():
@@ -73,19 +83,24 @@ class Term(models.Model):
         term.current = True
 
 
-    def getDate(self, week, day):
+    def get_date(self, week, day):
         """ return an absolute date for a term week/day pair """
         return self.start + datetime.timedelta(week * 7 + day)
 
-    def reverseDate(self, date):
-        """ returns a term week/day pair for an absolute date """
+    def reverse_date(self, date):
+        """ returns a term week/day pair for an absolute date, starting from 0/0 """
         if self.start <= date <= self.end:
             # days since the term started
             delta = date - self.start
+<<<<<<< HEAD
             return (delta.days / 7, delta.days % 7)
         # if not within the dates the term, return invalid result
+=======
+            return (delta / 7, delta % 7)
+        # if not within the dates the term, raise an error
+>>>>>>> attendance-views
         else:
-            return (-1, -1)
+            raise ValueError('Invalid date for this term: ' + str(date))
 
     def get_absolute_url(self):
         return reverse('terms:detail', kwargs={'code': self.code})

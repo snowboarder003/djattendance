@@ -5,5 +5,3 @@ admin.site.register(Event)
 admin.site.register(EventGroup)
 admin.site.register(Schedule)
 admin.site.register(ScheduleTemplate)
-
-

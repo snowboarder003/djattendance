@@ -32,7 +32,7 @@ class Roll(models.Model):
 
     trainee = models.ForeignKey(Trainee, related_name='rolls')
 
-    status = models.CharField(max_length=1, choices=ROLL_STATUS, default='P')
+    status = models.CharField(max_length=5, choices=ROLL_STATUS, default='P')
 
     # once a roll is finalized, it can no longer be edited
     # except by a TA, attendance monitor, or other admin
@@ -49,4 +49,3 @@ class Roll(models.Model):
     def __unicode__(self):
         # return status, trainee name, and event
         return "[%s] %s @ %s" % (self.status, self.trainee, self.event)
-

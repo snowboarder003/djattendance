@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime, date, time, timedelta
 
 from django.db import models
 from django.core.urlresolvers import reverse
@@ -58,7 +58,7 @@ class Event(models.Model):
     group = models.ForeignKey('EventGroup', blank=True, null=True)
 
     # if this event is a class, relate it
-    classs = models.ForeignKey(Class, blank=True, null=True)  # class is a reserved keyword :(
+    classs = models.ForeignKey(Class, blank=True, null=True, verbose_name='class')  # class is a reserved keyword :(
 
     # the type of event
     type = models.CharField(max_length=1, choices=EVENT_TYPES)
@@ -69,25 +69,23 @@ class Event(models.Model):
     # which term this event is active in
     term = models.ForeignKey(Term)
 
-    date = models.DateField()
+    start = models.DateTimeField()
 
-    start = models.TimeField()
-
-    end = models.TimeField()
+    end = models.DateTimeField()
 
     def _week(self):
-        self.term.reverseDate(self.date)[0]
+        self.term.reverseDate(self.start.date)[0]
     week = property(_week)
 
     def _day(self):
-        self.term.reverseDate(self.date)[1]
+        self.term.reverseDate(self.start.date)[1]
     day = property(_day)
 
     def get_absolute_url(self):
-        return reverse('event-detail', kwargs={'pk': self.pk})
+        return reverse('schedules:event-detail', kwargs={'pk': self.pk})
 
     def __unicode__(self):
-        return self.name
+        return "[%s] %s" % (self.start.strftime('%m/%d'), self.name)
 
 
 class EventGroup(models.Model):
@@ -117,7 +115,9 @@ class Schedule(models.Model):
     events = models.ManyToManyField(Event, null=True, blank=True)
 
     def todays_events(self):
-        return self.events.filter(date__exact=date.today())
+        today = datetime.combine(date.today(), time(0,0))
+        tomorrow = today + timedelta(days=1)
+        return self.events.filter(start__gte=today).filter(end__lte=tomorrow).order_by('start')
 
     class Meta:
         # a trainee should only have one schedule per term
@@ -125,6 +125,9 @@ class Schedule(models.Model):
 
     def __unicode__(self):
         return self.trainee.account.get_full_name() + " " + self.term.code + " schedule"
+
+    def get_absolute_url(self):
+        return reverse('schedules:schedule-detail', kwargs={'pk': self.pk})
 
 
 class ScheduleTemplate(models.Model):
