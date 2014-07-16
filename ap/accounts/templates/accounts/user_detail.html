@@ -2,9 +2,17 @@
 
 {% load staticfiles %}
 
+{% load bootstrap3 %}
+
 {% block title %}Example Page{% endblock %}
 
 {% block content %}
+
+    {% if messages %}
+        {% for message in messages %}
+            {% bootstrap_messages message %}
+        {% endfor %}
+    {% endif %}
 
     <h3> User Profile </h3>
     
