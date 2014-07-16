@@ -127,10 +127,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __unicode__(self):
         return self.email
 
-    @staticmethod
-    def autocomplete_search_fields():
-        return ("id__iexact",)
-
 
 class Profile(models.Model):
     """ A profile for a user account, containing user data. A profile can be thought
@@ -150,10 +146,6 @@ class Profile(models.Model):
 
     class Meta:
         abstract = True
-
-    @staticmethod
-    def autocomplete_search_fields():
-        return ("id__iexact", "account__icontains", )
 
 
 class TrainingAssistant(Profile):
@@ -181,13 +173,7 @@ class Trainee(Profile):
 
     TA = models.ForeignKey(TrainingAssistant, null=True, blank=True)
     mentor = models.ForeignKey('self', related_name='mentee', null=True, blank=True)
-    """
-    mentor_hash = models.CharField(u"Mentor hash", max_length=50, unique=True)
 
-    @staticmethod
-    def autocomplete_term_adjust(term):
-        return hashlib.sha1(term).hexdigest()
-"""
     team = models.ForeignKey(Team, null=True, blank=True)
     house = models.ForeignKey(House, null=True, blank=True)
     bunk = models.ForeignKey(Bunk, null=True, blank=True)
@@ -217,7 +203,3 @@ class Trainee(Profile):
 
     def _trainee_email(self):
         return self.account
-
-    @staticmethod
-    def autocomplete_search_fields():
-        return ("id__iexact", "mentor_hash__icontains",)
