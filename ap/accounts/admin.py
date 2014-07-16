@@ -9,6 +9,7 @@ from aputils.admin import VehicleInline, EmergencyInfoInline
 
 """" ACCOUNTS admin.py """
 
+
 class APUserCreationForm(forms.ModelForm):
     """ A form for creating a new user """
 
@@ -52,7 +53,8 @@ class APUserAdmin(UserAdmin):
     form = APUserChangeForm
 
     # The fields to be used in displaying the User model.
-    # These override the definitions on the base UserAdmin that reference specific fields on auth.User
+    # These override the definitions on the base UserAdmin that reference
+    # specific fields on auth.User
     list_display = ("email", "is_staff", "firstname", "lastname")
     list_filter = ("is_staff", "is_superuser", "is_active", "groups")
     search_fields = ("email", "firstname", "lastname")
@@ -60,24 +62,26 @@ class APUserAdmin(UserAdmin):
     filter_horizontal = ("groups", "user_permissions")
     fieldsets = (
         (None, {"fields":
-                            ("email",)}),
+                ("email",)}),
 
         ("Personal info", {"fields":
-                            ("firstname", "lastname","date_of_birth")}),
+                           ("firstname", "lastname")}),
         ("Permissions", {"fields":
-                            ("is_active",
-                            "is_staff",
-                            "is_superuser",
-                            "groups",
-                            "user_permissions")}),
+                         ("is_active",
+                             "is_staff",
+                             "is_superuser",
+                             "groups",
+                             "user_permissions")}),
         ("Important dates", {"fields": ("last_login",)}),
     )
     add_fieldsets = (
         (None, {
             "classes": ("wide",),
-            "fields": ("email", "firstname", "lastname", "password", "password_repeat")}
-        ),
+            "fields": ("email", "firstname", "lastname", "password",
+                       "password_repeat")}
+         ),
     )
+
 
 class CurrentTermListFilter(SimpleListFilter):
 	#Lists the trainees by term
@@ -175,11 +179,15 @@ class FirstTermMentorListFilter(SimpleListFilter):
 			q = q.filter(id__in=q_ids)
 			return q
 
+
 class TraineeAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             # add 'bunk' back in once db behaves
-            'fields': (('account', 'active',), 'type', 'term', ('date_begin', 'date_end',), ('married', 'spouse',), ('TA', 'mentor',), 'team', 'house', 'address', 'self_attendance',)
+            'fields': (('account', 'active',), 'type', 'term',
+                ('date_begin', 'date_end',), ('married', 'spouse',),
+                ('TA', 'mentor',), 'team', ('house', 'bunk',), 'address',
+                'self_attendance',)
         }),
     )
     list_display = ('__unicode__','current_term','_trainee_email',)

@@ -106,6 +106,7 @@ WSGI_APPLICATION = 'ap.wsgi.application'
 TEMPLATE_CONTEXT_PROCESSORS = (
 	'django.contrib.auth.context_processors.auth',
 	'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
 )
 
 TEMPLATE_DIRS = (
@@ -138,6 +139,7 @@ INSTALLED_APPS = (
     'django_reset',
     'import_export',
     'debug_toolbar',
+    'bootstrap3',
     # ap CORE
     'accounts',
     'aputils',
@@ -219,3 +221,6 @@ EMAIL_HOST_PASSWORD = 'test4now'
 #Port for sending email.
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+#URL after login page
+LOGIN_REDIRECT_URL = '/'
