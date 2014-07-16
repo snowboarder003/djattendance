@@ -10,7 +10,7 @@ print(SITE_ROOT)
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
-    ('Jonathan Tien', 'jonathan.tien@gmail.com')
+    ('Attendance Project', 'attendanceproj@gmail.com')
 )
 
 MANAGERS = ADMINS
@@ -93,6 +93,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -109,7 +110,10 @@ TEMPLATE_DIRS = (
     os.path.join(SITE_ROOT, 'templates'),
 )
 
+AUTH_USER_MODEL = 'accounts.User'
+
 INSTALLED_APPS = (
+    # django contrib
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -118,7 +122,13 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
- #   'accounts',
+    # third-party modules
+    'autofixture',
+    'braces',
+    'django_reset',
+    'bootstrap3',
+    # ap CORE
+    'accounts',
     'aputils',
     'books',
     'classes',
@@ -128,8 +138,9 @@ INSTALLED_APPS = (
     'services',
     'teams',
     'terms',
-    'django_reset',
     'syllabus',
+    # ap modules
+    'dailybread',  # daily nourishment
 )
 
 # A sample logging configuration. The only tangible logging
@@ -165,3 +176,11 @@ try:
     from local_settings import *
 except ImportError:
     pass
+
+#URL after login page
+LOGIN_REDIRECT_URL = '/'
+
+TEMPLATE_CONTEXT_PROCESSORS = {
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages'
+}

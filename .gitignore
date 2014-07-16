@@ -5,4 +5,8 @@ ap/.project
 ap/.pydevproject
 .gitignore
 .DS_Store
-
+key.pub
+ap/.project
+ap/.pydevproject
+venv
+staticfiles

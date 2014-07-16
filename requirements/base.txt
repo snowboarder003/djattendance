@@ -1,6 +1,7 @@
-Django==1.5.5
+Django==1.6.5
 django-reset==0.2.0
 psycopg2==2.5.2
 djorm-ext-pgarray==0.10
 djorm-ext-expressions==0.6
-
+South==0.8.2
+django-braces==1.2.2

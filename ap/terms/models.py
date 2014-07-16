@@ -1,8 +1,10 @@
-from django.db import models
-from django.core.urlresolvers import reverse
 import datetime
 
-########################################################################80chars
+from django.db import models
+from django.core.urlresolvers import reverse
+from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist
+
 
 """ TERM models.py
 
@@ -39,12 +41,23 @@ class Term(models.Model):
     # the last day of the term, the sat of semiannual
     end = models.DateField(verbose_name='end date')
 
-    # returns an absolute date for a term week/day pair
+    @staticmethod
+    def current_term():
+        """ Return the current term """
+        try:
+            return Term.objects.get(Q(start__lte=datetime.date.today()), Q(end__gte=datetime.date.today()))
+        # this will happen in cases such as in-between terms (or empty DB, possibly)
+        except ObjectDoesNotExist:
+            # return an obviously fake term object
+            return Term(name="Temp 0000", code="TM00", start=datetime.date.today(), end=datetime.date.today())
+
+
     def getDate(self, week, day):
+        """ return an absolute date for a term week/day pair """
         return self.start + datetime.timedelta(week * 7 + day)
-    # returns a term week/day pair for an absolute date
 
     def reverseDate(self, date):
+        """ returns a term week/day pair for an absolute date """
         if self.start <= date <= self.end:
             # days since the term started
             delta = date - self.start

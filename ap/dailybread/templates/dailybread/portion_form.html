@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Submit Daily Nourishment</h1>
+
+<form action="" method="post">
+<div class="form-group">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <input type="submit" value="Submit">
+</div>
+</form>
+
+{% endblock %}
