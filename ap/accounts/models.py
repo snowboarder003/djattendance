@@ -67,7 +67,7 @@ class APUserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """ A basic user account, containing all common user information.
-    This is a custom-defined User, but inherits from Django's classes to integrate with 
+    This is a custom-defined User, but inherits from Django's classes to integrate with
     Django's other provided User tools/functionality
     AbstractBaseUser provides Django's basic authentication backend.
     PermissionsMixin provides compatability with Django's built-in permissions system.
@@ -126,11 +126,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __unicode__(self):
         return self.email
-    
+
     @staticmethod
     def autocomplete_search_fields():
         return ("id__iexact",)
-    
+
 
 class Profile(models.Model):
     """ A profile for a user account, containing user data. A profile can be thought
@@ -150,16 +150,11 @@ class Profile(models.Model):
 
     class Meta:
         abstract = True
-    
+
     @staticmethod
     def autocomplete_search_fields():
         return ("id__iexact", "account__icontains", )
 
-    # gets trainee id
-    @staticmethod
-    def get_trainee(user_id):
-        return Trainee.objects.get(account_id=user_id)
-    
 
 class TrainingAssistant(Profile):
 
@@ -215,9 +210,9 @@ class Trainee(Profile):
     # calculates what term the trainee is in
     def _calculate_term(self):
     	num_terms = self.term.all().count()
-    	
+
     	return num_terms
-        
+
     current_term = property(_calculate_term)
 
     def _trainee_email(self):

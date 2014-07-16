@@ -18,8 +18,8 @@ class IndividualSlipCreate(generic.CreateView):
         print 'Make home in my heart, Lord!'
         self.object = form.save(commit=False)
         self.object.status = 'P'
-        self.object.trainee = Profile.get_trainee(self.request.user.id)
-        self.object.TA = self.object.trainee.TA
+        self.object.trainee = self.request.user.trainee
+        self.object.TA = self.request.user.trainee.TA
         self.object.save()
         return super(generic.CreateView, self).form_valid(form)
 
@@ -46,8 +46,8 @@ class GroupSlipCreate(generic.CreateView):
         def form_valid(self, form):
             self.object = form.save(commit=False)
             self.object.status = 'P'
-            self.object.trainee = Profile.get_trainee(self.request.user.id)
-            self.object.TA = self.object.trainee.TA
+            self.object.trainee = self.request.user.trainee
+            self.object.TA = self.request.user.trainee.TA
             self.object.save()
             return super(generic.CreateView, self).form_valid(form)
 
@@ -65,7 +65,7 @@ class GroupSlipUpdate(generic.UpdateView):
 class GroupSlipDelete(generic.DeleteView):
     model = GroupSlip
     success_url='/leaveslips/'
-    
+
 
 # viewing the leave slips
 class LeaveSlipList(generic.ListView):
