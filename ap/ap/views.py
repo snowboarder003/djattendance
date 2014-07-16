@@ -13,13 +13,6 @@ def home(request):
     data = {'daily_nourishment': Portion.today(),
             'user': request.user}
 
-    #test message
-    messages.add_message(request, messages.DEBUG, 'DEBUG message')
-    messages.add_message(request, messages.INFO, 'INFO message')
-    messages.add_message(request, messages.SUCCESS, 'SUCCESS message')
-    messages.add_message(request, messages.WARNING, 'WARNING message')
-    messages.add_message(request, messages.ERROR, 'ERROR message')
-
     if request.user.trainee:
         try:
             data['schedule'] = request.user.trainee.schedule_set.get(term=Term.current_term())
