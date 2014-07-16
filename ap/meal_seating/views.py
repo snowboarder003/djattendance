@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 
-from mealSeating.models import Table
+from meal_seating.models import Table
 from accounts.models import User
 from datetime import date, timedelta
 
@@ -18,7 +18,7 @@ def seattables(request):
     return render(request, 'detail.html', {'mydict' : mydict})
 
 def newseats(request):
-    return render(request, 'newSeating.html')
+    return render(request, 'newseating.html')
 
 def signin(request):
     trainees = User.objects.all().filter(is_active=1).order_by("lastname")[:50]

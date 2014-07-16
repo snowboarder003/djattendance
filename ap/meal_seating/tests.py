@@ -9,8 +9,8 @@ from datetime import date
 from django.test import TestCase
 
 from accounts.models import User, Trainee
-from mealSeating.models import Table
-from mealSeating.autofixtures import TraineeAutoFixture, UserBrotherAutoFixture, UserSisterAutoFixture
+from meal_seating.models import Table
+from meal_seating.autofixtures import TraineeAutoFixture, UserBrotherAutoFixture, UserSisterAutoFixture
 
 
 def setup_traineeBrothers_autofixture(number):

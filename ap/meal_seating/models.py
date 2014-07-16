@@ -1,6 +1,6 @@
 from django.db import models
 
-""" mealSeating models.py
+""" meal_seating models.py
 
 This module prints the bi-weekly meal seating list for the FTTA and FTTMA
 brothers and sisters, and also for short-termers.
@@ -43,13 +43,13 @@ class Table(models.Model):
             print "cannot seat " + traineenum + " trainees. Current capacity is: " + totalcapacity
         else:
             for trainee in genderlist:    
-                mealseating = {}
+                meal_seating = {}
                 if ( traineenum == tables[tablenum].capacity):
                     tablenum += 1
                     traineenum = 0
-                mealseating["first_name"] = trainee.firstname
-                mealseating["last_name"] = trainee.lastname
-                mealseating["table"] = tables[tablenum]
-                meal_list.append(mealseating)
+                meal_seating["first_name"] = trainee.firstname
+                meal_seating["last_name"] = trainee.lastname
+                meal_seating["table"] = tables[tablenum]
+                meal_list.append(meal_seating)
                 traineenum += 1
             return meal_list    

@@ -1,4 +1,4 @@
 from django.contrib import admin
-from mealSeating.models import Table
+from meal_seating.models import Table
 
 admin.site.register(Table)

@@ -1,7 +1,7 @@
 [
    {
       "pk":1,
-      "model":"mealSeating.Table",
+      "model":"meal_seating.Table",
       "fields":{
          "name":"SE-01",
          "capacity":9,
@@ -11,7 +11,7 @@
    },
    {
       "pk":2,
-      "model":"mealSeating.Table",
+      "model":"meal_seating.Table",
       "fields":{
          "name":"SE-02",
          "capacity":9,
@@ -21,7 +21,7 @@
    },
    {
       "pk":3,
-      "model":"mealSeating.Table",
+      "model":"meal_seating.Table",
       "fields":{
          "name":"SE-03",
          "capacity":9,
@@ -31,7 +31,7 @@
    },
    {
       "pk":4,
-      "model":"mealSeating.Table",
+      "model":"meal_seating.Table",
       "fields":{
          "name":"SE-04",
          "capacity":9,
@@ -41,7 +41,7 @@
    },
    {
       "pk":5,
-      "model":"mealSeating.Table",
+      "model":"meal_seating.Table",
       "fields":{
          "name":"W-01",
          "capacity":9,
@@ -51,7 +51,7 @@
    },
    {
       "pk":2,
-      "model":"mealSeating.Table",
+      "model":"meal_seating.Table",
       "fields":{
          "name":"W-02",
          "capacity":9,
@@ -61,7 +61,7 @@
    },
    {
       "pk":3,
-      "model":"mealSeating.Table",
+      "model":"meal_seating.Table",
       "fields":{
          "name":"W-03",
          "capacity":9,
@@ -71,7 +71,7 @@
    },
    {
       "pk":4,
-      "model":"mealSeating.Table",
+      "model":"meal_seating.Table",
       "fields":{
          "name":"W-04",
          "capacity":9,

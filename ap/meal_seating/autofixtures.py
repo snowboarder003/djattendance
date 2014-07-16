@@ -3,7 +3,7 @@ import random
 from accounts.models import User, TrainingAssistant, Trainee
 from autofixture import generators, register, AutoFixture
 
-""" mealSeating.autofixtures borrowed from accounts
+""" meal_seating.autofixtures borrowed from accounts
 
 Uses django-autofixture to generate random testing data.
 (https://github.com/gregmuellegger/django-autofixture/)

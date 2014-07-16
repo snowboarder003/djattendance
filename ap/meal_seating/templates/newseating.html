@@ -5,7 +5,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <form class="form-horizontal" action="/mealSeating/viewList/" method="post">{% csrf_token %}
+    <form class="form-horizontal" action="/meal_seating/viewList/" method="post">{% csrf_token %}
     <fieldset>
 
     <!-- Form Name -->
@@ -54,7 +54,7 @@
     </fieldset>
     </form>
 
-    <form class="form-horizontal" action="/mealSeating/mealsignin/" method="post">{% csrf_token %}
+    <form class="form-horizontal" action="/meal_seating/mealsignin/" method="post">{% csrf_token %}
         <div align="center">
           <input type="submit" name="Meal Sign In Sheet" class="btn" value="View Meal Sign In Sheet">
         </div>

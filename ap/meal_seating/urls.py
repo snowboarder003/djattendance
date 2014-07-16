@@ -1,11 +1,11 @@
 from django.conf.urls import patterns, url
 
-from mealSeating import views
+from meal_seating import views
 
 urlpatterns = patterns('',
-    url(r'newSeating/',
+    url(r'newseating/',
         views.newseats),
-    url(r'viewList/',
+    url(r'viewlist/',
         views.seattables),
     url(r'mealsignin/',
         views.signin),
