@@ -3,7 +3,7 @@ from itertools import chain
 from tastypie import fields, utils
 from tastypie.resources import ModelResource
 from tastypie.validation import Validation, CleanedDataFormValidation
-from tastypie.authentication import BasicAuthentication
+from tastypie.authentication import Authentication, BasicAuthentication
 from tastypie.authorization import Authorization
 
 from accounts.models import Profile, User, Trainee, TrainingAssistant
@@ -38,7 +38,7 @@ class TrainingAssistantResource(ModelResource):
 		authorization = Authorization()
 		queryset = TrainingAssistant.objects.all()
 		resource_name = 'TA'
-		
+
 
 class IndividualSlipResource(ModelResource):
 	trainee = fields.ForeignKey(TraineeResource, 'trainee')
@@ -48,7 +48,7 @@ class IndividualSlipResource(ModelResource):
 	class Meta:
 		queryset = IndividualSlip.objects.all()
 		allowed_methods = ['get', 'post', 'put', 'delete']
-		authentication = BasicAuthentication()
+		authentication = Authentication()
 		authorization = Authorization()
 		form = CleanedDataFormValidation(form_class=IndividualSlipForm)
 
@@ -58,14 +58,14 @@ class IndividualSlipResource(ModelResource):
 			if query:
 				individual_objects = IndividualSlip.objects.filter(events__id=query)[:1]
 				# Note: currently not dealing with other kinds of leave slips.
-				# If more than one leaveslip covers an event, we only display the first one. 
+				# If more than one leaveslip covers an event, we only display the first one.
 				# (User can view all leaveslips on the list page)
 
 				# group_objects = GroupSlip.objects.filter(events__id=query)[:1]
 				# return chain(individual_objects, group_objects)[:1]
 				return individual_objects
 		return super(IndividualSlipResource, self).get_object_list(bundle, **kwargs)
-		
+
 	def obj_get_list(self, bundle, **kwargs):
 		return self.get_object_list(bundle, **kwargs)
 
@@ -77,7 +77,7 @@ class RollResource(ModelResource):
 	class Meta:
 		queryset = Roll.objects.all()
 		allowed_methods = ['get', 'post', 'put', 'delete', 'patch']
-		authentication = BasicAuthentication()
+		authentication = Authentication()
 		authorization = Authorization()
 
 
