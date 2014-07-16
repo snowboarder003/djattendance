@@ -7,9 +7,9 @@ from django.contrib.auth.views import password_change, password_change_done
 
 urlpatterns = patterns(
     '',
-    url(r'^password_change$', password_change, {'template_name': 'accounts/password_change_form.html'}, name='password-change'),
+    url(r'^(?P<pk>\d+)$', UserDetailView.as_view(),name='user-detail'),
+    url(r'^update/(?P<pk>\d+)$', UserUpdateView.as_view(), name='user-update'),
+    url(r'^update/password$', password_change, {'template_name': 'accounts/password_change_form.html'}, name='password-change'),
+    url(r'^update/email/(?P<pk>\d+)$', EmailUpdateView.as_view(), name='email-change'),
     url(r'^password_change_done$', password_change_done, {'template_name': 'accounts/password_change_done.html'}, name='password-change-done'), 
-    url(r'^(?P<pk>\d+)/email_change$', EmailUpdateView.as_view(), name='email-change'),
-    url(r'^(?P<pk>\d+)/user_update$', UserUpdateView.as_view(), name='user-update'),
-    url(r'^(?P<pk>\d+)/user_detail$', UserDetailView.as_view(),name='user-detail'),
 )
