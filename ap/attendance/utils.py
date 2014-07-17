@@ -5,7 +5,7 @@ from terms.models import Term
 
 class Period(object):
     """ a collection of methods related to calculating attendance periods """
-    
+
     def period_of_week(self, week):
         """ for a week number, starting from zero, return the period """
         return week/self.duration + 1
@@ -28,6 +28,6 @@ class Period(object):
     def start_end(self, n):
         return self.start(n), self.end(n)
 
-    def __init__(self, term=Term.current_term()):
+    def __init__(self, term):
         self.term = term  # which term these periods apply to
         self.duration = 2 # number of weeks per period
