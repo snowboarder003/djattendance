@@ -1,9 +1,6 @@
 import datetime
-<<<<<<< HEAD
 import logging
-=======
 from exceptions import ValueError
->>>>>>> attendance-views
 
 from django.db import models
 from django.core.urlresolvers import reverse
