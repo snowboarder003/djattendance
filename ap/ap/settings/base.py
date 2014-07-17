@@ -142,6 +142,7 @@ INSTALLED_APPS = (
     'classes',
     'houses',
     'localities',
+    'meal_seating',
     'rooms',
     'services',
     'teams',
