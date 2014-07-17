@@ -112,8 +112,7 @@ class Discipline(models.Model):
         num_T = 0
         num_summary = 0
         for roll in trainee.rolls.all():
-            if roll.event.date >= Period().start(period) and
-            roll.event.date <= Period().end(period):
+            if roll.event.date >= Period().start(period) and roll.event.date <= Period().end(period):
                 if roll.status == 'A':
                     num_A += 1
                 elif roll.status == 'L' or roll.status == 'T' or \
