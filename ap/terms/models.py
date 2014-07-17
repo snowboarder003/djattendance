@@ -25,7 +25,7 @@ Data Models
 class Term(models.Model):
 
     # whether this is the current term
-    current = models.BooleanField(default=False) 
+    current = models.BooleanField(default=False)
 
     # a term's season; i.e. Spring/Fall
     season = models.CharField(max_length=6,
@@ -44,7 +44,6 @@ class Term(models.Model):
     # the last day of the term, the sat of semiannual
     end = models.DateField(verbose_name='end date')
 
-<<<<<<< HEAD
     def _name(self):
         # return term's full name; e.g. Fall 2014
         return self.season + " " + str(self.year)
@@ -56,11 +55,12 @@ class Term(models.Model):
         return self.season[:2] + str(self.year)[2:]
 
     code = property(_code)
-=======
-    def length():
+
+    def _length(self):
         """ number of weeks in the term """
         return 20  # hardcoded until it ever changes
->>>>>>> attendance-views
+
+    length = property(_length)
 
     @staticmethod
     def current_term():
@@ -70,7 +70,7 @@ class Term(models.Model):
         except ObjectDoesNotExist:
             logging.critical('Could not find any terms marked as the current term!')
             # try to return term by date (will not work for interim)
-            return Term.objects.get(Q(start__lte=datetime.date.today()), Q(end__gte=datetime.date.today()))  
+            return Term.objects.get(Q(start__lte=datetime.date.today()), Q(end__gte=datetime.date.today()))
         except MultipleObjectsReturned:
             logging.critical('More than one term marked as current term! Check your Term models')
             # try to return term by date (will not work for interim)
@@ -92,13 +92,8 @@ class Term(models.Model):
         if self.start <= date <= self.end:
             # days since the term started
             delta = date - self.start
-<<<<<<< HEAD
-            return (delta.days / 7, delta.days % 7)
-        # if not within the dates the term, return invalid result
-=======
             return (delta / 7, delta % 7)
         # if not within the dates the term, raise an error
->>>>>>> attendance-views
         else:
             raise ValueError('Invalid date for this term: ' + str(date))
 
