@@ -8,3 +8,4 @@ South==1.0
 xhtml2pdf==0.0.6
 django-bootstrap3
 django-bootstrap3-datetimepicker
+django-select2
