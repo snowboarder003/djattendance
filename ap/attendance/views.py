@@ -15,7 +15,7 @@ from leaveslips.models import IndividualSlip, IndividualSlipForm
 
 
 class AttendancePersonal(TemplateView):
-    template_name = 'attendance/attendance_detail.html'
+    template_name = 'attendance/attendance_react.html'
     context_object_name = 'context'
 
     def get_context_data(self, **kwargs):
