@@ -40,7 +40,7 @@ class Table(models.Model):
         for x in Table.objects.all().filter(genderType = gender).values("capacity"):
             totalcapacity += x["capacity"]
         if (len(genderlist) > totalcapacity):
-            print "cannot seat " + traineenum + " trainees. Current capacity is: " + totalcapacity
+            print "cannot seat " , traineenum , " trainees. Current capacity is: " , totalcapacity
         else:
             for trainee in genderlist:    
                 meal_seating = {}
