@@ -1,7 +1,9 @@
-# Django settings for ap project.
-
+# Django settings for AP
 import os
 import django
+from django.contrib.messages import constants as message_constants
+
+
 # calculated paths for django and the site
 # used as starting points for various other paths
 DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
@@ -9,8 +11,9 @@ SITE_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__f
 print(SITE_ROOT)
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
-    ('Attendance Project', 'attendanceproj@gmail.com')
+    ('Attendance Project', 'attendanceproj@gmail.com'),
+    ('Jonathan Tien', 'jonathan.tien@gmail.com'),
+    ('Jonathan Yao', 'jonyao.o@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -33,14 +36,14 @@ SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
-USE_I18N = True
+USE_I18N = False
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale.
 USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
-USE_TZ = True
+USE_TZ = False # djattendance (for now) only runs in Anaheim.
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
@@ -92,7 +95,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
+#    'apptemplates.Loader',
 #     'django.template.loaders.eggs.Loader',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -101,7 +110,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -110,6 +118,12 @@ ROOT_URLCONF = 'ap.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'ap.wsgi.application'
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+	'django.contrib.auth.context_processors.auth',
+	'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
+)
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -121,6 +135,11 @@ TEMPLATE_DIRS = (
 AUTH_USER_MODEL = 'accounts.User'
 
 INSTALLED_APPS = (
+
+    # admin third-party modules
+    'adminactions',
+    'grappelli',  # needs to be in front of 'django.contrib.admin'
+
     # django contrib
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -130,11 +149,17 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    #'django.contrib.formtools',
+
     # third-party modules
-    'autofixture',
-    'braces',
+    'autofixture', # easily generate dummy/test data
+    'bootstrap3', # easy-to-use bootstrap integration
+    'bootstrap3_datetime', # datetime picker widget
+    'braces', # Mixins for Django's class-based views.
     'django_reset',
     'django_tables2',
+    'report_builder',
+
     # ap CORE
     'accounts',
     'aputils',
@@ -142,13 +167,22 @@ INSTALLED_APPS = (
     'classes',
     'houses',
     'localities',
-    'meal_seating',
     'rooms',
     'services',
     'teams',
     'terms',
+
     # ap modules
+    'attendance',
+    'absent_trainee_roster',
     'dailybread',  # daily nourishment
+    'leaveslips',
+    'leaveslip_api',
+    'lifestudies',
+    'meal_seating',
+    'schedules',
+    'syllabus', # class syllabus
+    'verse_parse', # parse outlines for PSRP verses
 )
 
 # A sample logging configuration. The only tangible logging
@@ -178,4 +212,27 @@ LOGGING = {
             'propagate': True,
         },
     }
+}
+
+BOOTSTRAP3 = {
+    'jquery_url': '/static/jquery/js/jquery-1.10.1.min.js',
+    'base_url': '/static/bootstrap/css/',
+    'css_url': None,
+    'theme_url': None,
+    'javascript_url': None,
+    'horizontal_label_class': 'col-md-2',
+    'horizontal_field_class': 'col-md-4',
+}
+
+#URL after login page
+LOGIN_REDIRECT_URL = '/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+MESSAGE_TAGS = {
+    message_constants.DEBUG: 'debug',
+    message_constants.INFO: 'info',  #blue
+    message_constants.SUCCESS: 'success',  #green
+    message_constants.WARNING: 'warning',  #yellow
+    message_constants.ERROR: 'danger',  #red
 }

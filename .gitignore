@@ -3,9 +3,6 @@
 key.pub
 ap/.project
 ap/.pydevproject
-
-
 venv
-staticfiles
 *.sublime-project
 *.sublime-workspace

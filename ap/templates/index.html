@@ -19,4 +19,15 @@
         portion that you have enjoyed.</i>
     {% endif %}
 
+    {% if schedule %}
+        <h5>Today's Schedule</h5>
+        <div class="well">
+            <ul>
+            {% for event in schedule.todays_events %}
+                <li>{{ event.name }} @ {{ event.start }}</li>
+            {% endfor %}
+            </li>
+        </div>
+    {% endif %}
+
 {% endblock %}
