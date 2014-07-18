@@ -1,7 +1,9 @@
-# Django settings for ap project.
-
+# Django settings for AP
 import os
 import django
+from django.contrib.messages import constants as message_constants
+
+
 # calculated paths for django and the site
 # used as starting points for various other paths
 DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
@@ -9,8 +11,9 @@ SITE_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__f
 print(SITE_ROOT)
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
-    ('Attendance Project', 'attendanceproj@gmail.com')
+    ('Attendance Project', 'attendanceproj@gmail.com'),
+    ('Jonathan Tien', 'jonathan.tien@gmail.com'),
+    ('Jonathan Yao', 'jonyao.o@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -33,7 +36,7 @@ SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
-USE_I18N = True
+USE_I18N = False
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale.
@@ -80,10 +83,19 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'h%)g$1=j)_(lozsexfe*=$iwj9l#8mfaszohyg5n0azz691r#b'
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    'django.core.context_processors.request' #Required for django-tables2
+)
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
+#    'apptemplates.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
 
@@ -107,6 +119,12 @@ ROOT_URLCONF = 'ap.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'ap.wsgi.application'
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+	'django.contrib.auth.context_processors.auth',
+	'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
+)
+
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
@@ -117,6 +135,11 @@ TEMPLATE_DIRS = (
 AUTH_USER_MODEL = 'accounts.User'
 
 INSTALLED_APPS = (
+
+    # admin third-party modules
+    'adminactions',
+    'grappelli',  # needs to be in front of 'django.contrib.admin'
+
     # django contrib
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -126,30 +149,41 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    #'django.contrib.formtools',
+
     # third-party modules
-    'autocomplete_light', # django autocomplete widgets
     'autofixture', # easily generate dummy/test data
     'bootstrap3', # easy-to-use bootstrap integration
     'bootstrap3_datetime', # datetime picker widget
     'braces', # Mixins for Django's class-based views.
     'django_reset',
+    'django_tables2',
+    'report_builder',
+    'rest_framework',  # for API
+
     # ap CORE
     'accounts',
     'aputils',
     'books',
     'classes',
     'houses',
-    'leaveslips',
     'localities',
     'rooms',
     'services',
     'teams',
     'terms',
+
     # ap modules
-    'schedules',
     'attendance',
+    'absent_trainee_roster',
     'dailybread',  # daily nourishment
+    'leaveslips',
     'leaveslip_api',
+    'lifestudies',
+    'meal_seating',
+    'schedules',
+    'syllabus', # class syllabus
+    'verse_parse', # parse outlines for PSRP verses
 )
 
 # A sample logging configuration. The only tangible logging
@@ -191,11 +225,28 @@ BOOTSTRAP3 = {
     'horizontal_field_class': 'col-md-4',
 }
 
-from django.contrib.messages import constants as message_constants
+#URL after login page
+LOGIN_REDIRECT_URL = '/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 MESSAGE_TAGS = {
     message_constants.DEBUG: 'debug',
-    message_constants.INFO: 'info',#blue
-    message_constants.SUCCESS: 'success',#green
-    message_constants.WARNING: 'warning',#yellow
-    message_constants.ERROR: 'danger',#red
+    message_constants.INFO: 'info',  #blue
+    message_constants.SUCCESS: 'success',  #green
+    message_constants.WARNING: 'warning',  #yellow
+    message_constants.ERROR: 'danger',  #red
+}
+
+REST_FRAMEWORK = {
+    # Use hyperlinked styles by default.
+    # Only used if the `serializer_class` attribute is not set on a view.
+    'DEFAULT_MODEL_SERIALIZER_CLASS':
+        'rest_framework.serializers.HyperlinkedModelSerializer',
+
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
 }

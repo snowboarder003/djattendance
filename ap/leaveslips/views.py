@@ -1,12 +1,15 @@
+from itertools import chain
+from datetime import datetime
+
 from django.views import generic
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse, reverse_lazy
 
-from .models import LeaveSlip, IndividualSlip, GroupSlip, IndividualSlipForm, GroupSlipForm
-from accounts.models import Profile
+from rest_framework import viewsets
 
-from itertools import chain
-from datetime import datetime
+from .models import LeaveSlip, IndividualSlip, GroupSlip, IndividualSlipForm, GroupSlipForm
+from .serializers import IndividualSlipSerializer, GroupSlipSerializer
+from accounts.models import Profile
 
 # individual slips
 class IndividualSlipCreate(generic.CreateView):
@@ -18,8 +21,8 @@ class IndividualSlipCreate(generic.CreateView):
         print 'Make home in my heart, Lord!'
         self.object = form.save(commit=False)
         self.object.status = 'P'
-        self.object.trainee = Profile.get_trainee(self.request.user.id)
-        self.object.TA = self.object.trainee.TA
+        self.object.trainee = self.request.user.trainee
+        self.object.TA = self.request.user.trainee.TA
         self.object.save()
         return super(generic.CreateView, self).form_valid(form)
 
@@ -46,8 +49,8 @@ class GroupSlipCreate(generic.CreateView):
         def form_valid(self, form):
             self.object = form.save(commit=False)
             self.object.status = 'P'
-            self.object.trainee = Profile.get_trainee(self.request.user.id)
-            self.object.TA = self.object.trainee.TA
+            self.object.trainee = self.request.user.trainee
+            self.object.TA = self.request.user.trainee.TA
             self.object.save()
             return super(generic.CreateView, self).form_valid(form)
 
@@ -65,7 +68,7 @@ class GroupSlipUpdate(generic.UpdateView):
 class GroupSlipDelete(generic.DeleteView):
     model = GroupSlip
     success_url='/leaveslips/'
-    
+
 
 # viewing the leave slips
 class LeaveSlipList(generic.ListView):
@@ -78,3 +81,14 @@ class LeaveSlipList(generic.ListView):
          group=GroupSlip.objects.filter(trainee=self.request.user.id).order_by('status') #if trainee is in a group leaveslip submitted by another user
          queryset= chain(individual,group) #combines two querysets
          return queryset
+
+
+
+class IndividualSlipViewSet(viewsets.ModelViewSet):
+    queryset = IndividualSlip.objects.all()
+    serializer_class = IndividualSlipSerializer
+
+
+class GroupSlipViewSet(viewsets.ModelViewSet):
+    queryset = GroupSlip.objects.all()
+    serializer_class = GroupSlipSerializer

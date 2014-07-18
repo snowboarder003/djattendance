@@ -3,21 +3,25 @@ from .base import *
 DEBUG = True
 TEMPLATE_DEBUG = True
 
-INSTALLED_APPS += ('debug_toolbar',
-                   'django_extensions',)
+INSTALLED_APPS += ('django_extensions',
+                   'debug_toolbar',
+                   'django_nose',)
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'ap',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'djattendance',
         'USER': 'ap',
         'PASSWORD': '4livingcreatures',
-        'HOST': 'localhost',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+        'HOST': 'localhost',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',  # Set to empty string for default.
     }
 }
 
+INTERNAL_IPS = ('127.0.0.1',)
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
 DEBUG_TOOLBAR_CONFIG = {
-    'JQUERY_URL': '',  # use local jquery
+    'JQUERY_URL': '',  # use local jquery (for offline development)
 }

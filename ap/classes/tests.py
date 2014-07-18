@@ -4,7 +4,7 @@ when you run "manage.py test".
 
 Replace this with more appropriate tests for your application.
 """
-
+"""
 from django.test import TestCase
 from classes.models import Class
 
@@ -17,15 +17,7 @@ class ClassTests(TestCase):
         c4=Class.objects.create(name='Character', code='CHAR',type='AFTN')
 
     def test_class_type_choices(self):
-        """
-        Tests that the choice types matches
-        CLASS_TYPE = (
-        ('MAIN', 'Main'),
-        ('1YR', '1st Year'),
-        ('2YR', '2nd Year'),
-        ('AFTN', 'Afternoon'),
-         )  
-        """
+        
         c1=Class.objects.get(code='ECAL')
         c2=Class.objects.get(code='GOW')
         c3=Class.objects.get(code='NJ')
@@ -35,3 +27,4 @@ class ClassTests(TestCase):
         self.assertEqual(c2.type, "MAIN")
         self.assertEqual(c3.type, "2YR")
         self.assertEqual(c4.type, "AFTN")
+"""

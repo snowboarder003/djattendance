@@ -67,7 +67,7 @@ class Event(models.Model):
     monitor = models.CharField(max_length=2, choices=MONITOR_TYPES, blank=True, null=True)
 
     # which term this event is active in
-    term = models.ForeignKey(Term, default=Term.current_term())
+    term = models.ForeignKey(Term)
 
     start = models.DateTimeField()
 

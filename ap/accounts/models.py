@@ -1,7 +1,8 @@
 from datetime import date
 
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
+    PermissionsMixin
 from django.core.mail import send_mail
 from django.utils.http import urlquote
 
@@ -22,9 +23,10 @@ USER ACCOUNTS
     ...
 
 PROFILES
-    User accounts are extended by Profiles, which contain additional information,
-    generally representing roles that various users fill. The two most common
-    ones, Trainee and TA, are implemented here. Other examples include:
+    User accounts are extended by Profiles, which contain additional
+    information, generally representing roles that various users fill. The two
+    most common ones, Trainee and TA, are implemented here. Other examples
+    include:
         - every Trainee is also a service worker, so those user accounts also
         have a ServiceWorker profile that contains information needed for the
         ServiceScheduler algorithm
@@ -67,13 +69,14 @@ class APUserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """ A basic user account, containing all common user information.
-    This is a custom-defined User, but inherits from Django's classes to integrate with 
-    Django's other provided User tools/functionality
+    This is a custom-defined User, but inherits from Django's classes
+    to integrate with Django's other provided User tools/functionality
     AbstractBaseUser provides Django's basic authentication backend.
     PermissionsMixin provides compatability with Django's built-in permissions system.
     """
 
-    email = models.EmailField(verbose_name=u'email address', max_length=255, unique=True, db_index=True)
+    email = models.EmailField(verbose_name=u'email address', max_length=255,
+                              unique=True, db_index=True)
 
     def _make_username(self):
         return self.email.split('@')[0]
@@ -82,9 +85,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     firstname = models.CharField(verbose_name=u'first name', max_length=30)
     lastname = models.CharField(verbose_name=u'last name', max_length=30)
-    middlename = models.CharField(verbose_name=u'middle name', max_length=30, blank=True)
-    nickname = models.CharField(max_length=30, blank=True)
-    maidenname = models.CharField(verbose_name=u'maiden name', max_length=30, blank=True)
+    middlename = models.CharField(verbose_name=u'middle name', max_length=30,
+                                  blank=True, null=True)
+    nickname = models.CharField(max_length=30, blank=True, null=True)
+    maidenname = models.CharField(verbose_name=u'maiden name', max_length=30,
+                                  blank=True, null=True)
 
     GENDER = (
         ('B', 'Brother'),
@@ -100,7 +105,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     age = property(_get_age)
 
-    phone = models.PositiveIntegerField(null=True, blank=True)
+    # to accomodate phone number such as: +(yyy)yyyyyyyyyy x.yyyyyy 
+    phone = models.CharField(max_length=25, null=True, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -126,40 +132,28 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __unicode__(self):
         return self.email
-    
-    @staticmethod
-    def autocomplete_search_fields():
-        return ("id__iexact",)
-    
+
 
 class Profile(models.Model):
-    """ A profile for a user account, containing user data. A profile can be thought
-    of as a 'role' that a user has, such as a TA, a trainee, or a service worker.
-    Profile files should be pertinent directly to that profile role. All generic
-    data should either be in this abstract class or in the User model.
+    """ A profile for a user account, containing user data. A profile can be
+    thought of as a 'role' that a user has, such as a TA, a trainee, or a
+    service worker. Profile files should be pertinent directly to that profile
+    role. All generic data should either be in this abstract class or in the
+    User model.
     """
 
     # each user should only have one of each profile
     account = models.OneToOneField(User)
 
     # whether this profile is still active
-    # ex: if a trainee becomes a TA, they no longer need a service worker profile
+    # e.g. if a trainee becomes a TA, they no longer need a service worker profile
     active = models.BooleanField(default=True)
 
     date_created = models.DateField(auto_now_add=True)
 
     class Meta:
         abstract = True
-    
-    @staticmethod
-    def autocomplete_search_fields():
-        return ("id__iexact", "account__icontains", )
 
-    # gets trainee id
-    @staticmethod
-    def get_trainee(user_id):
-        return Trainee.objects.get(account_id=user_id)
-    
 
 class TrainingAssistant(Profile):
 
@@ -185,14 +179,9 @@ class Trainee(Profile):
     date_end = models.DateField(null=True, blank=True)
 
     TA = models.ForeignKey(TrainingAssistant, null=True, blank=True)
-    mentor = models.ForeignKey('self', related_name='mentee', null=True, blank=True)
-    """
-    mentor_hash = models.CharField(u"Mentor hash", max_length=50, unique=True)
+    mentor = models.ForeignKey('self', related_name='mentee', null=True,
+                               blank=True)
 
-    @staticmethod
-    def autocomplete_term_adjust(term):
-        return hashlib.sha1(term).hexdigest()
-"""
     team = models.ForeignKey(Team, null=True, blank=True)
     house = models.ForeignKey(House, null=True, blank=True)
     bunk = models.ForeignKey(Bunk, null=True, blank=True)
@@ -201,28 +190,23 @@ class Trainee(Profile):
     married = models.BooleanField(default=False)
     spouse = models.OneToOneField('self', null=True, blank=True)
     # refers to the user's home address, not their training residence
-    address = models.ForeignKey(Address, null=True, blank=True, verbose_name='home address')
+    address = models.ForeignKey(Address, null=True, blank=True,
+                                verbose_name='home address')
 
     # flag for trainees taking their own attendance
     # this will be false for 1st years and true for 2nd with some exceptions.
     self_attendance = models.BooleanField(default=False)
 
-
-
-    def __unicode__(self):
-        return self.account.get_full_name()
-
     # calculates what term the trainee is in
     def _calculate_term(self):
-    	num_terms = self.term.all().count()
-    	
-    	return num_terms
-        
+        return self.term.all().count()
+
     current_term = property(_calculate_term)
 
     def _trainee_email(self):
-        return self.account
+        return self.account.email
 
-    @staticmethod
-    def autocomplete_search_fields():
-        return ("id__iexact", "mentor_hash__icontains",)
+    email = property(_trainee_email)  # should just use trainee.user.email
+
+    def __unicode__(self):
+        return self.account.get_full_name()

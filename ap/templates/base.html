@@ -57,14 +57,29 @@
             <span class="icon-dot"></span>
             <span class="icon-dot"></span>
           </button>
-          <a class="navbar-brand hidden-xs" href="/">Full-Time Training in Anaheim</a>
-          <a class="navbar-brand visible-xs" href="/">FTTA</a>
+          <a class="navbar-brand hidden-xs" href="{% url 'home' %}">Full-Time Training in Anaheim</a>
+          <a class="navbar-brand visible-xs" href="#">FTTA</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             {% block navbar-right %}
-              <li><a href="#account">User Name</a></li>
-              <li><a href="#">Logout</a></li>
+              <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Hi, {{user.get_full_name}}! <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li role="presentation" class="dropdown-header">Account Settings</li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'user-detail' user.id %}">Profile</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'email-change' user.id %}">Change Email</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'password-change' %}">Change Password</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'user-update' user.id %}">Update Account</a></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation" class="dropdown-header">Dropdown header</li>
+                    <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'login' %}">Logout</a></li>
+                  </ul>
+              </li>
             {% endblock %}
           </ul>
         </div><!--/.nav-collapse -->
@@ -78,49 +93,70 @@
         <div class="col-xs-12 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation" style="padding:0px; margin-top:-20px">
           <div class="well sidebar-nav" style="border-radius:0px">
             <ul class="nav">
+
               {% block sidelinks %}
+
               <li>Schedule</li>
                 <li><a href="{% url 'schedules:schedule' %}">View Schedule</a></li>
                 <li><a href="{% url 'schedules:event-create' %}">Create Event</a></li>
+
               <li>Attendance</li>
+                {% block attendance_links %}
+                <li><a href="{% url 'schedules:event-create' %}">Create Event</a></li>
+                <li><a href="{% url 'schedules:schedule-list' %}">View Schedule</a></li>
                 <li><a href="{% url 'attendance:attendance-submit' %}">Personal Attendance</a></li>
+                <li><a href="{% url 'absent_trainee_roster:absent_trainee_form' %}">Absent Trainee Roster</a></li>
+                <li><a href="/lifestudies/">Life Study</a></li>
+                {% endblock %}
+
               <hr style="border-top: 1px solid #dddddd;">
+
               <li>Classes</li>
                 {% block classes_links %}
                 <li><a href="#">A/V Requests</a></li>
                 <li><a href="#">Class Notes</a></li>
                 {% endblock %}
+
               <hr style="border-top: 1px solid #dddddd;">
+
+              <li>Special Projects</li>
+                <li><a href="{% url 'meal_seating.views.newseats' %}">Meal Seating</a></li>
+
+              <hr style="border-top: 1px solid #dddddd;">
+
               <li>Leaveslips</li>
                 {% block leaveslips_links %}
                  <li><a href="/leaveslips">View Leaveslips</a></li>
                 <li><a href="/leaveslips/individual/create">Submit Individual Leaveslips</a></li>
                 <li><a href="/leaveslips/group/create">Submit Group Leaveslips</a></li>
                 {% endblock %}
+
               {% endblock %}
             </ul>
           </div>
         </div><!--/sidebar-->
     {% endblock %}
 
-        <!--CONTENT-->
-        <div class="col-xs-12 col-sm-9 content">
+    <!--CONTENT-->
+    <div class="col-xs-12 col-sm-9 content">
 
-        <div id="messages">
-          {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-{{ message.tags }}"><button type = "button" class="close" data-dismiss="alert">&times;</button>{{ message }}</div>
-            {% endfor %}
-          {% endif %}
-        </div>
-          
-          {% block content %}{% endblock %}
-        </div><!--/content-->
-      </div>
+        {% block messages %}
+            <div id="messages">
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }}"><button type = "button" class="close" data-dismiss="alert">&times;</button>{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+        {% endblock %}
+
+        {% block content %}
+          <!-- CONTENT OF PAGE GOES HERE -->
+        {% endblock %}
+
+      </div><!--/CONTENT -->
 
     </div> <!-- /container -->
-
-
 
   </body>
 </html>
