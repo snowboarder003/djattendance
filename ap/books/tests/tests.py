@@ -9,6 +9,8 @@ Pay attention to:
 3. coverage scope of each test definition
 4. how to retrieve created data globally from data generator outside the class
 And don't forget to start your test method with "test_"!!!
+
+Note: this unit-test is ONLY considered complete when coverage for "classes/models" = 100%
 """
 
 #from django.test import TestCase
