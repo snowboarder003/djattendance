@@ -159,6 +159,7 @@ INSTALLED_APPS = (
     'django_reset',
     'django_tables2',
     'report_builder',
+    'rest_framework',  # for API
 
     # ap CORE
     'accounts',
