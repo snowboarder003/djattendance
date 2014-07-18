@@ -14,7 +14,6 @@ def home(request):
     data = {'daily_nourishment': Portion.today(),
             'user': request.user}
 
-    #check to see if an user is a trainee or a TA
     if hasattr(request.user, 'trainee'):
         try:
             data['schedule'] = request.user.trainee.schedule_set.get(term=Term.current_term())
@@ -24,7 +23,7 @@ def home(request):
         #do stuff to TA
         pass
     else:
-        #do stuff to other kinds of users (anonymous?)
+        #do stuff to other kinds of users
         pass
 
     return render(request, 'index.html', dictionary=data)

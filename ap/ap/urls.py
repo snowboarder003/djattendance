@@ -31,6 +31,9 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
+    # messages_extends
+    url(r'^/', include('messages_extends.urls')),
+
     # leaveslips apis
     url(r'^api/', include(EventResource().urls)),
     url(r'^api/', include(GroupSlipResource().urls)),

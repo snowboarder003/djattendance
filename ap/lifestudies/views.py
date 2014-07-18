@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from lifestudies.models import Discipline, Summary
 from accounts.models import User, Profile, Trainee, TrainingAssistant
@@ -15,6 +16,8 @@ from houses.models import House
 from books.models import Book
 import datetime
 import logging
+
+from messages_extends import constants as constants_messages
 
 from django.db import transaction
 
@@ -91,6 +94,12 @@ class DisciplineCreateView(CreateView):
     form_class = NewDisciplineForm
 
     def get_success_url(self):
+        #this will also create a message to the trainee to show up when trainee logs in
+        messages.add_message(self.request, messages.WARNING, 'Life Study Summary Due!')
+        messages.add_message(self.request, 
+            constants_messages.WARNING_PERSISTENT, 
+            'Life Study Summary Due to {infraction}'.format(infraction=self.object.infraction),
+            user=self.object.trainee.account)
         return reverse_lazy('discipline-list')
 
 

@@ -159,6 +159,7 @@ INSTALLED_APPS = (
     'django_reset',
     'django_tables2',
     'report_builder',
+    'messages_extends',
 
     # ap CORE
     'accounts',
@@ -236,3 +237,5 @@ MESSAGE_TAGS = {
     message_constants.WARNING: 'warning',  #yellow
     message_constants.ERROR: 'danger',  #red
 }
+
+MESSAGE_STORAGE = 'messages_extends.storages.FallbackStorage'
