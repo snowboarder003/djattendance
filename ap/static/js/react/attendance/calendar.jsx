@@ -54,16 +54,21 @@
 
 
   var Event = React.createClass({
+    select: function() {
+        this.props.onUserInput(
+            this.props.event.id
+        );
+    },
     render: function() {
       var ev = this.props.event;
-      var classes = "schedule-event " + ev.roll + " " + ev.status;
+      var classes = "schedule-event " + ev.get("rolls").at(ev.get("rolls").length-1).get('roll') + " " + ev.get("status");
       var divStyle = {
-        top: moment.duration(moment(ev.start).format('H:m')).subtract(6, 'hours').asMinutes()/2,
-        height: moment(ev.end).diff(moment(ev.start), 'minutes')/2
+        top: moment.duration(moment(ev.get("start")).format('H:m')).subtract(6, 'hours').asMinutes()/2,
+        height: moment(ev.get("end")).diff(moment(ev.get("start")), 'minutes')/2
       };
       return(
-       <div className={classes} style={divStyle} data-id={ev.id} data-roll={ev.roll_id}>
-       {ev.code}
+       <div className={classes} style={divStyle} data-id={ev.get("id")} data-roll={ev.get("roll_id")}>
+       {ev.get("code")}
        </div>
        );
     }
@@ -73,14 +78,15 @@
     render: function() {
       var cols = [];
       //get events only from the state's week
-      var week_events = _.filter(this.props.events, function(ev) {
-        return (this.props.date.weekday(0) < moment(ev.start) && this.props.date.weekday(6) > moment(ev.end));
+      var week_events = this.props.events.filter(function(ev) {
+        return (this.props.date.weekday(0) < moment(ev.get("start")) && this.props.date.weekday(6) > moment(ev.get("end")));
       }, this);
+      console.log(week_events);
       
       for(var i=0;i<7;i++) {
         //get events for one day
         var day_events = _.filter(week_events, function(ev) {
-          return moment(ev.start).weekday() === i; // this == i
+          return moment(ev.get("start")).weekday() === i; // this == i
         });
 
         var day_col = [];
@@ -105,7 +111,6 @@
         <div className="hour">
         {hour}
         </div>
-
         );
     }
   });
@@ -166,7 +171,7 @@
   });
 
   var Attendance = React.createClass({
-    handleUserInput: function(input) {
+    handleDate: function(input) {
       if(input==="next") {
         this.setState({
           date: this.state.date.add("d", 7)
@@ -177,23 +182,34 @@
         });
       }
     },
+    addEvents: function(event_id) {
+      this.state.selectedEvents.push(event_id);
+      this.setState({
+        selectedEvents: this.state.selectedEvents
+      })
+    },
     getInitialState: function() {
       return {
-        date: moment()
+        date: moment(),
+        selectedEvents: []
       };
     },
     render: function() {
       return (
         <div>
         <WeekBar date={this.state.date} 
-        onUserInput={this.handleUserInput}
+        onUserInput={this.handleDate}
         />
         <div className="row">
         <DaysRow date={this.state.date} />
         </div>
         <div className="row">
         <TimesColumn />
-        <EventGrid events={this.props.events} date={this.state.date} />
+        <EventGrid 
+          events={this.props.events} 
+          date={this.state.date} 
+          selectedEvents={this.state.selectedEvents}
+        />
         <div className="col-md-4">
         <Roll />
         <Leaveslip />

@@ -19,38 +19,39 @@
 <div id="clndr">
 </div>
 
-<script>
-  var events = [
-  {% for event in schedule.events.all %}
-  {
-    id: "{{ event.id }}",
-    date: "{{ event.start | date:'Y-m-d'}}",
-    start: "{{ event.start | date:'r' }}",
-    end: "{{ event.end | date:'r' }}",
-    name: "{{ event.name }}",
-    code: "{{ event.code }}",
-    type: "{{ event.type }}",
-    slips: [],
-    status: "",
-  },{% endfor %}
-  ]
+<script type="text/javascript">
+  var events = new Events([
+    {% for event in schedule.events.all %}
+    new Event({
+      id: "{{ event.id }}",
+      date: "{{ event.start | date:'Y-m-d'}}",
+      start: "{{ event.start | date:'r' }}",
+      end: "{{ event.end | date:'r' }}",
+      name: "{{ event.name }}",
+      code: "{{ event.code }}",
+      type: "{{ event.type }}",
+      slips: [],
+      status: "",
+    }),
+    {% endfor %}
+    ]);
 
   {% for roll in attendance %}
-  var e = _.findWhere(events, {id: "{{ roll.event.id }}" });
-  e.roll = "{{ roll.get_status_display|slugify }}";
-  e.roll_id = "{{ roll.id }}";
+  events.get({{ roll.event.id }}).addRoll(new Roll({
+    id: "{{ roll.id }}",
+    roll: "{{ roll.get_status_display | slugify }}",
+    event_id: "{{ roll.event.id }}"
+  }));
   {% endfor %}
 
   {% for slip in leaveslips %}
   {% for event in slip.events.all %}
-  var event = _.findWhere(events, {id: "{{ event.id }}" })
-  event.slips.push({{slip.id}})
-  if(event.status != "approved") {
-    event.status = "{{ slip.get_status_display | slugify }}"
-  }
+  events.get({{ event.id }}).addSlip(new Leaveslip({
+    "id" : "{{slip.id}}",
+    "status" : "{{ slip.get_status_display | slugify }}"
+  }));
   {% endfor %}
   {% endfor %}
-
 </script>
 
 <script type="text/javascript" src="{% static "js/react/attendance/calendar.js" %}"></script>
@@ -463,6 +464,9 @@ $("#clndr").on("click", "#submit-roll button", function () {
 <script type="text/javascript" src="{% static "js/underscore-min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/moment.min.js" %}"></script>
 <script type="text/javascript" src="{% static "js/clndr.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/backbone/backbone.js" %}"></script>
+<script type="text/javascript" src="{% static "js/backbone/models.js" %}"></script>
+<script type="text/javascript" src="{% static "js/backbone/collections.js" %}"></script>
 <script type="text/javascript" src="{% static "js/react/react-with-addons.js" %}"></script>
 
 {% endblock %}
