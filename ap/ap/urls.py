@@ -26,7 +26,6 @@ urlpatterns = patterns('',
     url(r'^lifestudies/', include('lifestudies.urls')),
     url(r'^select2/', include('django_select2.urls')),
 
-    url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^adminactions/', include('adminactions.urls')), #django-adminactions pluggable app
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),

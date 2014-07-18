@@ -89,6 +89,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     'django.core.context_processors.request' #Required for django-tables2
+    'django.contrib.messages.context_processors.messages',
 )
 
 # List of callables that know how to import templates from various sources.
@@ -97,11 +98,6 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 #    'apptemplates.Loader',
 #     'django.template.loaders.eggs.Loader',
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.contrib.messages.context_processors.messages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -138,7 +134,7 @@ INSTALLED_APPS = (
 
     # admin third-party modules
     'adminactions',
-    'grappelli',  # needs to be in front of 'django.contrib.admin'
+    'suit',  # needs to be in front of 'django.contrib.admin'
 
     # django contrib
     'django.contrib.auth',
