@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Syllabus{% endblock %}
+
+{% block content %}
+
+	<h1>Delete Syllabus</h1>
+
+	<form action="" method="post">
+		{% csrf_token %}
+		<input type="submit" value="Delete">
+	</form>
+{% endblock %}

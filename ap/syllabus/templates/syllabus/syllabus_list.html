@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Syllabus List{% endblock %}
+
+{% block content %}
+	<h1> Syllabus List: </h1>
+
+	{% if syllabi %}
+		<ul>
+			{% for syllabus in syllabi %}
+			<table>
+				<tr>
+					<td><a href="{% url 'syllabus-detail' syllabus.id %}" > {{syllabus}} </a> </td>
+	        		<td><a href="{% url 'delete-syllabus' syllabus.id %}">Delete</a></td>
+	        	</tr>
+	        </table>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>No Syllabus.</p>
+	{% endif %}
+
+	<br></br>
+	<a href="{% url 'add-syllabus' %}"> Add a Syllabus </a>
+	{%comment%}<p><a href="{% url 'pdf-view' %}"> PDF Download</a></p>{%endcomment%}
+{% endblock %}
+
+	

@@ -1,32 +1,28 @@
 from django.conf.urls import patterns, url
-from syllabus.views import CLView, SyllabusDetailView, HomeView, DetailView, DeleteSyllabusView, AddSyllabusView, AddSessionView, DeleteSessionView, pdf_view
+from syllabus.views import SyllabusListView, SyllabusDetailView, SyllabusDeleteView, SyllabusCreateView, SessionCreateView, SessionDeleteView, SessionDetailView, pdf_view
 from syllabus.models import Syllabus, Session
-from terms.models import Term
-from terms import views
 
 urlpatterns = patterns('',
 
-	url(r'^$', HomeView.as_view(model=Term), name='home-view'),	
+	url(r'^$', SyllabusListView.as_view(), name='syllabus-list'),	
 
-	url(r'^(?P<term>(Fa|Sp)\d{2})/$', CLView.as_view(model=Syllabus,
-			context_object_name="list"), name='classlist-view'),
+	url(r'^(?P<pk>\d+)$', SyllabusDetailView.as_view(), name='syllabus-detail'),
 
-	url(r'^(?P<term>(Fa|Sp)\d{2})/(?P<kode>\D{0,5})/(?P<pk>\d+)$', 
-        DetailView.as_view(model=Syllabus), name='detail-view'),
-
-	url(r'^(?P<term>(Fa|Sp)\d{2})/add_syllabus.html$', 
-        AddSyllabusView.as_view(), name='add-syllabus'),
+	url(r'^add.html$', 
+        SyllabusCreateView.as_view(), name='add-syllabus'),
  
-	url(r'^(?P<term>(Fa|Sp)\d{2})/delete/(?P<pk>\d+)$', 
-        DeleteSyllabusView.as_view(), name='delete-syllabus'),	
+	url(r'^delete/(?P<pk>\d+)$', 
+        SyllabusDeleteView.as_view(), name='delete-syllabus'),	
 
-    url(r'^(?P<term>(Fa|Sp)\d{2})/(?P<kode>\D{0,5})/add_session/(?P<pk>\d+)$', 
-        AddSessionView.as_view(model=Session), name='add-session'),
+    url(r'^(?P<syllabus_pk>\d+)/add$', 
+        SessionCreateView.as_view(), name='add-session'),
 
-    url(r'^(?P<term>(Fa|Sp)\d{2})/(?P<kode>\D{0,5})/(?P<syllabus_pk>\d+)/delete_session/(?P<pk>\d+)$', 
-        DeleteSessionView.as_view(model=Session), name='delete-session'),
+    url(r'^(?P<syllabus_pk>\d+)/(?P<pk>\d+)/delete$', 
+        SessionDeleteView.as_view(), name='delete-session'),
 
-    url(r'^(?P<term>(Fa|Sp)\d{2})/(?P<kode>\D{0,5})/(?P<syllabus_pk>\d+)/pdf$', 
+    url(r'^(?P<syllabus_pk>\d+)/session/(?P<pk>\d+)$', SessionDetailView.as_view(), name='session-detail'),
+
+    url(r'^(?P<syllabus_pk>\d+)/pdf$', 
         pdf_view, name='pdf-view'),
 
 )

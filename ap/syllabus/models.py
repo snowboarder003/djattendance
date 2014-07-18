@@ -30,68 +30,32 @@ Data Models:
 """
 
 class Syllabus (models.Model):
-
-    # which class this syllabus belongs to
-    classSyllabus = models.ForeignKey(Class)
-
+    class_syllabus = models.OneToOneField(Class)
     # whether assignment is read before or after class (== true)
     after = models.BooleanField(default=False)
 
-    # def get_absolute_url(self):
-    #     return reverse('self.classSyllabus.code')
-
-    def get_absolute_url(self):
-        return '%s/' % self.classSyllabus.term.code #reverse_lazy('detail-view', kwargs={'after': self.classSyllabus.code}) 
-
-    def get_url(self):
-        return '%s/' % self.classSyllabus.code
-
-    def get_id(self):
-        slug = self.id
-        return slug
-
-    # @property
-    # def _get_code(self):
-    #     code= self.classSyllabus.code
-    #     return code
-    
-    # codes = property(_get_code)
-
     def __unicode__(self):
-        return (self.classSyllabus.name + " | " + self.classSyllabus.term.name)
-
-    # code = Syllabus.classSyllabus.code
-
-    # def get_code(self):
-    #     code = self.classSyllabus.term.name
-    #     return code
+        return "[{term}] {name}".format(term=self.class_syllabus.term.name, 
+                                         name=self.class_syllabus.name)
 
 
 class Session(models.Model):
-
-    # date of the class
+    syllabus = models.ForeignKey(Syllabus)
     date = models.DateField(verbose_name='session date')
-
-    # topic; "exam";
-    topic = models.CharField(max_length=200)
-
-    # book name, code
-    """ TODO: Make this OPTIONAL. """
-    """and make this multiple"""
-    book = models.ForeignKey(Book) #, blank=True, null=True)
-
-    # assignment info (pages; chapters; msgs; lessons; verses; exam: "FINAL, MIDTERM, ETC")
-        # can list multiple assigments, e.g. memory verses
-    """this works now, comma is its delimeter"""
-    assignment = ArrayField(dbtype="varchar(255)")
-
-    # exam (HIDDEN)
+    topic = models.CharField(max_length=255)
     exam = models.BooleanField(default=False)
 
-    # the class syllabus this session refers to
-    syllabus = models.ForeignKey(Syllabus)
+    class Meta:
+        ordering = ['date']
 
     def __unicode__(self):
-        return (self.syllabus.classSyllabus.name + " | "
-                + self.syllabus.classSyllabus.term.name + " | " + 
-                self.date.strftime('%Y/%m/%d') + " | " + self.topic)
+        return "[{date}] {topic}".format(date=self.date, topic=self.topic)
+
+
+class Assignment(models.Model):
+    session = models.ForeignKey(Session)
+    book = models.OneToOneField(Book)
+    reading = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return "{book} {reading}".format(book=self.book.name, reading=self.reading)

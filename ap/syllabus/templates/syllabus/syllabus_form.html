@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 %}
+
+{% block title %}Add Syllabus{% endblock %}
+
+{% block content %}
+
+	<h1>Add new syllabus</h1>
+
+	{% if form.errors %}
+		<p> show an notification here </p>
+	{% endif %}
+
+	<form action="" method="post">
+		{% csrf_token %}
+		{% bootstrap_form form %}
+		<input type="submit" value="Submit">
+	</form>
+
+	<a href="{% url 'syllabus-list' %}">Back to syllabus list.</a>
+{% endblock %}
+

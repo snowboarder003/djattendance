@@ -39,7 +39,7 @@ class Class(models.Model):
     type = models.CharField(max_length=4, choices=CLASS_TYPE)
 
     def __unicode__(self):
-        return self.name
+        return "[{term}] {name}".format(name=self.name, term=self.term)
 
     class Meta:
         verbose_name_plural = "classes"

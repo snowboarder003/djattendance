@@ -1,106 +1,84 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.views.generic import ListView, TemplateView, DetailView, ArchiveIndexView, CreateView, DeleteView
-from .models import Syllabus, Session
-from terms.models import Term
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-from .forms import NewSyllabusForm
 from django.core.urlresolvers import reverse_lazy
-
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic import ListView, DetailView, CreateView, DeleteView
 from django.shortcuts import get_object_or_404
 from django.template.loader import get_template
-from django import http
 from django.template import Context
+from syllabus.forms import NewSyllabusForm
+from syllabus.models import Syllabus, Session
+from classes.models import Class
+from terms.models import Term
 import ho.pisa as pisa
 import cStringIO as StringIO
 import cgi
 
-class HomeView(ListView):
-    template_name = "syllabus/termlist.html"
-    model = Term
-    context_object_name = 'termlist'
 
-class CLView(ListView):
-    template_name = "syllabus/classlist.html"
-    context_object_name = 'list'
+class SyllabusListView(ListView):
     model = Syllabus
+    template_name = "syllabus/syllabus_list.html"
+    context_object_name = 'syllabi'
 
-    """this is to get ?P<term> from urls.py 
-    and make it accessible to the template classlist.html 
-    by using {{term}}"""
-    def get_context_data(self, **kwargs):
-        context = super(CLView, self).get_context_data(**kwargs)
+    def get_success_urlontext_data(self, **kwargs):
+        context = super(SyllabusListView, self).get_context_data(**kwargs)
         context['term'] = self.kwargs['term']
         return context
 
-class DetailView(DetailView):
-    template_name = "syllabus/details.html"
+
+class SyllabusDetailView(DetailView):
+    template_name = "syllabus/syllabus_detail.html"
     model = Syllabus
     context_object_name = 'syllabus'
-    slug_url_kwarg = 'term','kode'
  
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
-        context['term'] = self.kwargs['term']
-        context['kode'] = self.kwargs['kode']
-        context['pk'] = self.kwargs['pk']
         return context
 
-class AddSyllabusView(CreateView):
+
+class SyllabusCreateView(CreateView):
     model = Syllabus
-    template_name = 'syllabus/new_syllabus_form.html'
+    template_name = 'syllabus/syllabus_form.html'
     form_class = NewSyllabusForm
 
-    def get_context_data(self, **kwargs):
-        context = super(AddSyllabusView, self).get_context_data(**kwargs)
-        context['term'] = self.kwargs['term']
-        return context
-
     def get_success_url(self):
-        term = self.kwargs['term']
-        return reverse_lazy('classlist-view', args=[term])
+        return reverse_lazy('syllabus-list')
 
-class DeleteSyllabusView(DeleteView):
+
+class SyllabusDeleteView(DeleteView):
     model = Syllabus
-    template_name = 'syllabus/delete_syllabus_confirm.html'
+    template_name = 'syllabus/syllabus_delete.html'
 
     def get_success_url(self):
-        term = self.kwargs['term']
-        return reverse_lazy('classlist-view', args=[term])
+        return reverse_lazy('syllabus-list')
 
-class SyllabusDetailView(ListView):
-    model = Syllabus
-    template_name = "syllabus/detail.html"  
-    context_object_name = 'syllabus'
-    slug_field = 'code'
-    slug_url_kwarg = 'code'
 
-class AddSessionView(CreateView):
+class SessionCreateView(CreateView):
     model = Session
-    template_name = 'session/new_session_form.html'
+    template_name = 'syllabus/session_form.html'
 
     def get_success_url(self):
-        term = self.kwargs['term']
-        kode = self.kwargs['kode']
-        pk = self.kwargs['pk']
-        return reverse_lazy('detail-view', args=[term,kode,pk])
+        return reverse_lazy('syllabus-detail', kwargs={'pk': self.kwargs['syllabus_pk']})
 
-class DeleteSessionView(DeleteView):
+
+class SessionDeleteView(DeleteView):
     model = Session
-    template_name = 'session/delete_session_confirm.html'
+    template_name = 'syllabus/session_delete.html'
 
     def get_success_url(self):
-        term = self.kwargs['term']
-        kode = self.kwargs['kode']
-        syllabus_pk = self.kwargs['syllabus_pk']
-        return reverse_lazy('detail-view', args=[term,kode,syllabus_pk])
+        return reverse_lazy('syllabus-detail', kwargs={'pk': self.kwargs['syllabus_pk']})
+
+
+class SessionDetailView(DetailView):
+    model = Session
+    template_name = 'syllabus/session_detail.html'
+    context_object_name = 'session'
 
 """TODO: to display the sessions in chronological order in pdf"""
-def pdf_view(request, term, kode, syllabus_pk):
+def pdf_view(request, syllabus_pk):
     syllabus = get_object_or_404(Syllabus, pk=syllabus_pk)
     return write_pdf('syllabus/syllabus_pdf.html',{
         'pagesize' : 'A4',
         'syllabus' : syllabus})
+
 
 def write_pdf(template_src, template_context):
     template = get_template(template_src)
