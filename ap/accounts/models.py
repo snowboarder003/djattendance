@@ -86,10 +86,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     firstname = models.CharField(verbose_name=u'first name', max_length=30)
     lastname = models.CharField(verbose_name=u'last name', max_length=30)
     middlename = models.CharField(verbose_name=u'middle name', max_length=30,
-                                  blank=True)
-    nickname = models.CharField(max_length=30, blank=True)
+                                  blank=True, null=True)
+    nickname = models.CharField(max_length=30, blank=True, null=True)
     maidenname = models.CharField(verbose_name=u'maiden name', max_length=30,
-                                  blank=True)
+                                  blank=True, null=True)
 
     GENDER = (
         ('B', 'Brother'),
@@ -105,8 +105,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     age = property(_get_age)
 
-    #to accomodate phone number such as:+(yyy)yyyyyyyyyy x.yyyyyy 
-    phone = models.CharField(max_length=25,null=True, blank=True)
+    # to accomodate phone number such as: +(yyy)yyyyyyyyyy x.yyyyyy 
+    phone = models.CharField(max_length=25, null=True, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
