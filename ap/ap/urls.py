@@ -10,6 +10,7 @@ from rest_framework import routers
 from accounts.views import UserViewSet, TraineeViewSet, TrainingAssistantViewSet
 from schedules.views import EventViewSet, ScheduleViewSet
 from attendance.views import RollViewSet
+from leaveslips.views import IndividualSlipViewSet, GroupSlipViewSet
 
 admin.autodiscover()
 autofixture.autodiscover()
@@ -32,6 +33,7 @@ urlpatterns = patterns('',
     url(r'^lifestudies/', include('lifestudies.urls')),
     url(r'^select2/', include('django_select2.urls')),
 
+    # admin urls
     url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^adminactions/', include('adminactions.urls')), #django-adminactions pluggable app
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -46,6 +48,8 @@ router.register(r'tas', TrainingAssistantViewSet)
 router.register(r'events', EventViewSet)
 router.register(r'schedules', ScheduleViewSet)
 router.register(r'rolls', RollViewSet)
+router.register(r'leaveslips', IndividualSlipViewSet)
+router.register(r'groupleaveslips', GroupSlipViewSet)
 
 urlpatterns += patterns('',
     url(r'^drf/', include(router.urls)),
