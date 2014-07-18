@@ -6,10 +6,13 @@ from django.forms.models import modelform_factory
 from django.contrib.admin.widgets import AdminDateWidget
 
 from bootstrap3_datetime.widgets import DateTimePicker
+from rest_framework import viewsets
 
 from .models import Schedule, ScheduleTemplate, Event, EventGroup
 from .forms import EventForm
+from .serializers import EventSerializer, ScheduleSerializer
 from terms.models import Term
+
 
 class SchedulePersonal(generic.TemplateView):
     template_name = 'schedules/schedule_detail.html'
@@ -80,7 +83,7 @@ class EventUpdate(generic.UpdateView):
 
     def form_valid(self, form):
         event = form.save()
-        
+
         # remove event from schedules of trainees no longer assigned to this event
         for schedule in event.schedule_set.all():
             if schedule.trainee not in form.cleaned_data['trainees']:
@@ -103,3 +106,13 @@ class EventUpdate(generic.UpdateView):
 class EventDelete(generic.DeleteView):
     model = Event
     success_url = reverse_lazy('event-create')
+
+
+
+class EventViewSet(viewsets.ModelViewSet):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+class ScheduleViewSet(viewsets.ModelViewSet):
+    queryset = Schedule.objects.all()
+    serializer_class = ScheduleSerializer

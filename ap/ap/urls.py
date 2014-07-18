@@ -8,17 +8,12 @@ import autofixture
 from rest_framework import routers
 
 from accounts.views import UserViewSet, TraineeViewSet, TrainingAssistantViewSet
+from schedules.views import EventViewSet, ScheduleViewSet
 
 admin.autodiscover()
 autofixture.autodiscover()
 
-router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-router.register(r'trainees', TraineeViewSet)
-router.register(r'tas', TrainingAssistantViewSet)
-
 urlpatterns = patterns('',
-    url(r'^api/', include(router.urls)),
     url(r'^$', 'ap.views.home', name='home'),
     url(r'^accounts/', include ('accounts.urls')),
     url(r'^accounts/login/$', login, name='login'),
@@ -40,13 +35,24 @@ urlpatterns = patterns('',
     url(r'^adminactions/', include('adminactions.urls')), #django-adminactions pluggable app
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
+)
 
-    # leaveslips apis
+# API urls
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'trainees', TraineeViewSet)
+router.register(r'tas', TrainingAssistantViewSet)
+router.register(r'events', EventViewSet)
+router.register(r'schedules', ScheduleViewSet)
+
+urlpatterns += patterns('',
+    url(r'^drf/', include(router.urls)),
+
+    # tastypie leaveslips apis
     url(r'^api/', include(EventResource().urls)),
     url(r'^api/', include(GroupSlipResource().urls)),
     url(r'^api/', include(IndividualSlipResource().urls)),
     url(r'^api/', include(TrainingAssistantResource().urls)),
     url(r'^api/', include(TraineeResource().urls)),
-    url(r'^api/', include(RollResource().urls))
-
+    url(r'^api/', include(RollResource().urls)),
 )
