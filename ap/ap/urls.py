@@ -5,10 +5,20 @@ from tastypie.api import Api
 from leaveslip_api.resources import IndividualSlipResource, GroupSlipResource, TraineeResource, TrainingAssistantResource, EventResource, RollResource
 import autofixture
 
+from rest_framework import routers
+
+from accounts.views import UserViewSet, TraineeViewSet, TrainingAssistantViewSet
+
 admin.autodiscover()
 autofixture.autodiscover()
 
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'trainees', TraineeViewSet)
+router.register(r'tas', TrainingAssistantViewSet)
+
 urlpatterns = patterns('',
+    url(r'^api/', include(router.urls)),
     url(r'^$', 'ap.views.home', name='home'),
     url(r'^accounts/', include ('accounts.urls')),
     url(r'^accounts/login/$', login, name='login'),

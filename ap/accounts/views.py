@@ -5,18 +5,17 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.generic import DetailView, UpdateView
 
-from accounts.models import User
-from accounts.forms import UserForm, EmailForm
+from rest_framework import viewsets
+
+from .models import User, Trainee, TrainingAssistant
+from .forms import UserForm, EmailForm
+from .serializers import UserSerializer, TraineeSerializer, TrainingAssistantSerializer
 
 
-class EmailUpdateView(UpdateView):
+class UserDetailView(DetailView):
     model = User
-    form_class = EmailForm
-    template_name = 'accounts/email_change.html'
-
-    def get_success_url(self):
-        messages.success(self.request, "Email Updated Successfully!")
-        return reverse_lazy('user-detail', kwargs={'pk': self.kwargs['pk']})
+    context_object_name = 'user'
+    template_name = 'accounts/user_detail.html'
 
 
 class UserUpdateView(UpdateView):
@@ -30,7 +29,26 @@ class UserUpdateView(UpdateView):
         return reverse_lazy('user-detail', kwargs={'pk': self.kwargs['pk']})
 
 
-class UserDetailView(DetailView):
+class EmailUpdateView(UpdateView):
     model = User
-    context_object_name = 'user'
-    template_name = 'accounts/user_detail.html'
+    form_class = EmailForm
+    template_name = 'accounts/email_change.html'
+
+    def get_success_url(self):
+        messages.success(self.request, "Email Updated Successfully!")
+        return reverse_lazy('user-detail', kwargs={'pk': self.kwargs['pk']})
+
+
+
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class TraineeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Trainee.objects.all()
+    serializer_class = TraineeSerializer
+
+
+class TrainingAssistantViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = TrainingAssistant.objects.all()
+    serializer_class = TrainingAssistantSerializer
