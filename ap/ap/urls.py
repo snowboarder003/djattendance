@@ -9,6 +9,7 @@ from rest_framework import routers
 
 from accounts.views import UserViewSet, TraineeViewSet, TrainingAssistantViewSet
 from schedules.views import EventViewSet, ScheduleViewSet
+from attendance.views import RollViewSet
 
 admin.autodiscover()
 autofixture.autodiscover()
@@ -44,6 +45,7 @@ router.register(r'trainees', TraineeViewSet)
 router.register(r'tas', TrainingAssistantViewSet)
 router.register(r'events', EventViewSet)
 router.register(r'schedules', ScheduleViewSet)
+router.register(r'rolls', RollViewSet)
 
 urlpatterns += patterns('',
     url(r'^drf/', include(router.urls)),
