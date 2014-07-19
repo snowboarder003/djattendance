@@ -1,0 +1,81 @@
+/Users/lifedispenser/workspace/djattendance/ap
+[
+{
+    "pk": 1, 
+    "model": "schedules.event", 
+    "fields": {
+        "term": 5, 
+        "code": "LOS", 
+        "group": null, 
+        "name": "LOS", 
+        "monitor": null, 
+        "start": "2014-07-15T09:00:00", 
+        "end": "2014-07-15T12:00:00", 
+        "type": "C", 
+        "classs": 14, 
+        "description": ""
+    }
+},
+{
+    "pk": 2, 
+    "model": "schedules.event", 
+    "fields": {
+        "term": 5, 
+        "code": "FMOC", 
+        "group": null, 
+        "name": "FMOC", 
+        "monitor": null, 
+        "start": "2014-07-16T10:00:00", 
+        "end": "2014-07-16T12:00:00", 
+        "type": "C", 
+        "classs": 2, 
+        "description": ""
+    }
+},
+{
+    "pk": 3, 
+    "model": "schedules.event", 
+    "fields": {
+        "term": 5, 
+        "code": "BOC", 
+        "group": null, 
+        "name": "BOC", 
+        "monitor": null, 
+        "start": "2014-07-17T11:00:00", 
+        "end": "2014-07-17T13:00:00", 
+        "type": "C", 
+        "classs": 7, 
+        "description": ""
+    }
+},
+{
+    "pk": 4, 
+    "model": "schedules.event", 
+    "fields": {
+        "term": 5, 
+        "code": "MS", 
+        "group": null, 
+        "name": "MS", 
+        "monitor": null, 
+        "start": "2014-07-19T09:30:00", 
+        "end": "2014-07-19T10:30:00", 
+        "type": "C", 
+        "classs": 15, 
+        "description": ""
+    }
+},
+{
+    "pk": 1, 
+    "model": "schedules.schedule", 
+    "fields": {
+        "term": 5, 
+        "events": [
+            1, 
+            2, 
+            3, 
+            4
+        ], 
+        "trainee": 1
+    }
+}
+]
