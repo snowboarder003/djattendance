@@ -1,5 +1,7 @@
 # djattendance
 
+[![Build Status](https://travis-ci.org/attendanceproject/djattendance.svg?branch=testing)](https://travis-ci.org/attendanceproject/djattendance)
+
 [![Coverage Status](https://img.shields.io/coveralls/attendanceproject/djattendance.svg)](https://coveralls.io/r/attendanceproject/djattendance)
 
 ## Summary
