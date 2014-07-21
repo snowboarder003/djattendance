@@ -13,7 +13,7 @@ before_script:
 script:
   - python ap/manage.py test --settings=ap.settings.local
   - cd ap
-  - coverage run ap/manage.py test --settings=ap.settings.local
+  - coverage run manage.py test --settings=ap.settings.local
 # email notification settings
 notifications:
   email:
