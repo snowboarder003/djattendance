@@ -49,7 +49,7 @@
                         <td>{{discipline.date_assigned | date:"m/d/y"}}
                         <td>
                             {% for summary in discipline.summary_set.all %}
-                            <a href="{% url 'summary-approve' summary.pk %}" class="tooltip-submit-date" data-toggle="tooltip" data-placement="top" title="{{summary.date_submitted | date:"m/d/y"}}">
+                            <a href="{% url 'summary_approve' summary.pk %}" class="tooltip-submit-date" data-toggle="tooltip" data-placement="top" title="{{summary.date_submitted | date:"m/d/y"}}">
                                 <span class="glyphicon glyphicon-file"></span>
                             </a>
                             {% endfor %}
@@ -91,7 +91,7 @@
                         <td>{{discipline.date_assigned | date:"m/d/y"}}
                         <td>
                             {% for summary in discipline.summary_set.all %}
-                            <a href="{% url 'summary-approve' summary.pk %}" class="tooltip-submit-date" data-toggle="tooltip" data-placement="top" title="{{summary.date_submitted | date:"m/d/y"}}">
+                            <a href="{% url 'summary_approve' summary.pk %}" class="tooltip-submit-date" data-toggle="tooltip" data-placement="top" title="{{summary.date_submitted | date:"m/d/y"}}">
                                 <span class="glyphicon glyphicon-file"></span>
                             </a>
                             {% endfor %}

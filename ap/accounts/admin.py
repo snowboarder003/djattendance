@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.admin import Group, User
 from django.utils.translation import ugettext_lazy as _
 
-from accounts.models import User, Trainee, TrainingAssistant
+from .models import User, Trainee, TrainingAssistant
 from aputils.admin import VehicleInline, EmergencyInfoInline
 
 """" ACCOUNTS admin.py """

@@ -1,12 +1,14 @@
 import datetime
 
-from django.db import models
-from accounts.models import Trainee
-from books.models import Book
 from django.core.exceptions import ValidationError
+from django.db import models
+
+from accounts.models import Trainee
 from attendance.utils import Period
-from terms.models import Term
+from books.models import Book
 from schedules.models import Schedule
+from terms.models import Term
+
 
 """ lifestudies models.py
 This discipline module handles the assigning and managing of

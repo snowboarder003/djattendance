@@ -1,27 +1,28 @@
+import datetime
+import logging
+
 from django import dispatch
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.urlresolvers import reverse_lazy
+from django.db import transaction
+from django.forms.formsets import formset_factory
 from django.http import HttpResponse, HttpResponseRedirect
-from lifestudies.models import Discipline, Summary
-from accounts.models import User, Profile, Trainee, TrainingAssistant
-from lifestudies.forms import NewSummaryForm, NewDisciplineForm, \
-    EditSummaryForm, HouseDisciplineForm
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView, CreateView, UpdateView
 from django.views.generic.list import ListView
-from django.core.urlresolvers import reverse_lazy
-from django.forms.formsets import formset_factory
-from terms.models import Term
+
+from .forms import NewSummaryForm, NewDisciplineForm, \
+    EditSummaryForm, HouseDisciplineForm
+from .models import Discipline, Summary
+from accounts.models import User, Profile, Trainee, TrainingAssistant
 from attendance.utils import Period
+from books.models import Book
+from houses.models import House
 from schedules.models import Schedule
 from teams.models import Team
-from houses.models import House
-from books.models import Book
-import datetime
-import logging
-
-from django.db import transaction
+from terms.models import Term
 
 logger = logging.getLogger(__name__)
 
@@ -95,7 +96,7 @@ class DisciplineReportView(ListView):
 class DisciplineCreateView(SuccessMessageMixin, CreateView):
     model = Discipline
     form_class = NewDisciplineForm
-    success_url = reverse_lazy('discipline-list')
+    success_url = reverse_lazy('discipline_list')
     success_message = "Discipline Assigned to Single Trainee Successfully!"
 
 
@@ -122,7 +123,7 @@ class DisciplineDetailView(DetailView):
 class SummaryCreateView(SuccessMessageMixin, CreateView):
     model = Summary
     form_class = NewSummaryForm
-    success_url = reverse_lazy('discipline-list')
+    success_url = reverse_lazy('discipline_list')
     success_message = "Life Study Summary Created Successfully!"
 
     def get_context_data(self, **kwargs):
@@ -147,7 +148,7 @@ class SummaryApproveView(DetailView):
     def post(self, request, *args, **kwargs):
         self.get_object().approve()
         messages.success(request, "Summary Approved!")
-        return HttpResponseRedirect(reverse_lazy('discipline-list'))
+        return HttpResponseRedirect(reverse_lazy('discipline_list'))
 
 
 class SummaryUpdateView(SuccessMessageMixin, UpdateView):
@@ -158,7 +159,7 @@ class SummaryUpdateView(SuccessMessageMixin, UpdateView):
     template_name = 'lifestudies/summary_detail.html'
     fields = ['content']
     form_class = EditSummaryForm
-    success_url = reverse_lazy('discipline-list')
+    success_url = reverse_lazy('discipline_list')
     success_message = "Summary Updated Successfully!"
 
     def get_context_data(self, **kwargs):
@@ -193,10 +194,10 @@ class CreateHouseDiscipline(TemplateView):
                     except IntegrityError:
                         transaction.rollback()
                 messages.success(request, "Disciplines Assigned to House!")
-                return HttpResponseRedirect(reverse_lazy('discipline-list'))
+                return HttpResponseRedirect(reverse_lazy('discipline_list'))
         else:
             form = HouseDisciplineForm()
-        return HttpResponseRedirect(reverse_lazy('discipline-list'))
+        return HttpResponseRedirect(reverse_lazy('discipline_list'))
 
 
 class AttendanceAssign(ListView):
@@ -226,9 +227,9 @@ class AttendanceAssign(ListView):
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
             period = int(request.POST['select_period'])
-            return HttpResponseRedirect(reverse_lazy('attendance-assign',
+            return HttpResponseRedirect(reverse_lazy('attendance_assign',
                                                      kwargs={'period': period})
                                         )
         else:
-            return HttpResponseRedirect(reverse_lazy('attendance-assign',
+            return HttpResponseRedirect(reverse_lazy('attendance_assign',
                                                      kwargs={'period: 1'}))
