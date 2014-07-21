@@ -1,10 +1,17 @@
 language: python
 python:
-  - "2.7"
-# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
-install: pip install -r requirements/dev.txt
-# command to run tests, e.g. python setup.py test
-script:  python ap/manage.py test --settings=ap.settings.local
+  - 2.7
+addons:
+  postgresql: "9.3"  
+install:
+  - pip install -r requirements/dev.txt
+before_script:
+  - cp ap/ap/settings/local.py.example ap/ap/settings/local.py
+  - psql -c 'create database ap;' -U postgres
+  - sed -i -e 's/getpass.getuser()/"postgres"/g' ap/ap/settings/local.py
+  - python manage.py syncdb
+script:
+  - python ap/manage.py test
 # email notification settings
 notifications:
   email:
@@ -12,8 +19,3 @@ notifications:
       - lifeunion@gmail.com
     on_success: [always|never|change] # default: change
     on_failure: [always|never|change] # default: always
-# database settings
-addons:
-  postgresql: "9.3"
-before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
