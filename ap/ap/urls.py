@@ -32,7 +32,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     # messages_extends
-    url(r'^/', include('messages_extends.urls')),
+    url(r'^messages/', include('messages_extends.urls')),
 
     # leaveslips apis
     url(r'^api/', include(EventResource().urls)),

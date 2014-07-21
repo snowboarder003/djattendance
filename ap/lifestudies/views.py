@@ -1,3 +1,4 @@
+from django import dispatch
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from lifestudies.models import Discipline, Summary
@@ -59,7 +60,6 @@ class DisciplineListView(ListView):
     #profile is the user that's currently logged in
     def get_context_data(self, **kwargs):
         context = super(DisciplineListView, self).get_context_data(**kwargs)
-        context['profile'] = self.request.user
         current_date = datetime.datetime.now().date()
         context['current_period'] = Period(Term.objects.get(pk=4)).period_of_date(datetime.date(2014,06,06))
         return context
@@ -78,7 +78,6 @@ class DisciplineReportView(ListView):
     #profile is the user that's currently logged in
     def get_context_data(self, **kwargs):
         context = super(DisciplineReportView, self).get_context_data(**kwargs)
-        context['profile'] = self.request.user
         context['trainees'] = Trainee.objects.all()
         context['teams'] = Team.objects.all()
         context['houses'] = House.objects.all()
@@ -94,12 +93,6 @@ class DisciplineCreateView(CreateView):
     form_class = NewDisciplineForm
 
     def get_success_url(self):
-        #this will also create a message to the trainee to show up when trainee logs in
-        messages.add_message(self.request, messages.WARNING, 'Life Study Summary Due!')
-        messages.add_message(self.request, 
-            constants_messages.WARNING_PERSISTENT, 
-            'Life Study Summary Due to {infraction}'.format(infraction=self.object.infraction),
-            user=self.object.trainee.account)
         return reverse_lazy('discipline-list')
 
 
