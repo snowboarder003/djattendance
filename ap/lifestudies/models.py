@@ -130,7 +130,7 @@ class Discipline(models.Model):
             {is_completed}".format(
             name=self.trainee.account.get_full_name(),
             infraction=self.infraction, offense=self.offense,
-            quantity=self.quantity, num_summary_due=self.get_num_summary_due,
+            quantity=self.quantity, num_summary_due=self.get_num_summary_due(),
             is_completed=self.is_completed())
 
 
