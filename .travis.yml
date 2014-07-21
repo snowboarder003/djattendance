@@ -9,9 +9,10 @@ before_script:
   - cp ap/ap/settings/local.py.example ap/ap/settings/local.py
   - psql -c 'create database ap;' -U postgres
   - sed -i -e 's/getpass.getuser()/"postgres"/g' ap/ap/settings/local.py
-  - python ap/manage.py syncdb
+  - python ap/manage.py syncdb --settings=ap.settings.local
 script:
-  - python ap/manage.py test
+  - python ap/manage.py test --settings=ap.settings.local
+  - coverage run ap/manage.py test --settings=ap.settings.local
 # email notification settings
 notifications:
   email:
@@ -19,3 +20,5 @@ notifications:
       - lifeunion@gmail.com
     on_success: [always|never|change] # default: change
     on_failure: [always|never|change] # default: always
+after_success:
+  - coveralls
