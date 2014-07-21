@@ -24,6 +24,7 @@ django-reset==0.2.0
 django-tastypie==0.11.1
 djorm-ext-core==0.7
 djorm-ext-expressions==0.6
+djorm-ext-pgarray==0.10
 html5lib==1.0b3
 kombu==3.0.16
 mock==1.0.1
