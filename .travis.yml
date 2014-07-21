@@ -22,4 +22,3 @@ notifications:
     on_failure: [always|never|change] # default: always
 after_success:
   - coveralls
-  

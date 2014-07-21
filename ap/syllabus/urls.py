@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 from syllabus.views import CLView, SyllabusDetailView, HomeView, DetailView, TestView, DeleteSyllabusView, AddSyllabusView, AddSessionView, DeleteSessionView
 from syllabus.models import Syllabus, Session
 from terms.models import Term
-from terms import views
+#from terms import views
 
 urlpatterns = patterns('',
 

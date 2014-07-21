@@ -58,7 +58,7 @@ class DisciplineListView(ListView):
         context = super(DisciplineListView, self).get_context_data(**kwargs)
         context['profile'] = self.request.user
         current_date = datetime.datetime.now().date()
-        context['current_period'] = Period().period_of_date(current_date)
+        context['current_period'] = Period(Term.objects.get(pk=4)).period_of_date(datetime.date(2014,06,06))
         return context
 
 
