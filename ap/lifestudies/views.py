@@ -1,12 +1,15 @@
 from django import dispatch
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse, HttpResponseRedirect
 from lifestudies.models import Discipline, Summary
 from accounts.models import User, Profile, Trainee, TrainingAssistant
 from lifestudies.forms import NewSummaryForm, NewDisciplineForm, \
     EditSummaryForm, HouseDisciplineForm
-from django.views.generic import ListView, CreateView, DetailView, FormView, \
-    UpdateView, TemplateView
+from django.views.generic.base import TemplateView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import FormView, CreateView, UpdateView
+from django.views.generic.list import ListView
 from django.core.urlresolvers import reverse_lazy
 from django.forms.formsets import formset_factory
 from terms.models import Term
@@ -35,9 +38,11 @@ class DisciplineListView(ListView):
         if 'approve' in request.POST:
             for value in request.POST.getlist('selection'):
                 Discipline.objects.get(pk=value).approve_all_summary()
+            messages.success(request, "Checked Discipline(s) Approved!")
         if 'delete' in request.POST:
             for value in request.POST.getlist('selection'):
                 Discipline.objects.get(pk=value).delete()
+            messages.success(request, "Checked Discipline(s) Deleted!")
         if 'attendance_assign' in request.POST:
             period = int(request.POST.get('attendance_assign'))
             for trainee in Trainee.objects.all():
@@ -53,6 +58,7 @@ class DisciplineListView(ListView):
                     except IntegrityError:
                         logger.error('Abort trasanction error')
                         transaction.rollback()
+            messages.success(request, "Discipline Assigned According to Attendance!")
         return self.get(request, *args, **kwargs)
 
     #profile is the user that's currently logged in
@@ -86,12 +92,11 @@ class DisciplineReportView(ListView):
         return context
 
 
-class DisciplineCreateView(CreateView):
+class DisciplineCreateView(SuccessMessageMixin, CreateView):
     model = Discipline
     form_class = NewDisciplineForm
-
-    def get_success_url(self):
-        return reverse_lazy('discipline-list')
+    success_url = reverse_lazy('discipline-list')
+    success_message = "Discipline Assigned to Single Trainee Successfully!"
 
 
 class DisciplineDetailView(DetailView):
@@ -103,21 +108,22 @@ class DisciplineDetailView(DetailView):
         if 'summary_pk' in request.POST:
             approve_summary_pk = int(request.POST['summary_pk'])
             Summary.objects.get(pk=approve_summary_pk).approve()
+            messages.success(request, "Summary Approved!")
         if 'hard_copy' in request.POST:
             self.get_object().summary_set.create(
                 content='approved hard copy summary',
                 book=Book.objects.get(pk=1),
                 chapter=1,
                 approved=True)
+            messages.success(request, "Hard Copy Submission Created!")
         return HttpResponseRedirect('')
 
 
-class SummaryCreateView(CreateView):
+class SummaryCreateView(SuccessMessageMixin, CreateView):
     model = Summary
     form_class = NewSummaryForm
-
-    def get_success_url(self):
-        return reverse_lazy('discipline-list')
+    success_url = reverse_lazy('discipline-list')
+    success_message = "Life Study Summary Created Successfully!"
 
     def get_context_data(self, **kwargs):
         context = super(SummaryCreateView, self).get_context_data(**kwargs)
@@ -140,10 +146,11 @@ class SummaryApproveView(DetailView):
 
     def post(self, request, *args, **kwargs):
         self.get_object().approve()
+        messages.success(request, "Summary Approved!")
         return HttpResponseRedirect(reverse_lazy('discipline-list'))
 
 
-class SummaryUpdateView(UpdateView):
+class SummaryUpdateView(SuccessMessageMixin, UpdateView):
     """this is the view that trainee click into in order to update the
     content of the summary"""
     model = Summary
@@ -151,14 +158,13 @@ class SummaryUpdateView(UpdateView):
     template_name = 'lifestudies/summary_detail.html'
     fields = ['content']
     form_class = EditSummaryForm
+    success_url = reverse_lazy('discipline-list')
+    success_message = "Summary Updated Successfully!"
 
     def get_context_data(self, **kwargs):
         context = super(SummaryUpdateView, self).get_context_data(**kwargs)
         context['profile'] = self.request.user
         return context
-
-    def get_success_url(self):
-        return reverse_lazy('discipline-list')
 
 
 class CreateHouseDiscipline(TemplateView):
@@ -186,7 +192,7 @@ class CreateHouseDiscipline(TemplateView):
                         discipline.save()
                     except IntegrityError:
                         transaction.rollback()
-
+                messages.success(request, "Disciplines Assigned to House!")
                 return HttpResponseRedirect(reverse_lazy('discipline-list'))
         else:
             form = HouseDisciplineForm()
