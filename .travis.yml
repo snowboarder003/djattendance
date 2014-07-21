@@ -9,7 +9,7 @@ before_script:
   - cp ap/ap/settings/local.py.example ap/ap/settings/local.py
   - psql -c 'create database ap;' -U postgres
   - sed -i -e 's/getpass.getuser()/"postgres"/g' ap/ap/settings/local.py
-  - python manage.py syncdb
+  - python ap/manage.py syncdb
 script:
   - python ap/manage.py test
 # email notification settings
