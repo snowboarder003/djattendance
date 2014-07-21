@@ -56,18 +56,17 @@ class Discipline(models.Model):
                                   max_length=4)
 
     # a quantity refers to how many summaries are assigned
-    quantity = models.PositiveSmallIntegerField(blank=False, null=False)
+    quantity = models.PositiveSmallIntegerField()
 
     # the date of the assignment of the discipline.
-    date_assigned = models.DateTimeField(editable=False, null=True,
-                                         auto_now_add=True)
+    date_assigned = models.DateTimeField(auto_now_add=True)
 
     # the due date and time for the discipline to be submitted by
-    due = models.DateField(blank=False, null=False)
+    due = models.DateField()
 
     # the type of offense being assigned
     offense = models.CharField(choices=TYPE_OFFENSE_CHOICES, default='RO',
-                               blank=False, null=False, max_length=2)
+                               max_length=2)
 
     trainee = models.ForeignKey(Trainee)
 
@@ -145,7 +144,7 @@ class Summary(models.Model):
     book = models.ForeignKey(Book)
 
     # the chapter assigned to summary
-    chapter = models.PositiveSmallIntegerField(blank=False, null=False)
+    chapter = models.PositiveSmallIntegerField()
 
     # if the summary has been approved
     approved = models.BooleanField(default=False)
@@ -154,8 +153,7 @@ class Summary(models.Model):
     discipline = models.ForeignKey(Discipline)
 
     # automatically generated date when summary is submitted
-    date_submitted = models.DateTimeField(editable=False,
-                                          null=True, auto_now_add=True)
+    date_submitted = models.DateTimeField(auto_now_add=True)
 
     #sort summaries by name
     class Meta:
