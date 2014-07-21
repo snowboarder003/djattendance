@@ -12,6 +12,7 @@ before_script:
   - python ap/manage.py syncdb --settings=ap.settings.local --noinput
 script:
   - python ap/manage.py test --settings=ap.settings.local
+  - cd ap
   - coverage run ap/manage.py test --settings=ap.settings.local
 # email notification settings
 notifications:
