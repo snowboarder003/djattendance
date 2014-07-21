@@ -5,3 +5,9 @@ python:
 install: pip install -r requirements/dev.txt
 # command to run tests, e.g. python setup.py test
 script:  python manage.py test --settings=ap.settings.local
+notifications:
+  email:
+    recipients:
+      - lifeunion@gmail.com
+    on_success: [always|never|change] # default: change
+    on_failure: [always|never|change] # default: always
