@@ -18,8 +18,6 @@ from books.models import Book
 import datetime
 import logging
 
-from messages_extends import constants as constants_messages
-
 from django.db import transaction
 
 logger = logging.getLogger(__name__)

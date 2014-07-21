@@ -141,7 +141,6 @@
     <div class="col-xs-12 col-sm-9 content">
 
         {% block messages %}
-        {% comment %}
             <div id="messages">
               {% if messages %}
                 {% for message in messages %}
@@ -149,7 +148,6 @@
                 {% endfor %}
               {% endif %}
             </div>
-        {% endcomment %}
         {% endblock %}
 
         {% block content %}
