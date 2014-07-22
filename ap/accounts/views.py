@@ -5,8 +5,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.generic import DetailView, UpdateView
 
-from accounts.models import User
-from accounts.forms import UserForm, EmailForm
+from .models import User
+from .forms import UserForm, EmailForm
 
 
 class EmailUpdateView(UpdateView):
@@ -16,7 +16,7 @@ class EmailUpdateView(UpdateView):
 
     def get_success_url(self):
         messages.success(self.request, "Email Updated Successfully!")
-        return reverse_lazy('user-detail', kwargs={'pk': self.kwargs['pk']})
+        return reverse_lazy('user_detail', kwargs={'pk': self.kwargs['pk']})
 
 
 class UserUpdateView(UpdateView):
@@ -27,7 +27,7 @@ class UserUpdateView(UpdateView):
     def get_success_url(self):
         messages.success(self.request,
                          "User Information Updated Successfully!")
-        return reverse_lazy('user-detail', kwargs={'pk': self.kwargs['pk']})
+        return reverse_lazy('user_detail', kwargs={'pk': self.kwargs['pk']})
 
 
 class UserDetailView(DetailView):

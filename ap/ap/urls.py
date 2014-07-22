@@ -10,9 +10,10 @@ autofixture.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'ap.views.home', name='home'),
-    url(r'^accounts/', include ('accounts.urls')),
     url(r'^accounts/login/$', login, name='login'),
 	url(r'^accounts/logout/$', logout, name='logout'),
+    url(r'^accounts/', include('accounts.urls')),
+    url(r'^terms/', include('terms.urls', namespace="terms")),
     url(r'^dailybread/', include('dailybread.urls', namespace="dailybread")),
     url(r'^schedules/', include('schedules.urls', namespace="schedules")),
     url(r'^attendance/', include('attendance.urls', namespace="attendance")),
@@ -21,8 +22,8 @@ urlpatterns = patterns('',
     url(r'^report_builder/', include('report_builder.urls')),
     url(r'^meal_seating/', include('meal_seating.urls')),
     url(r'^absent_trainee_roster/', include('absent_trainee_roster.urls', namespace="absent_trainee_roster")),
-    url(r'^syllabus/', include('syllabus.urls')),
-    url(r'^lifestudies/', include('lifestudies.urls')),
+    url(r'^syllabus/', include('syllabus.urls', namespace="syllabus")),
+    url(r'^lifestudies/', include('lifestudies.urls', namespace="lifestudies")),
     url(r'^select2/', include('django_select2.urls')),
 
     url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS

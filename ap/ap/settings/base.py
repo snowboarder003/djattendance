@@ -1,8 +1,6 @@
 # Django settings for AP
 import os
 import django
-from django.contrib.messages import constants as message_constants
-
 
 # calculated paths for django and the site
 # used as starting points for various other paths
@@ -228,11 +226,3 @@ BOOTSTRAP3 = {
 LOGIN_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-MESSAGE_TAGS = {
-    message_constants.DEBUG: 'debug',
-    message_constants.INFO: 'info',  #blue
-    message_constants.SUCCESS: 'success',  #green
-    message_constants.WARNING: 'warning',  #yellow
-    message_constants.ERROR: 'danger',  #red
-}

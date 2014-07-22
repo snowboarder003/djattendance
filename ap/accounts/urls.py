@@ -1,21 +1,20 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from django.contrib.auth.views import password_change, password_change_done
-from accounts import views
+from django.contrib.auth import views as auth_views
 
-from accounts.models import User
-from accounts.views import UserDetailView, UserUpdateView, EmailUpdateView
+from . import views
 
 urlpatterns = patterns(
     '',
-    url(r'^(?P<pk>\d+)$', UserDetailView.as_view(), name='user-detail'),
-    url(r'^update/(?P<pk>\d+)$', UserUpdateView.as_view(), name='user-update'),
-    url(r'^update/email/(?P<pk>\d+)$', EmailUpdateView.as_view(),
-        name='email-change'),
-    url(r'^update/password$', password_change,
-        {'template_name': 'accounts/password_change_form.html'},
-        name='password-change'),
-    url(r'^update/password/success$', password_change_done,
-        {'template_name': 'accounts/password_change_done.html'},
-        name='password-change-done'),
+    url(regex=r'^(?P<pk>\d+)$', view=views.UserDetailView.as_view(), name='user_detail'),
+    url(regex=r'^update/(?P<pk>\d+)$', view=views.UserUpdateView.as_view(), name='user_update'),
+    url(regex=r'^email/update/(?P<pk>\d+)$', view=views.EmailUpdateView.as_view(), name='email_change'),
+    url(regex=r'^password/change$', view=auth_views.password_change,
+        kwargs={'template_name': 'accounts/password_change_form.html',
+                'current_app': 'accounts'},
+        name='password_change'),
+    url(regex=r'^password/change/done$', view=auth_views.password_change_done,
+        kwargs={'template_name': 'accounts/password_change_done.html',
+                'current_app': 'accounts'},
+        name='password_change_done'),
 )
