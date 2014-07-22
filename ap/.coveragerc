@@ -1,30 +1,32 @@
 [run]
+data_file =
+    /home/travis/build/attendanceproject/djattendance/ap/.coverage
 omit =
     */python?.?/*
     */site-packages/nose/*
 
 [report]
 include =
-    absent_trainee_roster/*
-    accounts/*
-    attendance/*
-    books/*
-    classes/*
-    dailybread/*
-    hospitality/*
-    houses/*
-    leaveslips/*
-    lifestudies/*
-    localities/*
-    meal_seating/*
-    rooms/*
-    schedules/*
-    services/*
-    shortterm/*
-    syllabus/*
-    teams/*
-    terms/*
-    verse_parse/*
+    /home/travis/build/attendanceproject/djattendance/ap/absent_trainee_roster/*
+    /home/travis/build/attendanceproject/djattendance/ap/accounts/*
+    /home/travis/build/attendanceproject/djattendance/ap/attendance/*
+    /home/travis/build/attendanceproject/djattendance/ap/books/*
+    /home/travis/build/attendanceproject/djattendance/ap/classes/*
+    /home/travis/build/attendanceproject/djattendance/ap/dailybread/*
+    /home/travis/build/attendanceproject/djattendance/ap/hospitality/*
+    /home/travis/build/attendanceproject/djattendance/ap/houses/*
+    /home/travis/build/attendanceproject/djattendance/ap/leaveslips/*
+    /home/travis/build/attendanceproject/djattendance/ap/lifestudies/*
+    /home/travis/build/attendanceproject/djattendance/ap/localities/*
+    /home/travis/build/attendanceproject/djattendance/ap/meal_seating/*
+    /home/travis/build/attendanceproject/djattendance/ap/rooms/*
+    /home/travis/build/attendanceproject/djattendance/ap/schedules/*
+    /home/travis/build/attendanceproject/djattendance/ap/services/*
+    /home/travis/build/attendanceproject/djattendance/ap/shortterm/*
+    /home/travis/build/attendanceproject/djattendance/ap/syllabus/*
+    /home/travis/build/attendanceproject/djattendance/ap/teams/*
+    /home/travis/build/attendanceproject/djattendance/ap/terms/*
+    /home/travis/build/attendanceproject/djattendance/ap/verse_parse/*
 
 omit =
     */python?.?/*
