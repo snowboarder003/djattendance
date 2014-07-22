@@ -1,6 +1,7 @@
 # Django settings for AP
 import os
 import django
+from django.contrib.messages import constants as message_constants
 
 # calculated paths for django and the site
 # used as starting points for various other paths
