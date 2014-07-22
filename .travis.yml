@@ -13,7 +13,7 @@ before_script:
   - python manage.py syncdb --settings=ap.settings.local --noinput
 script:
   - python manage.py test --settings=ap.settings.local
-  - coverage run manage.py test --settings=ap.settings.local
+  - coverage run --source=absent_trainee_roster,accounts,attendance,books,classes,dailybread,hospitality,houses,leaveslips,lifestudies,localities,meal_seating,rooms,schedules,services,shortterm,syllabus,teams,terms,verse_parse manage.py test --settings=ap.settings.local
   - coverage report --rcfile="/home/travis/build/attendanceproject/djattendance/ap/.coveragerc"
 # - coverage report --omit="*/python?.?/*"
 
