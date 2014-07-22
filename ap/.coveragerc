@@ -1,6 +1,6 @@
 [run]
 data_file =
-    /home/travis/build/attendanceproject/djattendance/ap/.coverage
+    /.coverage
 omit =
     */python?.?/*
     */site-packages/nose/*
