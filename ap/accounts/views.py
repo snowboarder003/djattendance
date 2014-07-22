@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.generic import DetailView, UpdateView
 
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 
 from .models import User, Trainee, TrainingAssistant
 from .forms import UserForm, EmailForm
@@ -38,11 +38,12 @@ class EmailUpdateView(UpdateView):
         messages.success(self.request, "Email Updated Successfully!")
         return reverse_lazy('user-detail', kwargs={'pk': self.kwargs['pk']})
 
-
+""" API Views """
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
 
 class TraineeViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Trainee.objects.all()
@@ -52,3 +53,12 @@ class TraineeViewSet(viewsets.ReadOnlyModelViewSet):
 class TrainingAssistantViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = TrainingAssistant.objects.all()
     serializer_class = TrainingAssistantSerializer
+
+
+class TraineesByHouse(generics.ListAPIView):
+    serializer_class = TraineeSerializer
+    model = Trainee
+
+    def get_queryset(self):
+        house = self.kwargs['pk']
+        return Trainee.objects.filter(house__id=house)

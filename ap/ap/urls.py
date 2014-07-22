@@ -7,7 +7,7 @@ import autofixture
 
 from rest_framework import routers
 
-from accounts.views import UserViewSet, TraineeViewSet, TrainingAssistantViewSet
+from accounts.views import *
 from schedules.views import EventViewSet, ScheduleViewSet
 from attendance.views import RollViewSet
 from leaveslips.views import IndividualSlipViewSet, GroupSlipViewSet
@@ -53,6 +53,7 @@ router.register(r'groupleaveslips', GroupSlipViewSet)
 
 urlpatterns += patterns('',
     url(r'^drf/', include(router.urls)),
+    url(r'^drf/trainees/house/(?P<pk>\d+)/$', TraineesByHouse.as_view()),
 
     # tastypie leaveslips apis
     url(r'^api/', include(EventResource().urls)),
