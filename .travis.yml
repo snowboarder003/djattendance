@@ -14,7 +14,9 @@ script:
   - python ap/manage.py test --settings=ap.settings.local
   - cd ap
   - coverage run manage.py test --settings=ap.settings.local 
-  - coverage report --omit="*/python?.?/*"
+  - coverage report
+# - coverage report --omit="*/python?.?/*"
+
 # email notification settings
 notifications:
   email:
