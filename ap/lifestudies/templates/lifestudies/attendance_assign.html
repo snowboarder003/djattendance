@@ -53,7 +53,7 @@
     </div>
 
 
-    <form action="{% url 'discipline_list' %}" method="post">
+    <form action="{% url 'lifestudies:discipline_list' %}" method="post">
         {% csrf_token %}
         <button type="submit" name="attendance_assign" value="{{period}}" class="btn btn-success">Assign</button>
     </form>
