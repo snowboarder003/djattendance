@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/attendanceproject/djattendance.svg?branch=testing)](https://travis-ci.org/attendanceproject/djattendance)
 
-[![Coverage Status](https://img.shields.io/coveralls/attendanceproject/djattendance.svg)](https://coveralls.io/r/attendanceproject/djattendance)
+[![Coverage Status](https://img.shields.io/coveralls/attendanceproject/djattendance.svg)](https://coveralls.io/r/attendanceproject/djattendance?branch=testing)
 
 ## Summary
 Djattendance is a rewrite of the original FTTA attendance server in Python/Django. It supports many internal functions of the FTTA, for both trainees and administrators, such as:
