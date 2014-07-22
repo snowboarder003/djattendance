@@ -4,6 +4,29 @@ omit =
     */site-packages/nose/*
 
 [report]
+include =
+    absent_trainee_roster/*
+    accounts/*
+    attendance/*
+    books/*
+    classes/*
+    dailybread/*
+    hospitality/*
+    houses/*
+    leaveslips/*
+    lifestudies/*
+    localities/*
+    meal_seating/*
+    rooms/*
+    schedules/*
+    services/*
+    shortterm/*
+    syllabus/*
+    teams/*
+    terms/*
+    verse_parse/*
+
 omit =
     */python?.?/*
     */site-packages/nose/*
+
