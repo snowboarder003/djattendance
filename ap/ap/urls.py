@@ -52,13 +52,13 @@ router.register(r'leaveslips', IndividualSlipViewSet)
 router.register(r'groupleaveslips', GroupSlipViewSet)
 
 urlpatterns += patterns('',
-    url(r'^drf/', include(router.urls)),
-    url(r'^drf/trainees/gender/(?P<gender>[bs])/$', TraineesByGender.as_view()),
-    url(r'^drf/trainees/term/(?P<pk>[1234])/$', TraineesByTerm.as_view()),
-    url(r'^drf/trainees/team/(?P<pk>\d+)/$', TraineesByTeam.as_view()),
-    url(r'^drf/trainees/house/(?P<pk>\d+)/$', TraineesByHouse.as_view()),
-    url(r'^drf/trainees/locality/(?P<pk>\d+)/$', TraineesByLocality.as_view()),
-    url(r'^drf/trainees/hc/$', HouseCoordinators.as_view()),
+    url(r'^api/', include(router.urls)),
+    url(r'^api/trainees/gender/(?P<gender>[BS])/$', TraineesByGender.as_view()),
+    url(r'^api/trainees/term/(?P<term>[1234])/$', TraineesByTerm.as_view()),
+    url(r'^api/trainees/team/(?P<pk>\d+)/$', TraineesByTeam.as_view()),
+    url(r'^api/trainees/house/(?P<pk>\d+)/$', TraineesByHouse.as_view()),
+    url(r'^api/trainees/locality/(?P<pk>\d+)/$', TraineesByLocality.as_view()),
+    url(r'^api/trainees/hc/$', TraineesHouseCoordinators.as_view()),
 
     # tastypie leaveslips apis
     url(r'^api/', include(EventResource().urls)),
