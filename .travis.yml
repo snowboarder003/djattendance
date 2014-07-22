@@ -9,11 +9,11 @@ before_script:
   - cp ap/ap/settings/local.py.example ap/ap/settings/local.py
   - psql -c 'create database djattendance;' -U postgres
   - sed -i -e 's/getpass.getuser()/"postgres"/g' ap/ap/settings/local.py
-  - python ap/manage.py syncdb --settings=ap.settings.local --noinput
-script:
-  - python ap/manage.py test --settings=ap.settings.local
   - cd ap
-  - coverage run manage.py test --settings=ap.settings.local 
+  - python manage.py syncdb --settings=ap.settings.local --noinput
+script:
+  - python manage.py test --settings=ap.settings.local
+  - coverage run manage.py test --settings=ap.settings.local --source=books 
   - coverage report --rcfile="/home/travis/build/attendanceproject/djattendance/ap/.coveragerc"
 # - coverage report --omit="*/python?.?/*"
 
