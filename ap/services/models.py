@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import Group
 
+from ss.models import Qualification
 
 """ services models.py
 
@@ -23,11 +24,23 @@ Data Models:
     Week and the semiannual training.
 """
 
-class Category(Group):
+class Category(models.Model):
     """
     Defines a service category such as Clean-up, Guard, Mopping, Chairs, etc.
     """
+    name = models.CharField(max_length=100)
+    description = models.TextField()
 
+    def __unicode__(self):
+        return self.name
+
+
+class Period(models.Model):
+    """
+    Defines a service period such as Pre-Training, FTTA regular week, etc
+    """
+
+    name = models.CharField(max_length=200)
     description = models.TextField()
 
     def __unicode__(self):
@@ -35,53 +48,36 @@ class Category(Group):
 
 
 class Service(Group):
-    """" 
-	FTTA service class to define service such as
-    Breakfast Clean-up, Dinner Prep, Guard A, Wednesday Chairs, etc.
-    This also includes designated services such as Accounting or Lights.
+    """"
+	Defines a weekly service, whether rotational (e.g. Tuesday Breakfast Clean-up)
+    or designated (e.g. Attendance Project, Vehicle Maintenance, or Lights)
     """
 
+    WEEKDAYS = (
+        ('Tue', 'Tuesday'),
+        ('Wed', 'Wednesday'),
+        ('Thu', 'Thursday'),
+        ('Fri', 'Friday'),
+        ('Sat', 'Saturday'),
+        ('Sun', 'Sunday'),
+        ('Mon', 'Monday'),
+    )
+
     category = models.ForeignKey(Category, related_name="services")
-    active = models.BooleanField()
+    period = models.ManyToManyField(Period)
 
-    #Every service has different workload to describe its service hours and service intensity
+    active = models.BooleanField(default=True)
+    designated = models.BooleanField()
+
+    # on a scale of 1-12, with 12 being the most intense
     workload = models.IntegerField()
-	
-	#whether this service needs certain qualified trainees
-    needQualification = models.BooleanField(blank=True)
+    recovery_time = models.PositiveSmallIntegerField()  # in hours
 
-	#Service qualification such as Sack lunch star,Kitchen Star,
-	#Shuttle Driver, Piano, Usher, etc
-    #Note: This is different from permanent designation. For example, 
-	#two brothers are be designated as AV brothers,
-    #but others brothers have the qualification to serve AV.
-	qualifiedTrainees = models.ManyToManyField('accounts.Trainee')
+    qualifications = models.ManyToManyField(Qualilfication)
 
-    #whether this service needs certain qualified trainees
-    need_qualification = models.BooleanField(blank=True)
-
-    #Service qualification such as Sack lunch star,Kitchen Star,
-    #Shuttle Driver, Piano, Usher, etc
-    #Note: This is different from permanent designation. For example,
-    #two brothers are be designated as AV brothers,
-    #but others brothers have the qualification to serve AV.
-    qualifiedTrainees = models.ManyToManyField('accounts.Trainee', blank=True)
-
-    def __unicode__(self):
-        return self.name
-
-
-class Period(models.Model):
-    """Define Service Period such as Pre-Training, FTTA regular week, etc"""
-
-    name = models.CharField(max_length=200)
-    description = models.TextField()
-
-    #Service which is in this Period
-    service = models.ManyToManyField(Service, related_name="periods")
-
-    startDate = models.DateField('start date')
-    endDate = models.DateField('end date')
+    weekday = models.CharField(max_length=3, choices=WEEKDAYS)
+    start = models.TimeField()
+    end = models.TimeField()
 
     def __unicode__(self):
         return self.name
