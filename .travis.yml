@@ -5,16 +5,16 @@ addons:
   postgresql: "9.3"  
 install:
   - pip install -r requirements/dev.txt
-  - pip install coveralls
 before_script:
   - cp ap/ap/settings/local.py.example ap/ap/settings/local.py
   - psql -c 'create database djattendance;' -U postgres
   - sed -i -e 's/getpass.getuser()/"postgres"/g' ap/ap/settings/local.py
-  - cd ap 
-  - python manage.py syncdb --settings=ap.settings.local --noinput
+  - python ap/manage.py syncdb --settings=ap.settings.local --noinput
 script:
-  - python manage.py test --settings=ap.settings.local
-  - coverage run manage.py test --settings=ap.settings.local --omit="*/python?.?/*"
+  - python ap/manage.py test --settings=ap.settings.local
+  - cd ap
+  - coverage run manage.py test --settings=ap.settings.local 
+  - coverage report --omit="*/python?.?/*"
 # email notification settings
 notifications:
   email:
