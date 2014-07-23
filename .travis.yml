@@ -9,11 +9,13 @@ before_script:
   - cp ap/ap/settings/local.py.example ap/ap/settings/local.py
   - psql -c 'create database djattendance;' -U postgres
   - sed -i -e 's/getpass.getuser()/"postgres"/g' ap/ap/settings/local.py
-  - python manage.py syncdb --settings=ap.settings.local --noinput
+  - python ap/manage.py syncdb --settings=ap.settings.local --noinput
 script:
+  - cd ap
   - python manage.py test --settings=ap.settings.local
   - coverage run --source=absent_trainee_roster,accounts,attendance,books,classes,dailybread,hospitality,houses,leaveslips,lifestudies,localities,meal_seating,rooms,schedules,services,shortterm,syllabus,teams,terms,verse_parse ap/manage.py test --settings=ap.settings.local
-  - coverage report --rcfile="/home/travis/build/attendanceproject/djattendance/ap/.coveragerc"
+  - coverage report
+#- coverage report --rcfile="/home/travis/build/attendanceproject/djattendance/ap/.coveragerc"
 
 # email notification settings
 notifications:
