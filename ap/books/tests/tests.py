@@ -11,6 +11,8 @@ Pay attention to:
 And don't forget to start your test method with "test_"!!!
 
 Note: this unit-test is ONLY considered complete when coverage for "books/models" = 100%
+To see coverage value: run "coverage run manage.py test --settings=ap.settings.local"
+Please refer to classes/tests/tests.py to see example for using factory_boy
 """
 
 #from django.test import TestCase
