@@ -191,7 +191,7 @@ class TraineeAdmin(admin.ModelAdmin):
                 'self_attendance',)
         }),
     )
-    list_display = ('__unicode__','current_term','_trainee_email',)
+    list_display = ('__unicode__','current_term','_trainee_email','team', 'house',)
     list_filter = ('active', CurrentTermListFilter,FirstTermMentorListFilter,)
     inlines = [
         VehicleInline, EmergencyInfoInline,
