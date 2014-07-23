@@ -18,12 +18,10 @@ urlpatterns = patterns('',
     url(r'^attendance/', include('attendance.urls', namespace="attendance")),
     url(r'^leaveslips/', include('leaveslips.urls', namespace="leaveslips")),
     url(r'^verse_parse/', include('verse_parse.urls', namespace="verse_parse")),
-    url(r'^report_builder/', include('report_builder.urls')),
     url(r'^meal_seating/', include('meal_seating.urls')),
     url(r'^absent_trainee_roster/', include('absent_trainee_roster.urls', namespace="absent_trainee_roster")),
     url(r'^syllabus/', include('syllabus.urls', namespace="syllabus")),
     url(r'^lifestudies/', include('lifestudies.urls', namespace="lifestudies")),
-    url(r'^select2/', include('django_select2.urls')),
 
     url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^adminactions/', include('adminactions.urls')), #django-adminactions pluggable app
@@ -40,5 +38,7 @@ urlpatterns = patterns('',
 
     #third party
     url(r'^explorer/', include('explorer.urls')),
+    url(r'^select2/', include('django_select2.urls')),
+
 
 )
