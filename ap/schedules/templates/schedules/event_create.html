@@ -10,6 +10,73 @@
 {% block media %}
     {{ form.media }}
 
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            var base_url = window.location.protocol + '//' + window.location.host;
+            var api_base = '/api'
+
+            function getTrainees(data) {
+                console.log('in getTrainees');
+                for (i = 0; i < data['terms'].length; i++) {
+                    response = $.ajax({
+                        url: base_url + api_base + '/trainees/term/' + data['terms'][i] + '/?format=json',
+                        contentType: 'application/json',
+                        data: data,
+                        dataType: 'json',
+                        success: function(data) {
+                            // pass data to callback function
+                            addTrainees(data);
+                        }
+                    });    
+                }
+                
+                // console.log(response);
+            }
+
+            function addTrainees(data) {
+                // console.log(data);
+                
+                var trainee_ids = []   // list of ids of all trainees selected
+
+                //first populate trainee_ids with trainees already in Trainees select2 field, then add trainees from data
+                if ($('#id_trainees').val()){
+                    trainee_ids = $('#id_trainees').val();
+                }
+                for (i = 0; i < data.length; i++) {
+                    trainee_ids[trainee_ids.length] = data[i]['id'];
+                }
+                // console.log(value);
+                $('#id_trainees').select2("val", trainee_ids);
+                return;
+            }
+
+            function getValues(object) {
+                var values = [];
+                object.each(function() {
+                    values[values.length] = $(this).attr('value');
+                })
+                return values;
+            }
+
+            $('#traineeGroupForm').submit(function(event) {
+                event.preventDefault();
+                form_data = {
+                    'terms': getValues($('input[name=term]:checked')),
+                    'gender': $('input[name=gender]:checked').attr('value'),
+                    'hc': $('#id_hc').is(":checked"),
+                    'team_types': getValues($('input[name=team_type]:checked')),
+                    'teams': getValues($('select[name=team2] option:selected')),
+                    'houses': getValues($('select[name=house2] option:selected')),
+                }
+                // console.log(form_data);
+                getTrainees(form_data, 'GET');
+                $('#addTraineeGroup').modal('hide');
+                return false;
+            })
+        })
+    </script>
+
     <style>
         .select2-container{
             border: 0px;
@@ -39,8 +106,6 @@
     <form id="eventForm" action="" method="post">{% csrf_token %}
         {% bootstrap_form form %}
         <button type="button" data-toggle="modal" data-target="#addTraineeGroup">Add Trainee Group</button>
-        
-        <div id="trainee_list"></div>
         {% buttons %}
             <button type="submit" class="btn btn-primary" form="eventForm">
                 Create
@@ -66,6 +131,8 @@
                 </div>
             </div>
         </div>
+    </div>
+
     </div>
     
 
