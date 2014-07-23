@@ -11,9 +11,9 @@ before_script:
   - sed -i -e 's/getpass.getuser()/"postgres"/g' ap/ap/settings/local.py
   - python ap/manage.py syncdb --settings=ap.settings.local --noinput
 script:
-  - cd ap
-  - python manage.py test --settings=ap.settings.local
-  - coverage run --source=absent_trainee_roster,accounts,attendance,books,classes,dailybread,hospitality,houses,leaveslips,lifestudies,localities,meal_seating,rooms,schedules,services,shortterm,syllabus,teams,terms,verse_parse manage.py test --settings=ap.settings.local
+  - python ap/manage.py test --settings=ap.settings.local
+#  - coverage run --source=absent_trainee_roster,accounts,attendance,books,classes,dailybread,hospitality,houses,leaveslips,lifestudies,localities,meal_seating,rooms,schedules,services,shortterm,syllabus,teams,terms,verse_parse manage.py test --settings=ap.settings.local
+  - coverage run ap/runtests.py
   - coverage report
 #- coverage report --rcfile="/home/travis/build/attendanceproject/djattendance/ap/.coveragerc"
 
