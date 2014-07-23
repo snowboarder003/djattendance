@@ -6,7 +6,7 @@ addons:
 install:
   - pip install -r requirements/dev.txt
 before_script:
-  - cp ap/ap/settings/local.py.example ap/ap/settings/local.py
+  - cp ap/ap/settings/travis.py ap/ap/settings/local.py
   - psql -c 'create database djattendance;' -U postgres
   - sed -i -e 's/getpass.getuser()/"postgres"/g' ap/ap/settings/local.py
   - python ap/manage.py syncdb --settings=ap.settings.local --noinput
