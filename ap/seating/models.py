@@ -8,11 +8,14 @@ from accounts.models import Trainee
 
 """ seating/models.py
 
-Template:
+Template: an empty seating chart that can be reused from term to term,
+represented as a list of coordinates on a grid
 
-Chart:
+Chart: relates Trainees to a Template
 
-Partial:
+Seat: intermediate model between Charts and Trainees M2M relationship
+
+Partial: a subsection of a Chart
 """
 
 
@@ -32,6 +35,7 @@ class Template(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class Chart(models.Model):
     """ Defines a seating chart, built on top of a template """
 
@@ -47,6 +51,7 @@ class Chart(models.Model):
     def __unicode__(self):
         return self.term + ' ' + self.name
 
+
 class Seat(models.Model):
     """ Intermediate model to relate a Trainee to a seating Chart """
     trainee = models.ForeignKey(Trainee)
@@ -58,6 +63,7 @@ class Seat(models.Model):
 
     def __unicode__(self):
         return "%s on %s @ (%s, %s)" % {self.trainee, self.chart, self.x, self.y }
+
 
 class Partial(models.Model):
     """ Defines a subset of a seating chart. Mainly used for entering roll """
