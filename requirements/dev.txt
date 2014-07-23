@@ -49,4 +49,4 @@ xlrd==0.9.3
 xlwt==0.7.5
 
 python-coveralls
-django-restframework
+djangorestframework
