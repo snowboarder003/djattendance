@@ -4,6 +4,7 @@ when you run "manage.py test".
 
 Replace this with more appropriate tests for your application.
 """
+"""
 
 from django.test import TestCase
 
@@ -19,9 +20,6 @@ class BookTests(TestCase):
         b2=Book.objects.create(isbn=1234567891, name="Life Study of Genesis volume 2", code="LSG2", chapters=25, publisher=p)
 
     def test_for_foreignkey_in_Book_objects(self):
-        """
-        Tests that the fields are inserted correctly
-        """
         c=Collection.objects.get(code="LS")
         p=Publisher.objects.get(code="LSM")
         b1=Book.objects.get(code="LSG1")
@@ -33,9 +31,6 @@ class BookTests(TestCase):
         self.assertIsNone(b1.chapters)
 
     def test_unicode_functions(self):
-        """
-        Test for unicode functions in Collection, Publisher, Book and Author
-        """
         c=Collection.objects.get(code="LS")
         p=Publisher.objects.get(code="LSM")
         a=Author.objects.get(code="WL")
@@ -47,3 +42,4 @@ class BookTests(TestCase):
         self.assertEqual('<Author: Witness Lee>', a)
         self.assertEqual('<Book: Life Study of Genesis volume 1>', b1)
         self.assertEqual('<Book: Life Study of Genesis volume 2>', b2)
+"""
