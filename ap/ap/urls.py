@@ -36,6 +36,9 @@ urlpatterns = patterns('',
     url(r'^api/', include(IndividualSlipResource().urls)),
     url(r'^api/', include(TrainingAssistantResource().urls)),
     url(r'^api/', include(TraineeResource().urls)),
-    url(r'^api/', include(RollResource().urls))
+    url(r'^api/', include(RollResource().urls)),
+
+    #third party
+    url(r'^explorer/', include('explorer.urls')),
 
 )

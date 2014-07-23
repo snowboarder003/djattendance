@@ -156,7 +156,7 @@ INSTALLED_APPS = (
     'braces', # Mixins for Django's class-based views.
     'django_reset',
     'django_tables2',
-    'report_builder',
+    'explorer',
 
     # ap CORE
     'accounts',
