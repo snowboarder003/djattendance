@@ -1,7 +1,8 @@
 from django import forms
+from .models import Discipline, Summary
 from accounts.models import Trainee
-from lifestudies.models import Discipline, Summary
 from houses.models import House
+
 
 
 class NewDisciplineForm(forms.ModelForm):

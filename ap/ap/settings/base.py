@@ -3,7 +3,6 @@ import os
 import django
 from django.contrib.messages import constants as message_constants
 
-
 # calculated paths for django and the site
 # used as starting points for various other paths
 DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
@@ -159,6 +158,7 @@ INSTALLED_APPS = (
     'django_reset',
     'django_tables2',
     'report_builder',
+    'rest_framework',  # for API
 
     # ap CORE
     'accounts',
@@ -235,4 +235,17 @@ MESSAGE_TAGS = {
     message_constants.SUCCESS: 'success',  #green
     message_constants.WARNING: 'warning',  #yellow
     message_constants.ERROR: 'danger',  #red
+}
+
+REST_FRAMEWORK = {
+    # Use hyperlinked styles by default.
+    # Only used if the `serializer_class` attribute is not set on a view.
+    'DEFAULT_MODEL_SERIALIZER_CLASS':
+        'rest_framework.serializers.ModelSerializer',
+
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
 }
