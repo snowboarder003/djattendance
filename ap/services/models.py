@@ -48,7 +48,7 @@ class Period(models.Model):
 
 
 class Service(Group):
-    """"
+    """
 	Defines a weekly service, whether rotational (e.g. Tuesday Breakfast Clean-up)
     or designated (e.g. Attendance Project, Vehicle Maintenance, or Lights)
     """

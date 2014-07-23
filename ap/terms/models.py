@@ -2,8 +2,6 @@ from django.db import models
 from django.core.urlresolvers import reverse
 import datetime
 
-########################################################################80chars
-
 """ TERM models.py
 
 This schedules module is for representing weekly trainee schedules.
