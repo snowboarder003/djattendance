@@ -18,7 +18,6 @@
             var api_base = '/api'
 
             function getTrainees(data) {
-                console.log('in getTrainees');
                 for (i = 0; i < data['terms'].length; i++) {
                     response = $.ajax({
                         url: base_url + api_base + '/trainees/term/' + data['terms'][i] + '/?format=json',
@@ -84,7 +83,7 @@
             padding: 0px;
         }
         ul.select2-choices{
-            border-color: #CCC;
+            border: 1px #cccccc;
             border-radius: 4px;
         }
 
