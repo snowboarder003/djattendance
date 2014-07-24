@@ -1,8 +1,18 @@
-{% extends "base.html" %}
+{% extends "houses/base_houses.html" %}
 
-{% block content %}
+{% block houses_content %}
 	<h1> House Management </h1>
 	{% for house in houses %}
-		{{house}}
+		<li>{{house}}</li>
+		<ul>
+		{% for room in house.room_set.all %}
+			<li>{{room}}</li>
+			<ul>
+			{% for bunk in room.bunk_set.all %}
+				<li>{{bunk}}</li>
+			{% endfor %}
+			</ul>
+		{% endfor %}
+		</ul>
 	{% endfor %}
 {% endblock %}
