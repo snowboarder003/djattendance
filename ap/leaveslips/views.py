@@ -1,12 +1,15 @@
+from itertools import chain
+from datetime import datetime
+
 from django.views import generic
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse, reverse_lazy
 
-from .models import LeaveSlip, IndividualSlip, GroupSlip, IndividualSlipForm, GroupSlipForm
-from accounts.models import Profile
+from rest_framework import viewsets
 
-from itertools import chain
-from datetime import datetime
+from .models import LeaveSlip, IndividualSlip, GroupSlip, IndividualSlipForm, GroupSlipForm
+from .serializers import IndividualSlipSerializer, GroupSlipSerializer
+from accounts.models import Profile
 
 # individual slips
 class IndividualSlipCreate(generic.CreateView):
@@ -78,3 +81,14 @@ class LeaveSlipList(generic.ListView):
          group=GroupSlip.objects.filter(trainee=self.request.user.id).order_by('status') #if trainee is in a group leaveslip submitted by another user
          queryset= chain(individual,group) #combines two querysets
          return queryset
+
+
+
+class IndividualSlipViewSet(viewsets.ModelViewSet):
+    queryset = IndividualSlip.objects.all()
+    serializer_class = IndividualSlipSerializer
+
+
+class GroupSlipViewSet(viewsets.ModelViewSet):
+    queryset = GroupSlip.objects.all()
+    serializer_class = GroupSlipSerializer

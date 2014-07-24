@@ -9,3 +9,4 @@ xhtml2pdf==0.0.6
 django-bootstrap3
 django-bootstrap3-datetimepicker
 django-select2
+djangorestframework
