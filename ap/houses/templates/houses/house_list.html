@@ -1,11 +1,17 @@
 {% extends "houses/base_houses.html" %}
+{% load staticfiles %}
 
 {% block tab1 %} class="active" {% endblock %}
+
+{% block references %}
+	<link rel="stylesheet" href="{% static "datatables/css/jquery.dataTables.css" %}" />
+	<link rel="stylesheet" href="{% static "datatables/css/dataTables.bootstrap.css" %}" />
+{% endblock %}
 
 {% block houses_content %}
 	<h1> House Management </h1>
 
-	<table class="table table-condensed table-hover">
+	<table class="table" id="house-table">
 		<thead>
 			<tr>
 				<th> House </th>
@@ -22,10 +28,6 @@
 				<th> Age </th>
 				<th> Team </th>
 				<th> Room Type </th>
-				<th style="display:none;"> Sending Locality </th>
-				<th style="display:none;"> Semi Annual Training Housing </th>
-				<th style="display:none;"> House Coordinator </th>
-				<th style="display:none;"> Vehicle Cap </th>
 			</tr>
 		</thead>
 		<tbody>
@@ -42,7 +44,7 @@
 						<td>{{bunk.current_occupant.mentor}}</td>
 						<td>{{bunk.current_occupant.current_term}}</td>
 						<td>{{bunk.current_occupant.vehicle}}</td>
-						<td>{{bunk.current_occupant.account.date_of_birth | date:'m/d/y'}}</td>
+						<td>{{bunk.current_occupant.account.date_of_birth | date:'m/d/Y'}}</td>
 						<td>{{bunk.current_occupant.TA}}</td>
 						<td>{{bunk.current_occupant.account.age}}</td>
 						<td>{{bunk.current_occupant.team}}</td>
@@ -55,4 +57,14 @@
 
 	</table>
 
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		$(document).ready(function(){
+	    	$('#house-table').dataTable();
+		});
+	</script>
+	<script type="text/javascript" src="{% static "datatables/js/jquery.dataTables.js" %}"></script>
+	<script type="text/javascript" src="{% static "datatables/js/dataTables.bootstrap.js" %}"></script>
 {% endblock %}
