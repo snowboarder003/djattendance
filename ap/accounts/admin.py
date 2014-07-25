@@ -66,7 +66,7 @@ class APUserAdmin(UserAdmin):
                 ("email",)}),
 
         ("Personal info", {"fields":
-                           ("firstname", "lastname","gender",)}),
+                           ("firstname", "lastname", "gender", "date_of_birth")}),
         ("Permissions", {"fields":
                          ("is_active",
                              "is_staff",
