@@ -134,7 +134,7 @@ $(document).ready(function(){
         return values;
     }
 
-    $('#traineeGroupForm').submit(function(event) {
+    $('#trainee_select_form').submit(function(event) {
         event.preventDefault();
         form_data = {
             'terms': getValues($('input[name=term]:checked')),
@@ -145,6 +145,6 @@ $(document).ready(function(){
             'houses': getValues($('select[name=house] option:selected')),
         };
         getTrainees(form_data);
-        $('#addTraineeGroup').modal('hide');
+        $('#trainee_select').modal('hide');
     })
 })

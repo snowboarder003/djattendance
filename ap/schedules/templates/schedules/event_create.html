@@ -14,7 +14,7 @@
 
     <script type="text/javascript" src="/static/js/trainee_select.js"></script>
 
-    <style>
+     <style>
         /* ideally, the border should be on select2-container, not select2-choices (this is what select2-bootstrap.css does). but doing it that way results in a weird line break (the cursor always starts on a new line and makes the box look funny). */
         .select2-container{
             border: 0px;
@@ -23,15 +23,6 @@
         ul.select2-choices{
             border: 1px #cccccc;
             border-radius: 4px;
-        }
-
-        .checkbox{
-            padding-right: 10px;
-            display: inline-block;
-            margin-top: 0px;
-        }
-        .checkbox + .checkbox{
-            margin-top: 0px;
         }
     </style>
 
@@ -43,7 +34,7 @@
 
     <form id="eventForm" action="" method="post">{% csrf_token %}
         {% bootstrap_form form %}
-        <button type="button" data-toggle="modal" data-target="#addTraineeGroup">Add Trainee Group</button>
+        <button type="button" data-toggle="modal" data-target="#trainee_select">Add Trainee Group</button>
         {% buttons %}
             <button type="submit" class="btn btn-primary" form="eventForm">
                 Create
@@ -51,25 +42,7 @@
         {% endbuttons %}
     </form>
 
-    <div id="addTraineeGroup" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="traineeGroupForm" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="traineeGroupFormLabel">Add Trainee Group</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="traineeGroupForm" action="" method="post">{% csrf_token %}
-                        {% bootstrap_form traineeGroupForm %}
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary" form="traineeGroupForm">Add Trainees</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include 'schedules/trainee_select_modal.html' %}
 
     </div>
     

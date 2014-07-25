@@ -18,7 +18,7 @@ class EventForm(forms.ModelForm):
                     'end': DateTimePicker(options={'format': 'MM/DD/YYYY HH:mm'}) }
 
 
-class TraineeGroupForm(forms.Form):
+class TraineeSelectForm(forms.Form):
     TERM_CHOICES = ((1, '1'),
                     (2, '2'),
                     (3, '3'),
