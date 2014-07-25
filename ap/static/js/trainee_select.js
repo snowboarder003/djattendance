@@ -2,15 +2,15 @@ $(document).ready(function(){
     var base_url = window.location.protocol + '//' + window.location.host;
     var api_base = '/api'
 
-    var trainee_groups = {'terms': [], 
-                          'gender': [],
-                          'hc': [],
-                          'team_types': [],
-                          'teams': [],
-                          'houses': []
-                         }
-
     function getTrainees(data) {
+        var trainee_groups = {'terms': [], 
+                              'gender': [],
+                              'hc': [],
+                              'team_types': [],
+                              'teams': [],
+                              'houses': []
+                             }
+
         var deferreds = []; // all ajax deferred objects get pushed into here
 
         for (i = 0; i < data['terms'].length; i++) {
@@ -95,11 +95,14 @@ $(document).ready(function(){
         // all trainee groups and add trainees to Trainee field.
         $.when.apply($, deferreds).then(function(){
             var intersect = [];
-            for (k in trainee_groups) {
-                if (trainee_groups[k].length > 0) {
+            for (k in data) {
+                console.log(data[k]);
+                console.log(data[k] != false);
+                if (data[k] != false && data[k] != undefined) {
                     intersect[intersect.length] = trainee_groups[k];
                 }
             }
+            console.log(intersect);
             addTrainees(_.intersection.apply(this, intersect));
         });
 
@@ -126,14 +129,6 @@ $(document).ready(function(){
         return;
     }
 
-    function getValues(object) {
-        var values = [];
-        object.each(function() {
-            values[values.length] = $(this).attr('value');
-        })
-        return values;
-    }
-
     $('#trainee_select_form').submit(function(event) {
         event.preventDefault();
         form_data = {
@@ -146,5 +141,20 @@ $(document).ready(function(){
         };
         getTrainees(form_data);
         $('#trainee_select').modal('hide');
+        clearForm();
     })
+
+    function getValues(object) {
+        var values = [];
+        object.each(function() {
+            values[values.length] = $(this).attr('value');
+        })
+        return values;
+    }
+
+    function clearForm() {
+        document.getElementById('trainee_select_form').reset();
+        $('#id_team').select2('val', []);
+        $('#id_house').select2('val', []);
+    }
 })
