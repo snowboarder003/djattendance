@@ -131,4 +131,11 @@ class Bunk(models.Model):
 
     def __unicode__(self):
         return self.room.house.name + " Bunk " + str(self.number)
+
+    def current_occupant(self):
+        current_trainee = self.trainee_set.first()
+        for trainee in self.trainee_set.all():
+            if trainee.date_end > current_trainee.date_end:
+                current_trainee = trainee
+        return current_trainee
     
