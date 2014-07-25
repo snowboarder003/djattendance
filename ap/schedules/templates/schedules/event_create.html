@@ -9,73 +9,10 @@
 
 {% block media %}
     <link href="/static/css/select2-bootstrap.css" type="text/css" media="screen" rel="stylesheet">
+    <script type="text/javascript" src="/static/js/underscore-min.js"></script>
     {{ form.media }}
 
-    <script type="text/javascript">
-
-        $(document).ready(function(){
-            var base_url = window.location.protocol + '//' + window.location.host;
-            var api_base = '/api'
-
-            function getTrainees(data) {
-                for (i = 0; i < data['terms'].length; i++) {
-                    response = $.ajax({
-                        url: base_url + api_base + '/trainees/term/' + data['terms'][i] + '/?format=json',
-                        contentType: 'application/json',
-                        data: data,
-                        dataType: 'json',
-                        success: function(data) {
-                            // pass data to callback function
-                            addTrainees(data);
-                        }
-                    });    
-                }
-                
-                // console.log(response);
-            }
-
-            function addTrainees(data) {
-                // console.log(data);
-                
-                var trainee_ids = []   // list of ids of all trainees selected
-
-                //first populate trainee_ids with trainees already in Trainees select2 field, then add trainees from data
-                if ($('#id_trainees').val()){
-                    trainee_ids = $('#id_trainees').val();
-                }
-                for (i = 0; i < data.length; i++) {
-                    trainee_ids[trainee_ids.length] = data[i]['id'];
-                }
-                // console.log(value);
-                $('#id_trainees').select2("val", trainee_ids);
-                return;
-            }
-
-            function getValues(object) {
-                var values = [];
-                object.each(function() {
-                    values[values.length] = $(this).attr('value');
-                })
-                return values;
-            }
-
-            $('#traineeGroupForm').submit(function(event) {
-                event.preventDefault();
-                form_data = {
-                    'terms': getValues($('input[name=term]:checked')),
-                    'gender': $('input[name=gender]:checked').attr('value'),
-                    'hc': $('#id_hc').is(":checked"),
-                    'team_types': getValues($('input[name=team_type]:checked')),
-                    'teams': getValues($('select[name=team2] option:selected')),
-                    'houses': getValues($('select[name=house2] option:selected')),
-                }
-                // console.log(form_data);
-                getTrainees(form_data, 'GET');
-                $('#addTraineeGroup').modal('hide');
-                return false;
-            })
-        })
-    </script>
+    <script type="text/javascript" src="/static/js/trainee_select.js"></script>
 
     <style>
         /* ideally, the border should be on select2-container, not select2-choices (this is what select2-bootstrap.css does). but doing it that way results in a weird line break (the cursor always starts on a new line and makes the box look funny). */
