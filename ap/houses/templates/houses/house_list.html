@@ -5,12 +5,27 @@
 {% block houses_content %}
 	<h1> House Management </h1>
 
-	<table class="table table-hover">
+	<table class="table table-condensed table-hover">
 		<thead>
 			<tr>
-				<th> Name </th>
 				<th> House </th>
-				<th> Bunk </th>
+				<th> Bunk # </th>
+				<th> Position </th>
+				<th> Gender </th>
+				<th> Name </th>
+				<th> Phone </th>
+				<th> Mentor </th>
+				<th> Term </th>
+				<th> Vehicle </th>
+				<th> Birth Date </th>
+				<th> TA </th>
+				<th> Age </th>
+				<th> Team </th>
+				<th> Room Type </th>
+				<th style="display:none;"> Sending Locality </th>
+				<th style="display:none;"> Semi Annual Training Housing </th>
+				<th style="display:none;"> House Coordinator </th>
+				<th style="display:none;"> Vehicle Cap </th>
 			</tr>
 		</thead>
 		<tbody>
@@ -18,9 +33,20 @@
 				{% for room in house.room_set.all %}
 					{% for bunk in room.bunk_set.all %}
 					<tr>
-						<td>{{bunk.trainee_set.all}}</td>
 						<td>{{house}}</td>
-						<td>{{bunk}}</td>
+						<td>{{bunk.number}}</td>
+						<td>{{bunk.position}}</td>
+						<td>{{house.gender}}</td>
+						<td>{{bunk.current_occupant}}</td>
+						<td>{{bunk.current_occupant.account.phone}}</td>
+						<td>{{bunk.current_occupant.mentor}}</td>
+						<td>{{bunk.current_occupant.current_term}}</td>
+						<td>{{bunk.current_occupant.vehicle}}</td>
+						<td>{{bunk.current_occupant.account.date_of_birth | date:'m/d/y'}}</td>
+						<td>{{bunk.current_occupant.TA}}</td>
+						<td>{{bunk.current_occupant.account.age}}</td>
+						<td>{{bunk.current_occupant.team}}</td>
+						<td>{{room.type}}</td>
 					</tr>
 					{% endfor %}
 				{% endfor %}
@@ -29,17 +55,4 @@
 
 	</table>
 
-	{% for house in houses %}
-		<li>{{house}}</li>
-		<ul>
-		{% for room in house.room_set.all %}
-			<li>{{room}}</li>
-			<ul>
-			{% for bunk in room.bunk_set.all %}
-				<li>{{bunk}}</li>
-			{% endfor %}
-			</ul>
-		{% endfor %}
-		</ul>
-	{% endfor %}
 {% endblock %}
