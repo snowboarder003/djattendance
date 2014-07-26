@@ -87,7 +87,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
-    'django.core.context_processors.request' #Required for django-tables2
+    'django.core.context_processors.request'
 )
 
 # List of callables that know how to import templates from various sources.
@@ -96,11 +96,6 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 #    'apptemplates.Loader',
 #     'django.template.loaders.eggs.Loader',
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.contrib.messages.context_processors.messages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -118,11 +113,7 @@ ROOT_URLCONF = 'ap.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'ap.wsgi.application'
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-	'django.contrib.auth.context_processors.auth',
-	'django.core.context_processors.request',
-    'django.contrib.messages.context_processors.messages',
-)
+
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -150,14 +141,12 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     #'django.contrib.formtools',
 
-    # third-party modules
-    'autofixture', # easily generate dummy/test data
-    'bootstrap3', # easy-to-use bootstrap integration
-    'bootstrap3_datetime', # datetime picker widget
-    'braces', # Mixins for Django's class-based views.
-    'django_reset',
-    'django_tables2',
-    'explorer',
+    # third-party django modules
+    'autofixture',  # easily generate dummy/test data
+    'bootstrap3',  # easy-to-use bootstrap integration
+    'bootstrap3_datetime',  # datetime picker widget
+    'braces',  # Mixins for Django's class-based views.
+    'explorer',  # SQL explorer
     'rest_framework',  # for API
 
     # ap CORE
@@ -181,8 +170,8 @@ INSTALLED_APPS = (
     'lifestudies',
     'meal_seating',
     'schedules',
-    'syllabus', # class syllabus
-    'verse_parse', # parse outlines for PSRP verses
+    'syllabus',  # class syllabus
+    'verse_parse',  # parse outlines for PSRP verses
 )
 
 # A sample logging configuration. The only tangible logging
