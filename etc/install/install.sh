@@ -3,7 +3,14 @@
 # Script to set up a Django project on Vagrant.
 
 # Installation settings
+# Edit the following to change the name of the database user that will be created:
+APP_DB_USER=ap
+APP_DB_PASS=4livingcreatures
 
+# Edit the following to change the name of the database that is created (defaults to the user name)
+APP_DB_NAME=djattendance
+
+# Edit the following to change the version of PostgreSQL that is installed
 PROJECT_NAME=$1
 
 DB_NAME=$PROJECT_NAME
@@ -12,6 +19,7 @@ VIRTUALENV_NAME=$PROJECT_NAME
 PROJECT_DIR=/home/vagrant/$PROJECT_NAME
 VIRTUALENV_DIR=/home/vagrant/.virtualenvs/$PROJECT_NAME
 
+PG_VERSION=9.3
 PGSQL_VERSION=9.3
 
 # Need to fix locale so that Postgres creates databases in UTF-8
@@ -57,10 +65,23 @@ su - vagrant -c "mkdir -p /home/vagrant/.pip_download_cache"
 
 
 # postgresql setup for project
-create user django with password 'attend2god'
-create user ap with password '4livingcreatures'
-createdb -Udjango $DB_NAME
-createdb -Uap 'djattendance'
+# Restart so that all new config is loaded:
+service postgresql restart
+
+cat << EOF | su - postgres -c psql
+-- Create the database user:
+CREATE USER $APP_DB_USER WITH PASSWORD '$APP_DB_PASS';
+
+-- Create the database:
+CREATE DATABASE $APP_DB_NAME WITH OWNER $APP_DB_USER;
+EOF
+
+# Tag the provision time:
+date > "$PROVISIONED_ON"
+
+echo "Successfully created PostgreSQL dev virtual machine."
+echo ""
+
 
 # virtualenv setup for project
 su - vagrant -c "/usr/local/bin/virtualenv $VIRTUALENV_DIR && \
@@ -68,9 +89,3 @@ su - vagrant -c "/usr/local/bin/virtualenv $VIRTUALENV_DIR && \
     PIP_DOWNLOAD_CACHE=/home/vagrant/.pip_download_cache $VIRTUALENV_DIR/bin/pip install -r $PROJECT_DIR/requirements/dev.txt"
 
 echo "workon $VIRTUALENV_NAME" >> /home/vagrant/.bashrc
-
-# Set execute permissions on manage.py, as they get lost if we build from a zip file
-chmod a+x $PROJECT_DIR/manage.py
-
-# Django project setup
-su - vagrant -c "source $VIRTUALENV_DIR/bin/activate && cd $PROJECT_DIR && ./ap/manage.py syncdb --settings=ap.settings.local"
