@@ -142,7 +142,6 @@ INSTALLED_APPS = (
     #'django.contrib.formtools',
 
     # third-party django modules
-    'autofixture',  # easily generate dummy/test data
     'bootstrap3',  # easy-to-use bootstrap integration
     'bootstrap3_datetime',  # datetime picker widget
     'braces',  # Mixins for Django's class-based views.
