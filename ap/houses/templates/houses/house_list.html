@@ -63,8 +63,10 @@
 	<script>
 		$(document).ready(function(){
 	    	$('#house-table').dataTable();
+	    	$('#house-table').editableTableWidget();
 		});
 	</script>
 	<script type="text/javascript" src="{% static "datatables/js/jquery.dataTables.js" %}"></script>
 	<script type="text/javascript" src="{% static "datatables/js/dataTables.bootstrap.js" %}"></script>
+	<script type="text/javascript" src="{% static "houses/js/mindmup-editabletable.js" %}"></script>
 {% endblock %}
