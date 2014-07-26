@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from django.views.generic import TemplateView
 
-# Create your views here.
+from .models import Template, Chart
+
+
+class TemplateCreate(TemplateView):
+    template_name = "seating/template_create.html" 

@@ -1,0 +1,21 @@
+.cell {
+    width: 30px;
+	height: 30px;
+	background: white;
+    border: 1px solid black;
+}
+
+.cell:hover {
+    background: #cccccc;
+}
+
+
+#width, #height {
+    width: 50px;
+    margin: 5px;
+}
+
+#name, #desc {
+    width: 250px;
+    margin: 10px;
+}
