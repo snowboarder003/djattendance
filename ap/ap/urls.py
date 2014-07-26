@@ -30,6 +30,8 @@ urlpatterns = patterns('',
     url(r'^absent_trainee_roster/', include('absent_trainee_roster.urls', namespace="absent_trainee_roster")),
     url(r'^syllabus/', include('syllabus.urls', namespace="syllabus")),
     url(r'^lifestudies/', include('lifestudies.urls', namespace="lifestudies")),
+    url(r'^seating/', include('seating.urls', namespace='seating')),
+
     url(r'^select2/', include('django_select2.urls')),
 
     # admin urls
