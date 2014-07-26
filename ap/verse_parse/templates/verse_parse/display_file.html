@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}The File You Uploaded{% endblock %}
+{% block content %}
+<h3>The File You Uploaded:</h3>
+
+<form action ="#" method="post" id="dispform">{% csrf_token %}
+	<div>
+		<!--{{ form }}
+		<input type="text" name ="q" id="q" value= "John 3:16" />-->
+		<textarea name="outline" name ="q" id="q" cols="100" rows="50">{{data}}</textarea>
+	</div>
+</form>
+<div id="output"></div>
+
+<div>
+	<script src="{% static "js/en_bcv_parser.min.js" %}"></script>
+	<script>
+		var bcv = new bcv_parser;
+		bcv.set_options({"book_alone_strategy": "include", "book_sequence_strategy": "include"});
+		do_parse();
+		document.getElementById("q").addEventListener("keyup", do_parse, false);
+		document.getElementById("q").focus();
+		
+		function do_parse(){
+			var table = document.createElement("table");
+			var tbody = document.createElement("tbody");
+			var s = document.getElementById("q").value;
+			var osises = bcv.parse(s).osis_and_indices();
+			if (osises.length > 0){
+				var thead = document.createElement("thread");
+				var tr_head = document.createElement("tr");
+				var th2 = document.createElement("th");
+				th2.appendChild(document.createTextNode("Osis Value"));
+				tr_head.appendChild(th2);
+				thead.appendChild(tr_head);
+				table.appendChild(thead);
+			}
+			for (var i = 0, last = osises.length; i < last; i++) {
+					var osis = osises[i];
+					var tr = document.createElement("tr");
+					var td2 = document.createElement("td");
+					td2.appendChild(document.createTextNode(osis.osis));
+					tr.appendChild(td2);
+					tbody.appendChild(tr);
+				}
+				table.appendChild(tbody);
+				if (document.getElementById("output").firstChild) {
+					document.getElementById("output").removeChild(document.getElementById("output").firstChild);
+				}
+				document.getElementById("output").appendChild(table);
+		}
+	</script>
+</div>
+{% endblock %}

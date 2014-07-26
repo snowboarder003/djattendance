@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+{% block title %}Create Event{% endblock %}
+
+{% block media %}
+    {{ form.media }}
+
+    <style>
+        .select2-container{
+            border: 0px;
+            padding: 0px;
+        }
+        ul.select2-choices{
+            border-color: #CCC;
+            border-radius: 4px;
+        }
+
+        .checkbox{
+            padding-right: 10px;
+            display: inline-block;
+            margin-top: 0px;
+        }
+        .checkbox + .checkbox{
+            margin-top: 0px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block content %}
+
+    <h2>Create Event</h2>
+
+    <form id="eventForm" action="" method="post">{% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="button" data-toggle="modal" data-target="#addTraineeGroup">Add Trainee Group</button>
+        
+        <div id="trainee_list"></div>
+        {% buttons %}
+            <button type="submit" class="btn btn-primary" form="eventForm">
+                Create
+            </button>
+        {% endbuttons %}
+    </form>
+
+    <div id="addTraineeGroup" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="traineeGroupForm" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="traineeGroupFormLabel">Add Trainee Group</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="traineeGroupForm" action="" method="post">{% csrf_token %}
+                        {% bootstrap_form traineeGroupForm %}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" form="traineeGroupForm">Add Trainees</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+{% endblock %}
