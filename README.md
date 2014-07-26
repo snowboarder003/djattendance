@@ -38,7 +38,7 @@ A more detailed guide to running djattendance on your local machine can be found
 
 
 ## Running djattendance with vagrant
-## NOTE: Folder that contains the vagrant file is synced as well, so all work is still done on the host.
+NOTE: Folder that contains the vagrant file is synced as well, so all work is still done on the host.
 
 0. have VirtualBox and Vagrant installed
 1. `git clone` the djattendance repo
