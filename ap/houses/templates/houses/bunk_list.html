@@ -1,0 +1,9 @@
+{% extends "houses/base_houses.html" %}
+
+{% block houses_content %}
+	<h1> Bunk Tool </h1>
+	<h2> A tool to help assign the bunks for each house </h2>
+	{% for bunk in bunks %}
+		<li>{{bunk}}</li>
+	{% endfor %}
+{% endblock %}

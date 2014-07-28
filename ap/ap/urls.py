@@ -29,6 +29,7 @@ urlpatterns = patterns('',
     url(r'^absent_trainee_roster/', include('absent_trainee_roster.urls', namespace="absent_trainee_roster")),
     url(r'^syllabus/', include('syllabus.urls', namespace="syllabus")),
     url(r'^lifestudies/', include('lifestudies.urls', namespace="lifestudies")),
+    url(r'^houses/', include('houses.urls', namespace="houses")),
 
     # admin urls
     url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
