@@ -6,12 +6,12 @@
 {% block references %}
 	<link rel="stylesheet" href="{% static "datatables/css/jquery.dataTables.css" %}" />
 	<link rel="stylesheet" href="{% static "datatables/css/dataTables.bootstrap.css" %}" />
-{% endblock %}
+{% endblock references %}
 
 {% block houses_content %}
-	<h1> House Management </h1>
+	<h1 id="bunk-header"> House Management </h1>
 
-	<table class="table" id="house-table">
+	<table class="display compact" id="house-table">
 		<thead>
 			<tr>
 				<th> House </th>
@@ -39,9 +39,9 @@
 						<td>{{bunk.number}}</td>
 						<td>{{bunk.position}}</td>
 						<td>{{house.gender}}</td>
-						<td>{{bunk.current_occupant}}</td>
+						<td><input type="text" id="row-1-age" name="row-1-age" value="{{bunk.current_occupant}}"></td>
 						<td>{{bunk.current_occupant.account.phone}}</td>
-						<td>{{bunk.current_occupant.mentor}}</td>
+						<td><input type="text" id="row-1-age" name="row-1-age" value="{{bunk.current_occupant.mentor}}"></td>
 						<td>{{bunk.current_occupant.current_term}}</td>
 						<td>{{bunk.current_occupant.vehicle}}</td>
 						<td>{{bunk.current_occupant.account.date_of_birth | date:'m/d/Y'}}</td>
@@ -54,19 +54,15 @@
 				{% endfor %}
 			{% endfor %}	
 		</tbody>
-
 	</table>
+			
+	<button id="bunk-submit-changes" class="btn btn-default"> Submit Changes </button>
 
-{% endblock %}
+
+{% endblock houses_content %}
 
 {% block scripts %}
-	<script>
-		$(document).ready(function(){
-	    	$('#house-table').dataTable();
-	    	$('#house-table').editableTableWidget();
-		});
-	</script>
-	<script type="text/javascript" src="{% static "datatables/js/jquery.dataTables.js" %}"></script>
-	<script type="text/javascript" src="{% static "datatables/js/dataTables.bootstrap.js" %}"></script>
-	<script type="text/javascript" src="{% static "houses/js/mindmup-editabletable.js" %}"></script>
-{% endblock %}
+	<script type="text/javascript" src="{% static 'houses/js/houses.js' %}"></script>
+	<script type="text/javascript" src="{% static 'datatables/js/jquery.dataTables.js' %}"></script>
+	<script type="text/javascript" src="{% static 'datatables/js/dataTables.bootstrap.js' %}"></script>
+{% endblock scripts %}
