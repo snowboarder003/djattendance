@@ -14,3 +14,6 @@ django-sql-explorer
 djorm-ext-core
 djorm-ext-expressions
 djorm-ext-pgarray
+
+# deprecate
+django-tastypie==0.11.1
