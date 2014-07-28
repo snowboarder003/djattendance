@@ -17,7 +17,7 @@ djorm-ext-pgarray
 
 # PDF
 xhtml2pdf==0.0.6
-
+pdfminer==20140328
 
 # deprecate
 django-tastypie==0.11.1
