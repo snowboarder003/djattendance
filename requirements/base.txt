@@ -15,5 +15,9 @@ djorm-ext-core
 djorm-ext-expressions
 djorm-ext-pgarray
 
+# PDF
+xhtml2pdf==0.0.6
+
+
 # deprecate
 django-tastypie==0.11.1
