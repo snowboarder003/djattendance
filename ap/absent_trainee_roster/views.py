@@ -56,6 +56,7 @@ def absent_trainee_form(request):
 			return render_to_response('absent_trainee_roster/absent_trainee_form.html', c)
 
 	else:
+		# shows existing entries from user's house, i.e. if form was already submitted and user revisits the page
 		formset = EntryFormSet(user=request.user, queryset=roster.entry_set.filter(absentee__account__trainee__house=request.user.trainee.house))
 
 	c = {'formset': formset, 'user': request.user}
