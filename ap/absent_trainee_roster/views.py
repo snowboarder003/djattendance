@@ -10,7 +10,7 @@ from absent_trainee_roster.forms import AbsentTraineeForm, NewEntryFormSet
 
 
 
-@user_passes_test(lambda u: u.groups.filter(name='house_coordinator').count() == 1, login_url = '/')
+# @user_passes_test(lambda u: u.groups.filter(name='house_coordinator').count() == 1, login_url = '/')
 def absent_trainee_form(request):
 	EntryFormSet = modelformset_factory(Entry, AbsentTraineeForm, formset=NewEntryFormSet, max_num=10, extra=1, can_delete=True)
 	
