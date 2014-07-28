@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/templates/themes/screen.css' %}" />
+
+{% block content %}
+    <form action="" method="get">
+        {{ filter.form.as_p }}
+        <input type="submit" />
+    </form>
+    {% for obj in filter %}
+        {{ obj.lastname }} - {{ obj.firstname }} - {{ obj.gender }} <br />
+    {% endfor %}
+
+{% load render_table from django_tables2 %}
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'themes/screen.css' %}" />
+    </head>
+    <body>
+        {% render_table trainees_table %}
+    </body>
+</html>
+{% endblock %}

@@ -3,9 +3,12 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
 from . import views
+from .models import User
 
 urlpatterns = patterns(
     '',
+    url(r'^$', view=views.UserListView.as_view(), name='users_list'),
+    url(r'^traineeslist$',view=views.TraineesListView.as_view(), name='trainees_list'),
     url(regex=r'^(?P<pk>\d+)$', view=views.UserDetailView.as_view(), name='user_detail'),
     url(regex=r'^update/(?P<pk>\d+)$', view=views.UserUpdateView.as_view(), name='user_update'),
     url(regex=r'^email/update/(?P<pk>\d+)$', view=views.EmailUpdateView.as_view(), name='email_change'),

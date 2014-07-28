@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, ListView
 
 from rest_framework import viewsets, generics
 from rest_framework.views import APIView
@@ -12,7 +12,11 @@ from rest_framework.response import Response
 from .models import User, Trainee, TrainingAssistant
 from .forms import UserForm, EmailForm
 from .serializers import UserSerializer, TraineeSerializer, TrainingAssistantSerializer
-
+from django_filters.views import FilterView
+from django_filters.filterset import FilterSet
+from .filter import TraineeFilter
+from django_tables2   import RequestConfig, SingleTableView
+from .tables  import TraineeTable
 
 class UserDetailView(DetailView):
     model = User
@@ -30,6 +34,10 @@ class UserUpdateView(UpdateView):
                          "User Information Updated Successfully!")
         return reverse_lazy('user_detail', kwargs={'pk': self.kwargs['pk']})
 
+class UserListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/user_list.html'
 
 class EmailUpdateView(UpdateView):
     model = User
@@ -110,3 +118,16 @@ class TraineesHouseCoordinators(generics.ListAPIView):
 
     def get_queryset(self):
         return Trainee.objects.filter(account__groups__name__iexact="house coordinators")
+
+class TraineesListView(ListView):
+    template_name = 'accounts/trainees_list.html'
+    model = Trainee
+    tables_class = TraineeTable
+
+    def get_context_data(self, **kwargs):
+        context = super(TraineesListView, self).get_context_data(**kwargs)
+        context['filter']=TraineeFilter(self.request.GET, queryset=User.objects.all())
+        table = TraineeTable(Trainee.objects.all())
+        RequestConfig(self.request).configure(table)
+        context['trainees_table']=table
+        return context
