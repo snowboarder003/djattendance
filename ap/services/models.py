@@ -37,7 +37,7 @@ class Category(models.Model):
 
 class Period(models.Model):
     """
-    Defines a service period such as Pre-Training, FTTA regular week, etc
+    Defines a service period such as Pre-Training, FTTA regular week, etc.
     """
 
     name = models.CharField(max_length=200)
@@ -53,18 +53,19 @@ class Service(Group):
     or designated (e.g. Attendance Project, Vehicle Maintenance, or Lights)
     """
 
+    # according to datetime.date.today()
     WEEKDAYS = (
-        ('Tue', 'Tuesday'),
-        ('Wed', 'Wednesday'),
-        ('Thu', 'Thursday'),
-        ('Fri', 'Friday'),
-        ('Sat', 'Saturday'),
-        ('Sun', 'Sunday'),
-        ('Mon', 'Monday'),
+        ('0', 'Monday'),
+        ('1', 'Tuesday'),
+        ('2', 'Wednesday'),
+        ('3', 'Thursday'),
+        ('4', 'Friday'),
+        ('5', 'Saturday'),
+        ('6', 'Sunday'),
     )
 
     category = models.ForeignKey(Category, related_name="services")
-    period = models.ManyToManyField(Period)
+    period = models.ManyToManyField(Period, related_name="services")
 
     active = models.BooleanField(default=True)
     designated = models.BooleanField()
@@ -75,7 +76,7 @@ class Service(Group):
 
     qualifications = models.ManyToManyField(Qualilfication)
 
-    weekday = models.CharField(max_length=3, choices=WEEKDAYS)
+    weekday = models.CharField(max_length=1, choices=WEEKDAYS)
     start = models.TimeField()
     end = models.TimeField()
 
