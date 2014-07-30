@@ -3,4 +3,4 @@ from django import forms
 from accounts.models import Trainee
 
 class BunkForm(Form):
-	trainee = forms.ModelChoiceField(queryset=Trainee.objects.all())
+	trainee = forms.ModelChoiceField(queryset=Trainee.objects.all(), required=False, empty_label="Vacant")

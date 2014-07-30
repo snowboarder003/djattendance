@@ -2,13 +2,12 @@
 {% load bootstrap3 %}
 
 {% block houses_content %}
-	<h1> Update Bunk: {{trainee.account.get_full_name}} </h1>
+	<h1> Update Bunk #{{bunk.number}} in {{bunk.room.house}} </h1>
 
-	{% bootstrap_form form %}
-	
 	<form action="" method="post">
+		{% bootstrap_form form %}
 		{% csrf_token %}
-		<button type="submit"> Submit </button>
+		<button type="submit" class="btn btn-success"> Submit </button>
 	</form>
 
 {% endblock houses_content %}
