@@ -46,35 +46,10 @@ class TraineesRosterListView(ListView):
     context_object_name = 'trainees'
     template_name = 'accounts/lists_for_TA/active_roster_trainees.html'
 
-class TraineesGroupTeamListView(ListView):
-    model = Trainee
-    context_object_name = 'trainees'
-    template_name = 'accounts/lists_for_TA/active_group_team_trainees.html'
-
-class TraineesGroupTAListView(ListView):
-    model = Trainee
-    context_object_name = 'trainees'
-    template_name = 'accounts/lists_for_TA/active_group_ta_trainees.html'
-
-class TraineesGroupGenderListView(ListView):
-    model = Trainee
-    context_object_name = 'trainees'
-    template_name = 'accounts/lists_for_TA/active_group_gender_trainees.html'
-
 class TraineesGroupTeamTypeListView(ListView):
     model = Trainee
     context_object_name = 'trainees'
     template_name = 'accounts/lists_for_TA/active_group_teamtype_trainees.html'
-
-class TraineesGroupVehicleListView(ListView):
-    model = Trainee
-    context_object_name = 'trainees'
-    template_name = 'accounts/lists_for_TA/active_group_vehicle_trainees.html'
-
-class TraineesGroupTermListView(ListView):
-    model = Trainee
-    context_object_name = 'trainees'
-    template_name = 'accounts/lists_for_TA/active_group_term_trainees.html'
 
 class TraineesGroupAftClassListView(ListView):
     model = Trainee
