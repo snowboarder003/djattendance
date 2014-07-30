@@ -28,6 +28,7 @@
 				<th> Age </th>
 				<th> Team </th>
 				<th> Room Type </th>
+				<th> Edit </th>
 			</tr>
 		</thead>
 		<tbody>
@@ -47,6 +48,13 @@
 					<td>{{bunk.trainee.account.age}}</td>
 					<td>{{bunk.trainee.team}}</td>
 					<td>{{bunk.room.type}}</td>
+					<td>
+						<form action="{% url 'houses:bunk_update' bunk.id %}" method="get">
+							<button type="submit" class="btn btn-primary btn-sm">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</button>
+						</form>
+					</td>
 				</tr>
 			{% endfor %}	
 		</tbody>
