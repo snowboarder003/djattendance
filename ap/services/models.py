@@ -64,6 +64,12 @@ class Service(Group):
         ('6', 'Sunday'),
     )
 
+    GENDER = (
+        ('B', 'Brother'),
+        ('S', 'Sister'),
+        ('E', 'Either'),
+    )
+
     category = models.ForeignKey(Category, related_name="services")
     period = models.ManyToManyField(Period, related_name="services")
 
@@ -72,9 +78,8 @@ class Service(Group):
 
     # on a scale of 1-12, with 12 being the most intense
     workload = models.IntegerField()
-    recovery_time = models.PositiveSmallIntegerField()  # in hours
 
-    qualifications = models.ManyToManyField(Qualilfication)
+    gender = models.CharField(max_length=1, choices=GENDER, default='E')
 
     weekday = models.CharField(max_length=1, choices=WEEKDAYS)
     start = models.TimeField()
