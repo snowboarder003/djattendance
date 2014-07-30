@@ -75,11 +75,11 @@ class Service(Group):
 
     active = models.BooleanField(default=True)
     designated = models.BooleanField()
+    gender = models.CharField(max_length=1, choices=GENDER, default='E')
 
     # on a scale of 1-12, with 12 being the most intense
-    workload = models.IntegerField()
-
-    gender = models.CharField(max_length=1, choices=GENDER, default='E')
+    workload = models.PositiveSmallIntegerField()
+    workers_required = models.PositiveSmallIntegerField()
 
     weekday = models.CharField(max_length=1, choices=WEEKDAYS)
     start = models.TimeField()
