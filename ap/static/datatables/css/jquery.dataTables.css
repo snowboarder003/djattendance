@@ -490,3 +490,10 @@ th, td { white-space: nowrap; }
   }
 
 body { font-size: 140%; }
+
+tr.group,
+tr.group:hover {
+    background-color: #ddd !important;
+}
+
+

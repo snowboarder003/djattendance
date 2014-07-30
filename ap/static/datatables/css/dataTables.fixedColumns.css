@@ -1,0 +1,58 @@
+
+
+/* Block out what is behind the fixed column's header and footer */
+table.DTFC_Cloned thead,
+table.DTFC_Cloned tfoot {
+    background-color: white;
+}
+
+/* Block out the gap above the scrollbar on the right, when there is a fixed
+ * right column
+ */
+div.DTFC_Blocker {
+    background-color: white;
+}
+
+div.DTFC_LeftWrapper table.dataTable,
+div.DTFC_RightWrapper table.dataTable {
+    margin-bottom: 0;
+}
+
+div.DTFC_LeftWrapper table.dataTable.no-footer,
+div.DTFC_RightWrapper table.dataTable.no-footer {
+    border-bottom: none;
+}
+
+/* Ensure that the demo table scrolls */
+th, td { white-space: nowrap; }
+div.dataTables_wrapper {
+        width: 800px;
+        margin: 0 auto;
+}
+
+/* Ensure that the demo table scrolls */
+    th, td { white-space: nowrap; }
+    div.dataTables_wrapper {
+        width: 800px;
+        margin: 0 auto;
+    }
+ 
+    /* Styling for the index columns */
+    th.index,
+    td.index {
+        background-color: white !important;
+        border-top: 1px solid white !important;
+        border-bottom: none !important;
+    }
+    div.DTFC_LeftHeadWrapper table {
+        border-bottom: 1px solid white !important;
+    }
+    div.DTFC_LeftHeadWrapper th {
+        border-bottom: 1px solid white !important;
+    }
+    div.DTFC_LeftBodyWrapper {
+        border-right: 1px solid black;
+    }
+    div.DTFC_LeftFootWrapper th {
+        border-top: 1px solid white !important;
+    }

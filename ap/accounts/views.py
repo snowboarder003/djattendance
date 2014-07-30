@@ -34,10 +34,60 @@ class UserUpdateView(UpdateView):
                          "User Information Updated Successfully!")
         return reverse_lazy('user_detail', kwargs={'pk': self.kwargs['pk']})
 
-class UserListView(ListView):
+class TraineesListView(ListView):
     model = Trainee
     context_object_name = 'trainees'
-    template_name = 'accounts/user_list.html'
+    template_name = 'accounts/lists_for_TA/all_trainees.html'
+
+class TraineesActiveListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/lists_for_TA/active_trainees.html'
+
+class TraineesRosterListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/lists_for_TA/active_roster_trainees.html'
+
+class TraineesGroupTeamListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/lists_for_TA/active_group_team_trainees.html'
+
+class TraineesGroupTAListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/lists_for_TA/active_group_ta_trainees.html'
+
+class TraineesGroupGenderListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/lists_for_TA/active_group_gender_trainees.html'
+
+class TraineesGroupTeamTypeListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/lists_for_TA/active_group_teamtype_trainees.html'
+
+class TraineesGroupVehicleListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/lists_for_TA/active_group_vehicle_trainees.html'
+
+class TraineesGroupTermListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/lists_for_TA/active_group_term_trainees.html'
+
+class TraineesGroupAftClassListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/lists_for_TA/active_group_aftclass_trainees.html'
+
+class TraineesGroupSkillListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/lists_for_TA/active_group_skill_trainees.html'
 
 class EmailUpdateView(UpdateView):
     model = User
@@ -118,7 +168,7 @@ class TraineesHouseCoordinators(generics.ListAPIView):
 
     def get_queryset(self):
         return Trainee.objects.filter(account__groups__name__iexact="house coordinators")
-
+"""
 class TraineesListView(ListView):
     template_name = 'accounts/trainees_list.html'
     model = Trainee
@@ -131,3 +181,4 @@ class TraineesListView(ListView):
         RequestConfig(self.request).configure(table)
         context['trainees_table']=table
         return context
+"""
