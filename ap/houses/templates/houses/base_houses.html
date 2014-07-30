@@ -5,9 +5,7 @@
     {% if request.user.trainingassistant %}
 
         <ul class="nav nav-tabs" role="tablist">
-            <li {% block tab1 %}{%endblock%}><a href="{% url 'houses:house_list' %}">House Management</a></li>
-            <li {% block tab2 %}{%endblock%}><a href="{% url 'houses:bunk_list' %}">Bunk Tools</a></li>
-            <li {% block tab3 %}{%endblock%}><a href="#">House Coordinators</a></li>
+            <li {% block tab1 %}{%endblock%}><a href="{% url 'houses:bunk_list' %}">Bunk Assignment</a></li>
             <li {% block tab4 %}{%endblock%} class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
