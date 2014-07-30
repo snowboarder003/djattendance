@@ -14,9 +14,6 @@ from .forms import UserForm, EmailForm
 from .serializers import UserSerializer, TraineeSerializer, TrainingAssistantSerializer
 from django_filters.views import FilterView
 from django_filters.filterset import FilterSet
-from .filter import TraineeFilter
-from django_tables2   import RequestConfig, SingleTableView
-from .tables  import TraineeTable
 
 class UserDetailView(DetailView):
     model = User
@@ -87,7 +84,7 @@ class TraineesGroupAftClassListView(ListView):
 class TraineesGroupSkillListView(ListView):
     model = Trainee
     context_object_name = 'trainees'
-    template_name = 'accounts/lists_for_TA/active_group_skill_trainees.html'
+    template_name = 'accounts/active_group_skill_trainees.html'
 
 class EmailUpdateView(UpdateView):
     model = User
@@ -168,17 +165,3 @@ class TraineesHouseCoordinators(generics.ListAPIView):
 
     def get_queryset(self):
         return Trainee.objects.filter(account__groups__name__iexact="house coordinators")
-"""
-class TraineesListView(ListView):
-    template_name = 'accounts/trainees_list.html'
-    model = Trainee
-    tables_class = TraineeTable
-
-    def get_context_data(self, **kwargs):
-        context = super(TraineesListView, self).get_context_data(**kwargs)
-        context['filter']=TraineeFilter(self.request.GET, queryset=User.objects.all())
-        table = TraineeTable(Trainee.objects.all())
-        RequestConfig(self.request).configure(table)
-        context['trainees_table']=table
-        return context
-"""
