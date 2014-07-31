@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+    <h2>Welcome, {{ user.get_full_name }}! </h2>
+
+    <h5>Daily Nourishment</h5>
+    {% if daily_nourishment.text %}
+        <blockquote>
+            {{ daily_nourishment.text }}
+            <small>{{ daily_nourishment.ref }}</small>
+        </blockquote>
+    {% else %}
+        <i>No nourishment has been submitted.  Click
+        <a href="/dailybread/submit">here</a> to submit a verse or ministry
+        portion that you have enjoyed.</i>
+    {% endif %}
+
+    {% if schedule %}
+        <h5>Today's Schedule</h5>
+        <div class="well">
+            <ul>
+            {% for event in schedule.todays_events %}
+                <li>{{ event.name }} @ {{ event.start }}</li>
+            {% endfor %}
+            </li>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block messages %}
+    <div id="messages">
+        {% for message in messages %}
+            {% bootstrap_messages message %}                
+        {% endfor %}
+    </div>
+{% endblock %}
+

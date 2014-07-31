@@ -4,9 +4,12 @@ from exceptions import ValueError
 
 from django.db import models
 from django.core.urlresolvers import reverse
+<<<<<<< HEAD
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 import datetime
+=======
+>>>>>>> origin/dev
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
@@ -81,6 +84,10 @@ class Term(models.Model):
         """ Set term to current, set all other terms to not current """
         Term.objects.filter(current=True).update(current=False)
         term.current = True
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/dev
 
     def get_date(self, week, day):
         """ return an absolute date for a term week/day pair """
