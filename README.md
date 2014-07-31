@@ -1,5 +1,6 @@
 # djattendance
----
+
+[![Build Status](https://travis-ci.org/attendanceproject/djattendance.svg?branch=dev)](https://travis-ci.org/attendanceproject/djattendance) [![Coverage Status](https://coveralls.io/repos/attendanceproject/djattendance/badge.png?branch=dev)](https://coveralls.io/r/attendanceproject/djattendance?branch=dev)
 
 ## Summary
 Djattendance is a rewrite of the original FTTA attendance server in Python/Django. It supports many internal functions of the FTTA, for both trainees and administrators, such as:
@@ -34,3 +35,16 @@ A more detailed guide to running djattendance on your local machine can be found
 1. `git clone` the djattendance repo
 2. `pip install -r requirements.txt` from the `/requirements` (recommended that you use `virtualenv`)
 3. using django: `manage.py syncdb` and `manage.py runserver` (be sure to use the local settings)
+
+
+## Running djattendance with vagrant
+NOTE: Folder that contains the vagrant file is synced as well, so all work is still done on the host.
+
+0. have VirtualBox and Vagrant installed
+1. `git clone` the djattendance repo
+2. Run 'vagrant up' within the project directory where the VagrantFile is located
+3. Run 'vagrant ssh' to access the VM
+4. 'cd ap'
+5. 'python manage.py syncdb --settings=ap.settings.local'
+6. 'python manage.py runserver 0.0.0.0:8000 --settings=ap.settings.local'
+7. From your host (not the guest VM) you can access the site from localhost:8111. 

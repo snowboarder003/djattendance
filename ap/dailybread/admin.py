@@ -6,7 +6,8 @@ def approve(modeladmin, request, queryset):
     queryset.update(approved=True)
 
 class PortionAdmin(admin.ModelAdmin):
-    list_display = ('approved', 'title', 'submitted_by', 'timestamp')
+    list_display = ('title', 'submitted_by', 'timestamp', 'approved')
     actions = [approve]
+    search_fields = ['title', 'text', 'ref']
 
 admin.site.register(Portion, PortionAdmin)
