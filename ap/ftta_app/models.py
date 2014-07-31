@@ -89,8 +89,8 @@ class Recommendation():
         return self.description
 
     #connect with elder's information    
-    def __unicode__(self):
-        return u"the recommendation by %s" % elder_recommending
+    # def __unicode__(self):
+    #     return u"the recommendation by %s" % elder_recommending
 
 
 
