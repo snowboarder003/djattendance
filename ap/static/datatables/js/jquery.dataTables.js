@@ -27,26 +27,16 @@
 (/** @lends <global> */function( window, document, undefined ) {
 
 (function( factory ) {
-<<<<<<< HEAD
 	"use strict";
 
 	if ( typeof define === 'function' && define.amd ) {
 		// Define as an AMD module if possible
 		define( 'datatables', ['jquery'], factory );
 	}
-=======
-    "use strict";
-
-    if ( typeof define === 'function' && define.amd ) {
-        // Define as an AMD module if possible
-        define( 'datatables', ['jquery'], factory );
-    }
->>>>>>> TA_admin_trainee
     else if ( typeof exports === 'object' ) {
         // Node/CommonJS
         factory( require( 'jquery' ) );
     }
-<<<<<<< HEAD
 	else if ( jQuery && !jQuery.fn.dataTable ) {
 		// Define using browser globals otherwise
 		// Prevent multiple instantiations if the script is loaded twice
@@ -29195,4 +29185,4 @@
 }));
 
 }(window, document));
->>>>>>> TA_admin_trainee
+
