@@ -12,6 +12,10 @@ from schedules.views import EventViewSet, ScheduleViewSet
 from attendance.views import RollViewSet
 from leaveslips.views import IndividualSlipViewSet, GroupSlipViewSet
 
+from collections import namedtuple
+
+Route = namedtuple('Route', ['url', 'mapping', 'name', 'initkwargs'])
+
 admin.autodiscover()
 autofixture.autodiscover()
 
@@ -40,8 +44,24 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 )
 
-# API urls
-router = routers.DefaultRouter()
+# Note delete is not supported because we don't really want to blanket delete everything (dangerous)
+class BulkUpdateRouter(routers.DefaultRouter):
+    routes = routers.SimpleRouter.routes
+    routes[0] = Route(
+        url=r'^{prefix}{trailing_slash}$',
+        mapping={
+            'get': 'list',
+            'post': 'create',
+            'put': 'bulk_update',
+            'patch': 'partial_bulk_update'
+        },
+        name='{basename}-list',
+        initkwargs={'suffix': 'List'}
+    )
+
+# Django REST Framework API urls
+# router = routers.DefaultRouter()
+router = BulkUpdateRouter()
 router.register(r'users', UserViewSet)
 router.register(r'trainees', TraineeViewSet)
 router.register(r'tas', TrainingAssistantViewSet)
@@ -51,14 +71,16 @@ router.register(r'rolls', RollViewSet)
 router.register(r'leaveslips', IndividualSlipViewSet)
 router.register(r'groupleaveslips', GroupSlipViewSet)
 
+api_url = r'^api/'
+
 urlpatterns += patterns('',
     url(r'^drf/', include(router.urls)),
 
-    # tastypie leaveslips apis
-    url(r'^api/', include(EventResource().urls)),
-    url(r'^api/', include(GroupSlipResource().urls)),
-    url(r'^api/', include(IndividualSlipResource().urls)),
-    url(r'^api/', include(TrainingAssistantResource().urls)),
-    url(r'^api/', include(TraineeResource().urls)),
-    url(r'^api/', include(RollResource().urls)),
+    # tastypie apis
+    url(api_url, include(EventResource().urls)),
+    url(api_url, include(GroupSlipResource().urls)),
+    url(api_url, include(IndividualSlipResource().urls)),
+    url(api_url, include(TrainingAssistantResource().urls)),
+    url(api_url, include(TraineeResource().urls)),
+    url(api_url, include(RollResource().urls)),
 )

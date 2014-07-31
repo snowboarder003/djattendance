@@ -27,10 +27,7 @@
     <script src="{% static "bootstrap/js/offcanvas.js" %}"></script>
 
     <!-- put other refs and scripts here -->
-    {% block media %}
-      {% block refs %}{% endblock refs %}
-      {% block scripts %}{% endblock scripts %}
-    {% endblock %}
+    {% block refs %}{% endblock refs %}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -137,26 +134,30 @@
         </div><!--/sidebar-->
     {% endblock %}
 
-    <!--CONTENT-->
-    <div class="col-xs-12 col-sm-9 content">
+      <!--CONTENT-->
+      <div class="col-xs-12 col-sm-9 content">
 
-        {% block messages %}
-            <div id="messages">
-              {% if messages %}
-                {% for message in messages %}
-                  <div class="alert alert-{{ message.tags }}"><button type = "button" class="close" data-dismiss="alert">&times;</button>{{ message }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-        {% endblock %}
+          {% block messages %}
+              <div id="messages">
+                {% if messages %}
+                  {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}"><button type = "button" class="close" data-dismiss="alert">&times;</button>{{ message }}</div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+          {% endblock %}
 
-        {% block content %}
-          <!-- CONTENT OF PAGE GOES HERE -->
-        {% endblock %}
+          {% block content %}
+            <!-- CONTENT OF PAGE GOES HERE -->
+          {% endblock %}
 
       </div><!--/CONTENT -->
 
+    </div>
+
     </div> <!-- /container -->
+
+    {% block scripts %}{% endblock scripts %}
 
   </body>
 </html>

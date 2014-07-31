@@ -1,20 +1,42 @@
+.btn-group button {
+    margin-right: 0px;
+}
+
+.no-padding {
+    padding: 0px;
+}
+
+.dead-space {
+    min-height: 39px;
+    width: 58px;
+}
+
+.hour-text {
+    width: 58px;
+    text-align: right;
+    padding-right: 3px;
+}
+
 .schedule-header {
     border-bottom: solid thin #cccccc;
     text-align: center;
 }
 
 .today {
-    background-color: #dff0d8;
+    background-color: #F3F3F3;
 }
 
 .hour {
     height: 30px;
     border-bottom: dotted thin #cccccc;
     font-size: 10px;
+    /*padding-top: 13px;*/
+    width: 570px;
 }
 
 .schedule-event {
     opacity: 0.6;
+    /*opacity: 0.9;*/
     position: absolute;
     width: 97%;
     text-align: center;
@@ -22,9 +44,46 @@
     color: #000000;
     background-color: #dddddd;
     border: 1px solid #aaaaaa;
+    cursor: pointer;
+}
+
+.today-marker {
+    border: 1px solid #ff7f6e;
+    cursor: default;
 }
 
 .selected-event {
     opacity: 1.0;
     border: 1px solid #000000;
+}
+
+.selected-event, .schedule-event {
+    z-index: 100;
+}
+
+.event-col {
+    height: 540px;
+    border-left: 1px solid #F3F3F3;
+}
+
+.timebar {
+    z-index: 50;
+}
+
+.action-col {
+    margin-top: -40px;
+}
+
+.event-info {
+    min-height: 215px;
+}
+
+.leaveslip-info {
+    height: 266px;
+    overflow-y: auto;
+}
+
+.center-padded {
+    text-align: center;
+    padding: 15px;
 }
