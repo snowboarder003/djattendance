@@ -1,25 +1,11 @@
 from .base import *
 
 DEBUG = True
-TEMPLATE_DEBUG = True
 
-INSTALLED_APPS += ('gunicorn',
-                   'debug_toolbar',)
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ap',
-        'USER': 'django',
-        'PASSWORD': 'attend2god',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
+import dj_database_url
 
 # Parse database configuration from $DATABASE_URL
-import dj_database_url
-DATABASES['default'] =  dj_database_url.config(default='postgres://django:attend2god@localhost/ap')
+DATABASES['default'] =  dj_database_url.config()
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -36,3 +22,5 @@ STATIC_URL = '/ap/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'ap/static'),
 )
+
+
