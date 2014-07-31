@@ -4,10 +4,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.db.models import Q
 from django.views.generic import ListView
- 
-from .forms import UploadBadgeForm
 from .models import Badge
-
 from accounts.models import User
 from terms.models import Term
  
