@@ -12,6 +12,7 @@ from teams.models import Team
 from houses.models import House, Bunk
 from services.models import Service
 from localities.models import Locality
+from ftta_app import Approval, HealthPackage, Submission, InternationalPackage
 
 """ accounts models.py
 The user accounts module takes care of user accounts and
@@ -157,9 +158,47 @@ class Profile(models.Model):
 
 
 class TrainingAssistant(Profile):
-
     services = models.ManyToManyField(Service, blank=True, null=True)
     houses = models.ManyToManyField(House, blank=True, null=True)
+
+    def __unicode__(self):
+        return self.account.get_full_name()
+
+
+class Elder(Profile):
+    # one elder can be mapped to many recommendations
+    
+    def __unicode__(self):
+        return self.account.get_full_name()
+
+
+class Overseer(Profile):
+    # many packages (corresponding to each application) are mapped to many medical officers
+    approvals = models.ManyToManyField(Approval, blank=True, null=True)
+
+    def __unicode__(self):
+        return self.account.get_full_name()
+
+
+class Medical(Profile):
+
+    submissions = models.ManyToManyField(Submission, blank=True, null=True)
+    packages = models.ManyToManyField(HealthPackage, blank=True, null=True)
+
+    def __unicode__(self):
+        return self.account.get_full_name()
+
+
+
+class InternationalFormsHelper(Profile):
+    # 
+    packages = models.ManyToManyField(InternationalPackage, blank=True, null=True)
+
+    def __unicode__(self):
+        return self.account.get_full_name()
+
+
+class Applicant(Profile):
 
     def __unicode__(self):
         return self.account.get_full_name()
