@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    
+    {% if request.user.trainingassistant %}
+
+        <ul class="nav nav-pills" role="tablist">
+            <li {% block tabactive1 %} {% endblock %}><a href="{% url 'accounts:trainees_list' %}" role="tab">All Trainees</a></li>
+            <li {% block tabactive2 %} {% endblock %}><a href="{% url 'accounts:trainees_active_list'%}" role="tab">Active Trainees</a></li>
+            <li {% block tabactive3 %} {% endblock %}><a href="{% url 'accounts:trainees_roster_list'%}" role="tab">Roster</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{% url 'accounts:trainees_group_teamtype_list' %}">Group By Team Type</a></li>
+                    <li><a href="{% url 'accounts:trainees_group_aftclass_list' %}">Group By Afternoon Class</a></li>
+                    <li><a href="{% url 'accounts:trainees_group_skill_list' %}">Group By Skill Keywords</a></li>
+                    <!--<li class="divider"></li>-->
+                </ul>
+            </li>
+        </ul>
+
+    {% block trainee_content %}{% endblock %}
+    {% endif %}
+{% endblock %}

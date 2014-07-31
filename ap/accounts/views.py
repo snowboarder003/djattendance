@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, ListView
 
 from rest_framework import viewsets, generics
 from rest_framework.views import APIView
@@ -12,7 +12,8 @@ from rest_framework.response import Response
 from .models import User, Trainee, TrainingAssistant
 from .forms import UserForm, EmailForm
 from .serializers import UserSerializer, TraineeSerializer, TrainingAssistantSerializer
-
+from django_filters.views import FilterView
+from django_filters.filterset import FilterSet
 
 class UserDetailView(DetailView):
     model = User
@@ -30,6 +31,35 @@ class UserUpdateView(UpdateView):
                          "User Information Updated Successfully!")
         return reverse_lazy('user_detail', kwargs={'pk': self.kwargs['pk']})
 
+class TraineesListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/lists_for_TA/all_trainees.html'
+
+class TraineesActiveListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/lists_for_TA/active_trainees.html'
+
+class TraineesRosterListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/lists_for_TA/active_roster_trainees.html'
+
+class TraineesGroupTeamTypeListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/lists_for_TA/active_group_teamtype_trainees.html'
+
+class TraineesGroupAftClassListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/lists_for_TA/active_group_aftclass_trainees.html'
+
+class TraineesGroupSkillListView(ListView):
+    model = Trainee
+    context_object_name = 'trainees'
+    template_name = 'accounts/active_group_skill_trainees.html'
 
 class EmailUpdateView(UpdateView):
     model = User

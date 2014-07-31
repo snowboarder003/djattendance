@@ -1,0 +1,124 @@
+{% extends "accounts/base_accounts.html" %}
+{% load staticfiles %}
+
+{% block tab1 %} class="active" {% endblock %}
+
+{% block references %}
+    <link rel="stylesheet" href="{% static "datatables/css/jquery.dataTables.css" %}" />
+    <link rel="stylesheet" href="{% static "datatables/css/dataTables.bootstrap.css" %}" />
+    <link rel="stylesheet" href="{% static "datatables/css/jquery-ui.css" %}" />
+    <link rel="stylesheet" href="{% static "datatables/css/dataTables.colVis.css" %}" />
+    <link rel="stylesheet" href="{% static "datatables/css/dataTables.tableTools.css" %}" />
+{% endblock %}
+
+{% block scripts %}
+    <script>
+    $(document).ready(function() {
+        var table = $('#trainee-table').DataTable({
+        "columnDefs": [
+            { "visible": false, "targets": 1 }
+        ],
+        "order": [[ 1, 'asc' ]],
+        "displayLength": 25,
+        "scrollY": 420,
+        "scrollX": true,
+        paging: false,
+        dom:'CT<"top"i>frt<"bottom"lp><"clear">',
+        tableTools: {"sSwfPath": "{% static 'datatables/swf/copy_csv_xls.swf'%}",
+                    "aButtons": [ "copy", "csv", "xls", "print" ]},
+        colVis: {
+                    restore: "Restore",
+                    showAll: "Show all",
+                    showNone: "Show none"
+                },
+        "drawCallback": function ( settings ) {
+            var api = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+            var last=null;
+ 
+            api.column(1, {page:'current'} ).data().each( function ( group, i ) {
+                if ( last !== group ) {
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td colspan="5">'+group+'</td></tr>'
+                    );
+ 
+                    last = group;
+                }
+            } );
+        }
+        } );
+
+         // Order by the grouping
+        $('#trainee-table tbody').on( 'click', 'tr.group', function () {
+            var currentOrder = table.order()[0];
+            if ( currentOrder[0] === 1 && currentOrder[1] === 'asc' ) {
+                table.order( [ 1, 'desc' ] ).draw();
+            }
+            else {
+                table.order( [ 1, 'asc' ] ).draw();
+            }
+        } );
+    } );
+    </script>
+    <script type="text/javascript" src="{% static "datatables/js/jquery.js" %}"></script>
+    <script type="text/javascript" src="{% static "datatables/js/jquery.dataTables.js" %}"></script>
+    <script type="text/javascript" src="{% static "datatables/js/dataTables.bootstrap.js" %}"></script> 
+    <script type="text/javascript" src="{% static "datatables/js/dataTables.colVis.js" %}"></script>   
+    <script type="text/javascript" src="{% static "datatables/js/dataTables.tableTools.js" %}"></script>
+{% endblock %}
+
+{% block trainee_content %}
+    <h4> Groupings of Roster By Team Type </h4>
+    <table class="table table-bordered display compact cell-border" id="trainee-table" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th> HC </th>
+                <th> AftClass </th>
+                <th> Last Name </th>
+                <th> First Name </th>
+                <th> Gender </th>
+                <th> Term </th>
+                <th> Locality </th>
+                <th> Team </th>
+                <th> Residence </th>
+                <th> Bunk </th>
+                <th> Vehicle </th>
+                <th> Phone </th>
+                <th> TA </th>
+                <th> Age </th>
+                <th> Mentor </th>
+                <th> Highest Degree </th>
+                <th> Email </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for trainee in trainees %}
+                {% if trainee.active %}
+                    <tr>
+                        <td> </td>
+                        <td> </td>
+                        <td>{{trainee.account.lastname}}</td>
+                        <td>{{trainee.account.firstname}}</td>
+                        <td>{{trainee.account.gender}}</td>
+                        <td>{{trainee.account.term}}</td>
+                        <td>  </td>
+                        <td>{{trainee.team}}</td>
+                        <td>{{trainee.house}}</td>
+                        <td>{{trainee.bunk}}</td>
+                        <td>  </td>
+                        <td>{{trainee.account.phone}}</td>
+                        <td>{{trainee.TA}}</td>
+                        <td>{{trainee.account.age}}</td>
+                        <td>{{trainee.mentor}}</td>
+                        <td>  </td>
+                        <td>{{trainee.email}}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}   
+        </tbody>
+    </table>
+
+    <BR>&nbsp;<BR> 
+
+{% endblock %}

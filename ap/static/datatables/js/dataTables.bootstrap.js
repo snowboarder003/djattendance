@@ -18,24 +18,39 @@ var factory = function( $, DataTable ) {
 
 /* Set the defaults for DataTables initialisation */
 $.extend( true, DataTable.defaults, {
+<<<<<<< HEAD
 	dom:
 		"<'row'<'col-xs-6'l><'col-xs-6'f>r>"+
 		"t"+
 		"<'row'<'col-xs-6'i><'col-xs-6'p>>",
 	renderer: 'bootstrap'
+=======
+    dom:
+        "<'row'<'col-xs-6'l><'col-xs-6'f>r>"+
+        "t"+
+        "<'row'<'col-xs-6'i><'col-xs-6'p>>",
+    renderer: 'bootstrap'
+>>>>>>> TA_admin_trainee
 } );
 
 
 /* Default class modification */
 $.extend( DataTable.ext.classes, {
+<<<<<<< HEAD
 	sWrapper:      "dataTables_wrapper form-inline dt-bootstrap",
 	sFilterInput:  "form-control input-sm",
 	sLengthSelect: "form-control input-sm"
+=======
+    sWrapper:      "dataTables_wrapper form-inline dt-bootstrap",
+    sFilterInput:  "form-control input-sm",
+    sLengthSelect: "form-control input-sm"
+>>>>>>> TA_admin_trainee
 } );
 
 
 /* Bootstrap paging button renderer */
 DataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, buttons, page, pages ) {
+<<<<<<< HEAD
 	var api     = new DataTable.Api( settings );
 	var classes = settings.oClasses;
 	var lang    = settings.oLanguage.oPaginate;
@@ -125,6 +140,97 @@ DataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, bu
 		$(host).empty().html('<ul class="pagination"/>').children('ul'),
 		buttons
 	);
+=======
+    var api     = new DataTable.Api( settings );
+    var classes = settings.oClasses;
+    var lang    = settings.oLanguage.oPaginate;
+    var btnDisplay, btnClass;
+
+    var attach = function( container, buttons ) {
+        var i, ien, node, button;
+        var clickHandler = function ( e ) {
+            e.preventDefault();
+            if ( e.data.action !== 'ellipsis' ) {
+                api.page( e.data.action ).draw( false );
+            }
+        };
+
+        for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
+            button = buttons[i];
+
+            if ( $.isArray( button ) ) {
+                attach( container, button );
+            }
+            else {
+                btnDisplay = '';
+                btnClass = '';
+
+                switch ( button ) {
+                    case 'ellipsis':
+                        btnDisplay = '&hellip;';
+                        btnClass = 'disabled';
+                        break;
+
+                    case 'first':
+                        btnDisplay = lang.sFirst;
+                        btnClass = button + (page > 0 ?
+                            '' : ' disabled');
+                        break;
+
+                    case 'previous':
+                        btnDisplay = lang.sPrevious;
+                        btnClass = button + (page > 0 ?
+                            '' : ' disabled');
+                        break;
+
+                    case 'next':
+                        btnDisplay = lang.sNext;
+                        btnClass = button + (page < pages-1 ?
+                            '' : ' disabled');
+                        break;
+
+                    case 'last':
+                        btnDisplay = lang.sLast;
+                        btnClass = button + (page < pages-1 ?
+                            '' : ' disabled');
+                        break;
+
+                    default:
+                        btnDisplay = button + 1;
+                        btnClass = page === button ?
+                            'active' : '';
+                        break;
+                }
+
+                if ( btnDisplay ) {
+                    node = $('<li>', {
+                            'class': classes.sPageButton+' '+btnClass,
+                            'aria-controls': settings.sTableId,
+                            'tabindex': settings.iTabIndex,
+                            'id': idx === 0 && typeof button === 'string' ?
+                                settings.sTableId +'_'+ button :
+                                null
+                        } )
+                        .append( $('<a>', {
+                                'href': '#'
+                            } )
+                            .html( btnDisplay )
+                        )
+                        .appendTo( container );
+
+                    settings.oApi._fnBindAction(
+                        node, {action: button}, clickHandler
+                    );
+                }
+            }
+        }
+    };
+
+    attach(
+        $(host).empty().html('<ul class="pagination"/>').children('ul'),
+        buttons
+    );
+>>>>>>> TA_admin_trainee
 };
 
 
@@ -133,6 +239,7 @@ DataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, bu
  * Required TableTools 2.1+
  */
 if ( DataTable.TableTools ) {
+<<<<<<< HEAD
 	// Set the classes that TableTools uses to something suitable for Bootstrap
 	$.extend( true, DataTable.TableTools.classes, {
 		"container": "DTTT btn-group",
@@ -163,6 +270,38 @@ if ( DataTable.TableTools ) {
 			"liner": "a"
 		}
 	} );
+=======
+    // Set the classes that TableTools uses to something suitable for Bootstrap
+    $.extend( true, DataTable.TableTools.classes, {
+        "container": "DTTT btn-group",
+        "buttons": {
+            "normal": "btn btn-default",
+            "disabled": "disabled"
+        },
+        "collection": {
+            "container": "DTTT_dropdown dropdown-menu",
+            "buttons": {
+                "normal": "",
+                "disabled": "disabled"
+            }
+        },
+        "print": {
+            "info": "DTTT_print_info modal"
+        },
+        "select": {
+            "row": "active"
+        }
+    } );
+
+    // Have the collection use a bootstrap compatible drop down
+    $.extend( true, DataTable.TableTools.DEFAULTS.oTags, {
+        "collection": {
+            "container": "ul",
+            "button": "li",
+            "liner": "a"
+        }
+    } );
+>>>>>>> TA_admin_trainee
 }
 
 }; // /factory
@@ -170,15 +309,24 @@ if ( DataTable.TableTools ) {
 
 // Define as an AMD module if possible
 if ( typeof define === 'function' && define.amd ) {
+<<<<<<< HEAD
 	define( ['jquery', 'datatables'], factory );
+=======
+    define( ['jquery', 'datatables'], factory );
+>>>>>>> TA_admin_trainee
 }
 else if ( typeof exports === 'object' ) {
     // Node/CommonJS
     factory( require('jquery'), require('datatables') );
 }
 else if ( jQuery ) {
+<<<<<<< HEAD
 	// Otherwise simply initialise as normal, stopping multiple evaluation
 	factory( jQuery, jQuery.fn.dataTable );
+=======
+    // Otherwise simply initialise as normal, stopping multiple evaluation
+    factory( jQuery, jQuery.fn.dataTable );
+>>>>>>> TA_admin_trainee
 }
 
 
