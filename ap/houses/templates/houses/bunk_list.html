@@ -1,9 +1,75 @@
 {% extends "houses/base_houses.html" %}
+{% load staticfiles %}
+
+{% block tab1 %} class="active" {% endblock %}
+
+{% block references %}
+	<link rel="stylesheet" href="{% static "datatables/css/jquery.dataTables.css" %}" />
+	<link rel="stylesheet" href="{% static "datatables/css/dataTables.bootstrap.css" %}" />
+{% endblock %}
 
 {% block houses_content %}
-	<h1> Bunk Tool </h1>
-	<h2> A tool to help assign the bunks for each house </h2>
-	{% for bunk in bunks %}
-		<li>{{bunk}}</li>
-	{% endfor %}
+	<h1> Bunk Assignment </h1>
+
+	<table class="table" id="house-table">
+		<thead>
+			<tr>
+				<th> House </th>
+				<th> Bunk # </th>
+				<th> Position </th>
+				<th> Gender </th>
+				<th> Name </th>
+				<th> Phone </th>
+				<th> Mentor </th>
+				<th> Term </th>
+				<th> Vehicle </th>
+				<th> Birth Date </th>
+				<th> TA </th>
+				<th> Age </th>
+				<th> Team </th>
+				<th> Room Type </th>
+				<th> Edit </th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for bunk in bunks %}
+				<tr>
+					<td>{{bunk.room.house}}</td>
+					<td>{{bunk.number}}</td>
+					<td>{{bunk.position}}</td>
+					<td>{{bunk.room.house.gender}}</td>
+					<td>{{bunk.trainee}}</td>
+					<td>{{bunk.trainee.account.phone}}</td>
+					<td>{{bunk.trainee.mentor}}</td>
+					<td>{{bunk.trainee.current_term}}</td>
+					<td>{{bunk.trainee.vehicle}}</td>
+					<td>{{bunk.trainee.account.date_of_birth | date:'m/d/Y'}}</td>
+					<td>{{bunk.trainee.TA}}</td>
+					<td>{{bunk.trainee.account.age}}</td>
+					<td>{{bunk.trainee.team}}</td>
+					<td>{{bunk.room.type}}</td>
+					<td>
+						<form action="{% url 'houses:bunk_update' bunk.id %}" method="get">
+							<button type="submit" class="btn btn-primary btn-sm">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</button>
+						</form>
+					</td>
+				</tr>
+			{% endfor %}	
+		</tbody>
+
+	</table>
+
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		$(document).ready(function(){
+	    	$('#house-table').dataTable();
+	    	$('#house-table').editableTableWidget();
+		});
+	</script>
+	<script type="text/javascript" src="{% static "datatables/js/jquery.dataTables.js" %}"></script>
+	<script type="text/javascript" src="{% static "datatables/js/dataTables.bootstrap.js" %}"></script>
 {% endblock %}

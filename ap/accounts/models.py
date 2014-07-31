@@ -186,7 +186,7 @@ class Trainee(Profile):
     #locality = models.ManyToManyField(Locality)
     team = models.ForeignKey(Team, null=True, blank=True)
     house = models.ForeignKey(House, null=True, blank=True)
-    bunk = models.ForeignKey(Bunk, null=True, blank=True)
+    bunk = models.OneToOneField(Bunk, null=True, blank=True)
 
     # personal information
     married = models.BooleanField(default=False)
