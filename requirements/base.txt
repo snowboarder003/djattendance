@@ -1,12 +1,23 @@
-Django==1.6.5
-psycopg2==2.5.3
-django-braces==1.4
-django-tables2==0.15.0
+Django
+psycopg2
+django-braces
 django-adminactions
-django-grappelli==2.5.3
-South==1.0
-xhtml2pdf==0.0.6
+django-grappelli
+South
 django-bootstrap3
 django-bootstrap3-datetimepicker
 django-select2
 djangorestframework
+django-sql-explorer
+
+# database extensions
+djorm-ext-core
+djorm-ext-expressions
+djorm-ext-pgarray
+
+# PDF
+xhtml2pdf==0.0.6
+pdfminer==20140328
+
+# deprecate
+django-tastypie==0.11.1
