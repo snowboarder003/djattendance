@@ -10,3 +10,5 @@ django-bootstrap3
 django-bootstrap3-datetimepicker
 django-select2
 djangorestframework
+django-image-tools
+pillow

@@ -7,32 +7,36 @@ from django.views.generic import ListView
 from .models import Badge
 from accounts.models import User
 from terms.models import Term
- 
-def index(request):
 
+def index(request):
     return render_to_response('badges/index.html')
+
+def handle_uploaded_file(f):
+    with open('badges/trial.jpg', 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
 
 def batch(request):
     if request.method == 'POST':
         b = Badge(type='T')
         b.term_created = Term.current_term()
         b.original = request.FILES['file']
+        b.avatar = request.FILES['file']
+        print b.original.path
         b.save()
-
+        
         # grab the trainee name. filename in form of:
         # /path/to/Ellis_Armad.jpg or /path/to/Ellis_Armad_1.jpg
         name = b.original.name.split('/')[-1].split('.')[0].split('_')
-
         user = User.objects.get(Q(is_active=True), 
-                                Q(firstname__exact=name[1]), 
-                                Q(lastname__exact=name[0]))
-
+                                Q(firstname__exact=name[0]), 
+                                Q(lastname__exact=name[1]))
         user.trainee.badge = b
+        
         user.save()
-
+        user.trainee.save()
         return HttpResponseRedirect(reverse('badges:index'))
         
-
     return render_to_response('badges/batch.html', context_instance=RequestContext(request))
 
 class TermView(ListView):

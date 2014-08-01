@@ -46,7 +46,10 @@ USE_TZ = False # djattendance (for now) only runs in Anaheim.
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
+
+# Temporary folder for upload, in this example is the subfolder 'upload'
+UPLOAD_TO = os.path.join(SITE_ROOT, 'media/upload')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -156,7 +159,6 @@ INSTALLED_APPS = (
     'bootstrap3_datetime', # datetime picker widget
     'braces', # Mixins for Django's class-based views.
     'django_reset',
-    'django_tables2',
     'explorer',
     'rest_framework',  # for API
 

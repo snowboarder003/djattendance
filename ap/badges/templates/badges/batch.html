@@ -1,22 +1,17 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+{% block references%}
+    <!-- jQuery Upload Files -->
+    <link rel="stylesheet" href="{% static 'css/dropzone.css' %}">
+{% endblock %}
 
-{% block content %}
-
-        <!-- IMPORTANT enctype attribute! -->
-        <form class="dropzone" action="{% url "badges:batch" %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-        </form>
-        <button id="submit-all">
-            Submit all files
-        </button>
-        {% load staticfiles %}
-        <link href="{% static 'css/dropzone.css' %}" type="text/css" rel="stylesheet"/>
-        <script src="{% static 'js/dropzone.js' %}"></script>
-        <script type="text/javascript">
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'js/dropzone.js' %}"></script>
+    <script type="text/javascript">
             Dropzone.options.myDropzone = {
  
                 // Prevents Dropzone from uploading dropped files immediately
-                autoProcessQueue : false,
+                autoProcessQueue : true,
  
                 init : function() {
                     var submitButton = document.querySelector("#submit-all")
@@ -32,10 +27,20 @@
                     this.on("addedfile", function() {
                         // Show submit button here and/or inform user to click it.
                     });
- 
                 }
             };
-        </script>
-
-
+    </script>
 {% endblock %}
+
+{% block content %}
+        <!-- IMPORTANT enctype attribute! -->
+        <form class="dropzone" action="{% url "badges:batch" %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+        </form>
+        <button id="submit-all">
+            Submit all files
+        </button>
+{% endblock %}
+
+
+

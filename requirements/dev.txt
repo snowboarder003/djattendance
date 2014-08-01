@@ -1,7 +1,6 @@
 -r base.txt
 
 pudb==2014.1
-Pillow==2.4.0
 PuLP==1.5.6
 PyPDF2==1.20
 amqp==1.4.5
