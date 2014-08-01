@@ -156,6 +156,7 @@ INSTALLED_APPS = (
     'bootstrap3_datetime', # datetime picker widget
     'braces', # Mixins for Django's class-based views.
     'django_reset',
+    'django_select2',
     'django_tables2',
     'report_builder',
     'rest_framework',  # for API
