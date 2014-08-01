@@ -8,7 +8,8 @@ $(document).ready(function(){
                               'hc': [],
                               'team_types': [],
                               'teams': [],
-                              'houses': []
+                              'houses': [],
+                              'localities': []
                              }
 
         var deferreds = []; // all ajax deferred objects get pushed into here
@@ -91,6 +92,19 @@ $(document).ready(function(){
                 }));
         }
 
+        for (i = 0; i < data['localities'].length; i++) {
+            deferreds.push(
+                $.ajax({
+                    url: base_url + api_base + '/trainees/locality/' + data['localities'][i] + '/?format=json',
+                    contentType: 'application/json',
+                    data: data,
+                    dataType: 'json',
+                    success: function(data) {
+                        trainee_groups['localities'] = _.union(trainee_groups['localities'], getTraineeIDs(data));
+                    }
+                }));
+        }
+
         // when all ajax calls are successful, find intersection of
         // all trainee groups and add trainees to Trainee field.
         $.when.apply($, deferreds).then(function(){
@@ -138,6 +152,7 @@ $(document).ready(function(){
             'team_types': getValues($('input[name=team_type]:checked')),
             'teams': getValues($('select[name=team] option:selected')),
             'houses': getValues($('select[name=house] option:selected')),
+            'localities': getValues($('select[name=locality] option:selected')),
         };
         getTrainees(form_data);
         $('#trainee_select').modal('hide');
@@ -156,5 +171,6 @@ $(document).ready(function(){
         document.getElementById('trainee_select_form').reset();
         $('#id_team').select2('val', []);
         $('#id_house').select2('val', []);
+        $('#id_locality').select2('val', []);
     }
 })
