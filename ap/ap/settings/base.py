@@ -213,7 +213,7 @@ LOGGING = {
 }
 
 BOOTSTRAP3 = {
-    'jquery_url': '/static/jquery/js/jquery-1.10.1.min.js',
+    'jquery_url': '/static/js/jquery-1.11.1.min.js',
     'base_url': '/static/bootstrap/css/',
     'css_url': None,
     'theme_url': None,
