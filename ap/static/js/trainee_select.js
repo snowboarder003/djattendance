@@ -56,7 +56,7 @@ $(document).ready(function(){
         for (i = 0; i < data['team_types'].length; i++) {
             deferreds.push(
                 $.ajax({
-                    url: base_url + api_base + '/trainees/team/' + data['team_types'][i] + '/?format=json',
+                    url: base_url + api_base + '/trainees/teamtype/' + data['team_types'][i] + '/?format=json',
                     contentType: 'application/json',
                     data: data,
                     dataType: 'json',
