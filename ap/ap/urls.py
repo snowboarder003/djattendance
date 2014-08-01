@@ -1,6 +1,9 @@
+# coding: utf-8
+from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.views import login, logout
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from tastypie.api import Api
 from leaveslip_api.resources import IndividualSlipResource, GroupSlipResource, TraineeResource, TrainingAssistantResource, EventResource, RollResource
 import autofixture
@@ -35,6 +38,7 @@ urlpatterns = patterns('',
     url(r'^adminactions/', include('adminactions.urls')), #django-adminactions pluggable app
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
 )
 
 # API urls
@@ -70,3 +74,5 @@ urlpatterns += patterns('',
     url(r'^select2/', include('django_select2.urls')),
 
 )
+
+urlpatterns += staticfiles_urlpatterns()
