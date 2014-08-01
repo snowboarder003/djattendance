@@ -2,14 +2,20 @@ body {
   min-height: 2000px;
 }
 
+@media (min-width: 768px) and (max-width: 992px) {
+  .container{
+    max-width:100%;
+  }
+}
+
 .navbar-static-top {
   margin-bottom: 19px;
 }
 
 .navbar-toggle {
-	border: 0px;
-	margin-top: 6px;
-	margin-bottom: 0px;
+    border: 0px;
+    margin-top: 6px;
+    margin-bottom: 0px;
 }
 
 .navbar-toggle .icon-dot {

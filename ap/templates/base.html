@@ -16,8 +16,7 @@
 
       {% load bootstrap3 %}
 
-      <link href="{% static "css/fluid.css" %}" rel="stylesheet"> 
-      <link href="{% static "css/navbar-static-top.css" %}" rel="stylesheet">
+      <link href="{% static "css/base.css" %}" rel="stylesheet"> 
       <link href="{% static "css/offcanvas.css" %}" rel="stylesheet">
       {% bootstrap_css %}
       {% bootstrap_messages %}
@@ -45,8 +44,8 @@
   <body>
 
     <!-- Static navbar -->
-    <div class="navbar navbar-default navbar-static-top">
-      <div class="container">
+    <div class="navbar navbar-default">
+      <div class="container-fluid">
         <div class="navbar-header">
           <div class="pull-left visible-xs">
             <button type="button" class="sidebar-toggle" data-toggle="offcanvas">
@@ -78,9 +77,6 @@
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'password_change' %}">Change Password</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'user_update' user.id %}">Update Account</a></li>
                     <li role="presentation" class="divider"></li>
-                    <li role="presentation" class="dropdown-header">Dropdown header</li>
-                    <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-                    <li role="presentation" class="divider"></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'login' %}">Logout</a></li>
                   </ul>
               </li>
@@ -91,7 +87,7 @@
     </div>
 
     {% block sidebar %}
-    <div class="container">
+    <div class="container-fluid">
       <div class="row row-offcanvas row-offcanvas-left">
         <!--SIDEBAR-->
         <div class="col-xs-12 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation" style="padding:0px; margin-top:-20px">
