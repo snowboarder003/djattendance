@@ -1,4 +1,4 @@
-<!-- 
+{% comment %}
     TRAINEE SELECT MODAL:
     form to select groups of trainees by:
         - terms
@@ -7,6 +7,7 @@
         - team types
         - teams
         - houses
+        - sending locality
     This will find the intersection of the query sets:
         - e.g. term: 1, 2; gender: B >>> first-year brothers
 
@@ -22,7 +23,7 @@
 
     On the button that pops up the modal, set data-toggle="modal" and data-target="#trainee_select":
         <button type="button" data-toggle="modal" data-target="#trainee_select">Add Trainee Group</button>
--->
+{% endcomment %}
 
 {% load bootstrap3 %}
 
