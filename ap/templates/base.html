@@ -10,27 +10,29 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.png">
 
-    <title>FTTA - {% block title %}{% endblock %}</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="{% static "css/fluid.css" %}" rel="stylesheet"> <!--right now, just a fix for small-size screens-->
-    <link href="{% static "bootstrap/css/navbar-static-top.css" %}" rel="stylesheet">
-    <link href="{% static "bootstrap/css/offcanvas.css" %}" rel="stylesheet">
-    {% block references %}{% endblock %}
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
-    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
-    <script src="{% static "js/modernizr-2.6.2-respond-1.1.0.min.js" %}"></script>
-    <script src="{% static "bootstrap/js/offcanvas.js" %}"></script>
-
-    <!-- put other refs and scripts here -->
+    <title>FTTA | {% block title %}{% endblock %}</title>
+    
     {% block media %}
-      {% block refs %}{% endblock refs %}
-      {% block scripts %}{% endblock scripts %}
+
+      {% load bootstrap3 %}
+
+      <link href="{% static "css/fluid.css" %}" rel="stylesheet"> 
+      <link href="{% static "css/navbar-static-top.css" %}" rel="stylesheet">
+      <link href="{% static "css/offcanvas.css" %}" rel="stylesheet">
+      {% bootstrap_css %}
+      {% bootstrap_messages %}
+      {% block references %}
+          <!-- additional css/refs here -->
+      {% endblock references %}
+
+      <script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
+      <script src="{% static "js/modernizr-2.6.2-respond-1.1.0.min.js" %}"></script>
+      <script src="{% static "js/offcanvas.js" %}"></script>
+      {% bootstrap_javascript %}
+      {% block scripts %}
+          <!-- additional js here -->
+      {% endblock scripts %}
+
     {% endblock %}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -58,7 +60,8 @@
             <span class="icon-dot"></span>
             <span class="icon-dot"></span>
           </button>
-          <a class="navbar-brand hidden-xs" href="{% url 'home' %}">Full-Time Training in Anaheim</a>
+
+          <a class="navbar-brand hidden-xs" href="{% url 'home' %}"></img>Full-Time Training in Anaheim</a>
           <a class="navbar-brand visible-xs" href="#">FTTA</a>
         </div>
         <div class="navbar-collapse collapse">
