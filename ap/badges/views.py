@@ -11,18 +11,12 @@ from terms.models import Term
 def index(request):
     return render_to_response('badges/index.html')
 
-def handle_uploaded_file(f):
-    with open('badges/trial.jpg', 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
-
 def batch(request):
     if request.method == 'POST':
         b = Badge(type='T')
         b.term_created = Term.current_term()
         b.original = request.FILES['file']
         b.avatar = request.FILES['file']
-        print b.original.path
         b.save()
         
         # grab the trainee name. filename in form of:
@@ -48,3 +42,11 @@ class TermView(ListView):
 
     def get_queryset(self, **kwargs):
         return Badge.objects.filter(term_created__exact=Term.current_term())
+
+class BadgeDetailView(ListView):
+
+    model = Badge
+
+    def get_template_names(self):
+        return ['badges/manage.html']
+

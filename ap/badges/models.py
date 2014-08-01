@@ -3,7 +3,6 @@ from django.db import models
 from terms.models import Term
 
 from .util import _image_upload_path,_image_upload_avatar_path, resize_image
-from django_image_tools.models import Image
 
 class Badge(models.Model):
     """
