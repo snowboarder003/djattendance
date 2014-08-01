@@ -6,10 +6,10 @@ addons:
 install:
   - pip install -r requirements/dev.txt
 before_script:
-  - cp ap/ap/settings/travis.py ap/ap/settings/local.py
+  - cp ap/ap/settings/travis.py ap/ap/settings/dev.py
   - psql -c 'create database djattendance;' -U postgres
-  - sed -i -e 's/getpass.getuser()/"postgres"/g' ap/ap/settings/local.py
-  - python ap/manage.py syncdb --settings=ap.settings.local --noinput
+  - sed -i -e 's/getpass.getuser()/"postgres"/g' ap/ap/settings/dev.py
+  - python ap/manage.py syncdb --settings=ap.settings.dev --noinput
 script:
   - coverage run ap/runtests.py
   - coverage report

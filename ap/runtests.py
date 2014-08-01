@@ -4,7 +4,7 @@ import os
 if __name__== "__main__":
     sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),'..')))
 
-settingsPath = "ap.settings.local"
+settingsPath = "ap.settings.dev"
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", settingsPath)
 from django.conf import settings
 from django_nose import NoseTestSuiteRunner
