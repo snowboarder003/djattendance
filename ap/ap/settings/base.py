@@ -216,7 +216,7 @@ BOOTSTRAP3 = {
     'jquery_url': '/static/js/jquery-1.11.1.min.js',
     'base_url': None,
     'css_url': '/static/css/bootstrap.min.css',
-    'theme_url': '/static/css/bootstrap-theme.min.css',
+    'theme_url': None,
     'javascript_url': '/static/js/bootstrap.min.js',
     'horizontal_label_class': 'col-md-2',
     'horizontal_field_class': 'col-md-4',
