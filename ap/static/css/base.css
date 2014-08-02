@@ -1,16 +1,10 @@
 body {
-  min-height: 2000px;
+  padding: 10px;
 }
 
-@media (min-width: 768px) and (max-width: 992px) {
-  .container{
-    max-width:100%;
-  }
-}
-
-.navbar-static-top {
-  margin-bottom: 19px;
-}
+/*
+ * NAVBAR STYLES
+ */
 
 .navbar-toggle {
     border: 0px;
