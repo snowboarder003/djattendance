@@ -6,19 +6,18 @@ addons:
 install:
   - pip install -r requirements/dev.txt
 before_script:
-  - cp ap/ap/settings/local.py.example ap/ap/settings/local.py
+  - cp ap/ap/settings/travis.py ap/ap/settings/dev.py
   - psql -c 'create database djattendance;' -U postgres
-  - sed -i -e 's/getpass.getuser()/"postgres"/g' ap/ap/settings/local.py
-  - python ap/manage.py syncdb --settings=ap.settings.local --noinput
+  - sed -i -e 's/getpass.getuser()/"postgres"/g' ap/ap/settings/dev.py
+  - python ap/manage.py syncdb --settings=ap.settings.dev --noinput
 script:
-  - python ap/manage.py test --settings=ap.settings.local
-  - coverage run ap/manage.py test --settings=ap.settings.local
+  - coverage run ap/runtests.py
+  - coverage report
+
 # email notification settings
 notifications:
   email:
     recipients:
       - lifeunion@gmail.com
-    on_success: [always|never|change] # default: change
-    on_failure: [always|never|change] # default: always
 after_success:
   - coveralls
