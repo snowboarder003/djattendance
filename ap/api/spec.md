@@ -36,7 +36,7 @@ return full resource for every request
 `/trainees/team/[pk]` or `[team-code]` (e.g. 'ANA-COM' or 'I-YP')
 
 `GET` trainess by team type:
-`/trainees/team/[type]` (e.g. 'CAMPUS' or 'YP')
+`/trainees/teamtype/[type]` (e.g. 'CAMPUS' or 'YP')
 
 `GET` house coordinators:
 `/trainees/HC`
