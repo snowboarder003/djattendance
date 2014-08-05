@@ -31,11 +31,6 @@ class ScheduleDetail(generic.DetailView):
     def get_queryset(self):
         return Schedule.objects.filter(trainee=self.request.user.trainee).filter(term=Term.current_term())
 
-class ScheduleCreate(generic.CreateView):
-    model = ScheduleTemplate
-    template_name = 'schedules/new_schedule.html'
-    fields = ['name']
-
 
 class ScheduleList(generic.ListView):
     model = ScheduleTemplate
