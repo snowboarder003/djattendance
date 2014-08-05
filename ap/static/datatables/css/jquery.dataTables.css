@@ -474,24 +474,3 @@ table.dataTable td {
     margin-top: 0.5em;
   }
 }
-
-div.dataTables_wrapper {
-    margin-bottom: 3em;
-}
-
-div.container {
-    width: 80%;
-}
-
-th, td { white-space: nowrap; }
-  div.dataTables_wrapper {
-    width: 800px;
-    margin: 0 auto;
-  }
-
-body { font-size: 140%; }
-
-tr.group,
-tr.group:hover {
-    background-color: #ddd !important;
-}

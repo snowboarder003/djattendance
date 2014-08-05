@@ -14,10 +14,10 @@
     <script>
         $(document).ready(function(){
             $('#badges-table').dataTable( {
-                dom: 'T<"clear">lfrtip',
+                dom: '<"clear">lfrtiTp',
                 tableTools: {
                 "sRowSelect": "multi",
-                "aButtons": [ "select_all", "select_none" ]
+                "aButtons": []
                 }
             });
         });
@@ -29,6 +29,8 @@
 {% endblock %}
 
 {% block badges_content %}
+    
+    <BR>&nbsp;<BR> 
 
     <table class="table table-bordered display compact cell-border" id="badges-table" cellspacing="0" width="100%">
         <thead>
