@@ -7,7 +7,6 @@ from django.contrib.messages import constants as message_constants
 # used as starting points for various other paths
 DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
 SITE_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
-print(SITE_ROOT)
 
 ADMINS = (
     ('Attendance Project', 'attendanceproj@gmail.com'),
@@ -55,7 +54,6 @@ UPLOAD_TO = os.path.join(SITE_ROOT, 'media/upload')
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
 MEDIA_URL = '/media/'
-
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.

@@ -1,6 +1,10 @@
-{% extends "base.html" %}
+{% extends "badges/base_badges.html" %}
 
-{% block content %}
+{% load bootstrap3 %}
+
+{% block tab1 %}class="active"{% endblock %}
+
+{% block badge_content %}
     
     <h1>Badges</h1>
     
@@ -16,7 +20,7 @@
     {% for badge in object_list %} 
         <tr>
 
-           <td><img src='{{ badge.original.url }}'/></td>
+           <td><img src='{{ badge.get_thumb }}'/></td>
            <td>{{badge.type}}</td>
            <td>{{badge.firstname}} {{badge.middlename}} {{badge.lastname}}</td>
            <td>{{badge.locality}}</td>

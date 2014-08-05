@@ -34,12 +34,10 @@
 
 {% block content %}
         <!-- IMPORTANT enctype attribute! -->
-        <form class="dropzone" action="{% url "badges:batch" %}" method="post" enctype="multipart/form-data">
+        <form class="dropzone" action="{% url "badges:badges_batch" %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
         </form>
-        <button id="submit-all">
-            Submit all files
-        </button>
+        <p> Every file you drop in is stored directly</p>
 {% endblock %}
 
 

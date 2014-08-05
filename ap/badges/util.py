@@ -8,10 +8,7 @@ def _image_upload_path(instance, filename):
   # To customise the path which the image saves to.
   return instance.get_upload_path(filename)
 
-def _image_upload_avatar_path(instance, filename):
-  # To customise the path which the image saves to.
-  return instance.get_upload_avatar_path(filename)
-
-def resize_image(avatar, size=(200,200)):
-    image = Image.open(avatar.path)
-    image.resize(size, Image.ANTIALIAS).save(avatar.path, 'JPEG', quality=75)
+def resize_image(originimage, size=(100,100)):
+    image = Image.open(originimage.path)
+    final_path = str(originimage.path) + ".avatar"
+    image.resize(size, Image.ANTIALIAS).save(final_path, 'JPEG', quality=50)

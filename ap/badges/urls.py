@@ -1,18 +1,14 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns,url
+from . import views
+from django.conf import settings 
+from django.conf.urls.static import static 
 
-from badges.views import TermView
- 
-urlpatterns = patterns('',
-    url(r'^$', 'badges.views.index', name='index'),
-    # view/edit single badge
-    #url(r'^view/(?P<pk>\d+)/$', 'badges.views.view', name='view_badge'),
-    #url(r'^edit/(?P<pk>\d+)/$', 'badges.views.edit', name='edit_badge'),
-    # view multiple badges
-    url(r'^view/(?P<term>(Fa|Sp)\d{2})/$', TermView.as_view(), name='term_badges'),
-    #url(r'^edit/staff/$', 'badges.views.staff', name='staff_badges'),
-    # badge creation
-    #url(r'^create/$', 'badges.views.create_index', name='create_index'),
-    #url(r'^create/trainee/$', 'badges.views.create_trainee', name='create_trainee'),
-    #url(r'^create/staff/$', 'badges.views.create_staff', name='create_staff'),
-    url(r'^create/batch/$', 'badges.views.batch', name='batch'),
-)
+urlpatterns = patterns(
+    '',
+    url(r'^$', views.BadgeListView.as_view(), name='badges_list'),
+    url(r'^create/$', views.BadgeCreateView.as_view(), name='badge_create'),
+    url(r'^(?P<pk>\d+)/$', views.BadgeUpdateView.as_view(), name='badge_detail'),
+    url(r'^(?P<pk>\d+)/delete/$', views.BadgeDeleteView.as_view(), name='badge_delete'),
+    url(r'^create/batch/$', 'badges.views.batch', name='badges_batch'),
+    url(r'^view/(?P<term>(Fa|Sp)\d{2})/$', views.TermView.as_view(), name='badges_term'),
+)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
