@@ -32,15 +32,6 @@ class ScheduleDetail(generic.DetailView):
         return Schedule.objects.filter(trainee=self.request.user.trainee).filter(term=Term.current_term())
 
 
-class ScheduleList(generic.ListView):
-    model = ScheduleTemplate
-    template_name = 'schedules/list.html'
-    context_object_name = 'list_of_schedules'
-
-    def get_queryset(self):
-        return ScheduleTemplate.objects.all
-
-
 class EventCreate(generic.CreateView):
     model = Event
     template_name = 'schedules/event_create.html'
