@@ -5,12 +5,20 @@
 
 {% block title %}Home{% endblock %}
 
+{% block messages %}
+    <div id="messages">
+        {% for message in messages %}
+            {% bootstrap_messages message %}                
+        {% endfor %}
+    </div>
+{% endblock %}
+
 {% block content %}
 
     <h2>Welcome, {{ user.get_full_name }}! </h2>
 
     {% if daily_nourishment.text %}
-    <div class="panel panel-success">
+    <div class="panel panel-info">
       <div class="panel-heading">
         <h5 class="panel-title">Daily Nourishment</h5>
       </div>
@@ -47,11 +55,5 @@
 
 {% endblock %}
 
-{% block messages %}
-    <div id="messages">
-        {% for message in messages %}
-            {% bootstrap_messages message %}                
-        {% endfor %}
-    </div>
-{% endblock %}
+
 
