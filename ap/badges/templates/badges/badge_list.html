@@ -14,17 +14,23 @@
     <script>
         $(document).ready(function(){
             $('#badges-table').dataTable( {
+                dom: 'T<"clear">lfrtip',
+                tableTools: {
+                "sRowSelect": "multi",
+                "aButtons": [ "select_all", "select_none" ]
+                }
             });
         });
     </script>
     <script type="text/javascript" src="{% static "datatables/js/jquery.js" %}"></script>
     <script type="text/javascript" src="{% static "datatables/js/jquery.dataTables.js" %}"></script>
     <script type="text/javascript" src="{% static "datatables/js/dataTables.bootstrap.js" %}"></script>
+    <script type="text/javascript" src="{% static "datatables/js/dataTables.tableTools.js" %}"></script>
 {% endblock %}
 
 {% block badges_content %}
 
-    <table class="table table-striped table-bordered" id="badges-table" cellspacing="0" width="100%">
+    <table class="table table-bordered display compact cell-border" id="badges-table" cellspacing="0" width="100%">
         <thead>
             <tr>
                 <th>Avatar</th>
