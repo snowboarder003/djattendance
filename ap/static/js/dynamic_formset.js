@@ -86,46 +86,6 @@ function addForm(btn, prefix) {
 	return false;
 }
 
-function addEntry(entry, prefix) {
-		var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
-		// max num
-		if (formCount < parseInt($('#id_' + prefix + '-MAX_NUM_FORMS').val())) {
-
-			// Insert entry after the last form
-			$(entry).removeAttr('id').hide().insertAfter('.entry:last').slideDown(300);
-			$('select.select2').select2({width:'element',});
-
-			// Remove the bits we don't want in the new row/form
-			// e.g. error messages
-			$('.errorlist', entry).remove();
-			$(entry).children().removeClass('error');
-
-			// Relabel or rename all the relevant bits
-			$(entry).children().children().each(function () {
-				updateElementIndex(this, prefix, formCount);
-				$(this).val('');
-			});
-
-			// Add event handler for the delete item/form link
-			$(entry).find('.delete').click(function () {
-				return deleteForm(this, prefix);
-			});
-
-			// If there was previously only one form, the delete button was hidden, so show it.
-			if (formCount == 1) {
-				$('.delete').show();
-			}
-
-			// Update total form count
-			$('#id_' + prefix + '-TOTAL_FORMS').val(formCount + 1);
-
-		}	
-		else {
-			alert('Sorry, you can only enter a maximum of ten trainees.');
-		}
-		return false;
-	}
-
 $(document).ready(function () {
 
 	$('#add').click(function () {
