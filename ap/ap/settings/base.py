@@ -222,6 +222,8 @@ BOOTSTRAP3 = {
     'horizontal_field_class': 'col-md-4',
 }
 
+SELECT2_BOOTSTRAP = True
+
 #URL after login page
 LOGIN_REDIRECT_URL = '/'
 
