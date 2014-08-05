@@ -39,7 +39,7 @@ def batch(request):
 
     return render_to_response('badges/batch.html', context_instance=RequestContext(request))
 
-class TermView(ListView):
+class BadgeTermView(ListView):
 
     model = Badge
 
@@ -48,6 +48,10 @@ class TermView(ListView):
 
     def get_queryset(self, **kwargs):
         return Badge.objects.filter(term_created__exact=Term.current_term())
+
+    def get_context_data(self, **kwargs):
+        context = super(BadgeTermView, self).get_context_data(**kwargs)
+        return context
 
 class BadgeListView(ListView):
     model = Badge
