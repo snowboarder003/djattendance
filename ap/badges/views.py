@@ -84,4 +84,3 @@ class BadgeDeleteView(DeleteView):
     model = Badge
     template_name = 'badges/badge_delete.html'
     success_url='/badges/'
-

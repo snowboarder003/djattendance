@@ -11,4 +11,4 @@ urlpatterns = patterns(
     url(r'^(?P<pk>\d+)/delete/$', views.BadgeDeleteView.as_view(), name='badge_delete'),
     url(r'^create/batch/$', 'badges.views.batch', name='badges_batch'),
     url(r'^view/(?P<term>(Fa|Sp)\d{2})/$', views.BadgeTermView.as_view(), name='badges_term'),
-)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+) 

@@ -32,7 +32,6 @@ urlpatterns = patterns('',
     url(r'^absent_trainee_roster/', include('absent_trainee_roster.urls', namespace="absent_trainee_roster")),
     url(r'^syllabus/', include('syllabus.urls', namespace="syllabus")),
     url(r'^lifestudies/', include('lifestudies.urls', namespace="lifestudies")),
-
     # admin urls
     url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^adminactions/', include('adminactions.urls')), #django-adminactions pluggable app
@@ -71,5 +70,4 @@ urlpatterns += patterns('',
     #third party
     url(r'^explorer/', include('explorer.urls')),
     url(r'^select2/', include('django_select2.urls')),
-
 )
