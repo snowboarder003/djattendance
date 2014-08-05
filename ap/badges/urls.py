@@ -7,8 +7,8 @@ urlpatterns = patterns(
     '',
     url(r'^$', views.BadgeListView.as_view(), name='badges_list'),
     url(r'^create/$', views.BadgeCreateView.as_view(), name='badge_create'),
-    url(r'^(?P<pk>\d+)/$', views.BadgeUpdateView.as_view(), name='badge_detail'),
-    url(r'^(?P<pk>\d+)/delete/$', views.BadgeDeleteView.as_view(), name='badge_delete'),
+    url(r'^edit/(?P<pk>\d+)/$', views.BadgeUpdateView.as_view(), name='badge_detail'),
+    url(r'^delete/(?P<pk>\d+)/$', views.BadgeDeleteView.as_view(), name='badge_delete'),
     url(r'^create/batch/$', 'badges.views.batch', name='badges_batch'),
     url(r'^view/(?P<term>(Fa|Sp)\d{2})/$', views.BadgeTermView.as_view(), name='badges_term'),
 ) 

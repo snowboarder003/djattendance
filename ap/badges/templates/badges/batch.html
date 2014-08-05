@@ -1,5 +1,8 @@
-{% extends "base.html" %}
+{% extends "badges/base_badges.html" %}
 {% load staticfiles %}
+
+{% block tab3 %}class="active"{% endblock %}
+
 {% block references%}
     <!-- jQuery Upload Files -->
     <link rel="stylesheet" href="{% static 'css/dropzone.css' %}">
@@ -32,12 +35,14 @@
     </script>
 {% endblock %}
 
-{% block content %}
+{% block badges_content %}
+
+        <BR>&nbsp;<BR>
         <!-- IMPORTANT enctype attribute! -->
         <form class="dropzone" action="{% url "badges:badges_batch" %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
         </form>
-        <p> Every file you drop in is stored directly</p>
+        <p> Every file you drop in is stored directly!</p>
 {% endblock %}
 
 
