@@ -24,6 +24,10 @@
 		font-family: sans-serif;
 	}
 
+	th {
+		padding-top: 5px;
+	}
+
 	h1 {
 		font-size: 28px;
 		font-weight: bold;
@@ -108,7 +112,7 @@
 		</tr>
 		
 			{% for entry in entries %}
-				{% if entry.absentee.trainee_house.gender == 'B' %}
+				{% if entry.absentee.account.gender == 'B' %}
 					{% for k, v in days.items %}
 						{% ifequal k entry.absentee.name %}
 							{% if v > 2 %}
@@ -135,9 +139,9 @@
 				</tr>
 				{% endif %}
 			{% endfor %}
-		<tr>
+		<!-- <tr>
 			<td colspan='5' style='padding:0.5em; border-bottom: 1pt solid black;'></td>
-		</tr>
+		</tr> -->
 		<tr>
 			<td colspan='5' style='border-bottom: 1pt solid black;'></td>
 		</tr>
@@ -152,7 +156,7 @@
 			<td colspan='5' style='border-top: 1pt solid black;'></td>
 		</tr>
 		{% for entry in entries %}
-			{% if entry.absentee.trainee_house.gender == 'S' %}
+			{% if entry.absentee.account.gender == 'S' %}
 				{% for k, v in days.items %}
 					{% ifequal k entry.absentee.name %}
 						{% if v > 2 %}
@@ -179,22 +183,22 @@
 					</td>
 			{% endif %}
 		{% endfor %}
-		<tr>
+		<!-- <tr>
 			<td colspan='5' style='padding:0.5em; border-top: 1pt solid black;'></td>
-		</tr>
+		</tr> -->
 		
 		<tr>
 			<td colspan='5' style='border-bottom: 1pt solid black;'></td>
 		</tr>
 		<tr>
-			<th colspan=5 style='border-bottom:1pt solid black'>Unreported Houses</th>
+			<th class='headerRow' colspan=5 style='border-bottom:1pt solid black'>Unreported Houses</th>
 		</tr>
 		<tr>
 			<td style='vertical-align:top; width: 49%;' colspan=2>
-				<p style='font-weight:bold; margin-top:1em'>Brothers:</p>
+				<p style='font-weight:bold; padding-top:5px;'>Brothers:</p>
 				{% if bro_unreported_houses %}
 					{% for house in bro_unreported_houses %}
-						<p>{{house}}</p>
+						{{house}}<br>
 					{% endfor %}
 				{% else %}
 					<p style='font-style:italic'>No houses unreported.</p>
@@ -203,7 +207,7 @@
 			</td>
 			<td></td>
 			<td style='vertical-align:top; width: 49%;' colspan=2>
-				<p style='font-weight:bold; margin-top:1em'>Sisters:</p>
+				<p style='font-weight:bold; padding-top: 5px'>Sisters:</p>
 				{% if sis_unreported_houses %}
 					{% for house in sis_unreported_houses %}
 						<p>{{house}}</p>
@@ -219,17 +223,7 @@
 	<p><span style='font-weight:bold'># Days</span> is the number of days a trainee has been absent in the last 7 days. </p>
 	<p><span style='font-weight:bold'>+</span> means that within the last 7 days, the trainee's house has been unreported.</p>
 
-<!--	<div>
-		{% for key, value in days.items %}
-			<li>{{key}} - {{value}}</li>
-		{% endfor %}
-	</div>
-	
-	<div>
-		{% for house in unreported_list %}
-			<li>{{house}}</li>
-		{% endfor %}
-	</div> -->
+
 </td></tr></table>
 	</body>
 </html>
