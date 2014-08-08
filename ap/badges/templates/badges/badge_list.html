@@ -14,7 +14,7 @@
     <script>
         $(document).ready(function(){
             $('#badges-table').dataTable( {
-                dom: '<"clear">lfrtiTp',
+                dom: 'T<"clear">lfrtip',
                 tableTools: {
                 "sRowSelect": "multi",
                 "aButtons": []
@@ -29,37 +29,44 @@
 {% endblock %}
 
 {% block badges_content %}
-    
-    <BR>&nbsp;<BR> 
-
-    <table class="table table-bordered display compact cell-border" id="badges-table" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>Avatar</th>
-                <th>Type</th>
-                <th>Name</th>
-                <th>Term</th>
-                <th>Locality</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            {% for badge in object_list %} 
+    <BR>&nbsp;<BR>
+    <form action="{% url 'badges:badges_print' %}" method="post"> 
+    {% csrf_token %}
+        <table class="table table-bordered display compact cell-border" id="badges-table" cellspacing="0" width="100%">
+            <thead>
                 <tr>
-                    <th><img src='/{{badge.avatar}}'/></th>
-                    <th>{{badge.type}}</th>
-                    <th>{{badge.firstname}} {{badge.middlename}} {{badge.lastname}}</th>
-                    <th>{{badge.term_created}}</th>
-                    <th>{{badge.locality}}</th>
-                    <th><a href="{% url 'badges:badge_detail' badge.pk %}" class="list-group-item-active">Edit</th>
-                    <th><a href="{% url 'badges:badge_delete' badge.pk %}" class="list-group-item-active">Delete</th>
+                    <th>Avatar</th>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Term</th>
+                    <th>Locality</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    <th>Select to Print</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
 
-     <BR>&nbsp;<BR> 
+            <tbody>
+                {% for badge in object_list %} 
+                    <tr>
+                        <th><img src='/{{badge.avatar}}'/></th>
+                        <th>{{badge.type}}</th>
+                        <th>{{badge.firstname}} {{badge.middlename}} {{badge.lastname}}</th>
+                        <th>{{badge.term_created}}</th>
+                        <th>{{badge.locality}}</th>
+                        <th><a href="{% url 'badges:badge_detail' badge.pk %}" class="list-group-item-active">Edit</th>
+                        <th><a href="{% url 'badges:badge_delete' badge.pk %}" class="list-group-item-active">Delete</th>
+                        <th>
+                            <ul>
+                                <input type="checkbox" name="choice" id={{ badge.pk }} value="{{ badge.pk }}" />
+                                <label for="choice{{ badge.pk }}">Print</label><br />
+                            </ul>
+                        </th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <input type="submit" value="Print" />
+    </form>
 
 {% endblock %}

@@ -24,3 +24,18 @@ class BadgeUpdateForm(forms.ModelForm):
             badge.save()
         return badge
 
+class BadgePrint(forms.Form):
+    printoption = forms.BooleanField(required=False)
+
+class BadgePrintForm(forms.ModelForm):
+    class Meta:
+        model = Badge
+        exclude = ('avatar',)
+
+    def save(self, commit=True):
+        badge = super(BadgeUpdateForm, self).save(commit=False)
+        if commit:
+            badge.save()
+        return badge
+
+

@@ -8,7 +8,8 @@ from .models import Badge
 from accounts.models import User
 from terms.models import Term
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .forms import BadgeForm, BadgeUpdateForm
+from .forms import BadgeForm, BadgeUpdateForm, BadgePrintForm
+from .printtopdf import render_to_pdf
 
 def index(request):
     return render_to_response('badges/badge_list.html')
@@ -39,16 +40,60 @@ def batch(request):
 
     return render_to_response('badges/batch.html', context_instance=RequestContext(request))
 
+def badgeprintout(request):
+    """
+    context = RequestContext(request)
+    if request.method == 'POST':
+        form = BadgePrintForm(request.POST)
+    """
+    return render_to_response('badges/print.html', Badge.objects.filter(term_created__exact=Term.current_term()))
+
+def makepdf(request):
+    return render_to_pdf(
+            'print.html',
+            {
+                'pagesize':'A4',
+            }
+        )
+
+class BadgePrintView(ListView):
+
+    model = Badge
+
+    def get_template_names(self):
+        return ['badges/print.html']
+    
+    def get_queryset(self, **kwargs):
+        return Badge.objects.filter(term_created__exact=Term.current_term())
+    
+    def get_context_data(self, **kwargs):
+        context = super(BadgePrintView, self).get_context_data(**kwargs)
+        return context
+
+class BadgePrintBackView(ListView):
+
+    model = Badge
+
+    def get_template_names(self):
+        return ['badges/printback.html']
+    
+    def get_queryset(self, **kwargs):
+        return Badge.objects.filter(term_created__exact=Term.current_term())
+    
+    def get_context_data(self, **kwargs):
+        context = super(BadgePrintBackView, self).get_context_data(**kwargs)
+        return context
+
 class BadgeTermView(ListView):
 
     model = Badge
 
     def get_template_names(self):
         return ['badges/term.html']
-
+    
     def get_queryset(self, **kwargs):
         return Badge.objects.filter(term_created__exact=Term.current_term())
-
+    
     def get_context_data(self, **kwargs):
         context = super(BadgeTermView, self).get_context_data(**kwargs)
         return context
@@ -84,3 +129,4 @@ class BadgeDeleteView(DeleteView):
     model = Badge
     template_name = 'badges/badge_delete.html'
     success_url='/badges/'
+
