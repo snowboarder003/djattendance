@@ -30,7 +30,7 @@ class Portion(models.Model):
         portions = Portion.objects.filter(approved=True).values_list('id', flat=True)
         random.seed(date.today())
         try:
-            return Portion.objects.get(random.choice(portions))
+            return Portion.objects.get(id=random.choice(portions))
         except:
             return Portion()  # if it fails, return an empty Portion
 
