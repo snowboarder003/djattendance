@@ -6,7 +6,6 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from tastypie.api import Api
 from leaveslip_api.resources import IndividualSlipResource, GroupSlipResource, TraineeResource, TrainingAssistantResource, EventResource, RollResource
-import autofixture
 
 from rest_framework import routers
 
@@ -16,7 +15,6 @@ from attendance.views import RollViewSet
 from leaveslips.views import IndividualSlipViewSet, GroupSlipViewSet
 
 admin.autodiscover()
-autofixture.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'ap.views.home', name='home'),
@@ -33,8 +31,7 @@ urlpatterns = patterns('',
     url(r'^syllabus/', include('syllabus.urls', namespace="syllabus")),
     url(r'^lifestudies/', include('lifestudies.urls', namespace="lifestudies")),
 
-    # admin urls
-    url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
+
     url(r'^adminactions/', include('adminactions.urls')), #django-adminactions pluggable app
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),

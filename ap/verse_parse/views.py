@@ -33,9 +33,6 @@ def handle_uploaded_file(f):
 
 	for i in range(len(ref_outline)):
 		outline_pt = ref_outline[i]
-		# point = outline_pt[0]
-		# indent = ' '*((outline_pt['level']-1)*4)
-		# print(indent + outline_pt['string'])
 
 		for ref in outline_pt['refs']:				
 			ref['string'] = references.reference_to_string(ref)
@@ -43,12 +40,9 @@ def handle_uploaded_file(f):
 			if ref['chapter'] is not None:
 				ref['repeat'] = outline.find_repeat(ref_outline, ref, i)
 
-				# print(indent + ' '*len(outline_pt['string']) + ref['string'] + ' -- ' + str(ref['repeat']))
 
 				if ref['repeat'] == False:
 					ref['verses'] = references.get_verses(ref)
-					# for verse in ref['verses'].values():
-					# 	print(verse)
 	return (title, ref_outline)
 
 def upload_file(request):
@@ -93,14 +87,11 @@ def pdf_to_text(fname):
     rsrcmgr = PDFResourceManager(caching=caching)
     outfp = StringIO()
     device = TextConverter(rsrcmgr, outfp, codec=codec, laparams=laparams)
-    #fp = file(fname, 'rb')
     
     interpreter = PDFPageInterpreter(rsrcmgr, device)
     for page in PDFPage.get_pages(fname, pagenos,
                                       maxpages=maxpages, password=password,
                                       caching=caching, check_extractable=True):
             interpreter.process_page(page)
-    #fp.close()
     device.close()
-    #outfp.close()
     return outfp.getvalue()
