@@ -85,6 +85,7 @@ SECRET_KEY = 'h%)g$1=j)_(lozsexfe*=$iwj9l#8mfaszohyg5n0azz691r#b'
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
@@ -214,15 +215,13 @@ LOGGING = {
 
 BOOTSTRAP3 = {
     'jquery_url': '/static/js/jquery-1.11.1.min.js',
-    'base_url': None,
-    'css_url': '/static/css/bootstrap.min.css',
+    'base_url': '/static/bootstrap/css/',
+    'css_url': None,
     'theme_url': None,
-    'javascript_url': '/static/js/bootstrap.min.js',
+    'javascript_url': None,
     'horizontal_label_class': 'col-md-2',
     'horizontal_field_class': 'col-md-4',
 }
-
-SELECT2_BOOTSTRAP = True
 
 #URL after login page
 LOGIN_REDIRECT_URL = '/'
