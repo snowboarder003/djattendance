@@ -22,7 +22,7 @@
 }
 
 .form-control.select2-container .select2-choices {
-    border: 0 !important;
+    /*border: 0 !important;*/
     border-radius: 3px;
 }
 
