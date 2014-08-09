@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+
 {% load staticfiles %}
+{% load bootstrap3 %}
 
 {% block title %}Home{% endblock %}
 
@@ -31,3 +33,12 @@
     {% endif %}
 
 {% endblock %}
+
+{% block messages %}
+    <div id="messages">
+        {% for message in messages %}
+            {% bootstrap_messages message %}                
+        {% endfor %}
+    </div>
+{% endblock %}
+

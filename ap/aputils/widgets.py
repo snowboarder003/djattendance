@@ -15,7 +15,7 @@ class DatePicker(DateInput):
                     'jquery/css/datepicker.css',)
         }
         js = (
-            'jquery/js/jquery-1.10.1.min.js',
+            'js/jquery-1.11.1.min.js',
             'jquery/js/jquery.ui.core.js',
             'jquery/js/jquery.ui.datepicker.js',
             'js/datepicker.js',

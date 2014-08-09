@@ -11,6 +11,7 @@ from terms.models import Term
 from teams.models import Team
 from houses.models import House, Bunk
 from services.models import Service
+from localities.models import Locality
 
 """ accounts models.py
 The user accounts module takes care of user accounts and
@@ -86,10 +87,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     firstname = models.CharField(verbose_name=u'first name', max_length=30)
     lastname = models.CharField(verbose_name=u'last name', max_length=30)
     middlename = models.CharField(verbose_name=u'middle name', max_length=30,
-                                  blank=True)
-    nickname = models.CharField(max_length=30, blank=True)
+                                  blank=True, null=True)
+    nickname = models.CharField(max_length=30, blank=True, null=True)
     maidenname = models.CharField(verbose_name=u'maiden name', max_length=30,
-                                  blank=True)
+                                  blank=True, null=True)
 
     GENDER = (
         ('B', 'Brother'),
@@ -105,8 +106,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     age = property(_get_age)
 
-    #to accomodate phone number such as:+(yyy)yyyyyyyyyy x.yyyyyy 
-    phone = models.CharField(max_length=25,null=True, blank=True)
+    # to accomodate phone number such as: +(yyy)yyyyyyyyyy x.yyyyyy
+    phone = models.CharField(max_length=25, null=True, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -182,6 +183,7 @@ class Trainee(Profile):
     mentor = models.ForeignKey('self', related_name='mentee', null=True,
                                blank=True)
 
+    locality = models.ManyToManyField(Locality)
     team = models.ForeignKey(Team, null=True, blank=True)
     house = models.ForeignKey(House, null=True, blank=True)
     bunk = models.ForeignKey(Bunk, null=True, blank=True)
@@ -206,7 +208,7 @@ class Trainee(Profile):
     def _trainee_email(self):
         return self.account.email
 
-    email = property(_trainee_email)  # should just use trainee.user.email
+    email = property(_trainee_email)  # should just use trainee.account.email
 
     def __unicode__(self):
         return self.account.get_full_name()

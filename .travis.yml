@@ -1,0 +1,23 @@
+language: python
+python:
+  - 2.7
+addons:
+  postgresql: "9.3"  
+install:
+  - pip install -r requirements/dev.txt
+before_script:
+  - cp ap/ap/settings/travis.py ap/ap/settings/dev.py
+  - psql -c 'create database djattendance;' -U postgres
+  - sed -i -e 's/getpass.getuser()/"postgres"/g' ap/ap/settings/dev.py
+  - python ap/manage.py syncdb --settings=ap.settings.dev --noinput
+script:
+  - coverage run ap/runtests.py
+  - coverage report
+
+# email notification settings
+notifications:
+  email:
+    recipients:
+      - lifeunion@gmail.com
+after_success:
+  - coveralls

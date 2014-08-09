@@ -3,7 +3,6 @@ import os
 import django
 from django.contrib.messages import constants as message_constants
 
-
 # calculated paths for django and the site
 # used as starting points for various other paths
 DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
@@ -86,10 +85,9 @@ SECRET_KEY = 'h%)g$1=j)_(lozsexfe*=$iwj9l#8mfaszohyg5n0azz691r#b'
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
     "django.core.context_processors.media",
-    'django.core.context_processors.request' #Required for django-tables2
-    'django.contrib.messages.context_processors.messages',
+    "django.core.context_processors.request",
+    "django.contrib.messages.context_processors.messages",
 )
 
 # List of callables that know how to import templates from various sources.
@@ -115,18 +113,23 @@ ROOT_URLCONF = 'ap.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'ap.wsgi.application'
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-	'django.contrib.auth.context_processors.auth',
-	'django.core.context_processors.request',
-    'django.contrib.messages.context_processors.messages',
-)
-
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(SITE_ROOT, 'templates'),
 )
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
 
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -147,14 +150,13 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     #'django.contrib.formtools',
 
-    # third-party modules
-    'autofixture', # easily generate dummy/test data
-    'bootstrap3', # easy-to-use bootstrap integration
-    'bootstrap3_datetime', # datetime picker widget
-    'braces', # Mixins for Django's class-based views.
-    'django_reset',
-    'django_tables2',
-    'report_builder',
+    # third-party django modules
+    'bootstrap3',  # easy-to-use bootstrap integration
+    'bootstrap3_datetime',  # datetime picker widget
+    'braces',  # Mixins for Django's class-based views.
+    'explorer',  # SQL explorer
+    'django_select2',
+    'rest_framework',  # for API
 
     # ap CORE
     'accounts',
@@ -177,8 +179,8 @@ INSTALLED_APPS = (
     'lifestudies',
     'meal_seating',
     'schedules',
-    'syllabus', # class syllabus
-    'verse_parse', # parse outlines for PSRP verses
+    'syllabus',  # class syllabus
+    'verse_parse',  # parse outlines for PSRP verses
 )
 
 # A sample logging configuration. The only tangible logging
@@ -211,7 +213,7 @@ LOGGING = {
 }
 
 BOOTSTRAP3 = {
-    'jquery_url': '/static/jquery/js/jquery-1.10.1.min.js',
+    'jquery_url': '/static/js/jquery-1.11.1.min.js',
     'base_url': '/static/bootstrap/css/',
     'css_url': None,
     'theme_url': None,
@@ -231,4 +233,17 @@ MESSAGE_TAGS = {
     message_constants.SUCCESS: 'success',  #green
     message_constants.WARNING: 'warning',  #yellow
     message_constants.ERROR: 'danger',  #red
+}
+
+REST_FRAMEWORK = {
+    # Use hyperlinked styles by default.
+    # Only used if the `serializer_class` attribute is not set on a view.
+    'DEFAULT_MODEL_SERIALIZER_CLASS':
+        'rest_framework.serializers.ModelSerializer',
+
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
 }

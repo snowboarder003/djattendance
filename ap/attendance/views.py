@@ -6,7 +6,10 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404
 
+from rest_framework import viewsets
+
 from .models import Roll
+from .serializers import RollSerializer
 from schedules.models import Schedule, Event
 from leaveslips.models import IndividualSlip, GroupSlip
 from terms.models import Term
@@ -26,3 +29,9 @@ class AttendancePersonal(TemplateView):
         context['leaveslipform'] = IndividualSlipForm()
         context['leaveslips'] = chain(list(IndividualSlip.objects.filter(trainee=self.request.user.trainee).filter(events__term=Term.current_term())), list(GroupSlip.objects.filter(trainee=self.request.user.trainee).filter(start__gte=Term.current_term().start).filter(end__lte=Term.current_term().end)))
         return context
+
+
+
+class RollViewSet(viewsets.ModelViewSet):
+    queryset = Roll.objects.all()
+    serializer_class = RollSerializer
