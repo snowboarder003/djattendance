@@ -33,8 +33,7 @@ urlpatterns = patterns('',
     url(r'^syllabus/', include('syllabus.urls', namespace="syllabus")),
     url(r'^lifestudies/', include('lifestudies.urls', namespace="lifestudies")),
 
-    # admin urls
-    url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
+
     url(r'^adminactions/', include('adminactions.urls')), #django-adminactions pluggable app
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),

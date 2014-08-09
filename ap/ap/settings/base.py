@@ -85,7 +85,6 @@ SECRET_KEY = 'h%)g$1=j)_(lozsexfe*=$iwj9l#8mfaszohyg5n0azz691r#b'
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
@@ -138,7 +137,7 @@ INSTALLED_APPS = (
 
     # admin third-party modules
     'adminactions',
-    'grappelli',  # needs to be in front of 'django.contrib.admin'
+    'suit',  # needs to be in front of 'django.contrib.admin'
 
     # django contrib
     'django.contrib.auth',
