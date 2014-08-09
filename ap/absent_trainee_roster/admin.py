@@ -38,17 +38,31 @@ class RosterAdmin(admin.ModelAdmin):
 
 	readonly_fields = ('unreported_houses',)
 
-	# when roster is created, add all houses as unreported.
-	# --this is also done in RosterManager.create_roster(), but  
-	# admin doesn't call this function to create objects.
+	
 	def save_related(self, request, form, formsets, change):
+		roster = Roster.objects.get(date=request.REQUEST['date'])
+
+		# when roster is created, add all houses as unreported.
+		# --this is also done in RosterManager.create_roster(), but  
+		# admin doesn't call this function to create objects.
 		if change == False:
-			roster = Roster.objects.get(date=request.REQUEST['date'])
 			for house in House.objects.all():
 				roster.unreported_houses.add(house)
 			roster.save()
+
+		for formset in formsets:
+			self.save_formset(request, form, formset, change)
+
 		return True
 
+	def save_formset(self, request, form, formset, change):
+		roster = Roster.objects.get(date=request.REQUEST['date'])
+		entries = formset.save(commit=False)
+		for entry in entries:
+			roster.unreported_houses.remove(entry.absentee.house)
+			entry.save()
+		formset.save_m2m()
+		return True
 
 	def get_urls(self):
 		urls = super(RosterAdmin, self).get_urls()
