@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+from pdf import render_to_pdf
 
 from django.contrib import admin
 from django.template import loader,Context
@@ -7,9 +8,9 @@ from django.core.mail import EmailMessage
 from django.conf import settings # to get admin email addresses
 from django.http import HttpResponse
 
-from models import Absentee, Roster, Entry, House
-from pdf import render_to_pdf
-
+from .models import Absentee, Roster, Entry
+from houses.models import House
+from accounts.models import User
 
 class EntryAdmin(admin.ModelAdmin):
 	def house(obj):
@@ -76,11 +77,11 @@ class RosterAdmin(admin.ModelAdmin):
 				'pagsize': 'letter',
 				'roster': roster,
 				'entries': entries,
+				'genders': User.GENDER,
 				'bro_unreported_houses': bro_unreported_houses,
 				'sis_unreported_houses': sis_unreported_houses,
 				'days': days,
 				'unreported_list': unreported_list,
-				
 			}
 		)
 
