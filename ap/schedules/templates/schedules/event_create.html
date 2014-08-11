@@ -8,23 +8,11 @@
 {% block title %}Create Event{% endblock %}
 
 {% block media %}
-    <link href="/static/css/select2-bootstrap.css" type="text/css" media="screen" rel="stylesheet">
-    <script type="text/javascript" src="/static/js/underscore-min.js"></script>
+
+    {{ block.super }}
     {{ form.media }}
-
-
-     <style>
-        /* ideally, the border should be on select2-container, not select2-choices (this is what select2-bootstrap.css does). but doing it that way results in a weird line break (the cursor always starts on a new line and makes the box look funny). */
-        .select2-container{
-            border: 0px;
-            padding: 0px;
-        }
-        ul.select2-choices{
-            border: 1px #cccccc;
-            border-radius: 4px;
-        }
-    </style>
-
+    <link href="/static/css/select2-bootstrap.css" type="text/css" media="screen" rel="stylesheet">
+    
 {% endblock %}
 
 {% block content %}
