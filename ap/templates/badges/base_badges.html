@@ -4,8 +4,6 @@
 <h3> Badges </h3>
     <p> Welcome to the badges portal!</p>
 
-    {% if request.user.trainingassistant %}
-
         <ul class="nav nav-tabs" role="tablist">
             <li {% block tab1 %}{%endblock%}><a href="{% url 'badges:badges_term' "Fa14"%}">Badges for Current Term </a></li>
             <li {% block tab2 %}{%endblock%}><a href="{% url 'badges:badges_list' %}">All Badges List</a></li>
@@ -21,5 +19,4 @@
         </ul>
 
     {% block badges_content %}{% endblock %}
-    {% endif %}
 {% endblock %}
