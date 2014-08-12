@@ -22,13 +22,3 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'ap/static'),
 )
-
-BOOTSTRAP3 = {
-    'jquery_url': STATIC_ROOT + 'js/jquery-1.11.1.min.js',
-    'base_url': None,
-    'css_url': STATIC_ROOT + 'css/bootstrap.min.css',
-    'theme_url': None,
-    'javascript_url': STATIC_ROOT + 'js/bootstrap.min.js',
-    'horizontal_label_class': 'col-md-2',
-    'horizontal_field_class': 'col-md-4',
-}
