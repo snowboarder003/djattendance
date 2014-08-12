@@ -17,15 +17,7 @@ djorm-ext-pgarray==0.10
 
 # PDF
 xhtml2pdf==0.0.6
-<<<<<<< HEAD
-django-bootstrap3
-django-bootstrap3-datetimepicker
-django-select2
-djangorestframework
-pillow
-=======
 pdfminer==20140328
 
 # deprecate
 django-tastypie==0.11.1
->>>>>>> dev
