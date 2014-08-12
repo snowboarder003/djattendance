@@ -1,3 +1,21 @@
+.select2-container{
+    border: 0px;
+    padding: 0px;
+}
+ul.select2-choices{
+    border: 1px #cccccc;
+    border-radius: 4px;
+}
+
+.checkbox{
+    padding-right: 10px;
+    display: inline-block;
+    margin-top: 0px;
+}
+.checkbox + .checkbox{
+    margin-top: 0px;
+}
+
 .form-control .select2-choice {
     border: 0;
     border-radius: 2px;
@@ -22,7 +40,7 @@
 }
 
 .form-control.select2-container .select2-choices {
-    border: 0 !important;
+    /*border: 0 !important;*/
     border-radius: 3px;
 }
 
