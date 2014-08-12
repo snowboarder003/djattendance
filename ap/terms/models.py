@@ -4,9 +4,6 @@ from exceptions import ValueError
 
 from django.db import models
 from django.core.urlresolvers import reverse
-from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q
-import datetime
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
