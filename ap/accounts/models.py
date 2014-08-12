@@ -189,7 +189,7 @@ class Trainee(Profile):
                                blank=True)
     locality = models.ManyToManyField(Locality, null=True, blank=True)
 
-    #locality = models.ManyToManyField(Locality)
+    locality = models.ManyToManyField(Locality)
     team = models.ForeignKey(Team, null=True, blank=True)
     house = models.ForeignKey(House, null=True, blank=True)
     bunk = models.ForeignKey(Bunk, null=True, blank=True)
