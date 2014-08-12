@@ -94,6 +94,8 @@
             <div class="list-group small">
 
               {% block sidelinks %}
+              <li>Badge</li>
+                <li><a href="{% url 'badges:badges_list' %}">View Badges</a></li>
 
               <h5>Attendance</h5> {% block attendance_links %}
                 <a class="list-group-item" href="{% url 'schedules:schedule' %}">View Schedule</a>

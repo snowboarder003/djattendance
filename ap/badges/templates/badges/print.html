@@ -85,8 +85,12 @@
         </style>
     </head>
     <body>
-    {% if object_list|length < 9 %}
-        {% for badge in object_list %} 
+        {% for badge in object_list %}
+            {% if forloop.counter0|divisibleby:8 and forloop.counter0 >= 8 %}
+                <div class="page-break">
+                </div>
+            {% endif %}
+            {% if forloop.counter0|divisibleby:2 %}
             <div class="secondfreshcolumn">
                 <div class="banner">
                     Living Stream Ministry <br/>
@@ -100,7 +104,7 @@
                     <img class="badge-pic" src="/media/{{badge.original}}"></div>
                 </div>
             </div>
-
+            {% else %}
             <div class="badge">
                 <div class="banner">
                     Living Stream Ministry <br/>
@@ -114,126 +118,8 @@
                     <img class="badge-pic" src="/media/{{badge.original}}"></div>
                 </div>
             </div>
+            {% endif %}
         {% endfor %}
-    {% else %}
-        {% for badge in object_list %} 
-            <div class="secondfreshcolumn">
-                <div class="banner">
-                    Living Stream Ministry <br/>
-                    <small>Full-Time Training in Anaheim</small>
-                </div>
-                <div class="body">
-                    <div class="name">
-                        <b>{{badge.firstname}}</b> <br> 
-                        {{badge.locality}}
-                    </div>
-                    <img class="badge-pic" src="/media/{{badge.original}}"></div>
-                </div>
-            </div>
-
-            <div class="badge">
-                <div class="banner">
-                    Living Stream Ministry <br/>
-                    <small>Full-Time Training in Anaheim</small>
-                </div>
-                <div class="body">
-                    <div class="name">
-                        <b>{{badge.firstname}}</b> <br> 
-                        {{badge.locality}}
-                    </div>
-                    <img class="badge-pic" src="/media/{{badge.original}}"></div>
-                </div>
-            </div>
-
-            <div class="secondfreshcolumn">
-                <div class="banner">
-                    Living Stream Ministry <br/>
-                    <small>Full-Time Training in Anaheim</small>
-                </div>
-                <div class="body">
-                    <div class="name">
-                        <b>{{badge.firstname}}</b> <br> 
-                        {{badge.locality}}
-                    </div>
-                    <img class="badge-pic" src="/media/{{badge.original}}"></div>
-                </div>
-            </div>
-
-            <div class="badge">
-                <div class="banner">
-                    Living Stream Ministry <br/>
-                    <small>Full-Time Training in Anaheim</small>
-                </div>
-                <div class="body">
-                    <div class="name">
-                        <b>{{badge.firstname}}</b> <br> 
-                        {{badge.locality}}
-                    </div>
-                    <img class="badge-pic" src="/media/{{badge.original}}"></div>
-                </div>
-            </div>
-
-            <div class="secondfreshcolumn">
-                <div class="banner">
-                    Living Stream Ministry <br/>
-                    <small>Full-Time Training in Anaheim</small>
-                </div>
-                <div class="body">
-                    <div class="name">
-                        <b>{{badge.firstname}}</b> <br> 
-                        {{badge.locality}}
-                    </div>
-                    <img class="badge-pic" src="/media/{{badge.original}}"></div>
-                </div>
-            </div>
-
-            <div class="badge">
-                <div class="banner">
-                    Living Stream Ministry <br/>
-                    <small>Full-Time Training in Anaheim</small>
-                </div>
-                <div class="body">
-                    <div class="name">
-                        <b>{{badge.firstname}}</b> <br> 
-                        {{badge.locality}}
-                    </div>
-                    <img class="badge-pic" src="/media/{{badge.original}}"></div>
-                </div>
-            </div>
-
-            <div class="secondfreshcolumn">
-                <div class="banner">
-                    Living Stream Ministry <br/>
-                    <small>Full-Time Training in Anaheim</small>
-                </div>
-                <div class="body">
-                    <div class="name">
-                        <b>{{badge.firstname}}</b> <br> 
-                        {{badge.locality}}
-                    </div>
-                    <img class="badge-pic" src="/media/{{badge.original}}"></div>
-                </div>
-            </div>
-
-            <div class="badge">
-                <div class="banner">
-                    Living Stream Ministry <br/>
-                    <small>Full-Time Training in Anaheim</small>
-                </div>
-                <div class="body">
-                    <div class="name">
-                        <b>{{badge.firstname}}</b> <br> 
-                        {{badge.locality}}
-                    </div>
-                    <img class="badge-pic" src="/media/{{badge.original}}"></div>
-                </div>
-            </div>
-
-            <div class="page-break">
-            </div>
-
-        {% endfor %}
-    {% endif %}
     </body>
 </html>
 {% endblock %}
