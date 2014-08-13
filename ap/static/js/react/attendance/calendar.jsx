@@ -137,7 +137,9 @@
         week_events.push(todayEventMarker);
       }
 
-      this.props.setWeekEvents(week_events);
+      if(this.isMounted()) {
+        this.props.setWeekEvents(week_events);
+      }
 
       console.log(week_events, this.props.events.models);
 
@@ -313,43 +315,42 @@
     }
   });
 
-  var slipsBar = React.createBackboneClass({
-    render: function() {
-      var selectedSlips = this.props.selectedSlips,
-          slips = [],
-          i, _len;
+  // working on viewing the leaveslips *not working*
 
-      for (i = 0, _len = this.props.selectedSlips.length; i < _len; i++) {
-        slips.push(<Leaveslip slip={selectedSlips[i]} />);
-      }
+  // var slipsBar = React.createBackboneClass({
+  //   render: function() {
+  //     var selectedSlips = this.props.selectedSlips,
+  //         slips = [],
+  //         i, _len;
 
-      if (slips.length === 0) {
-        slips = (
-          <div>
-            <i>No event(s) with leaveslip(s) selected</i>
-            <div className="form-group center-padded">
-              <button className="btn btn-primary"><span className="glyphicon glyphicon-pencil"></span> Write New Leaveslip</button>
-            </div>
-          </div>
-        );
-      }
+  //     for (i = 0, _len = this.props.selectedSlips.length; i < _len; i++) {
+  //       slips.push(<Leaveslip slip={selectedSlips[i]} />);
+  //     }
 
-      var slips = this.props.getSlipsFromEvents(this.props.)
-
-      return (
-        <div className="panel panel-default leaveslip-container">
-          <div className="list-group">
-            <a href="#" className={titleClasses}>
-              {slip.get('type')}
-              <span className="badge">{status}</span>
-            </a>
-            <div className="list-group-item">{description}</div>
-            <div className="list-group-item">{comments}</div>
-          </div>
-        </div>
-      );
-    }
-  });
+  //     if (slips.length === 0) {
+  //       slips = (
+  //         <div>
+  //           <i>No event(s) with leaveslip(s) selected</i>
+  //           <div className="form-group center-padded">
+  //             <button className="btn btn-primary"><span className="glyphicon glyphicon-pencil"></span> Write New Leaveslip</button>
+  //           </div>
+  //         </div>
+  //       );
+  //     }
+  //     return (
+  //       <div className="panel panel-default leaveslip-container">
+  //         <div className="list-group">
+  //           <a href="#" className={titleClasses}>
+  //             {slip.get('type')}
+  //             <span className="badge">{status}</span>
+  //           </a>
+  //           <div className="list-group-item">{description}</div>
+  //           <div className="list-group-item">{comments}</div>
+  //         </div>
+  //       </div>
+  //     );
+  //   }
+  // });
 
   var Attendance = React.createBackboneClass({
     mixins: [
@@ -419,7 +420,7 @@
       var slips = this.getSlipsFromEvents(this.state.selectedEvents);
 
       console.log('slips calculation', slips, this.state.selectedEvents);
-
+      console.log('slips', slips);
       // Only set selected slip if it's one and only one slip selected
       if (_.size(slips) > 0) {
         this.setState({
@@ -513,17 +514,6 @@
           </div>
         </div>
         <hr />
-        <h1>Leaveslip management</h1>
-        <WeekBar
-          date={this.state.date}
-          onUserInput={this.handleDate}
-        />
-        <hr />
-        <slipsBar
-          weekEvents={this.state.weekEvents}
-          getSelectedWeekSlips={this.getSelectedWeekSlips}
-        />
-        <slipForm />
       </div>
       );
     }
@@ -532,6 +522,7 @@
 var attendance = Attendance({events: events, rolls: rolls, slips: slips});
 
 console.log('About to render react.js...');
+
 React.renderComponent(attendance, document.getElementById('react'));
 
 
