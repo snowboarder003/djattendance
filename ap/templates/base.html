@@ -33,8 +33,7 @@
           <!-- additional js here -->
       {% endblock scripts %}
 
-    <!-- put other refs and scripts here -->
-    {% block refs %}{% endblock refs %}
+    {% endblock %}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -77,7 +76,7 @@
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'password_change' %}">Change Password</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'user_update' user.id %}">Update Account</a></li>
                     <li role="presentation" class="divider"></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'login' %}">Logout</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'logout' %}">Logout</a></li>
                   </ul>
               </li>
             {% endblock %}
@@ -122,19 +121,18 @@
                 <a class="list-group-item" href="{% url 'meal_seating.views.newseats' %}">Meal Seating</a>
 
               {% endblock %}
-            </ul>
-          </div>
-        </div><!--/sidebar-->
-    {% endblock %}
+            </div>
+          </div> <!--/SIDEBAR-->
+        {% endblock %}
 
-      <!--CONTENT-->
-      <div class="col-xs-12 col-sm-9 content">
+        <!--CONTENT-->
+        <div id="content" class="col-xs-12 col-sm-10">
 
           {% block messages %}
               <div id="messages">
                 {% if messages %}
                   {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}"><button type = "button" class="close" data-dismiss="alert">&times;</button>{{ message }}</div>
+                    {% bootstrap_messages message %}
                   {% endfor %}
                 {% endif %}
               </div>
@@ -143,14 +141,10 @@
           {% block content %}
             <!-- CONTENT OF PAGE GOES HERE -->
           {% endblock %}
+        </div> <!--/CONTENT -->
 
-      </div><!--/CONTENT -->
-
-    </div>
-
+      </div> <!-- /row -->
     </div> <!-- /container -->
-
-    {% block scripts %}{% endblock scripts %}
 
   </body>
 </html>
