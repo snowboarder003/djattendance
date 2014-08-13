@@ -21,3 +21,8 @@ pdfminer==20140328
 
 # deprecate
 django-tastypie==0.11.1
+
+# React
+PyExecJS==1.0.4
+PyReact==0.4.0
+djangorestframework-bulk==0.1.3
