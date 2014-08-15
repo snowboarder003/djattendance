@@ -1,0 +1,13 @@
+table {
+  font-size:65%;
+}
+
+.name {
+    width:150px;
+    text-align: left;
+}
+
+.meal_date {
+    white-space:nowrap;
+    text-align: center;
+}
