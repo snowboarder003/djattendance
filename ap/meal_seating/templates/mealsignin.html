@@ -4,68 +4,107 @@
 
 {% block title %}Home{% endblock %}
 
+{% block references %}
+    
+    <link rel="stylesheet" type="text/css" href="../../static/css/dataTables.bootstrap.css"></link>
+    
+    <style type="text/css" class="init">
+        div.DTTT { margin-bottom: 0.5em; float: bottom; }
+    </style>
+
+{% endblock %}
+
+{% block scripts %}
+
+    <script type="text/javascript" language="javascript" src="../../static/js/jquery.js"></script>
+    <script type="text/javascript" language="javascript" src="../../static/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" language="javascript" src="../../static/js/dataTables.tableTools.js"></script>
+    <script type="text/javascript" language="javascript" src="../../static/js/dataTables.bootstrap.js"></script>
+    
+    <script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function() {
+        $('#mytable').DataTable( {
+            dom: 'T<"clear">lfrtip',
+            tableTools: {
+                "sSwfPath": "../../static/swf/copy_csv_xls_pdf.swf",
+                "aButtons": [ "print" ]
+            }
+        } );
+    } );
+    </script>
+
+{% endblock %}
+
 {% block content %}
 
-<table class="table table-striped table-bordered">
-    <tr align="center">
-    <td></td>
-    <td colspan="2">Tuesday</td>
-    <td colspan="2">Wednessday</td>
-    <td colspan="2">Thursday</td>
-    <td>Friday</td>
-    <td colspan="3">Saturday</td>
-    <td>LD</td>
-    <td>M</td>
-    <td colspan="2">Tuesday</td>
-    <td colspan="2">Wednessday</td>
-    <td colspan="2">Thursday</td>
-    <td>Friday</td>
-    <td colspan="3">Saturday</td>
-    <td>LD</td>
-    <td>M</td>
-    </tr>
-    
-    <tr align="center">
-        <td></td>
-        <td nowrap colspan="2">{{two_week_datelist.0}}</td>
-        <td nowrap colspan="2">{{two_week_datelist.1}}</td>
-        <td nowrap colspan="2">{{two_week_datelist.2}}</td>
-        <td nowrap >{{two_week_datelist.3}}</td>
-        <td nowrap colspan="3">{{two_week_datelist.4}}</td>
-        <td nowrap >{{two_week_datelist.5}}</td>
-        <td nowrap >{{two_week_datelist.6}}</td>
-        <td nowrap colspan="2">{{two_week_datelist.7}}</td>
-        <td nowrap colspan="2">{{two_week_datelist.8}}</td>
-        <td nowrap colspan="2">{{two_week_datelist.9}}</td>
-        <td nowrap >{{two_week_datelist.10}}</td>
-        <td nowrap colspan="3">{{two_week_datelist.11}}</td>
-        <td nowrap >{{two_week_datelist.12}}</td>
-        <td nowrap >{{two_week_datelist.13}}</td>
-    </tr>
-    
-    <tr align="center">
-    <td></td>
-    <td>B</td><td>D</td>    
-    <td>B</td><td>D</td>
-    <td>B</td><td>D</td>
-    <td>B</td>
-    <td>B</td><td>L</td><td>D</td>
-    <td>B</td><td>D</td>
-    <td>B</td><td>D</td>    
-    <td>B</td><td>D</td>
-    <td>B</td><td>D</td>
-    <td>B</td>
-    <td>B</td><td>L</td><td>D</td>
-    <td>B</td><td>D</td>
-    </tr>
-    
-    {% for entry in trainees %}
-        <tr><td>{{entry.lastname}} , {{entry.firstname}}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    {% endfor %}
+<link rel="stylesheet" type="text/css" href="{% static 'meal_seating/style.css' %}" />
 
-</table>
+<div class="container">
+    <section>
+        <table id="mytable" class="table table-striped table-bordered meal_date">
+            <thead>
+                    <td class="name"></td>
+                    <td colspan="2">Tuesday</td>
+                    <td colspan="2">Wednessday</td>
+                    <td colspan="2">Thursday</td>
+                    <td >Friday</td>
+                    <td colspan="3">Saturday</td>
+                    <td>LD</td>
+                    <td>M</td>
+                    <td colspan="2">Tuesday</td>
+                    <td colspan="2">Wednessday</td>
+                    <td colspan="2">Thursday</td>
+                    <td>Friday</td>
+                    <td colspan="3">Saturday</td>
+                    <td>LD</td>
+                    <td>M</td>
+                </tr>
 
+                <tr class="meal_date">
+                    <td class="name"></td>
+                    <td colspan="2">{{two_week_datelist.0}}</td>
+                    <td colspan="2">{{two_week_datelist.1}}</td>
+                    <td colspan="2">{{two_week_datelist.2}}</td>
+                    <td>{{two_week_datelist.3}}</td>
+                    <td colspan="3">{{two_week_datelist.4}}</td>
+                    <td>{{two_week_datelist.5}}</td>
+                    <td>{{two_week_datelist.6}}</td>
+                    <td colspan="2">{{two_week_datelist.7}}</td>
+                    <td colspan="2">{{two_week_datelist.8}}</td>
+                    <td colspan="2">{{two_week_datelist.9}}</td>
+                    <td>{{two_week_datelist.10}}</td>
+                    <td colspan="3">{{two_week_datelist.11}}</td>
+                    <td>{{two_week_datelist.12}}</td>
+                    <td>{{two_week_datelist.13}}</td>
+                </tr>
+                
+                <tr class="meal_date">
+                    <td class="name"></td>
+                    <td>B</td><td>D</td>    
+                    <td>B</td><td>D</td>
+                    <td>B</td><td>D</td>
+                    <td>B</td>
+                    <td>B</td><td>L</td><td>D</td>
+                    <td>B</td><td>D</td>
+                    <td>B</td><td>D</td>    
+                    <td>B</td><td>D</td>
+                    <td>B</td><td>D</td>
+                    <td>B</td>
+                    <td>B</td><td>L</td><td>D</td>
+                    <td>B</td><td>D</td>
+                </tr>
+            </thead>
 
+            <tbody>
+            {% for entry in trainees %}
+                <tr>
+                    <td class="name" >{{entry.lastname}} , {{entry.firstname}}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</div>
 
 {% endblock %}
 
