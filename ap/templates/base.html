@@ -29,6 +29,10 @@
       <script src="{% static "js/modernizr-2.6.2-respond-1.1.0.min.js" %}"></script>
       <script src="{% static "js/offcanvas.js" %}"></script>
       {% bootstrap_javascript %}
+
+      {% block scripts %}
+      <!-- additional js here -->
+      {% endblock scripts %}
     {% endblock %}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -141,8 +145,5 @@
 
       </div> <!-- /row -->
     </div> <!-- /container -->
-    {% block scripts %}
-      <!-- additional js here -->
-    {% endblock scripts %}
   </body>
 </html>
