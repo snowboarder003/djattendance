@@ -175,7 +175,6 @@ INSTALLED_APPS = (
     'absent_trainee_roster',
     'dailybread',  # daily nourishment
     'leaveslips',
-    'leaveslip_api',
     'lifestudies',
     'meal_seating',
     'schedules',

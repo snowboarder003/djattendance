@@ -521,9 +521,6 @@
 
 var attendance = Attendance({events: events, rolls: rolls, slips: slips});
 
-console.log('About to render react.js...');
-
-React.renderComponent(attendance, document.getElementById('react'));
 
 
 

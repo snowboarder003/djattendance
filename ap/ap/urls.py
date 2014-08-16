@@ -4,7 +4,6 @@ from django.conf.urls import patterns, include, url
 from django.contrib.auth.views import login, logout
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from leaveslip_api.resources import IndividualSlipResource, GroupSlipResource, TraineeResource, TrainingAssistantResource, EventResource, RollResource
 
 from rest_framework import routers
 
