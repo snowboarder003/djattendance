@@ -22,7 +22,7 @@
 
       {% bootstrap_css %}
 
-      <link href="{% static "css/dataTables.bootstrap.css" %}" rel="stylesheet"></link>
+      <link href="{% static "css/dataTables.bootstrap.min.css" %}" rel="stylesheet"></link>
 
       {% bootstrap_messages %}
       {% block references %}
@@ -34,9 +34,9 @@
       <script src="{% static "js/offcanvas.js" %}"></script>
       {% bootstrap_javascript %}
 
-      <script src="{% static "js/jquery.dataTables.js" %}"></script>
-      <script src="{% static "js/dataTables.tableTools.js" %}"></script>
-      <script src="{% static "js/dataTables.bootstrap.js" %}"></script>
+      <script src="{% static "js/jquery.dataTables.min.js" %}"></script>
+      <script src="{% static "js/dataTables.tableTools.min.js" %}"></script>
+      <script src="{% static "js/dataTables.bootstrap.min.js" %}"></script>
       {% block scripts %}
           <!-- additional js here -->
       {% endblock scripts %}
