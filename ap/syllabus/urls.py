@@ -25,7 +25,3 @@ urlpatterns = patterns('',
     url(r'^(?P<syllabus_pk>\d+)/pdf$', 
         pdf_view, name='pdf-view'),
 )
-
-
-
-
