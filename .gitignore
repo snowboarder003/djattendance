@@ -1,12 +1,10 @@
 *.pyc
-base.py
-key.pub
-ap/.project
-ap/.pydevproject
-.gitignore
 .DS_Store
 key.pub
+.project
 ap/.project
+.pydevproject
 ap/.pydevproject
 venv
-staticfiles
+*.sublime-project
+*.sublime-workspace

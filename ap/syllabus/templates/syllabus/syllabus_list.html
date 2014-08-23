@@ -10,8 +10,8 @@
 			{% for syllabus in syllabi %}
 			<table>
 				<tr>
-					<td><a href="{% url 'syllabus-detail' syllabus.id %}" > {{syllabus}} </a> </td>
-	        		<td><a href="{% url 'delete-syllabus' syllabus.id %}">Delete</a></td>
+					<td><a href="{% url 'syllabus:syllabus-detail' syllabus.id %}" > {{syllabus}} </a> </td>
+	        		<td><a href="{% url 'syllabus:delete-syllabus' syllabus.id %}">Delete</a></td>
 	        	</tr>
 	        </table>
 			{% endfor %}
@@ -21,8 +21,8 @@
 	{% endif %}
 
 	<br></br>
-	<a href="{% url 'add-syllabus' %}"> Add a Syllabus </a>
-	{%comment%}<p><a href="{% url 'pdf-view' %}"> PDF Download</a></p>{%endcomment%}
+	<a href="{% url 'syllabus:add-syllabus' %}"> Add a Syllabus </a>
+	{%comment%}<p><a href="{% url 'syllabus:pdf-view' %}"> PDF Download</a></p>{%endcomment%}
 {% endblock %}
 
 	
