@@ -99,7 +99,7 @@ class EventGroup(models.Model):
 
     # override delete(): ensure all events in eventgroup are also deleted
     def delete(self, *args, **kwargs):
-        Events.objects.filter(eventgroup=self.id).delete()
+        Event.objects.filter(eventgroup=self.id).delete()
         super(EventGroup, self).delete(*args, **kwargs)
 
 
@@ -136,14 +136,14 @@ class ScheduleTemplate(models.Model):
 
     eventgroup = models.ManyToManyField(EventGroup)  # TODO: consider refactor using postgres arrays
 
-    def apply(schedule, self):
+    def apply(self, schedule):
         """ applies a schedule template to a schedule """
         for eventgrp in EventGroup.objects.filter(scheduletemplate=self.id):
             # iterate over each event inside each event group
             for event in Event.objects.filter(eventgroup=eventgrp.id):
                 schedule.events.add(event)
 
-    def apply_multiple(schedules, self):
+    def apply_multiple(self, schedules):
         """ applies a schedule template to a group of schedules """
         for schedule in schedules:
             self.apply(schedule)
