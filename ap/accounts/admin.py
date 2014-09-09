@@ -21,7 +21,7 @@ class APUserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ("email", "firstname", "lastname")
+        fields = ("email", "firstname", "lastname", "gender",)
 
     def clean(self):
         cleaned_data = super(APUserCreationForm, self).clean()
@@ -56,7 +56,7 @@ class APUserAdmin(UserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin that reference
     # specific fields on auth.User
-    list_display = ("email", "is_staff", "firstname", "lastname")
+    list_display = ("email", "is_staff", "firstname", "lastname", "gender")
     list_filter = ("is_staff", "is_superuser", "is_active", "groups")
     search_fields = ("email", "firstname", "lastname")
     ordering = ("email",)
@@ -66,7 +66,7 @@ class APUserAdmin(UserAdmin):
                 ("email",)}),
 
         ("Personal info", {"fields":
-                           ("firstname", "lastname")}),
+                           ("firstname", "lastname","gender",)}),
         ("Permissions", {"fields":
                          ("is_active",
                              "is_staff",
@@ -78,7 +78,7 @@ class APUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             "classes": ("wide",),
-            "fields": ("email", "firstname", "lastname", "password",
+            "fields": ("email", "firstname", "lastname", "gender", "password",
                        "password_repeat")}
          ),
     )
@@ -184,34 +184,17 @@ class FirstTermMentorListFilter(SimpleListFilter):
 class TraineeAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            # add 'bunk' back in once db behaves
-            'fields': (('account', 'active',), 'type', 'term',
+            'fields': (('account', 'active',), 'type', 'locality', 'term',
                 ('date_begin', 'date_end',), ('married', 'spouse',),
                 ('TA', 'mentor',), 'team', ('house', 'bunk',), 'address',
                 'self_attendance',)
         }),
     )
-    list_display = ('__unicode__','current_term','_trainee_email',)
+    list_display = ('__unicode__','current_term','_trainee_email','team', 'house',)
     list_filter = ('active', CurrentTermListFilter,FirstTermMentorListFilter,)
     inlines = [
         VehicleInline, EmergencyInfoInline,
     ]
-
-    """
-	#overriding save function to add user to house_coordinator group if applicable
-	def save_model(self, request, obj, form, change):
-
-        if commit:
-        	#if user is a house_coordinator, adds user to the house_coordinator group
-        	if obj.user.profile.trainee.house_coordinator:
-        		try:
-        			group = Group.objects.get(name='house_coordinator')
-        			group.user_set.add(obj.user)
-        		else:
-        			group = Group.objects.create(name = 'house_coordinator')
-            user.save()
-        return user
-    """
 
 
 

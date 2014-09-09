@@ -9,8 +9,7 @@ from absent_trainee_roster.models import Entry, Roster
 from absent_trainee_roster.forms import AbsentTraineeForm, NewEntryFormSet
 
 
-
-@user_passes_test(lambda u: u.groups.filter(name='house_coordinator').count() == 1, login_url = '/')
+# @user_passes_test(lambda u: u.groups.filter(name='house_coordinator').count() == 1, login_url = '/')
 def absent_trainee_form(request):
 	EntryFormSet = modelformset_factory(Entry, AbsentTraineeForm, formset=NewEntryFormSet, max_num=10, extra=1, can_delete=True)
 	
@@ -49,13 +48,8 @@ def absent_trainee_form(request):
 			roster.unreported_houses.remove(request.user.trainee.house)
 			return redirect('/')
 		
-		else:
-			c = {'formset': formset, 'user': request.user}
-			c.update(csrf(request))
-			
-			return render_to_response('absent_trainee_roster/absent_trainee_form.html', c)
-
 	else:
+		# shows existing entries from user's house, i.e. if form was already submitted and user revisits the page
 		formset = EntryFormSet(user=request.user, queryset=roster.entry_set.filter(absentee__account__trainee__house=request.user.trainee.house))
 
 	c = {'formset': formset, 'user': request.user}

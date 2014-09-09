@@ -9,7 +9,7 @@ from bootstrap3_datetime.widgets import DateTimePicker
 from rest_framework import viewsets
 
 from .models import Schedule, ScheduleTemplate, Event, EventGroup
-from .forms import EventForm
+from .forms import EventForm, TraineeSelectForm
 from .serializers import EventSerializer, ScheduleSerializer
 from terms.models import Term
 
@@ -31,25 +31,16 @@ class ScheduleDetail(generic.DetailView):
     def get_queryset(self):
         return Schedule.objects.filter(trainee=self.request.user.trainee).filter(term=Term.current_term())
 
-class ScheduleCreate(generic.CreateView):
-    model = ScheduleTemplate
-    template_name = 'schedules/new_schedule.html'
-    fields = ['name']
-
-
-class ScheduleList(generic.ListView):
-    model = ScheduleTemplate
-    template_name = 'schedules/list.html'
-    context_object_name = 'list_of_schedules'
-
-    def get_queryset(self):
-        return ScheduleTemplate.objects.all
-
 
 class EventCreate(generic.CreateView):
     model = Event
     template_name = 'schedules/event_create.html'
     form_class = EventForm
+
+    def get_context_data(self, **kwargs):
+        context = super(EventCreate, self).get_context_data(**kwargs)
+        context['trainee_select_form'] = TraineeSelectForm()
+        return context
 
     def form_valid(self, form):
         event = form.save()
