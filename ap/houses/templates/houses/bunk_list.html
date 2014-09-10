@@ -23,7 +23,6 @@
 				<th> Mentor </th>
 				<th> Term </th>
 				<th> Vehicle </th>
-				<th> Birth Date </th>
 				<th> TA </th>
 				<th> Age </th>
 				<th> Team </th>
@@ -43,7 +42,6 @@
 					<td>{{bunk.trainee.mentor}}</td>
 					<td>{{bunk.trainee.current_term}}</td>
 					<td>{{bunk.trainee.vehicle}}</td>
-					<td>{{bunk.trainee.account.date_of_birth | date:'m/d/Y'}}</td>
 					<td>{{bunk.trainee.TA}}</td>
 					<td>{{bunk.trainee.account.age}}</td>
 					<td>{{bunk.trainee.team}}</td>
@@ -58,7 +56,6 @@
 				</tr>
 			{% endfor %}	
 		</tbody>
-
 	</table>
 
 {% endblock %}

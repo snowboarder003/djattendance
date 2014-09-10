@@ -1,0 +1,72 @@
+{% extends "houses/base_houses.html" %}
+{% load staticfiles %}
+
+{% block tab2 %} class="active" {% endblock %}
+
+{% block references %}
+	<link rel="stylesheet" href="{% static "datatables/css/jquery.dataTables.css" %}" />
+	<link rel="stylesheet" href="{% static "datatables/css/dataTables.bootstrap.css" %}" />
+{% endblock %}
+
+{% block houses_content %}
+	<h1> Unassigned Trainees </h1>
+
+	<table class="table" id="house-table">
+		<thead>
+			<tr>
+                <th> Last Name </th>
+                <th> First Name </th>
+                <th> Gender </th>
+                <th> Age </th>
+                <th> Current Term </th>
+                <th> Status </th>
+                <th> Team </th>
+                <th> Residence </th>
+                <th> Bunk </th>
+                <th> Married </th>
+                <th> Spouse </th>
+                <th> Vehicle Info</th>
+                <th> TA </th>
+                <th> Mentor </th>
+                <th> Start Date</th>
+                <th> End Date</th>
+            </tr>
+		</thead>
+		<tbody>
+			{% for trainee in trainees %}
+				{% if not trainee.house or not trainee.bunk%}
+				<tr>
+                    <td>{{trainee.account.lastname}}</td>
+                    <td>{{trainee.account.firstname}}</td>
+                    <td>{{trainee.account.gender}}</td>
+                    <td>{{trainee.account.age}}</td>
+                    <td>{{trainee.current_term}}</td>
+                    <td>{{trainee.type}}</td>
+                    <td>{{trainee.team}}</td>
+                    <td>{{trainee.house}}</td>
+                    <td>{{trainee.bunk}}</td>
+                    <td>{{trainee.married}}</td>
+                    <td>{{trainee.spouse}}</td>
+                    <td>{{trainee.vehicle}}</td>
+                    <td>{{trainee.TA}} </td>
+                    <td>{{trainee.mentor}} </td>
+                    <td>{{trainee.date_begin | date:'m/d/y'}}</td>
+                    <td>{{trainee.date_end | date:'m/d/y'}} </td>
+                </tr>
+                {% endif %}
+			{% endfor %}	
+		</tbody>
+	</table>
+
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		$(document).ready(function(){
+	    	$('#house-table').dataTable();
+	    	$('#house-table').editableTableWidget();
+		});
+	</script>
+	<script type="text/javascript" src="{% static "datatables/js/jquery.dataTables.js" %}"></script>
+	<script type="text/javascript" src="{% static "datatables/js/dataTables.bootstrap.js" %}"></script>
+{% endblock %}

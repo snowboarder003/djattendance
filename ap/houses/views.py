@@ -3,12 +3,19 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import FormView
 from .models import Bunk
 from .forms import BunkForm
+from accounts.models import Trainee
 
 
 class BunkListView(ListView):
 	model = Bunk
 	context_object_name = 'bunks'
 	template_name = 'houses/bunk_list.html'
+
+
+class TraineeListView(ListView):
+	model = Trainee
+	context_object_name = 'trainees'
+	template_name = 'houses/trainee_list.html'
 
 
 class BunkFormView(FormView):
