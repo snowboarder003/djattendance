@@ -30,7 +30,7 @@ urlpatterns = patterns('',
     url(r'^absent_trainee_roster/', include('absent_trainee_roster.urls', namespace="absent_trainee_roster")),
     url(r'^syllabus/', include('syllabus.urls', namespace="syllabus")),
     url(r'^lifestudies/', include('lifestudies.urls', namespace="lifestudies")),
-
+    url(r'^announcements/', include('announcements.urls', namespace="announcements")),
 
     url(r'^adminactions/', include('adminactions.urls')), #django-adminactions pluggable app
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -70,6 +70,7 @@ urlpatterns += patterns('',
     #third party
     url(r'^explorer/', include('explorer.urls')),
     url(r'^select2/', include('django_select2.urls')),
+    url(r'^messages/', include('messages_extends.urls')),
 
 )
 

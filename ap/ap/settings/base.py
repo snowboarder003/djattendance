@@ -157,6 +157,7 @@ INSTALLED_APPS = (
     'explorer',  # SQL explorer
     'django_select2',
     'rest_framework',  # for API
+    'messages_extends',
 
     # ap CORE
     'accounts',
@@ -181,6 +182,7 @@ INSTALLED_APPS = (
     'schedules',
     'syllabus',  # class syllabus
     'verse_parse',  # parse outlines for PSRP verses
+    'announcements',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -247,3 +249,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+MESSAGE_STORAGE = 'messages_extends.storages.FallbackStorage'
