@@ -29,8 +29,6 @@
 {% endblock %}
 
 {% block badges_content %}
-    <p><a href="{% url 'badges:badges_print_term' %}" class="list-group-item-active">Print all first term trainees</p>
-    <p><a href="{% url 'badges:badges_print_term_back' %}" class="list-group-item-active">Print all first term trainees back of the badge</p>
 
     <BR>&nbsp;<BR>
     <form action="{% url 'badges:badges_print_term' %}" method="post"> 
