@@ -69,8 +69,12 @@
         </style>
     </head>
     <body>
-    {% if object_list|length < 9 %}
-        {% for badge in object_list %} 
+    {% for badge in object_list %}
+            {% if forloop.counter0|divisibleby:8 and forloop.counter0 >= 8 %}
+                <div class="page-break">
+                </div>
+            {% endif %}
+            {% if forloop.counter0|divisibleby:2 %}
             <div class="secondfreshcolumn">
                 <div class="banner">
                     <b>Property of Living Stream Ministry</b><br/>
@@ -83,7 +87,7 @@
                 </div>
                 </div>
             </div>
-
+            {% else %}
             <div class="badge">
                 <div class="banner">
                     <b>Property of Living Stream Ministry</b><br/>
@@ -96,118 +100,8 @@
                 </div>
                 </div>
             </div>
-        {% endfor %}
-    {% else %}
-        {% for badge in object_list %} 
-            <div class="secondfreshcolumn">
-                <div class="banner">
-                    <b>Property of Living Stream Ministry</b><br/>
-                    If found please return to:
-                </div>
-                <div class="body">
-                <div class="name">
-                        PO BOX 2121 Anaheim, CA 92804 <br/>
-                        (714)991-4688
-                </div>
-                </div>
-            </div>
-
-            <div class="badge">
-                <div class="banner">
-                    <b>Property of Living Stream Ministry</b><br/>
-                    If found please return to:
-                </div>
-                <div class="body">
-                <div class="name">
-                        PO BOX 2121 Anaheim, CA 92804 <br/>
-                        (714)991-4688
-                </div>
-                </div>
-            </div>
-
-            <div class="secondfreshcolumn">
-                <div class="banner">
-                    <b>Property of Living Stream Ministry</b><br/>
-                    If found please return to:
-                </div>
-                <div class="body">
-                <div class="name">
-                        PO BOX 2121 Anaheim, CA 92804 <br/>
-                        (714)991-4688
-                </div>
-                </div>
-            </div>
-
-            <div class="badge">
-                <div class="banner">
-                    <b>Property of Living Stream Ministry</b><br/>
-                    If found please return to:
-                </div>
-                <div class="body">
-                <div class="name">
-                        PO BOX 2121 Anaheim, CA 92804 <br/>
-                        (714)991-4688
-                </div>
-                </div>
-            </div>
-
-            <div class="secondfreshcolumn">
-                <div class="banner">
-                    <b>Property of Living Stream Ministry</b><br/>
-                    If found please return to:
-                </div>
-                <div class="body">
-                <div class="name">
-                        PO BOX 2121 Anaheim, CA 92804 <br/>
-                        (714)991-4688
-                </div>
-                </div>
-            </div>
-
-            <div class="badge">
-                <div class="banner">
-                    <b>Property of Living Stream Ministry</b><br/>
-                    If found please return to:
-                </div>
-                <div class="body">
-                <div class="name">
-                        PO BOX 2121 Anaheim, CA 92804 <br/>
-                        (714)991-4688
-                </div>
-                </div>
-            </div>
-
-            <div class="secondfreshcolumn">
-                <div class="banner">
-                    <b>Property of Living Stream Ministry</b><br/>
-                    If found please return to:
-                </div>
-                <div class="body">
-                <div class="name">
-                        PO BOX 2121 Anaheim, CA 92804 <br/>
-                        (714)991-4688
-                </div>
-                </div>
-            </div>
-
-            <div class="badge">
-                <div class="banner">
-                    <b>Property of Living Stream Ministry</b><br/>
-                    If found please return to:
-                </div>
-                <div class="body">
-                <div class="name">
-                        PO BOX 2121 Anaheim, CA 92804 <br/>
-                        (714)991-4688
-                </div>
-                </div>
-            </div>
-
-            <div class="page-break">
-            </div>
-
-        {% endfor %}
-    {% endif %}
+            {% endif %}
+    {% endfor %}
     </body>
 </html>
 {% endblock %}
