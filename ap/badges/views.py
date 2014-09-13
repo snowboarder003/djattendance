@@ -56,7 +56,7 @@ def makepdf(request):
             }
         )
 
-class BadgePrintView(ListView):
+class BadgePrintFrontView(ListView):
 
     model = Badge
 
@@ -67,7 +67,7 @@ class BadgePrintView(ListView):
         return Badge.objects.filter(term_created__exact=Term.current_term())
     
     def get_context_data(self, **kwargs):
-        context = super(BadgePrintView, self).get_context_data(**kwargs)
+        context = super(BadgePrintFrontView, self).get_context_data(**kwargs)
         return context
 
 class BadgePrintBackView(ListView):
@@ -82,6 +82,20 @@ class BadgePrintBackView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super(BadgePrintBackView, self).get_context_data(**kwargs)
+        return context
+
+class BadgePrintFacebookView(ListView):
+
+    model = Badge
+
+    def get_template_names(self):
+        return ['badges/printfacebook.html']
+    
+    def get_queryset(self, **kwargs):
+        return Badge.objects.filter(term_created__exact=Term.current_term())
+    
+    def get_context_data(self, **kwargs):
+        context = super(BadgePrintFacebookView, self).get_context_data(**kwargs)
         return context
 
 class BadgeTermView(ListView):
