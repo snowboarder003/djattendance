@@ -84,6 +84,21 @@ class BadgePrintBackView(ListView):
         context = super(BadgePrintBackView, self).get_context_data(**kwargs)
         return context
 
+class BadgePrintGeneralBackView(ListView):
+
+    model = Badge
+
+    def get_template_names(self):
+        return ['badges/printgeneralback.html']
+    
+    def get_queryset(self, **kwargs):
+        return Badge.objects.filter(term_created__exact=Term.current_term())
+    
+    def get_context_data(self, **kwargs):
+        context = super(BadgePrintGeneralBackView, self).get_context_data(**kwargs)
+        context['loop_times'] = [i+1 for i in range(8)]
+        return context
+
 class BadgePrintFacebookView(ListView):
 
     model = Badge
@@ -110,6 +125,21 @@ class BadgePrintStaffView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super(BadgePrintStaffView, self).get_context_data(**kwargs)
+        return context
+
+class BadgePrintShorttermView(ListView):
+
+    model = Badge
+
+    def get_template_names(self):
+        return ['badges/printshortterm.html']
+    
+    def get_queryset(self, **kwargs):
+        return Badge.objects.filter(term_created__exact=Term.current_term())
+    
+    def get_context_data(self, **kwargs):
+        context = super(BadgePrintShorttermView, self).get_context_data(**kwargs)
+        context['loop_times'] = [i+1 for i in range(8)]
         return context
 
 class BadgeTermView(ListView):
@@ -185,4 +215,64 @@ class BadgeDeleteView(DeleteView):
     model = Badge
     template_name = 'badges/badge_delete.html'
     success_url='/badges/'
+
+class BadgePrintUsherView(ListView):
+
+    model = Badge
+
+    def get_template_names(self):
+        return ['badges/printusher.html']
+    
+    def get_queryset(self, **kwargs):
+        return Badge.objects.filter(term_created__exact=Term.current_term())
+    
+    def get_context_data(self, **kwargs):
+        context = super(BadgePrintUsherView, self).get_context_data(**kwargs)
+        context['loop_times'] = [i+1 for i in range(8)]
+        return context
+
+class BadgePrintTempView(ListView):
+
+    model = Badge
+
+    def get_template_names(self):
+        return ['badges/printtemp.html']
+    
+    def get_queryset(self, **kwargs):
+        return Badge.objects.filter(term_created__exact=Term.current_term())
+    
+    def get_context_data(self, **kwargs):
+        context = super(BadgePrintTempView, self).get_context_data(**kwargs)
+        context['loop_times'] = [i+1 for i in range(50)]
+        return context
+
+class BadgePrintVisitorView(ListView):
+
+    model = Badge
+
+    def get_template_names(self):
+        return ['badges/printvisitor.html']
+    
+    def get_queryset(self, **kwargs):
+        return Badge.objects.filter(term_created__exact=Term.current_term())
+    
+    def get_context_data(self, **kwargs):
+        context = super(BadgePrintVisitorView, self).get_context_data(**kwargs)
+        context['loop_times'] = [i+1 for i in range(50)]
+        return context
+
+class BadgePrintOfficeView(ListView):
+
+    model = Badge
+
+    def get_template_names(self):
+        return ['badges/printoffice.html']
+    
+    def get_queryset(self, **kwargs):
+        return Badge.objects.filter(term_created__exact=Term.current_term())
+    
+    def get_context_data(self, **kwargs):
+        context = super(BadgePrintOfficeView, self).get_context_data(**kwargs)
+        context['loop_times'] = [i+1 for i in range(8)]
+        return context
 
