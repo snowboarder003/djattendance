@@ -17,7 +17,7 @@
                 dom: 'T<"clear">lfrtip',
                 tableTools: {
                 "sRowSelect": "multi",
-                "aButtons": []
+                "aButtons": [],
                 }
             });
         });
@@ -47,7 +47,8 @@
             </thead>
 
             <tbody>
-                {% for badge in object_list %} 
+                {% for badge in object_list %}
+                {% if badge.type == "T" %} 
                     <tr>
                         <th><img src='/{{badge.avatar}}'/></th>
                         <th>{{badge.type}}</th>
@@ -57,6 +58,7 @@
                         <th><a href="{% url 'badges:badge_detail' badge.pk %}" class="list-group-item-active">Edit</th>
                         <th><a href="{% url 'badges:badge_delete' badge.pk %}" class="list-group-item-active">Delete</th>
                     </tr>
+                {% endif %}
                 {% endfor %}
             </tbody>
         </table>

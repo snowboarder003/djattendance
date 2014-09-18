@@ -41,7 +41,7 @@
                 width: 330px;
                 height: 46px;
                 text-align: center;
-                background: #181CCE;
+                background: #1B761B;
                 color: white;
                 font-size: 16pt;
                 font-family: Times;
@@ -90,11 +90,11 @@
                 <div class="page-break">
                 </div>
             {% endif %}
-            {% if forloop.counter0|divisibleby:2 and badge.type == "T" %}
+            {% if forloop.counter0|divisibleby:2 %}
             <div class="secondfreshcolumn">
                 <div class="banner">
                     Living Stream Ministry <br/>
-                    <small>Full-Time Training in Anaheim</small>
+                    <small>Full-Time Training in Anaheim Staff</small>
                 </div>
                 <div class="body">
                     <div class="name">
@@ -104,7 +104,7 @@
                     <img class="badge-pic" src="/media/{{badge.original}}"></div>
                 </div>
             </div>
-            {% elif badge.type == "T"%}
+            {% else %}
             <div class="badge">
                 <div class="banner">
                     Living Stream Ministry <br/>

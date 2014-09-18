@@ -14,6 +14,7 @@ class Badge(models.Model):
     BADGE_TYPES = (
         ('T', 'Trainee'),
         ('S', 'Staff'),
+        ('X', 'XB-Trainee'),
     )
 
     type = models.CharField(max_length=2, choices=BADGE_TYPES, default='T')
@@ -39,7 +40,8 @@ class Badge(models.Model):
             path += "trainees/" + self.term_created.code + '/'
         elif self.type == 'S':
             path += "staff/"
-        
+        elif self.type == 'X':
+            path += "xb/"
         return path + filename
     
     def save(self, *args, **kwargs):

@@ -98,6 +98,20 @@ class BadgePrintFacebookView(ListView):
         context = super(BadgePrintFacebookView, self).get_context_data(**kwargs)
         return context
 
+class BadgePrintStaffView(ListView):
+
+    model = Badge
+
+    def get_template_names(self):
+        return ['badges/printstaff.html']
+    
+    def get_queryset(self, **kwargs):
+        return Badge.objects.filter(term_created__exact=Term.current_term())
+    
+    def get_context_data(self, **kwargs):
+        context = super(BadgePrintStaffView, self).get_context_data(**kwargs)
+        return context
+
 class BadgeTermView(ListView):
 
     model = Badge
@@ -110,6 +124,34 @@ class BadgeTermView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super(BadgeTermView, self).get_context_data(**kwargs)
+        return context
+
+class BadgeXBTermView(ListView):
+
+    model = Badge
+
+    def get_template_names(self):
+        return ['badges/xbterm.html']
+    
+    def get_queryset(self, **kwargs):
+        return Badge.objects.filter(term_created__exact=Term.current_term())
+    
+    def get_context_data(self, **kwargs):
+        context = super(BadgeXBTermView, self).get_context_data(**kwargs)
+        return context
+
+class BadgeStaffView(ListView):
+
+    model = Badge
+
+    def get_template_names(self):
+        return ['badges/staff.html']
+    
+    def get_queryset(self, **kwargs):
+        return Badge.objects.filter(term_created__exact=Term.current_term())
+    
+    def get_context_data(self, **kwargs):
+        context = super(BadgeStaffView, self).get_context_data(**kwargs)
         return context
 
 class BadgeListView(ListView):
