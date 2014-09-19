@@ -7,6 +7,7 @@ urlpatterns = patterns(
     '',
     url(r'^$', views.BadgeListView.as_view(), name='badges_list'),
     url(r'^print/$', 'badges.views.badgeprintout', name='badges_print'),
+    url(r'^print/pdf/$', 'badges.views.some_view', name='badges_print_pdf'),
     url(r'^print/term/front/$', views.BadgePrintFrontView.as_view(), name='badges_print_term_front'),
     url(r'^print/term/back/$', views.BadgePrintBackView.as_view(), name='badges_print_term_back'),
     url(r'^print/back/$', views.BadgePrintGeneralBackView.as_view(), name='badges_print_general_back'),
