@@ -1,9 +1,11 @@
 from django.views.generic.base import View
 from .forms import NewAnnouncementForm
 from django.contrib import messages
+from messages_extends import constants as constant_messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
+from accounts.models import User
 
 
 
@@ -24,9 +26,9 @@ class AnnouncementView(View):
 			
 			# announcement to individual user
 			if user != None and send_to_all == False:
-				messages.add_message(request, messages.SUCCESS, "Announcement Made to %s" %(user))
 				# sending the message to the user
-				messages.add_message(request, messages.INFO, message)
+				user = User.objects.get(pk=user.id)
+				messages.add_message(request, constant_messages.INFO_PERSISTENT, message, user=user)
 			# announcement to multiple users
 			# announcement to all users
 			return HttpResponseRedirect(reverse_lazy('announcements:announcement_list'))
