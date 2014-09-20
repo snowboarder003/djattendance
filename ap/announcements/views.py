@@ -8,9 +8,11 @@ from django.core.urlresolvers import reverse_lazy
 from accounts.models import User
 
 
+class AnnouncementListView(View):
+	tempalte_name = 'announcements/announcement_list.html'
 
-class AnnouncementView(View):
-	template_name = 'announcements/announcement_list.html'
+class AnnouncementCreateView(View):
+	template_name = 'announcements/announcement_create.html'
 	form_class = NewAnnouncementForm
 
 	def get(self, request, *args, **kwargs):
@@ -31,7 +33,10 @@ class AnnouncementView(View):
 				messages.add_message(request, constant_messages.INFO_PERSISTENT, message, user=user)
 			# announcement to multiple users
 			# announcement to all users
-			return HttpResponseRedirect(reverse_lazy('announcements:announcement_list'))
+			elif send_to_all == True:
+				for user in User.objects.all():
+					messages.add_message(request, constant_messages.INFO_PERSISTENT, message, user=user)
+			return HttpResponseRedirect(reverse_lazy('announcements:announcement_create'))
 		return render(request, self.template_name, {'form': form})
 
 	def get_context_data(self, **kwargs):
