@@ -1,13 +1,51 @@
-from django.views.generic.edit import FormView
+from django.views.generic.base import View
 from .forms import NewAnnouncementForm
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
 
-# Create your views here.
-class AnnouncementView(FormView):
+
+
+class AnnouncementView(View):
 	template_name = 'announcements/announcement_list.html'
 	form_class = NewAnnouncementForm
-	success_url = reverse_lazy('announcement_list')
+
+	def get(self, request, *args, **kwargs):
+		form = self.form_class()
+		return render(request, self.template_name, {'form': form})
+
+	def post(self, request, *args, **kwargs):
+		form = self.form_class(request.POST)
+		if form.is_valid():
+			user = form.cleaned_data['user']
+			send_to_all = form.cleaned_data['send_to_all']
+			message = form.cleaned_data['message']
+			
+			# announcement to individual user
+			if user != None and send_to_all == False:
+				messages.add_message(request, messages.SUCCESS, "Announcement Made to %s" %(user))
+				# sending the message to the user
+				messages.add_message(request, messages.INFO, message)
+			# announcement to multiple users
+			# announcement to all users
+			return HttpResponseRedirect(reverse_lazy('announcements:announcement_list'))
+		return render(request, self.template_name, {'form': form})
 
 	def get_context_data(self, **kwargs):
 		context = super(AnnouncementView, self).get_context_data(**kwargs)
 		return context
+
+	# def post(self, request, *args, **kwargs):
+	# 	if request.method == 'POST':
+	# 	# 	form = NewAnnouncementForm(request.POST)
+	# 	# 	if form.is_valid():
+	# 	# 		print form.cleaned_data['user']
+	# 	# 		print form.cleaned_data['send_to_all']
+	# 	# 		print form.cleaned_data['message']
+	# 	# 		return reverse_lazy('announcement_list')
+	# 	# else:
+	# 	# 	form = NewAnnouncementForm()
+	# 		print "I am in"
+	# 	return reverse_lazy('announcement_list')
+
