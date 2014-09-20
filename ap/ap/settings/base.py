@@ -157,7 +157,7 @@ INSTALLED_APPS = (
     'explorer',  # SQL explorer
     'django_select2',
     'rest_framework',  # for API
-    'messages_extends',
+    'messages_extends',  # for announcements
 
     # ap CORE
     'accounts',
