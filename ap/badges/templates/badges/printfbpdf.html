@@ -1,0 +1,181 @@
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+<!DOCTYPE HTML PUBLIC >
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Printing 8 Badges per Page</title>
+        <style type="text/css">
+            @page {
+                size: {{ pagesize }};
+                margin: 1cm;
+                @frame footer {
+                    -pdf-frame-content: footerContent;
+                    bottom: 0cm;
+                    margin-left: 9cm;
+                    margin-right: 9cm;
+                    height: 1cm;
+                }
+            }
+
+            .title {
+                width: 130px;
+                height: 40px;
+                border: 3px;
+                text-align:center;
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+            .bigbox {
+                height: 690px;
+                width: 550px;
+                color: white;
+                font-size: 12pt;
+                font-family: Arial;
+                line-height: 1.2;
+            }
+
+            .firstcol {
+                padding-left: 600px;
+                padding-top: 100px;
+            }
+
+            .secondcol {
+                padding-left: 100px;
+                padding-top: -100px;
+            }
+            
+            .thirdcol {
+                position: relative;
+                width: 330px;
+                height: 141px;
+                background-image: url('/media/badges/GorgeousLogoLatest.jpg');
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            
+            .fourthcol {
+                position: relative;
+                float: left;
+                left: 17px;
+                top: 54px;
+                line-height: 2em;
+                font-size: 12pt;
+                font-family: Arial;
+            }
+
+            .fifthcol {
+                position: relative;
+                float: left;
+                left: 17px;
+                top: 54px;
+                line-height: 2em;
+                font-size: 12pt;
+                font-family: Arial;
+            }
+
+            .sixthcol {
+                position: relative;
+                float: left;
+                left: 17px;
+                top: 54px;
+                line-height: 2em;
+                font-size: 12pt;
+                font-family: Arial;
+            }
+            
+            .firstrow {
+                
+            }
+
+            .secondrow {
+                position: relative;
+                margin-left: 115px;
+                
+            }
+            
+            .thirdrow {
+                position: relative;
+                width: 330px;
+                height: 141px;
+                background-image: url('/media/badges/GorgeousLogoLatest.jpg');
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            
+            .fourthrow {
+                position: relative;
+                width: 330px;
+                height: 46px;
+                text-align: center;
+                background: #181CCE;
+                color: white;
+                font-size: 16pt;
+                font-family: Times;
+                line-height: 1.2;
+            }
+
+            .fifthrow {
+                position: relative;
+                float: left;
+                left: 17px;
+                top: 54px;
+                line-height: 2em;
+                font-size: 12pt;
+                font-family: Arial;
+            }
+
+            .sixthrow {
+                position: relative;
+                float: left;
+                left: 17px;
+                top: 54px;
+                line-height: 2em;
+                font-size: 12pt;
+                font-family: Arial;
+            }
+
+            .badge-pic {
+                float: left;
+                height: 94px;
+                width: 113px;
+            }
+
+            @media all {
+                .page-break { display: none; }
+            }
+
+            @media print {
+                .page-break { display: block; page-break-before: always; }
+            }
+    
+        </style>
+    </head>
+    <body>
+         
+            <div class="title">
+                Fall 2014 <br/>
+                <small>First-Term Brothers</small> </br>
+                -----------------------------------------------------------------------------------------------------------
+            </div>
+            <div class="bigbox">
+            <div class="firstrow">
+                <div class="firstcol">
+                    <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
+            </div>
+            </div>
+                <div class="secondcol">
+                    <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
+                <div class="thirdcol">
+                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
+                <div class="fourthcol">
+                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
+                <div class="fifthcol">
+                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
+                <div class="sixthcol"> 
+                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div> 
+    </body>
+</html>

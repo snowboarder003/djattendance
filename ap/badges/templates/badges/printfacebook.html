@@ -1,107 +1,15 @@
+{% extends "badges/base_badges.html" %}
 {% load staticfiles %}
 {% load bootstrap3 %}
+{% block tab6 %}class="active"{% endblock %}
 
 {% block badges_content %}
-    
-<BR>&nbsp;<BR> 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-    <head>
-        <title>Printing 8 Badges per Page</title>
-        <style type="text/css">
-            @page {
-                size: {{ pagesize }};
-                margin: 1cm;
-                @frame footer {
-                    -pdf-frame-content: footerContent;
-                    bottom: 0cm;
-                    margin-left: 9cm;
-                    margin-right: 9cm;
-                    height: 1cm;
-                }
-            }
-
-            .badge {
-            width: 330px;
-            height: 190px;
-            border: transparent 1px;
-            }
-
-            .secondfreshcolumn {
-                width: 330px;
-                height: 190px;
-                border: transparent 1px;
-                position: absolute;
-                float: left;
-                left: 426px;
-            }
-
-            .banner {
-                position: relative;
-                width: 330px;
-                height: 32px;
-                text-align: center;
-                font-size: 12pt;
-                font-family: Arial;
-                color: #D1d1d1;
-            }
-
-            .body {
-                position: relative;
-                width: 330px;
-                height: 141px;
-                float: left;
-                top: 102px;
-                font-size: 11pt;
-                font-family: Arial;
-                color: #D1d1d1;
-                text-align: center;
-            }
-            
-            @media all {
-                .page-break { display: none; }
-            }
-
-            @media print {
-                .page-break { display: block; page-break-before: always; }
-            }
-    
-        </style>
-    </head>
-    <body>
-    {% for badge in object_list %}
-            {% if forloop.counter0|divisibleby:8 and forloop.counter0 >= 8 %}
-                <div class="page-break">
-                </div>
-            {% endif %}
-            {% if forloop.counter0|divisibleby:2 %}
-            <div class="secondfreshcolumn">
-                <div class="banner">
-                    <b>Property of Living Stream Ministry</b><br/>
-                    If found please return to:
-                </div>
-                <div class="body">
-                <div class="name">
-                        PO BOX 2121 Anaheim, CA 92804 <br/>
-                        (714)991-4688
-                </div>
-                </div>
-            </div>
-            {% else %}
-            <div class="badge">
-                <div class="banner">
-                    <b>Property of Living Stream Ministry</b><br/>
-                    If found please return to:
-                </div>
-                <div class="body">
-                <div class="name">
-                        PO BOX 2121 Anaheim, CA 92804 <br/>
-                        (714)991-4688
-                </div>
-                </div>
-            </div>
-            {% endif %}
-    {% endfor %}
-    </body>
-</html>
+    <BR>&nbsp;<BR>
+    <li>
+        <a href="generate/">
+            <i class="icon-file icon-alpha75"></i>
+            Generate report
+        </a>
+    </li>
 {% endblock %}
+

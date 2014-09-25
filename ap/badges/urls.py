@@ -7,7 +7,6 @@ urlpatterns = patterns(
     '',
     url(r'^$', views.BadgeListView.as_view(), name='badges_list'),
     url(r'^print/$', 'badges.views.badgeprintout', name='badges_print'),
-    url(r'^print/pdf/$', 'badges.views.some_view', name='badges_print_pdf'),
     url(r'^print/term/front/$', views.BadgePrintFrontView.as_view(), name='badges_print_term_front'),
     url(r'^print/term/back/$', views.BadgePrintBackView.as_view(), name='badges_print_term_back'),
     url(r'^print/back/$', views.BadgePrintGeneralBackView.as_view(), name='badges_print_general_back'),
@@ -25,4 +24,5 @@ urlpatterns = patterns(
     url(r'^view/(?P<term>(Fa|Sp)\d{2})/$', views.BadgeTermView.as_view(), name='badges_term'),
     url(r'^view/xb/(?P<term>(Fa|Sp)\d{2})/$', views.BadgeXBTermView.as_view(), name='badges_term_xb'),
     url(r'^view/staff/$', views.BadgeStaffView.as_view(), name='badges_staff'),
+    url(r'^print/term/facebook/generate/$', 'badges.views.genpdf', name='badges_print_term_genpdf'),
 ) 
