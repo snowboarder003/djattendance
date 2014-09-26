@@ -142,7 +142,7 @@ class HomeAddress(Address):
 
 class Vehicle(models.Model):
 
-    color = models.CharField(max_length=10)
+    color = models.CharField(max_length=20)
 
     # e.g. "Honda", "Toyota"
     make = models.CharField(max_length=30)
@@ -150,11 +150,15 @@ class Vehicle(models.Model):
     # e.g. "Accord", "Camry"
     model = models.CharField(max_length=30)
 
+    year = models.PositiveSmallIntegerField()
+
     license_plate = models.CharField(max_length=10)
 
     state = models.CharField(max_length=20)
 
-    trainee = models.OneToOneField('accounts.Trainee', blank=True, null=True)
+    capacity = models.PositiveSmallIntegerField()
+
+    trainee = models.ManyToManyField('accounts.Trainee', blank=True, null=True)
 
     def __unicode__(self):
         return self.color + ' ' + self.make + ' ' + self.model
