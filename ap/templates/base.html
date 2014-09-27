@@ -114,7 +114,9 @@
                 <a class="list-group-item" href="#">Web Access Requests</a>
 
               <h5>Misc.</h5>
+                {% if request.user.trainingassistant %}
                 <a class="list-group-item" href="{% url 'announcements:announcement_list' %}">Announcements</a>
+                {% endif %}
                 <a class="list-group-item" href="#">Bible Reading Tracker</a>
                 <a class="list-group-item" href="{% url 'absent_trainee_roster:absent_trainee_form' %}">Absent Trainee Roster</a>
                 <a class="list-group-item" href="{% url 'meal_seating.views.newseats' %}">Meal Seating</a>
@@ -128,13 +130,6 @@
         <div id="content" class="col-xs-12 col-sm-10">
 
           {% block messages %}
-              <div id="messages">
-                {% if messages %}
-                  {% for message in messages %}
-                    {% bootstrap_messages message %}
-                  {% endfor %}
-                {% endif %}
-              </div>
           {% endblock %}
 
           {% block content %}

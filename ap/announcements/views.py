@@ -29,7 +29,7 @@ class AnnouncementCreateView(View):
 			# announcement to individual user
 			if user != None and send_to_all == False:
 				# sending the message to the user
-				user = User.objects.get(pk=user.id)
+				user = User.objects.get(pk=user.account_id)
 				messages.add_message(request, constant_messages.INFO_PERSISTENT, message, user=user)
 			# announcement to multiple users
 			# announcement to all users
