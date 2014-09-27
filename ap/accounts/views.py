@@ -116,6 +116,15 @@ class TraineesByTeam(generics.ListAPIView):
         return Trainee.objects.filter(team__id=team)
 
 
+class TraineesByTeamType(generics.ListAPIView):
+    serializer_class = TraineeSerializer
+    model = Trainee
+
+    def get_queryset(self):
+        type = self.kwargs['type'].upper()
+        return Trainee.objects.filter(team__type=type)
+
+
 class TraineesByHouse(generics.ListAPIView):
     serializer_class = TraineeSerializer
     model = Trainee

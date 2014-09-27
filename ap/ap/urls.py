@@ -1,9 +1,11 @@
+# coding: utf-8
+from django.conf import settings
 from django.conf.urls import patterns, include, url
-from django.contrib.auth.views import login, logout
+from django.contrib.auth.views import login, logout_then_login
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from tastypie.api import Api
 from leaveslip_api.resources import IndividualSlipResource, GroupSlipResource, TraineeResource, TrainingAssistantResource, EventResource, RollResource
-import autofixture
 
 from rest_framework import routers
 
@@ -13,13 +15,12 @@ from attendance.views import RollViewSet
 from leaveslips.views import IndividualSlipViewSet, GroupSlipViewSet
 
 admin.autodiscover()
-autofixture.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'ap.views.home', name='home'),
     url(r'^accounts/login/$', login, name='login'),
-	url(r'^accounts/logout/$', logout, name='logout'),
-    url(r'^accounts/', include('accounts.urls', namespace="accounts")),
+	url(r'^accounts/logout/$', logout_then_login, name='logout'),
+    url(r'^accounts/', include('accounts.urls')),
     url(r'^dailybread/', include('dailybread.urls', namespace="dailybread")),
     url(r'^schedules/', include('schedules.urls', namespace="schedules")),
     url(r'^attendance/', include('attendance.urls', namespace="attendance")),
@@ -31,11 +32,11 @@ urlpatterns = patterns('',
     url(r'^lifestudies/', include('lifestudies.urls', namespace="lifestudies")),
     url(r'^houses/', include('houses.urls', namespace="houses")),
 
-    # admin urls
-    url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
+
     url(r'^adminactions/', include('adminactions.urls')), #django-adminactions pluggable app
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
 )
 
 # API urls
@@ -53,6 +54,7 @@ urlpatterns += patterns('',
     url(r'^api/trainees/gender/(?P<gender>[BS])/$', TraineesByGender.as_view()),
     url(r'^api/trainees/term/(?P<term>[1234])/$', TraineesByTerm.as_view()),
     url(r'^api/trainees/team/(?P<pk>\d+)/$', TraineesByTeam.as_view()),
+    url(r'^api/trainees/teamtype/(?P<type>\w+)/$', TraineesByTeamType.as_view()),
     url(r'^api/trainees/house/(?P<pk>\d+)/$', TraineesByHouse.as_view()),
     url(r'^api/trainees/locality/(?P<pk>\d+)/$', TraineesByLocality.as_view()),
     url(r'^api/trainees/hc/$', TraineesHouseCoordinators.as_view()),
@@ -71,3 +73,5 @@ urlpatterns += patterns('',
     url(r'^select2/', include('django_select2.urls')),
 
 )
+
+urlpatterns += staticfiles_urlpatterns()

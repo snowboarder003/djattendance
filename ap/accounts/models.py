@@ -73,7 +73,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     This is a custom-defined User, but inherits from Django's classes
     to integrate with Django's other provided User tools/functionality
     AbstractBaseUser provides Django's basic authentication backend.
-    PermissionsMixin provides compatability with Django's built-in permissions system.
+    PermissionsMixin provides compatibility with Django's built-in permissions system.
     """
 
     email = models.EmailField(verbose_name=u'email address', max_length=255,
@@ -183,7 +183,7 @@ class Trainee(Profile):
     mentor = models.ForeignKey('self', related_name='mentee', null=True,
                                blank=True)
 
-    #locality = models.ManyToManyField(Locality)
+    locality = models.ManyToManyField(Locality)
     team = models.ForeignKey(Team, null=True, blank=True)
     house = models.ForeignKey(House, null=True, blank=True)
     bunk = models.OneToOneField(Bunk, null=True, blank=True)

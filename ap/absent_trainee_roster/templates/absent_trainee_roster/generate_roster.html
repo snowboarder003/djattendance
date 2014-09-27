@@ -24,6 +24,12 @@
 		font-family: sans-serif;
 	}
 
+	th {
+		padding-top: 5px;
+		font-weight: bold;
+		text-align:center
+	}
+
 	h1 {
 		font-size: 28px;
 		font-weight: bold;
@@ -34,12 +40,6 @@
 		font-style: italic;
 		text-align: right;
 		font-weight: normal;
-	}
-
-	h3 {
-		font-size: 16.8px;
-		margin-top: 2.5em;
-		text-decoration: underline;
 	}
 
 	h1, h2 {
@@ -61,25 +61,11 @@
 		margin-top: 24px;
 	}
 
-	.leftBorder {
-		border-left: 1pt none black;
-	}
-
-	.rightBorder {
-		border-right: 1pt none black;
-	}
-
 	table#reportTitle {
 		border-bottom: 2pt double black;
 		padding: 0px;
 	}
 
-	table.trainees th, table.trainees td {
-		padding: 2px;
-	}
-
-	
-	
 </style>
 
 <table width='100%' class='center'><tr><td>
@@ -93,120 +79,76 @@
 
 	<table width='100%' class='trainees center'>
         <colgroup><col><col><col><col><col></colgroup>
-        <tr>
-			<td colspan='5' style='border-bottom: 1pt solid black;'></td>
-		</tr>
-		<tr class='headerRow' id ='header'>
-			<th style='' class='leftBorder'>Brothers</th>
-			<th style='width: 120px;'>House</th>
-			<th style='text-align:center'>Term</th>
-			<th style='text-align:center' class='rightBorder'>Reason</th>
-			<th style='text-align:center'># Days</th>
-		</tr>
-		<tr>
-			<td colspan='5' style='border-top: 1pt solid black;'></td>
-		</tr>
-		
-			{% for entry in entries %}
-				{% if entry.absentee.trainee_house.gender == 'B' %}
-					{% for k, v in days.items %}
-						{% ifequal k entry.absentee.name %}
-							{% if v > 2 %}
-								<tr style='font-weight:bold'>
-							{% else %}
-								<tr>
+        {% for gender in genders %}
+	        <tr>
+				<td colspan='5' style='border-bottom: 1pt solid black;'></td>
+			</tr>
+			<tr>
+				<th>{{ gender.1 }}s</th>
+				<th>House</th>
+				<th>Term</th>
+				<th>Reason</th>
+				<th># Days</th>
+			</tr>
+			<tr>
+				<td colspan='5' style='border-top: 1pt solid black;'></td>
+			</tr>
+			
+				{% for entry in entries %}
+					{% if entry.absentee.account.gender == gender.0 %}
+						{% for k, v in days.items %}
+							{% ifequal k entry.absentee.name %}
+								{% if v > 2 %}
+									<tr style='font-weight:bold'>
+								{% else %}
+									<tr>
+								{% endif %}
+							{% endifequal %}
+						{% endfor %}
+						<td>{{entry.absentee.name}}</td>
+						<td style='text-align:center'>{{entry.absentee.house}}</td>
+						<td style='text-align:center'>{{entry.absentee.term}}</td>
+						<td style='text-align:center'>{{entry.get_reason_display}} </td>
+						<td style='text-align:center'>
+							{% for k, v in days.items %}
+								{% ifequal k entry.absentee.name %}
+									{{v}}
+								{% endifequal %}
+							{% endfor %}
+							{% if entry.absentee.house in unreported_list %}
+								+
 							{% endif %}
-						{% endifequal %}
-					{% endfor %}
-					<td class='leftBorder'>{{entry.absentee.name}}</td>
-					<td>{{entry.absentee.house}}</td>
-					<td style='text-align:center'>{{entry.absentee.term}}</td>
-					<td style='text-align:center'>{{entry.get_reason_display}} </td>
-					<td class='rightBorder' style='text-align:center'>
-						{% for k, v in days.items %}
-							{% ifequal k entry.absentee.name %}
-								{{v}}
-							{% endifequal %}
-						{% endfor %}
-						{% if entry.absentee.house in unreported_list %}
-							+
-						{% endif %}
-					</td>
-				</tr>
-				{% endif %}
-			{% endfor %}
-		<tr>
-			<td colspan='5' style='padding:0.5em; border-bottom: 1pt solid black;'></td>
-		</tr>
-		<tr>
-			<td colspan='5' style='border-bottom: 1pt solid black;'></td>
-		</tr>
-		<tr class='headerRow' id ='header'>
-			<th style='' class='leftBorder'>Sisters</th>
-			<th style='width: 120px;'>House</th>
-			<th style='text-align:center'>Term</th>
-			<th style='text-align:center' class='rightBorder'>Reason</th>
-			<th style='text-align:center'># Days</th>
-		</tr>
-		<tr>
-			<td colspan='5' style='border-top: 1pt solid black;'></td>
-		</tr>
-		{% for entry in entries %}
-			{% if entry.absentee.trainee_house.gender == 'S' %}
-				{% for k, v in days.items %}
-					{% ifequal k entry.absentee.name %}
-						{% if v > 2 %}
-							<tr style='font-weight:bold'>
-						{% else %}
-							<tr>
-						{% endif %}
-					{% endifequal %}
+						</td>
+					</tr>
+					{% endif %}
 				{% endfor %}
-				
-					<td class='leftBorder'>{{entry.absentee.name}}</td>
-					<td>{{entry.absentee.house}}</td>
-					<td style='text-align:center'>{{entry.absentee.term}}</td>
-					<td style='text-align:center'>{{entry.get_reason_display}} </td>
-					<td class='rightBorder' style='text-align:center'>
-						{% for k, v in days.items %}
-							{% ifequal k entry.absentee.name %}
-								{{v}}
-							{% endifequal %}
-						{% endfor %}
-						{% if entry.absentee.house in unreported_list %}
-							+
-						{% endif %}
-					</td>
-			{% endif %}
+
 		{% endfor %}
-		<tr>
-			<td colspan='5' style='padding:0.5em; border-top: 1pt solid black;'></td>
-		</tr>
-		
+
 		<tr>
 			<td colspan='5' style='border-bottom: 1pt solid black;'></td>
 		</tr>
 		<tr>
-			<th colspan=5 style='border-bottom:1pt solid black'>Unreported Houses</th>
+			<th colspan='5' style='border-bottom:1pt solid black'>Unreported Houses</th>
 		</tr>
 		<tr>
-			<td style='vertical-align:top; width: 49%;' colspan=2>
-				<p style='font-weight:bold; margin-top:1em'>Brothers:</p>
+			<td style='vertical-align:top; width: 49%; padding-top: 5px;' colspan='2'>
+				<span style='font-weight:bold;'>Brothers:</span><br>
 				{% if bro_unreported_houses %}
 					{% for house in bro_unreported_houses %}
-						<p>{{house}}</p>
+						{{house}}<br>
 					{% endfor %}
 				{% else %}
 					<p style='font-style:italic'>No houses unreported.</p>
-				{% endif %}
-				
+				{% endif %}	
 			</td>
+
 			<td></td>
-			<td style='vertical-align:top; width: 49%;' colspan=2>
-				<p style='font-weight:bold; margin-top:1em'>Sisters:</p>
+			<td style='vertical-align:top; width: 49%; padding-top: 5px;' colspan='2'>
+				<span style='font-weight:bold;'>Sisters:</span><br>
 				{% if sis_unreported_houses %}
 					{% for house in sis_unreported_houses %}
-						<p>{{house}}</p>
+						{{house}}<br>
 					{% endfor %}
 				{% else %}
 					<p style='font-style:italic'>No houses unreported.</p>
@@ -219,17 +161,7 @@
 	<p><span style='font-weight:bold'># Days</span> is the number of days a trainee has been absent in the last 7 days. </p>
 	<p><span style='font-weight:bold'>+</span> means that within the last 7 days, the trainee's house has been unreported.</p>
 
-<!--	<div>
-		{% for key, value in days.items %}
-			<li>{{key}} - {{value}}</li>
-		{% endfor %}
-	</div>
-	
-	<div>
-		{% for house in unreported_list %}
-			<li>{{house}}</li>
-		{% endfor %}
-	</div> -->
+
 </td></tr></table>
 	</body>
 </html>

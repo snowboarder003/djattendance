@@ -184,8 +184,7 @@ class FirstTermMentorListFilter(SimpleListFilter):
 class TraineeAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            # add 'bunk' back in once db behaves
-            'fields': (('account', 'active',), 'type', 'term',
+            'fields': (('account', 'active',), 'type', 'locality', 'term',
                 ('date_begin', 'date_end',), ('married', 'spouse',),
                 ('TA', 'mentor',), 'team', ('house', 'bunk',), 'address',
                 'self_attendance',)
@@ -196,22 +195,6 @@ class TraineeAdmin(admin.ModelAdmin):
     inlines = [
         VehicleInline, EmergencyInfoInline,
     ]
-
-    """
-	#overriding save function to add user to house_coordinator group if applicable
-	def save_model(self, request, obj, form, change):
-
-        if commit:
-        	#if user is a house_coordinator, adds user to the house_coordinator group
-        	if obj.user.profile.trainee.house_coordinator:
-        		try:
-        			group = Group.objects.get(name='house_coordinator')
-        			group.user_set.add(obj.user)
-        		else:
-        			group = Group.objects.create(name = 'house_coordinator')
-            user.save()
-        return user
-    """
 
 
 
