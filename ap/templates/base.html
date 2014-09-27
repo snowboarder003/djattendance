@@ -119,14 +119,12 @@
                 <a class="list-group-item" href="#">Bible Reading Tracker</a>
                 <a class="list-group-item" href="{% url 'absent_trainee_roster:absent_trainee_form' %}">Absent Trainee Roster</a>
                 <a class="list-group-item" href="{% url 'meal_seating.views.newseats' %}">Meal Seating</a>
+                <a class="list-group-item" href="{% url 'houses:bunk_list' %}">Bunk Assignment</a>
+                <a class="list-group-item" href="/explorer">SQL Explorer</a>
+                <a class="list-group-item" href="/admin">Admin Site</a>
+                <a class="list-group-item" href="/accounts/list">Trainee Editor</a>
 
               <hr style="border-top: 1px solid #dddddd;">
-
-              <li>TA Admin</li>
-                <li><a href="/admin">Admin Site</a></li>
-                <li><a href="/accounts/list">Trainee Editor</a></li>
-                <li><a href="{% url 'houses:bunk_list' %}">Bunk Assignment</a></li>
-                <li><a href="/explorer">SQL Explorer</a></li>
 
               {% endblock %}
             </div>
