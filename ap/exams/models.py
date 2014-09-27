@@ -1,8 +1,10 @@
-from datetime import date
+import datetime
 
 from django.db import models
 from accounts.models import Trainee
 from classes.models import Class
+
+from exams.utils import time_in_range
 
 
 """ exams models.py
@@ -40,6 +42,10 @@ class ExamTemplate(models.Model):
 	def _exams(self):
 		return 0
 	exams = property(_exams)
+
+	def _is_open(self):
+		return time_in_range(self.opens_on, self.closes_on, datetime.datetime.now())
+	is_open = property(_is_open)
 
 
 class Exam(ExamTemplate):

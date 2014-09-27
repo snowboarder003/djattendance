@@ -205,6 +205,10 @@ class Trainee(Profile):
 
     current_term = property(_calculate_term)
 
+    # TODO: will return True if the trainee has the designated service to enter exam scores/grade
+    def is_designated_grader(self):
+        return True
+
     def _trainee_email(self):
         return self.account.email
 
