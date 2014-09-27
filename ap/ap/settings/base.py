@@ -181,6 +181,7 @@ INSTALLED_APPS = (
     'schedules',
     'syllabus',  # class syllabus
     'verse_parse',  # parse outlines for PSRP verses
+    'exams',
 )
 
 # A sample logging configuration. The only tangible logging
