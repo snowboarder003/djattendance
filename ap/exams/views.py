@@ -31,3 +31,14 @@ class SingleExamGradesListView(ListView):
 		context = super(SingleExamGradesListView, self).get_context_data(**kwargs)
 		context['exam_template_name'] = 'Exam Template Name'
 		return context
+
+class CreateExamView(CreateView):
+	template_name = 'exams/take_single_exam.html'
+	model = Exam
+	fields = []
+	context_object_name = 'exam'
+	
+	def get_context_data(self, **kwargs):
+		context = super(CreateExamView, self).get_context_data(**kwargs)
+		context['questions'] = self.questions
+		return context

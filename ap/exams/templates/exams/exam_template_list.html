@@ -22,7 +22,8 @@
                 <button type="button" class="btn btn-default">View statistics</button>
             {% elif user.trainee %}
                 {% if exam_template.is_open %} <!-- TODO: or trainee is retaking exam -->
-                    <button type="button" class="btn btn-default">Take exam</button>
+                    <a href="{% url 'exams:take_exam' %}">
+                    <button type="button" class="btn btn-default">Take exam</button></a>
                 {% endif %}
             {% endif %}
 

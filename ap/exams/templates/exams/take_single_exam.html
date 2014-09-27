@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block references %}
+    <link rel="stylesheet" href="{% static "exams/css/exams.css" %}" />    
+{% endblock %}
+
+{% block title %}Take Exam{% endblock %}
+
+{% block content %}
+
+<h1>Taking Exam {{ exam }}</h1>
+
+{% if user.trainee %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-default">Save</button>
+                <a href="{% url 'exams:exam_template_list' %}">
+                    <button type="button" class="btn btn-default">Back</button></a>
+            </div>
+            <h3 class="panel-title">{{ exam_template_name }}</h3>
+        </div>
+        <div class="panel-body">
+        {% for question in exam.questions %}
+            {{ question.text }}
+        {% empty %}
+            <i>No exam grades to view.</i>
+        {% endfor %}
+        </div>
+    </div>
+
+{% else %}
+<i>Sorry, you cannot take the exam.</i>
+{% endif %}
+
+
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
