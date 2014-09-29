@@ -159,6 +159,7 @@ INSTALLED_APPS = (
     'rest_framework',  # for API
 
     # ap CORE
+    'api',
     'accounts',
     'aputils',
     'books',
