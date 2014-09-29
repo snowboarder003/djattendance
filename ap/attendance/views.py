@@ -29,7 +29,7 @@ class AttendancePersonal(TemplateView):
     context_object_name = 'context'
 
     def get_context_data(self, **kwargs):
-        jsx.transform('static/js/react/attendance/calendar.jsx', 'static/js/react/attendance/calendar.js')
+        jsx.transform('/static/attendance/calendar.jsx', '/static/attendance/calendar.js')
 
         listJSONRenderer = JSONRenderer()
 
