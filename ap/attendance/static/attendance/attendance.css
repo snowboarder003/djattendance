@@ -21,7 +21,7 @@
 }
 
 .pending, .fellowship {
-    background-image: url('../images/stripe.png');
+    background-image: url('/static/attendance/stripe.png');
     background-repeat: repeat;
 }
 
