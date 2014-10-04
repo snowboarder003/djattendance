@@ -80,7 +80,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'h%)g$1=j)_(lozsexfe*=$iwj9l#8mfaszohyg5n0azz691r#b'
+SECRET_KEY = "h%)g$1=j)_(lozsexfe*=$iwj9l#8mfaszohyg5n0azz691r#b"
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
@@ -154,7 +154,7 @@ INSTALLED_APPS = (
     'bootstrap3',  # easy-to-use bootstrap integration
     'bootstrap3_datetime',  # datetime picker widget
     'braces',  # Mixins for Django's class-based views.
-    'explorer',  # SQL explorer
+    # 'explorer',  # SQL explorer
     'django_select2',
     'rest_framework',  # for API
 
