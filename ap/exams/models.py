@@ -81,6 +81,7 @@ class TextQuestion(Question):
 
 class TextResponse(Response):
 	body = models.CharField(max_length=500)
+	question = models.ForeignKey(TextQuestion)
 
 
 
