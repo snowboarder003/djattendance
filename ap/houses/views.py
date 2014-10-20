@@ -1,14 +1,14 @@
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormView
-from .models import Bunk
+from .models import Bunk, House
 from .forms import BunkForm
 from accounts.models import Trainee
 
 
 class BunkListView(ListView):
-	model = Bunk
-	context_object_name = 'bunks'
+	model = House
+	context_object_name = 'houses'
 	template_name = 'houses/bunk_list.html'
 
 

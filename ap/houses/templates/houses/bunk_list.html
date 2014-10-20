@@ -6,83 +6,85 @@
 {% block references %}
 	<link rel="stylesheet" href="{% static "datatables/css/jquery.dataTables.css" %}" />
 	<link rel="stylesheet" href="{% static "datatables/css/dataTables.bootstrap.css" %}" />
+
 {% endblock %}
 
 {% block houses_content %}
-	<h1> Bunk Assignment </h1>
 
-	<div class="container">
-	        <div class="row">
-	            <div class="col-md-8">
-	                <h1>Column title</h1>
-	                <h5></h5>
-	                <form role="form">
-	                    <table class="table">
-	                        <thead>
-	                            <tr>
-	                                <th>#</th>
-	                                <th>Name</th>
-	                                <th>Bunk #</th>
-	                            </tr>
-	                        </thead>
-	                        <tbody>
-	                            <tr>
-	                                <td>1</td>
-	                                <td>
-	                                    <select class="form-control">
-	                                        <option>Dennis Lu</option>
-	                                        <option>Andre Kurniawan</option>
-	                                        <option>Josh Nuernburger</option>
-	                                    </select>
-	                                </td>
-	                                <td>1</td>
-	                            </tr>
-	                            <tr>
-	                                <td>2</td>
-	                                <td></td>
-	                                <td>2</td>
-	                            </tr>
-	                            <tr>
-	                                <td>3</td>
-	                                <td></td>
-	                            </tr>
-	                        </tbody>
-	                    </table>
-	                    <div class="form-group"></div>
-	                    <div class="form-group"></div>
-	                    <div class="form-group"></div>
-	                    <button type="submit" class="btn">Submit</button>
-	                </form>
-	            </div>
-	            <div class="col-md-4">
-	                <h3>First Year Trainees</h3>
-	                <ul>
-	                    <li>
-	                        <a href="#" data-toggle="modal" data-target="#modal1">David Teng</a>
-	                    </li>
-	                    <li>Eric Romero</li>
-	                    <li>Joseph Yao</li>
-	                </ul>
-	            </div>
-	        </div>
-        </div>
-        <div class="modal fade pg-show-modal" id="modal1" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Modal title</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>One fine body&hellip;</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
+<div class="col-md-8">
+    <h1>Bunk Assignment</h1>                      
+    	
+    	{% for house in houses %} 
+    	<h3>{{house}}</h3>
+    	<table class="table" style="font-size: 14px; line-height: 1.42857143; background-color: rgb(255, 255, 255);">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Bunk #</th>
+                </tr>
+            </thead>
+            <tbody>
+            	
+                <tr>
+                    <td>1</td>
+                    <td>
+                        <select class="form-control">
+                            <option>Dennis Lu</option>
+                            <option>Andre Kurniawan</option>
+                            <option>Josh Nuernburger</option>
+                        </select>
+                    </td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td></td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        {% endfor %}
+    <form role="form">
+        <div class="form-group"></div>
+        <div class="form-group"></div>
+        <div class="form-group"></div>
+        <button type="submit" class="btn">Submit</button>
+    </form>
+</div>
+<div class="col-md-4">
+    <h3>First Year Trainees</h3>
+    <ul>
+        <li>
+            <a href="#" data-toggle="modal" data-target="#modal1">David Teng</a>
+        </li>
+        <li>Eric Romero</li>
+        <li>Joseph Yao</li>
+    </ul>
+</div>
+<div class="modal fade pg-show-modal" id="modal1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
+    </div>
+</div>
+
+
 
 
 	{%comment%}
