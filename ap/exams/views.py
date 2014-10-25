@@ -20,6 +20,14 @@ class ExamTemplateListView(ListView):
     def get_queryset(self):
     	return ExamTemplate.objects.all()
 
+    def get_context_data(self, **kwargs):
+    	context = super(ExamTemplateListView, self).get_context_data(**kwargs)
+    	context['taken'] = []
+    	for template in ExamTemplate.objects.all():
+    		context['taken'].append(template.is_taken(self.request.user.trainee))
+    	print context['taken']
+    	return context
+
 class SingleExamGradesListView(ListView):
 	template_name = 'exams/single_exam_grades.html'
 	model = Exam
@@ -42,6 +50,7 @@ class TakeExamView(SuccessMessageMixin, CreateView):
 		context = super(TakeExamView, self).get_context_data(**kwargs)
 		context['exam_template'] = ExamTemplate.objects.get(pk=self.kwargs['pk'])
 		context['exam_questions'] = context['exam_template'].questions.all()
+		context['exam_is_taken'] = context['exam_template'].is_taken(self.request.user.trainee)
 		return context
 
 	def form_valid(self, form):
@@ -50,6 +59,7 @@ class TakeExamView(SuccessMessageMixin, CreateView):
 		exam.examtemplate_ptr = template
 		exam.__dict__.update(template.__dict__)
 		exam.trainee = self.request.user.trainee
+		exam.is_complete = True
 		exam.save()
 
 		responses = self.request.POST.getlist('response')

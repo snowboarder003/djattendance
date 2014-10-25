@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load staticfiles %}
+{% load exam_extras %}
 
 {% block references %}
     <link rel="stylesheet" href="{% static "exams/css/exams.css" %}" />    
@@ -13,15 +14,16 @@
 
 <h1>Exam Templates</h1>
 
-
 {% for exam_template in exam_templates %}
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="btn-group pull-right">
             {% if user.trainingassistant %}
                 <button type="button" class="btn btn-default">View statistics</button>
             {% elif user.trainee %}
-                {% if exam_template.is_open %} <!-- TODO: or trainee is retaking exam -->
+                {% if exam_template.is_open and not taken|lookup:forloop.counter0 %} 
+                <!-- TODO: or trainee is retaking exam -->
                     <a href="{% url 'exams:take_exam' exam_template.id %}">
                     <button type="button" class="btn btn-default">Take exam</button></a>
                 {% endif %}
@@ -40,6 +42,7 @@
         <b>Opens:</b> {{ exam_template.opens_on }}<br />
         <b>Closes:</b> {{ exam_template.closes_on }}<br /><br />
         <span class="badge alert-success">{{ exam_template.training_class }}</span>
+        {% if taken|lookup:forloop.counter0 %}<span class="badge alert-info">Taken</span>{% endif %}
         <span class="badge alert-warning">Cutoff at {{ exam_template.cutoff }}%</span>
     </div>
 </div>

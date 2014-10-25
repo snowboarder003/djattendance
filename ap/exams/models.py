@@ -39,9 +39,12 @@ class ExamTemplate(models.Model):
 	def __unicode__(self):
 		return "Exam for %s, [%s]" % (self.training_class, self.training_class.term)
 
-	def _exams(self):
-		return 0
-	exams = property(_exams)
+	def is_taken(self, trainee_id):
+		try:
+			Exam.objects.get(examtemplate_ptr=self, trainee=trainee_id)
+			return True
+		except Exam.DoesNotExist:
+			return False
 
 	def _is_open(self):
 		return time_in_range(self.opens_on, self.closes_on, datetime.datetime.now())

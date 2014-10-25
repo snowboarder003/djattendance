@@ -22,6 +22,9 @@
             <h3 class="panel-title">{{ exam_template }}</h3>
         </div>
         <div class="panel-body">
+        {% if exam_is_taken %}
+        <i>Sorry, you have already taken this exam.</i>
+        {% else %}
 
             <form action="" method="post">
                 {% csrf_token %}
@@ -36,9 +39,10 @@
                 <button type="submit" value="Submit" class="btn btn-default">Save</button>
                 <!-- <input type="submit" value="Submit" /> -->
             </form>
+        {% endif %}
+
         </div>
     </div>
-
 {% else %}
 <i>Sorry, you cannot take the exam.</i>
 {% endif %}
