@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% block references %}
+    <link rel="stylesheet" href="{% static 'exams/css/exams.css' %}" />    
+{% endblock %}
+
+{% block title %}Exam Retake List{% endblock %}
+
+{% block content %}
+
+<h1>Exam Retake List</h1>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="btn-group pull-right">
+            <a href="{% url 'exams:exam_template_list' %}">
+                <button type="button" class="btn btn-default">Back</button></a>
+        </div>
+        <h3 class="panel-title">{{ exam_template }}</h3>
+    </div>
+    <div class="panel-body">
+
+    General stats:
+
+    <table class="table table-striped">
+        <th>Trainee</th>
+        <th>Exam Grade</th>
+        {% for exam in exams %}
+            {% if exam_template.cutoff > exam.grade %}
+                <tr class="danger">{{ exam.grade }}</td>
+            {% else %}
+                <tr>
+            {% endif %}
+                <td>{{ exam.trainee }}</td>
+                <td>{{ exam.grade }}</td>
+        </tr>
+        {% empty %}
+            <i>No exam grades to view.</i>
+        {% endfor %}
+    </table>
+
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

@@ -66,6 +66,21 @@ class SingleExamGradesListView(CreateView, SuccessMessageMixin):
 			return redirect('exams:exams_template_list')
 		return HttpResponseRedirect(reverse_lazy('exams:exam_template_list'))
 
+class GenerateRetakeList(DetailView):
+	template_name = 'exams/exam_retake_list.html'
+	model = ExamTemplate
+	fields = []
+	context_object_name = 'exam_template'
+
+	def get_context_data(self, **kwargs):
+		context = super(GenerateRetakeList, self).get_context_data(**kwargs)
+		context['exam_template'] = ExamTemplate.objects.get(pk=self.kwargs['pk'])
+		try:
+			context['exams'] = Exam.objects.filter(exam_template=context['exam_template']).order_by('trainee__account__lastname')
+		except Exam.DoesNotExist:
+			context['exams'] = []
+		return context
+
 class TakeExamView(SuccessMessageMixin, CreateView):
 	template_name = 'exams/take_single_exam.html'
 	model = Exam
