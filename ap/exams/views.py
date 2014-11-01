@@ -1,6 +1,6 @@
 import datetime
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse_lazy
 
 from django.views.generic import View
@@ -8,6 +8,7 @@ from django.views.generic.detail import DetailView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import FormView, CreateView, UpdateView
 from django.views.generic.list import ListView
+from django.shortcuts import redirect
 
 from .models import ExamTemplate, Exam, TextQuestion, TextResponse
 
@@ -25,18 +26,25 @@ class ExamTemplateListView(ListView):
     	context['taken'] = []
     	for template in ExamTemplate.objects.all():
     		context['taken'].append(template.is_taken(self.request.user.trainee))
-    	print context['taken']
     	return context
 
-class SingleExamGradesListView(ListView):
+class SingleExamGradesListView(CreateView, SuccessMessageMixin):
 	template_name = 'exams/single_exam_grades.html'
-	model = Exam
+	model = ExamTemplate
 	context_object_name = 'exam_grades'
+	fields = []
+	success_url = reverse_lazy('exams:exam_template_list')
+	success_message = 'Exam grades updated.'
 
 	def get_context_data(self, **kwargs):
 		context = super(SingleExamGradesListView, self).get_context_data(**kwargs)
-		context['exam_template_name'] = 'Exam Template Name'
+		context['exam_template'] = ExamTemplate.objects.get(pk=self.kwargs['pk'])
+		try:
+			context['exams'] = Exam.objects.filter(exam_template=context['exam_template']).order_by('trainee__account__lastname')
+		except Exam.DoesNotExist:
+			context['exams'] = []
 		return context
+
 
 class TakeExamView(SuccessMessageMixin, CreateView):
 	template_name = 'exams/take_single_exam.html'
@@ -56,8 +64,7 @@ class TakeExamView(SuccessMessageMixin, CreateView):
 	def form_valid(self, form):
 		exam = form.save(commit=False)
 		template = ExamTemplate.objects.get(pk=self.kwargs['pk'])
-		exam.examtemplate_ptr = template
-		exam.__dict__.update(template.__dict__)
+		exam.exam_template = template
 		exam.trainee = self.request.user.trainee
 		exam.is_complete = True
 		exam.save()

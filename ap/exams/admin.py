@@ -3,7 +3,7 @@ from exams.models import ExamTemplate, Exam, TextQuestion, TextResponse
 
 # admin.site.register(TextQuestion)
 # admin.site.register(TextResponse)
-# admin.site.register(Exam)
+admin.site.register(Exam)
 
 class TextQuestionInline(admin.StackedInline):
     model = TextQuestion

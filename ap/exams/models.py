@@ -41,7 +41,7 @@ class ExamTemplate(models.Model):
 
 	def is_taken(self, trainee_id):
 		try:
-			Exam.objects.get(examtemplate_ptr=self, trainee=trainee_id)
+			Exam.objects.get(exam_template=self, trainee=trainee_id)
 			return True
 		except Exam.DoesNotExist:
 			return False
@@ -51,13 +51,14 @@ class ExamTemplate(models.Model):
 	is_open = property(_is_open)
 
 
-class Exam(ExamTemplate):
+class Exam(models.Model):
 	is_complete = models.BooleanField(default=False)
 	is_graded = models.BooleanField(default=False)
 	grade = models.IntegerField(default=0)
 
 	# each exam instance is linked to exactly one trainee
 	trainee = models.ForeignKey(Trainee)
+	exam_template = models.ForeignKey(ExamTemplate)
 
 	def __unicode__(self):
 		return "%s's exam" % (self.trainee)
