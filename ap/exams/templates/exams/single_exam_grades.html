@@ -16,15 +16,15 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
+            <form action="" method="post">
             <div class="btn-group pull-right">
-                <button type="button" class="btn btn-default">Save grades</button>
+                <button type="submit" class="btn btn-default">Save grades</button>
                 <a href="{% url 'exams:exam_template_list' %}">
                     <button type="button" class="btn btn-default">Back</button></a>
             </div>
             <h3 class="panel-title">Entering grades for {{ exam_template }}</h3>
         </div>
         <div class="panel-body">
-            <form action="" method="post">
                 {% csrf_token %}
                 <table class="table table-striped">
                     <th>Trainee</th>
@@ -33,18 +33,18 @@
                     <tr>
                         <td>{{ exam.trainee }}</td>
                         <td>
+                            <input type="hidden" name="exam-id" value="{{ exam.id }}" />
                             <input type="" cols="100" id="{{ exam.id }}" name="exam-grade" value="{{ exam.grade }}" class="form-control" />
                         </td>
                     </tr>
                     {% empty %}
                         <i>No exam grades to view.</i>
                     {% endfor %}
-
                 </table>
                 <button type="submit" value="Save" class="btn btn-default">Save</button>
-            </form>
+            </div>
+        </form>
 
-        </div>
     </div>
 
 {% else %}

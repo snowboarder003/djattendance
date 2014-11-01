@@ -9,6 +9,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import FormView, CreateView, UpdateView
 from django.views.generic.list import ListView
 from django.shortcuts import redirect
+from django.contrib import messages
 
 from .models import ExamTemplate, Exam, TextQuestion, TextResponse
 
@@ -45,6 +46,25 @@ class SingleExamGradesListView(CreateView, SuccessMessageMixin):
 			context['exams'] = []
 		return context
 
+	def post(self, request, *args, **kwargs):
+		if request.method == 'POST':
+			grades = request.POST.getlist('exam-grade')
+			exam_ids = request.POST.getlist('exam-id')
+			for index, exam_id in enumerate(exam_ids):
+				try:
+					exam = Exam.objects.get(id=exam_id)
+				except Exam.DoesNotExist:
+					exam = False
+				if exam:
+					exam.grade = grades[index]
+					exam.is_graded = True
+					exam.save()
+			messages.success(request, 'Exam grades saved.')
+			return HttpResponseRedirect(reverse_lazy('exams:exam_template_list'))
+		else:
+			messages.add_message(request, messages.ERROR, 'Nothing saved.')
+			return redirect('exams:exams_template_list')
+		return HttpResponseRedirect(reverse_lazy('exams:exam_template_list'))
 
 class TakeExamView(SuccessMessageMixin, CreateView):
 	template_name = 'exams/take_single_exam.html'
