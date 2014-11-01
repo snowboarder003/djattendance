@@ -11,6 +11,11 @@ class BunkListView(ListView):
 	context_object_name = 'houses'
 	template_name = 'houses/bunk_list.html'
 
+	def get_context_data(self, **kwargs):
+		context = super(BunkListView, self).get_context_data(**kwargs)
+		context['trainees'] = Trainee.objects.all()
+		return context
+
 
 class TraineeListView(ListView):
 	model = Trainee
