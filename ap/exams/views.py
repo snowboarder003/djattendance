@@ -75,6 +75,10 @@ class GenerateRetakeList(DetailView):
 	def get_context_data(self, **kwargs):
 		context = super(GenerateRetakeList, self).get_context_data(**kwargs)
 		context['exam_template'] = ExamTemplate.objects.get(pk=self.kwargs['pk'])
+		exam_stats = context['exam_template'].statistics()
+		context['exam_max'] = exam_stats.get('maximum')
+		context['exam_min'] = exam_stats.get('minimum')
+		context['exam_average'] = exam_stats.get('average')
 		try:
 			context['exams'] = Exam.objects.filter(exam_template=context['exam_template']).order_by('trainee__account__lastname')
 		except Exam.DoesNotExist:

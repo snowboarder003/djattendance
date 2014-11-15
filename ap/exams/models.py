@@ -46,6 +46,20 @@ class ExamTemplate(models.Model):
 		except Exam.DoesNotExist:
 			return False
 
+	def statistics(self):
+		exams = Exam.objects.filter(exam_template=self)
+		total = 0
+		minimum = 100
+		maximum = 0
+		for exam in exams:
+			total = total + exam.grade
+			if exam.grade < minimum:
+				minimum = exam.grade
+			if exam.grade > maximum:
+				maximum = exam.grade
+		# return 'five'
+		return { 'average': float(total)/float(exams.count()), 'maximum': maximum, 'minimum': minimum }
+
 	def _is_open(self):
 		return time_in_range(self.opens_on, self.closes_on, datetime.datetime.now())
 	is_open = property(_is_open)
