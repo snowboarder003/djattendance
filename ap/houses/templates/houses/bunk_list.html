@@ -15,42 +15,50 @@
     <h1>Bunk Assignment</h1>                      
     	{% for house in houses %} 
     	<h3>{{house}}</h3>
-    	<table class="table" style="font-size: 14px; line-height: 1.42857143; background-color: rgb(255, 255, 255);">
-            <thead>
-                <tr>
-                    <th>Bunk #</th>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody>
-            	{% for trainee in house.trainee_set.all %}
-                <tr>
-                    <td>{{forloop.counter}}</td>
-                    <td>
-                        <select class="form-control">
-                            <option>{{trainee}}</option>
-                            {% for option in trainees %}
-                            	<option>{{option}}</option>
-                            {% endfor %}
-                        </select>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% endfor %}
-    <form role="form">
-        <div class="form-group"></div>
-        <div class="form-group"></div>
-        <div class="form-group"></div>
-        <button type="submit" class="btn">Submit</button>
-    </form>
+    	{% if house.trainee_set.all|length > 0 %}
+	    	<table class="table" style="font-size: 14px; line-height: 1.42857143; background-color: rgb(255, 255, 255);">
+	            <thead>
+	                <tr>
+	                    <th>Bunk #</th>
+	                    <th>Name</th>
+	                    <th>Submit</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	            	{% for room in house.room_set.all %}
+	            	{% for bunk in room.bunk_set.all %}
+	            	<form role="form" action="{% url 'houses:bunk_list' %}" method="post">
+	            		{% csrf_token %}
+	                <tr>
+	                    <td>{{bunk.number}}</td>
+	                    <td>
+	                        <select class="form-control" name="select-trainee">
+	                            <option value="{{bunk.pk}}-{{bunk.trainee.pk}}">{{bunk.trainee}}</option>
+	                            {% for trainee in trainees %}
+		                            {% if trainee != bunk.trainee %}
+		                            	<option value="{{bunk.pk}}-{{trainee.pk}}">{{trainee}}</option>
+		                           	{% endif %}
+	                            {% endfor %}
+	                        </select>
+	                    </td>
+	                    <td>
+	                    	<button type="submit" class="btn">Submit</button>
+	                    </td>
+	                </tr>
+	               	</form>
+	                {% endfor %}
+	                {% endfor %}
+	            </tbody>
+	        </table>
+	    {% endif %}
+
+    	{% endfor %}
 </div>
 <div class="col-md-4">
-    <h3>First Year Trainees</h3>
+    <h3>Bunkless Trainees</h3>
     <ul>
         {% for trainee in trainees %}
-            {% if trainee.term == 1 %}
+            {% if trainee.current_term == 1 and trainee.bunk == empty %}
 				<li><a href="#" data-toggle="modal" data-target="#modal1">
         			{{trainee}}
         		</a></li>
@@ -66,7 +74,7 @@
                 <h4 class="modal-title">Modal title</h4>
             </div>
             <div class="modal-body">
-                <p>One fine body&hellip;</p>
+                <p>Body</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

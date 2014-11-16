@@ -6,6 +6,9 @@ from .forms import BunkForm
 from accounts.models import Trainee
 
 
+"""Phil 3:20 'Our commonwealth exists in the heavens, from which also 
+we eagerly await a Savior, the Lord Jesus Christ' """
+
 class BunkListView(ListView):
 	model = House
 	context_object_name = 'houses'
@@ -16,6 +19,16 @@ class BunkListView(ListView):
 		context['trainees'] = Trainee.objects.all()
 		return context
 
+	def post(self, request, *args, **kwargs):
+		for value in request.POST.getlist('select-trainee'):
+			bunk = Bunk.objects.get(pk=int(value.split('-')[0]))
+			trainee = Trainee.objects.get(pk=int(value.split('-')[1]))
+			trainee.bunk = None
+			print trainee
+			print trainee.bunk
+			bunk.trainee = trainee
+			trainee.save()
+		return self.get(request, *args, **kwargs)
 
 class TraineeListView(ListView):
 	model = Trainee
