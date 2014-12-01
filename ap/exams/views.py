@@ -66,6 +66,16 @@ class SingleExamGradesListView(CreateView, SuccessMessageMixin):
 			return redirect('exams:exams_template_list')
 		return HttpResponseRedirect(reverse_lazy('exams:exam_template_list'))
 
+class GenerateGradeReport(DetailView):
+	template_name = 'exams/exam_grade_report.html'
+	model = Exam
+	context_object_name = 'exam'
+	fields = ['trainee', 'grade', 'exam_template', 'is_complete', 'is_graded']
+
+	def get_context_data(self, **kwargs):
+		context = super(GenerateGradeReport, self).get_context_data(**kwargs)
+		return context
+
 class GenerateRetakeList(DetailView):
 	template_name = 'exams/exam_retake_list.html'
 	model = ExamTemplate
@@ -76,9 +86,9 @@ class GenerateRetakeList(DetailView):
 		context = super(GenerateRetakeList, self).get_context_data(**kwargs)
 		context['exam_template'] = ExamTemplate.objects.get(pk=self.kwargs['pk'])
 		exam_stats = context['exam_template'].statistics()
-		context['exam_max'] = exam_stats.get('maximum')
-		context['exam_min'] = exam_stats.get('minimum')
-		context['exam_average'] = exam_stats.get('average')
+		context['exam_max'] = exam_stats['maximum']
+		context['exam_min'] = exam_stats['minimum']
+		context['exam_average'] = exam_stats['average']
 		try:
 			context['exams'] = Exam.objects.filter(exam_template=context['exam_template']).order_by('trainee__account__lastname')
 		except Exam.DoesNotExist:

@@ -9,4 +9,5 @@ urlpatterns = patterns(
         name='single_exam_grades'),
     url(r'^(?P<pk>\d+)/take-exam$', views.TakeExamView.as_view(), name='take_exam'),
     url(r'^(?P<pk>\d+)/exam-retake-list$', views.GenerateRetakeList.as_view(), name='exam_retake_list'),
+    url(r'^(?P<pk>\d+)/exam-grade-report$', views.GenerateGradeReport.as_view(), name='exam_grade_report'),
 )

@@ -57,8 +57,12 @@ class ExamTemplate(models.Model):
 				minimum = exam.grade
 			if exam.grade > maximum:
 				maximum = exam.grade
-		# return 'five'
-		return { 'average': float(total)/float(exams.count()), 'maximum': maximum, 'minimum': minimum }
+		stats = { 'maximum': 'n/a', 'minimum': 'n/a', 'average': 0 }
+		if exams.count() > 0:
+			stats['average'] = float(total)/float(exams.count())
+			stats['minimum'] = minimum
+			stats['maximum'] = maximum
+		return stats
 
 	def _is_open(self):
 		return time_in_range(self.opens_on, self.closes_on, datetime.datetime.now())
