@@ -42,20 +42,7 @@ def batch(request):
     return render_to_response('badges/batch.html', context_instance=RequestContext(request))
 
 def badgeprintout(request):
-    """
-    context = RequestContext(request)
-    if request.method == 'POST':
-        form = BadgePrintForm(request.POST)
-    """
     return render_to_response('badges/print.html', Badge.objects.filter(term_created__exact=Term.current_term()))
-
-def makepdf(request):
-    return render_to_pdf(
-            'print.html',
-            {
-                'pagesize':'A4',
-            }
-        )
 
 class BadgePrintFrontView(ListView):
 
@@ -105,13 +92,20 @@ class BadgePrintFacebookView(ListView):
     model = Badge
 
     def get_template_names(self):
-        return ['badges/printfacebook.html']
+        return ['badges/printfbpdf.html']
     
     def get_queryset(self, **kwargs):
         return Badge.objects.filter(term_created__exact=Term.current_term())
     
     def get_context_data(self, **kwargs):
         context = super(BadgePrintFacebookView, self).get_context_data(**kwargs)
+        context['number_first_term'] = Badge.objects.filter(term_created__exact=Term.current_term()).count()
+        
+        """context['first_term'] = Badge.objects.filter(trainee__sss="R").count()
+        """
+        
+        context['first_term_pages'] = context['first_term']/20
+        context['loop_range'] = range(1,context['first_term_pages']+1)
         return context
 
 class BadgePrintStaffView(ListView):
@@ -278,15 +272,8 @@ class BadgePrintOfficeView(ListView):
         return context
 
 def genpdf(request):
-    '''
-    pdf = pisa.CreatePDF("Hello <strong>World</strong>",file('mypdf.pdf', 'wb'))
-    if not pdf.err:
-        pisa.startViewer('mypdf.pdf')
-    return render_to_response('badges/printfacebook.html', context_instance=RequestContext(request))
-    '''
-    return render_to_pdf(
-            'badges/printfbpdf.html', {}
-        )
+    return render_to_response('badges/print.html')
+
 
 
 

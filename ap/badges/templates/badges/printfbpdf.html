@@ -1,7 +1,7 @@
 {% load staticfiles %}
 {% load bootstrap3 %}
 
-<!DOCTYPE HTML PUBLIC >
+{% block badges_content %}
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -20,80 +20,85 @@
                 }
             }
 
-            .title {
-                width: 130px;
-                height: 20px;
-                border: 3px;
-                text-align:center;
-                font-size: 20px;
+            .bigbox {
+                width:  710px;
+                height: 840px;
+                border: solid 2px;
+            }
+
+            .firstfreshcolumn {
+                width: 112px;
+                height: 134px;
+                border: transparent 1px;
+                position: relative;
+                float: left;
+                left:15px;
+                top: 90px;
+            }
+
+            .columndivider {
+                width: 25px;
+                height: 94px;
+                border: transparent 1px;
+                position: relative;
+                float: left;
+                left:25px;
+                top: 90px;
+            }
+
+            .titledivider {
+                width: 15px;
+                height: 12px;
+                border: solid 1px;
+                position: relative;
+                float: left;
+                left: 100px;
+            }
+
+            .firstpictitle {
+                border: transparent 1px;
+                width: 112px;
+                height: 12px;
+                position: relative;
+                float: left;
+                top: 5px;
+                left: 1px;
+                font-size: 14px;
                 font-weight: bold;
             }
 
-            .bigbox {
-                height: 690px;
-                width: 550px;
-                color: white;
-                font-size: 12pt;
-                font-family: Arial;
-                line-height: 1.2;
+            .pagetitle {
+                border: transparent 1px;
+                position: absolute;
+                float: left;
+                left: 300px;
+                font-size: 25px;
+                font-weight: bold;
             }
 
-            .firstcol {
-                padding-left: 0px;
-                padding-top: 5px;
+            .pagetitlebottom {
+                border: transparent 1px;
+                position: absolute;
+                float: left;
+                left: 260px;
+                top: 40px;
+                font-size: 25px;
+                font-weight: bold;
             }
 
-            .secondcol {
-                padding-left: 118px;
-                padding-top: -96.5px;
-            }
-            
-            .thirdcol {
-                padding-left: 236px;
-                padding-top: -96.5px;
-            }
-            
-            .fourthcol {
-                padding-left: 354px;
-                padding-top: -96.5px;
-            }
-
-            .fifthcol {
-                padding-left: 472px;
-                padding-top: -96.5px;
-            }
-
-            .sixthcol {
-                padding-left: 590px;
-                padding-top: -96.5px;
-            }
-            
-            .firstrow {
-            }
-
-            .name {
-            }
-
-            .secondrow {
-            }
-            
-            .thirdrow {
-            }
-            
-            .fourthrow {
-            }
-
-            .fifthrow {
-            }
-
-            .sixthrow {
-    
+            .pagetitlelimit {
+                border: transparent 1px;
+                position: absolute;
+                float: left;
+                top: 60px;
+                font-size: 25px;
+                font-weight: bold;
             }
 
             .badge-pic {
+                position: relative;
                 float: left;
                 height: 94px;
-                width: 113px;
             }
 
             @media all {
@@ -107,121 +112,29 @@
         </style>
     </head>
     <body>
-         
-            <div class="title">
-                Fall 2014 <br/>
+        {% for i in loop_range %}
+            <div class="pagetitle">
+                Fall 2014<br/>
+            </div>
+            <div class="pagetitlebottom">
                 <small>First-Term Brothers</small> </br>
-                -----------------------------------------------------------------------------------------------------------
+            </div>
+            <div class="pagetitlelimit">
+                _________________________________________________________ </br>
             </div>
             <div class="bigbox">
-            <div class="firstrow">
-                <div class="firstcol">
-                    <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="secondcol">
-                    <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="thirdcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="fourthcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="fifthcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="sixthcol"> 
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div> 
+                {% for badge in object_list %}
+                <div class="firstfreshcolumn">
+                    <img class="badge-pic" src="/media/{{badge.original}}" %>
+                <div class="firstpictitle">
+                     {{badge.lastname}} , {{badge.firstname}}
+                </div>
+                </div>
+                <div class="columndivider">
+                </div>
+                {% endfor %}
             </div>
-            <div class="name">
-                Andree </br>
-                Kitchener </br>
-                -----------------------------------------------
-            </div>
-            <div class="secondrow">
-                <div class="firstcol">
-                    <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="secondcol">
-                    <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="thirdcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="fourthcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="fifthcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="sixthcol"> 
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div> 
-            </div>
-            <div class="name">
-                Andree </br>
-                Kitchener </br>
-                -----------------------------------------------
-            </div>
-            <div class="thirdrow">
-                <div class="firstcol">
-                    <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="secondcol">
-                    <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="thirdcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="fourthcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="fifthcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="sixthcol"> 
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div> 
-            </div>
-            <div class="name">
-                Andree </br>
-                Kitchener </br>
-                -----------------------------------------------
-            </div>
-            <div class="fourthrow">
-                <div class="firstcol">
-                    <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="secondcol">
-                    <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="thirdcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="fourthcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="fifthcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="sixthcol"> 
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div> 
-            </div>
-            <div class="name">
-                Andree </br>
-                Kitchener </br>
-                -----------------------------------------------
-            </div>
-            <div class="fifthrow">
-                <div class="firstcol">
-                    <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="secondcol">
-                    <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="thirdcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="fourthcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="fifthcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="sixthcol"> 
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div> 
-            </div>
-            <div class="name">
-                Andree </br>
-                Kitchener </br>
-                -----------------------------------------------
-            </div>
-            <div class="sixthrow">
-                <div class="firstcol">
-                    <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="secondcol">
-                    <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="thirdcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="fourthcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="fifthcol">
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div>
-                <div class="sixthcol"> 
-                     <img class="badge-pic" src="http://127.0.0.1:8000/media/badges/trainees/Fa14/KurniawanAndree.jpg"> </div> 
-            </div>
+        {% endfor %}
     </body>
 </html>
+{% endblock %}

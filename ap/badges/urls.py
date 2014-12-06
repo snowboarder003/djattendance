@@ -24,5 +24,5 @@ urlpatterns = patterns(
     url(r'^view/(?P<term>(Fa|Sp)\d{2})/$', views.BadgeTermView.as_view(), name='badges_term'),
     url(r'^view/xb/(?P<term>(Fa|Sp)\d{2})/$', views.BadgeXBTermView.as_view(), name='badges_term_xb'),
     url(r'^view/staff/$', views.BadgeStaffView.as_view(), name='badges_staff'),
-    url(r'^print/term/facebook/generate/$', 'badges.views.genpdf', name='badges_print_term_genpdf'),
+    url(r'^print/term/facebook/generate/$', views.BadgePrintFrontView.as_view(), name='badges_print_term_genpdf'),
 ) 
