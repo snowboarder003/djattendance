@@ -8,12 +8,15 @@ from .models import Badge
 from accounts.models import User
 from terms.models import Term
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.base import TemplateView
 from .forms import BadgeForm, BadgeUpdateForm, BadgePrintForm
 from .printtopdf import render_to_pdf
 import xhtml2pdf.pisa as pisa
+import datetime
 
-def index(request):
-    return render_to_response('badges/badge_list.html')
+class index(ListView):
+    model = Badge
+    template_name = "badge_list.html"
 
 def batch(request):
     if request.method == 'POST':
@@ -48,6 +51,14 @@ class BadgePrintFrontView(ListView):
 
     model = Badge
 
+    def post(self, request, *args, **kwargs):
+        print "YES"
+        if 'print' in request.POST:
+            print "HI"
+            for value in request.POST.getlist('choice'):
+                print value
+        return self.get(request, *args, **kwargs)
+
     def get_template_names(self):
         return ['badges/print.html']
     
@@ -56,6 +67,11 @@ class BadgePrintFrontView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super(BadgePrintFrontView, self).get_context_data(**kwargs)
+        badge_pk = []
+        if 'print' in self.request.POST:
+            for value in self.request.POST.getlist('choice'):
+                badge_pk.append(value)
+        context['object_list'] = Badge.objects.filter(id__in=badge_pk)
         return context
 
 class BadgePrintBackView(ListView):
@@ -97,15 +113,28 @@ class BadgePrintFacebookView(ListView):
     def get_queryset(self, **kwargs):
         return Badge.objects.filter(term_created__exact=Term.current_term())
     
+    # Praise the Lord!!!!!!!
     def get_context_data(self, **kwargs):
         context = super(BadgePrintFacebookView, self).get_context_data(**kwargs)
-        context['number_first_term'] = Badge.objects.filter(term_created__exact=Term.current_term()).count()
+        context['first_term_brothers'] = Badge.objects.filter(term_created__exact=Term.objects.get(year=2014, season='Fall'), gender__exact='M')
+        context['first_term_sisters'] = Badge.objects.filter(term_created__exact=Term.objects.get(year=2014, season='Fall'), gender__exact='F')
+
+        context['second_term_brothers'] = Badge.objects.filter(term_created__exact=Term.objects.get(year=2014, season='Spring'), gender__exact='M')
+        context['second_term_sisters'] = Badge.objects.filter(term_created__exact=Term.objects.get(year=2014, season='Spring'), gender__exact='F')
+
+        context['third_term_brothers'] = Badge.objects.filter(term_created__exact=Term.objects.get(year=2013, season='Fall'), gender__exact='M')
+        context['third_term_sisters'] = Badge.objects.filter(term_created__exact=Term.objects.get(year=2013, season='Fall'), gender__exact='F')
+
+        context['fourth_term_brothers'] = Badge.objects.filter(term_created__exact=Term.objects.get(year=2013, season='Spring'), gender__exact='M')
+        context['fourth_term_sisters'] = Badge.objects.filter(term_created__exact=Term.objects.get(year=2013, season='Spring'), gender__exact='F')
+
+
         
         """context['first_term'] = Badge.objects.filter(trainee__sss="R").count()
         """
         
-        context['first_term_pages'] = context['first_term']/20
-        context['loop_range'] = range(1,context['first_term_pages']+1)
+        # context['first_term_pages'] = context['first_term']/20
+        # context['loop_range'] = range(1,context['first_term_pages']+1)
         return context
 
 class BadgePrintStaffView(ListView):

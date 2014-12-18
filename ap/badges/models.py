@@ -17,6 +17,11 @@ class Badge(models.Model):
         ('X', 'XB-Trainee'),
     )
 
+    GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+    )
+
     type = models.CharField(max_length=2, choices=BADGE_TYPES, default='T')
     original = models.ImageField(upload_to=_image_upload_path)
     term_created = models.ForeignKey(Term)
@@ -28,6 +33,7 @@ class Badge(models.Model):
     firstname = models.CharField(max_length=50, null=True, blank=True)
     middlename = models.CharField(max_length=1, null=True, blank=True)
     lastname = models.CharField(max_length=50, null=True, blank=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     title = models.CharField(max_length=30, null=True, blank=True)
     locality = models.CharField(max_length=100, null=True, blank=True)
     avatar = models.CharField(max_length=255, null=True, blank=True)

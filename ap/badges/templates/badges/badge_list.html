@@ -30,7 +30,7 @@
 
 {% block badges_content %}
     <BR>&nbsp;<BR>
-    <form action="{% url 'badges:badges_print' %}" method="post"> 
+    <form role="form" action="{% url 'badges:badges_print_term_front' %}" method="post"> 
     {% csrf_token %}
         <table class="table table-bordered display compact cell-border" id="badges-table" cellspacing="0" width="100%">
             <thead>
@@ -38,6 +38,7 @@
                     <th>Avatar</th>
                     <th>Type</th>
                     <th>Name</th>
+                    <th>Gender</th>
                     <th>Term</th>
                     <th>Locality</th>
                     <th>Edit</th>
@@ -52,13 +53,14 @@
                         <th><img src='/{{badge.avatar}}'/></th>
                         <th>{{badge.type}}</th>
                         <th>{{badge.firstname}} {{badge.middlename}} {{badge.lastname}}</th>
+                        <th>{{badge.gender}}</th>
                         <th>{{badge.term_created}}</th>
                         <th>{{badge.locality}}</th>
                         <th><a href="{% url 'badges:badge_detail' badge.pk %}" class="list-group-item-active">Edit</th>
                         <th><a href="{% url 'badges:badge_delete' badge.pk %}" class="list-group-item-active">Delete</th>
                         <th>
                             <ul>
-                                <input type="checkbox" name="choice" id={{ badge.pk }} value="{{ badge.pk }}" />
+                                <input type="checkbox" name="choice" value="{{ badge.pk }}" />
                                 <label for="choice{{ badge.pk }}">Print</label><br />
                             </ul>
                         </th>
@@ -66,7 +68,7 @@
                 {% endfor %}
             </tbody>
         </table>
-    <input type="submit" value="Print" />
+        <button type="submit" name="print" class="btn btn-success">Print</button>
     </form>
 
 {% endblock %}

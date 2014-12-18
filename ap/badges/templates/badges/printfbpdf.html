@@ -20,7 +20,15 @@
                 }
             }
 
-            .bigbox {
+            body {
+              padding-top: 50px;
+            }
+            .starter-template {
+              padding: 40px 15px;
+              text-align: center;
+            }
+
+            /*.bigbox {
                 width:  710px;
                 height: 840px;
                 border: solid 2px;
@@ -107,12 +115,183 @@
 
             @media print {
                 .page-break { display: block; page-break-before: always; }
-            }
+            }*/
     
         </style>
     </head>
+
+
     <body>
-        {% for i in loop_range %}
+        <div class="container">
+            <div class="starter-template">
+                <h1>First-Term Brothers</h1>
+                <div class="row">
+                    {% for badge in first_term_brothers %}
+                    <div class="col-xs-6 col-md-3">
+                        <img class="badge-pic" src="/media/{{badge.original}}" %>
+                        <div class="firstpictitle">
+                            {{badge.lastname}} , {{badge.firstname}}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+    </body>
+    <body>
+        <div class="container">
+            <div class="starter-template">
+                <h1>First-Term Sisters</h1>
+                <div class="row">
+                    {% for badge in first_term_sisters %}
+                    <div class="col-xs-6 col-md-3">
+                        <img class="badge-pic" src="/media/{{badge.original}}" %>
+                        <div class="firstpictitle">
+                            {{badge.lastname}} , {{badge.firstname}}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+    </body>
+    <body>
+        <div class="container">
+            <div class="starter-template">
+                <h1>Second-Term Brothers</h1>
+                <div class="row">
+                    {% for badge in second_term_brothers %}
+                    <div class="col-xs-6 col-md-3">
+                        <img class="badge-pic" src="/media/{{badge.original}}" %>
+                        <div class="firstpictitle">
+                            {{badge.lastname}} , {{badge.firstname}}
+                        </div>
+                    </div>
+                    {% endfor %} 
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+    </body>
+    <body>
+        <div class="container">
+            <div class="starter-template">
+                <h1>Second-Term Sisters</h1>
+                <div class="row">
+                    {% for badge in second_term_sisters %}
+                    <div class="col-xs-6 col-md-3">
+                        <img class="badge-pic" src="/media/{{badge.original}}" %>
+                        <div class="firstpictitle">
+                            {{badge.lastname}} , {{badge.firstname}}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+    </body>
+    <body>
+        <div class="container">
+            <div class="starter-template">
+                <h1>Third-Term Brothers</h1>
+                <div class="row">
+                    {% for badge in third_term_brothers %}
+                    <div class="col-xs-6 col-md-3">
+                        <img class="badge-pic" src="/media/{{badge.original}}" %>
+                        <div class="firstpictitle">
+                            {{badge.lastname}} , {{badge.firstname}}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+    </body>
+    <body>
+        <div class="container">
+            <div class="starter-template">
+                <h1>Third-Term Sisters</h1>
+                <div class="row">
+                    {% for badge in third_term_sisters %}
+                    <div class="col-xs-6 col-md-3">
+                        <img class="badge-pic" src="/media/{{badge.original}}" %>
+                        <div class="firstpictitle">
+                            {{badge.lastname}} , {{badge.firstname}}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+    </body>
+    <body>
+        <div class="container">
+            <div class="starter-template">
+                <h1>Fourth-Term Brothers</h1>
+                <div class="row">
+                    {% for badge in fourth_term_brothers %}
+                    <div class="col-xs-6 col-md-3">
+                        <img class="badge-pic" src="/media/{{badge.original}}" %>
+                        <div class="firstpictitle">
+                            {{badge.lastname}} , {{badge.firstname}}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+    </body>
+    <body>
+        <div class="container">
+            <div class="starter-template">
+                <h1>Fourth-Term Sisters</h1>
+                <div class="row">
+                    {% for badge in fourth_term_sisters %}
+                    <div class="col-xs-6 col-md-3">
+                        <img class="badge-pic" src="/media/{{badge.original}}" %>
+                        <div class="firstpictitle">
+                            {{badge.lastname}} , {{badge.firstname}}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+    </body>
+
+    {% comment %}
+    <body>
             <div class="pagetitle">
                 Fall 2014<br/>
             </div>
@@ -126,15 +305,15 @@
                 {% for badge in object_list %}
                 <div class="firstfreshcolumn">
                     <img class="badge-pic" src="/media/{{badge.original}}" %>
-                <div class="firstpictitle">
-                     {{badge.lastname}} , {{badge.firstname}}
-                </div>
+                    <div class="firstpictitle">
+                         {{badge.lastname}} , {{badge.firstname}}
+                    </div>
                 </div>
                 <div class="columndivider">
                 </div>
                 {% endfor %}
             </div>
-        {% endfor %}
     </body>
+    {% endcomment %}
 </html>
 {% endblock %}
