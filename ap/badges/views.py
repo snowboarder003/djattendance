@@ -128,6 +128,7 @@ class BadgePrintFacebookView(ListView):
         context['fourth_term_brothers'] = Badge.objects.filter(term_created__exact=Term.objects.get(year=2013, season='Spring'), gender__exact='M')
         context['fourth_term_sisters'] = Badge.objects.filter(term_created__exact=Term.objects.get(year=2013, season='Spring'), gender__exact='F')
 
+        context['current_term'] = Term().current_term
 
         
         """context['first_term'] = Badge.objects.filter(trainee__sss="R").count()

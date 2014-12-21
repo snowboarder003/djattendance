@@ -1,141 +1,136 @@
 {% load staticfiles %}
 {% load bootstrap3 %}
 
-<head>
+<head style="margin-bottom:100px">
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet" media="all">
 </head>
+
 {% block badges_content %}
 
 <!-- Hallelujah Jesus is Lord! He has been resurrected and ascended! -->
-<body>
+<body> 
     <div class="container-fluid">
-        <div class="container" style="width:710pm;height:840px;padding: 40px 15px;text-align=center">
-            <div class="term">
-                <h1>First-Term Brothers</h1>
-                <div class="row">
-                    {% for badge in first_term_brothers %}
-                    <div class="col-xs-6 col-md-3" style="float:left;margin-right:2%">
-                        <img class="badge-pic" src="/media/{{badge.original}}" style="height:100px">
-                        <div class="firstpictitle">
-                            <p>{{badge.lastname}} , {{badge.firstname}}</p>
-                        </div>
-                    </div>
-                    {% endfor %}
+        <h1 align="center"> {{current_term}} </h1>
+        <h1 align="center">First-Term Brothers</h1>
+        <hr style="border-top: dotted 1px">
+        <div class="row">
+            {% for badge in first_term_brothers %}
+
+            <div class="col-lg-2 col-sm-2 col-xs-2">
+                    <img class="badge-pic" src="/media/{{badge.original}}" style="height:80px;">
+                <div class="firstpictitle">
+                    <p style="line-height:1">{{badge.firstname}}<br>{{badge.lastname}}<br><b>{{badge.locality}}</b></p>
                 </div>
             </div>
+                {% if forloop.counter|divisibleby:"6" %}
+                <p style="visibility: hidden; line-height:0">j</p> <!--Hack right here --> 
+                    <hr style="border-top: dotted 1px">
+                {% endif %}
+
+            {% endfor %}
         </div>
-        <div class="container" style="width:710pm;height:840px;padding: 40px 15px;text-align=center">
-            <div class="term">
-                <h1>First-Term Sisters</h1>
-                <div class="row">
-                    {% for badge in first_term_sisters %}
-                    <div class="col-xs-6 col-md-3" style="float:left;margin-right:2%">
-                        <img class="badge-pic" src="/media/{{badge.original}}" style="height:100px">
-                        <div class="firstpictitle">
-                            {{badge.lastname}} , {{badge.firstname}}
-                        </div>
-                    </div>
-                    {% endfor %}
+        <h1 align="center" style="page-break-before: always"> {{current_term}} </h1>
+        <h1 align="center">First-Term Sisters</h1>
+        <hr style="border-top: dotted 1px">
+        <div class="row">
+            {% for badge in first_term_sisters %}
+
+            <div class="col-lg-2 col-sm-2 col-xs-2">
+                    <img class="badge-pic" src="/media/{{badge.original}}" style="height:80px">
+                <div class="firstpictitle">
+                    <p style="line-height:1">{{badge.firstname}}<br>{{badge.lastname}}<br><b>{{badge.locality}}</b></p>
                 </div>
             </div>
+                {% if forloop.counter|divisibleby:"6" %}
+                <p style="visibility: hidden; line-height:0">j</p> <!--Hack right here --> 
+                    <hr style="border-top: dotted 1px">
+                {% endif %}
+
+            {% endfor %}
         </div>
-        <div class="container">
-            <div class="term" style="width:710pm;height:840px;padding: 40px 15px;text-align=center">
-                <h1>Second-Term Brothers</h1>
-                <div class="row">
-                    {% for badge in second_term_brothers %}
-                    <div class="col-xs-6 col-md-3" style="float:left;margin-right:2%">
-                        <img class="badge-pic" src="/media/{{badge.original}}" style="height:100px">
-                        <div class="firstpictitle">
-                            {{badge.lastname}} , {{badge.firstname}}
-                        </div>
-                    </div>
-                    {% endfor %} 
+        <h1 align="center" style="page-break-before: always"> {{current_term}} </h1>
+        <h1 align="center">Second-Term Brothers</h1>
+        <hr style="border-top: dotted 1px">
+        <div class="row">
+            {% for badge in second_term_brothers %}
+
+            <div class="col-lg-2 col-sm-2 col-xs-2">
+                    <img class="badge-pic" src="/media/{{badge.original}}" style="height:80px">
+                <div class="firstpictitle">
+                    <p style="line-height:1">{{badge.firstname}}<br>{{badge.lastname}}<br><b>{{badge.locality}}</b></p>
                 </div>
             </div>
+                {% if forloop.counter|divisibleby:"6" %}
+                <p style="visibility: hidden; line-height:0">j</p> <!--Hack right here --> 
+                    <hr style="border-top: dotted 1px">
+                {% endif %}
+
+            {% endfor %}
         </div>
-        <div class="container">
-            <div class="term" style="width:710pm;height:840px;padding: 40px 15px;text-align=center">
-                <h1>Second-Term Sisters</h1>
-                <div class="row">
-                    {% for badge in second_term_sisters %}
-                    <div class="col-xs-3" style="float:left;margin-right:2%;text-align:center">
-                        <img class="badge-pic" src="/media/{{badge.original}}" style="height:100px">
-                        <div class="firstpictitle">
-                            <p>{{badge.lastname}} , <br></br>
-                            {{badge.firstname}}</p>
-                        </div>
-                    </div>
-                    {% endfor %}
+        <h1 align="center" style="page-break-before: always"> {{current_term}} </h1>
+        <h1 align="center">Second-Term Sisters</h1>
+        <hr style="border-top: dotted 1px">
+        <div class="row">
+            {% for badge in second_term_sisters %}
+
+            <div class="col-lg-2 col-sm-2 col-xs-2">
+                    <img class="badge-pic" src="/media/{{badge.original}}" style="height:80px">
+                <div class="firstpictitle">
+                    <p style="line-height:1">{{badge.firstname}}<br>{{badge.lastname}}<br><b>{{badge.locality}}</b></p>
                 </div>
             </div>
+                {% if forloop.counter|divisibleby:"6" %}
+                <p style="visibility: hidden; line-height:0">j</p> <!--Hack right here --> 
+                    <hr style="border-top: dotted 1px">
+                {% endif %}
+
+            {% endfor %}
         </div>
+
+        <h1 align="center" style="page-break-before: always"> {{current_term}} </h1>
         <h1 align="center">Third-Term Brothers</h1>
-        <hr class="divider">
+        <hr style="border-top: dotted 1px">
         <div class="row">
             {% for badge in third_term_brothers %}
 
             <div class="col-lg-2 col-sm-2 col-xs-2">
                     <img class="badge-pic" src="/media/{{badge.original}}" style="height:80px">
                 <div class="firstpictitle">
-                    <p>{{badge.firstname}}<br>{{badge.lastname}}</p>
+                    <p style="line-height:1">{{badge.firstname}}<br>{{badge.lastname}}<br><b>{{badge.locality}}</b></p>
                 </div>
             </div>
                 {% if forloop.counter|divisibleby:"6" %}
-                <p style="visibility: hidden; line-height:0">j</p>
+                <p style="visibility: hidden; line-height:0">j</p> <!--Hack right here --> 
                     <hr style="border-top: dotted 1px">
                 {% endif %}
 
             {% endfor %}
         </div>
-        <div class="container">
-            <div class="term" style="width:710pm;height:840px;padding: 40px 15px;text-align=center">
-                <h1 align="center">Third-Term Sisters</h1>
-                <hr></hr>
-                <div class="row">
-                    {% for badge in third_term_sisters %}
-                    <div class="col-xs-6 col-md-3" style="float:left;margin-right:2%">
-                        <img class="badge-pic" src="/media/{{badge.original}}" style="height:100px">
-                        <div class="firstpictitle">
-                            {{badge.lastname}} , {{badge.firstname}}
-                        </div>
-                    </div>
-                    {% endfor %}
+
+        <h1 align="center" style="page-break-before: always"> {{current_term}} </h1>
+        <h1 align="center">Third-Term Sisters</h1>
+        <hr style="border-top: dotted 1px">
+        <div class="row">
+            {% for badge in third_term_sisters %}
+
+            <div class="col-lg-2 col-sm-2 col-xs-2">
+                    <img class="badge-pic" src="/media/{{badge.original}}" style="height:80px">
+                <div class="firstpictitle">
+                    <p style="line-height:1">{{badge.firstname}}<br>{{badge.lastname}}<br><b>{{badge.locality}}</b></p>
                 </div>
             </div>
+                {% if forloop.counter|divisibleby:"6" %}
+                <p style="visibility: hidden; line-height:0">j</p> <!--Hack right here --> 
+                    <hr style="border-top: dotted 1px">
+                {% endif %}
+
+            {% endfor %}
         </div>
-        <div class="container">
-            <div class="term" style="width:710pm;height:840px;padding: 40px 15px;text-align=center">
-                <h1>Fourth-Term Brothers</h1>
-                <div class="row">
-                    {% for badge in fourth_term_brothers %}
-                    <div class="col-xs-6 col-md-3" style="float:left;margin-right:2%">
-                        <img class="badge-pic" src="/media/{{badge.original}}" style="height:100px">
-                        <div class="firstpictitle">
-                            {{badge.lastname}} , {{badge.firstname}}
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="term" style="width:710pm;height:840px;padding: 40px 15px;text-align=center">
-                <h1>Fourth-Term Sisters</h1>
-                <div class="row">
-                    {% for badge in fourth_term_sisters %}
-                    <div class="col-xs-6 col-md-3" style="float:left;margin-right:2%">
-                        <img class="badge-pic" src="/media/{{badge.original}}" style="height:100px">
-                        <div class="firstpictitle">
-                            {{badge.lastname}} , {{badge.firstname}}
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+        
     </div>
     <script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
+
 </body>
+
 {% endblock %}
