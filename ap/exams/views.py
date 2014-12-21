@@ -1,5 +1,6 @@
 import datetime
 
+from django.views.generic.edit import FormView
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse_lazy
 
@@ -10,9 +11,10 @@ from django.views.generic.edit import FormView, CreateView, UpdateView
 from django.views.generic.list import ListView
 from django.shortcuts import redirect
 from django.contrib import messages
+from django_select2 import *
 
-from .models import ExamTemplate, Exam, TextQuestion, TextResponse
-
+from .forms import TraineeSelectForm
+from .models import ExamTemplate, Exam, TextQuestion, TextResponse, Trainee
 
 class ExamTemplateListView(ListView):
     template_name = 'exams/exam_template_list.html'
@@ -66,15 +68,35 @@ class SingleExamGradesListView(CreateView, SuccessMessageMixin):
 			return redirect('exams:exams_template_list')
 		return HttpResponseRedirect(reverse_lazy('exams:exam_template_list'))
 
-class GenerateGradeReport(DetailView):
-	template_name = 'exams/exam_grade_report.html'
+class GenerateGradeReports(CreateView, SuccessMessageMixin):
 	model = Exam
-	context_object_name = 'exam'
-	fields = ['trainee', 'grade', 'exam_template', 'is_complete', 'is_graded']
+	template_name = 'exams/exam_grade_reports.html'
+	success_url = reverse_lazy('exams:exam_grade_reports')
 
 	def get_context_data(self, **kwargs):
-		context = super(GenerateGradeReport, self).get_context_data(**kwargs)
+		context = super(GenerateGradeReports, self).get_context_data(**kwargs)
+		context['trainee_select_form'] = TraineeSelectForm()
+		context['trainees'] = TraineeSelectForm
+		trainee_list = self.request.GET.getlist('trainees')
+		exams = {}
+		for trainee in trainee_list:
+			try:
+				exams[Trainee.objects.get(id=trainee)] = Exam.objects.filter(trainee_id=trainee)
+			except Exam.DoesNotExist:
+				exams[trainee] = {}				
+		context['exams'] = exams
 		return context
+
+	# def get_queryset(self):
+		# print self.kwargs
+		# print self.request
+
+	# def post(self, request, *args, **kwargs):
+	# 	if request.method == 'POST':
+	# 		trainees = request.POST.getlist('trainees')
+	# 		request._post = request.POST.copy()
+	# 		request._get = request.POST.copy()
+	# 		return super(GenerateGradeReports, self).post(self, request, *args, **kwargs)
 
 class GenerateRetakeList(DetailView):
 	template_name = 'exams/exam_retake_list.html'
