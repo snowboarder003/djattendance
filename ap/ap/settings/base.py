@@ -136,7 +136,7 @@ AUTH_USER_MODEL = 'accounts.User'
 INSTALLED_APPS = (
 
     # admin third-party modules
-    'adminactions',
+    #'adminactions',
     'suit',  # needs to be in front of 'django.contrib.admin'
 
     # django contrib
@@ -154,7 +154,7 @@ INSTALLED_APPS = (
     'bootstrap3',  # easy-to-use bootstrap integration
     'bootstrap3_datetime',  # datetime picker widget
     'braces',  # Mixins for Django's class-based views.
-    'explorer',  # SQL explorer
+   # 'explorer',  # SQL explorer
     'django_select2',
     'rest_framework',  # for API
 
@@ -173,6 +173,7 @@ INSTALLED_APPS = (
     # ap modules
     'attendance',
     'absent_trainee_roster',
+    'bible_track',
     'dailybread',  # daily nourishment
     'leaveslips',
     'leaveslip_api',

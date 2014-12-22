@@ -158,7 +158,7 @@ class Profile(models.Model):
 
 class TrainingAssistant(Profile):
 
-    services = models.ManyToManyField(Service, blank=True, null=True)
+    #services = models.ManyToManyField(Service, blank=True, null=True)
     houses = models.ManyToManyField(House, blank=True, null=True)
 
     def __unicode__(self):
