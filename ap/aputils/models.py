@@ -89,6 +89,9 @@ class State(models.Model):
     
     name = models.CharField(max_length=2, blank=True, choices=STATES)
 
+    def __unicode__(self):
+        return self.name
+
 
 class City(models.Model):
 
