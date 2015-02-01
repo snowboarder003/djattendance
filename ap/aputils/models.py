@@ -85,6 +85,7 @@ class State(models.Model):
         ('WV', 'West Virginia'),
         ('WI', 'Wisconsin'),
         ('WY', 'Wyoming'),
+        ('PR', 'Puerto Rico'),
     )
     
     name = models.CharField(max_length=2, blank=True, choices=STATES)
