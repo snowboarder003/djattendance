@@ -20,6 +20,12 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
+
 INTERNAL_IPS = ('127.0.0.1',)
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
