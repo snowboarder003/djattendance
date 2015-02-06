@@ -247,3 +247,9 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+SUIT_CONFIG = {
+    # header
+    'ADMIN_NAME': 'FTTA Admin',
+    'LIST_PER_PAGE': 20,
+}
