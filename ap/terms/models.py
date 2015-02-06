@@ -94,8 +94,5 @@ class Term(models.Model):
         else:
             raise ValueError('Invalid date for this term: ' + str(date))
 
-    def get_absolute_url(self):
-        return reverse('terms:detail', kwargs={'code': self.code})
-
     def __unicode__(self):
         return self.name
