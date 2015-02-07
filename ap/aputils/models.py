@@ -91,7 +91,7 @@ class State(models.Model):
     name = models.CharField(max_length=2, blank=True, choices=STATES, unique=True)
 
     def __unicode__(self):
-        return self.name
+        return self.get_name_display()
 
 
 class City(models.Model):
