@@ -86,10 +86,9 @@ class State(models.Model):
         ('WI', 'Wisconsin'),
         ('WY', 'Wyoming'),
         ('PR', 'Puerto Rico'),
-        ('DC', 'Washington DC'),
     )
     
-    name = models.CharField(max_length=2, blank=True, choices=STATES)
+    name = models.CharField(max_length=2, blank=True, choices=STATES, unique=True)
 
     def __unicode__(self):
         return self.name
