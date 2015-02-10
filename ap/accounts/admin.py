@@ -192,6 +192,8 @@ class TraineeAdmin(ForeignKeyAutocompleteAdmin):
        'spouse': ('account__firstname', 'account__lastname', 'account__email'),
     }
 
+    search_fields = ['account__email', 'account__firstname', 'account__lastname']
+
     fieldsets = (
         (None, {
             'fields': (('account', 'active',), 'type', 'locality', 'term',
