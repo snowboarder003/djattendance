@@ -187,9 +187,10 @@ class TraineeAdmin(ForeignKeyAutocompleteAdmin):
     # User is your FK attribute in your model
     # first_name and email are attributes to search for in the FK model
     related_search_fields = {
-       'TA': ('account__firstname', 'account__lastname', 'account__email'),
-       'mentor': ('account__firstname', 'account__lastname', 'account__email'),
-       'spouse': ('account__firstname', 'account__lastname', 'account__email'),
+        'account': ('firstname', 'lastname', 'email'),
+        'TA': ('account__firstname', 'account__lastname', 'account__email'),
+        'mentor': ('account__firstname', 'account__lastname', 'account__email'),
+        'spouse': ('account__firstname', 'account__lastname', 'account__email'),
     }
 
     search_fields = ['account__email', 'account__firstname', 'account__lastname']
