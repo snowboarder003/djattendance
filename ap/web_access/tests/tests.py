@@ -4,7 +4,7 @@ Skeleton for unit tests for the web-access module
 
 import socket
 from threading import Thread
-from netaddr import EUI
+from netaddr import EUI, IPAddress
 
 from web_access.models import Request
 from web_access import utils as wa_utils
@@ -53,6 +53,7 @@ class WebAccessTests(unittest.TestCase):
         """
         Tests for web_access.utils
         """
+        
         # use the loopback address for the test
         wa_utils.HOST = '127.0.0.1'
         
@@ -67,7 +68,14 @@ class WebAccessTests(unittest.TestCase):
         #wait for the server connection to close
         thread.join()
         result=''.join(return_val)
-        self.assertEqual('00:00:00:00:00:00 0', result, 'send_raw failed! %s' % (result))
+        self.assertEqual('00:00:00:00:00:00 0', result, 'send_raw failed! %s'
+                         % (result))
+        
+        gateway = wa_utils.get_default_gateway()
+        self.assert_(not gateway is None, "Unable to get default gateway to "\
+                     "test get_mac")
+        self.assert_(not wa_utils.get_mac(gateway) is None,
+                     "get_mac failed!")
 
     def tearDown(self):
         pass
