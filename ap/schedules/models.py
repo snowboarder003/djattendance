@@ -90,12 +90,10 @@ class Event(models.Model):
 
 class EventGroup(models.Model):
 
-    # for now, this should just be the same as the event name
-    name = models.CharField(max_length=30)
-
     # which days this event repeats, starting with Monday (0) through LD (6)
     # i.e. an event that repeats on Tuesday and Thursday would be (1,3)
     repeat = models.CommaSeparatedIntegerField(max_length=7)
+    duration = models.PositiveSmallIntegerField()  # how many weeks this event repeats
 
     # override delete(): ensure all events in eventgroup are also deleted
     def delete(self, *args, **kwargs):

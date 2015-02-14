@@ -10,4 +10,5 @@ urlpatterns = patterns('',
     url(r'event/(?P<pk>\d+)/$', views.EventDetail.as_view(), name='event-detail'),
     url(r'event/(?P<pk>\d+)/update/$', views.EventUpdate.as_view(), name='event-update'),
     url(r'event/(?P<pk>\d+)/delete/$', views.EventDelete.as_view(), name='event-delete'),
+    url(r'eventgroup/create/$', views.EventGroupCreate.as_view(), name='event-create'),
 )
