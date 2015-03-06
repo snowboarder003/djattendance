@@ -44,23 +44,25 @@ class EventGroupCreate(generic.FormView):
     def form_valid(self, form):
         # custom logic (do something)
 
-        eg = EventGroup.create(
-            repeat=",".join(form.cleaned_data['repeat']), 
-            duration=form.cleaned_data['duration'])
+        eg = EventGroup(
+            repeat = ",".join(form.cleaned_data['repeat']), 
+            duration = form.cleaned_data['duration'])
+        eg.save()
 
-        e = Event.create(
-            name=form.cleaned_data['name'],
-            code=form.cleaned_data['code'],
-            description=form.cleaned_data['description'],
-            classs=form.cleaned_data['classs'],
-            type=form.cleaned_data['type'],
-            monitor=form.cleaned_data['monitor'],
-            term=form.cleaned_data['term'],
-            start=form.cleaned_data['start'],
-            end=form.cleaned_data['end'],)
+        e = Event(
+            name = form.cleaned_data['name'],
+            code = form.cleaned_data['code'],
+            description = form.cleaned_data['description'],
+            classs = form.cleaned_data['classs'],
+            type = form.cleaned_data['type'],
+            monitor = form.cleaned_data['monitor'],
+            term = form.cleaned_data['term'],
+            start = form.cleaned_data['start'],
+            end = form.cleaned_data['end'],
+            group = eg,)
 
         eg.create_children(e)
-        
+
         return super(EventGroupCreate, self).form_valid(form)
 
 

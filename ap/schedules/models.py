@@ -1,4 +1,5 @@
 from datetime import datetime, date, time, timedelta
+from copy import deepcopy
 
 from django.db import models
 from django.core.urlresolvers import reverse
@@ -6,6 +7,7 @@ from django.core.urlresolvers import reverse
 from terms.models import Term
 from classes.models import Class
 from accounts.models import Trainee
+from .utils import next_dow
 
 
 """ SCHEDULES models.py
@@ -95,9 +97,24 @@ class EventGroup(models.Model):
     repeat = models.CommaSeparatedIntegerField(max_length=20)
     duration = models.PositiveSmallIntegerField()  # how many weeks this event repeats
 
-    def create_children(self, Event):
+    def create_children(self, e):
         # create repeating child Events
-        pass
+
+        events = [] # list of events to create
+
+        for day in map(int, self.repeat.split(",")):
+            event = deepcopy(e)
+            event.pk = None
+            event.start = next_dow(event.start, day)
+            event.end = next_dow(event.end, day)
+            events.append(event)
+            for week in range(1, self.duration):
+                event_ = deepcopy(event)
+                event_.start += timedelta(7*week)
+                event_.end += timedelta(7*week)
+                events.append(event_)
+
+        Event.objects.bulk_create(events)
 
     def delete(self, *args, **kwargs):
         # override delete(): ensure all events in eventgroup are also deleted
