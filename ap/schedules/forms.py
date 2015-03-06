@@ -42,6 +42,7 @@ class EventGroupForm(forms.ModelForm):
         fields = ('type', 'name', 'code', 'description', 'classs', 'monitor', 'term', 'start', 'end')
         help_texts = {
             'start': 'Set the date to the first occurrence of the event',
+            'end': 'Set the date to the first occurrence of the event',
         }
         widgets = { 'start': DateTimePicker(options={'format': 'MM/DD/YYYY HH:mm'}),
                     'end': DateTimePicker(options={'format': 'MM/DD/YYYY HH:mm'}) }
