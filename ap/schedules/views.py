@@ -45,6 +45,9 @@ class EventGroupCreate(generic.FormView):
         # custom logic (do something)
 
         eg = EventGroup(
+            name = form.cleaned_data['name'],
+            code = form.cleaned_data['code'],
+            description = form.cleaned_data['description'],
             repeat = ",".join(form.cleaned_data['repeat']), 
             duration = form.cleaned_data['duration'])
         eg.save()
