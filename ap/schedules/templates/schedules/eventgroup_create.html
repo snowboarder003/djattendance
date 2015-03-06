@@ -19,7 +19,7 @@
 
     <h2>Create Repeating Event</h2>
 
-    <form id="eventForm" action="" method="post">{% csrf_token %}
+    <form id="eventForm" class="col-md-6" action="" method="post">{% csrf_token %}
         {% bootstrap_form form %}
         <button type="button" data-toggle="modal" data-target="#trainee_select">Add Trainee Group</button>
         {% buttons %}
