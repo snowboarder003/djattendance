@@ -124,6 +124,9 @@ class EventGroup(models.Model):
         Event.objects.filter(eventgroup=self.id).delete()
         super(EventGroup, self).delete(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse('schedules:eventgroup-detail', kwargs={'pk': self.pk})
+
     def __unicode__(self):
         return self.name + " group"
 

@@ -35,6 +35,7 @@ class ScheduleDetail(generic.DetailView):
 class EventGroupCreate(generic.FormView):
     template_name = 'schedules/eventgroup_create.html'
     form_class = EventGroupForm
+    #success_url = 
 
     def get_context_data(self, **kwargs):
         context = super(EventGroupCreate, self).get_context_data(**kwargs)
@@ -67,6 +68,11 @@ class EventGroupCreate(generic.FormView):
         eg.create_children(e)
 
         return super(EventGroupCreate, self).form_valid(form)
+
+
+class EventGroupDetail(generic.DetailView):
+    model = EventGroup
+    context_object_name = "eventgroup"
 
 
 class EventCreate(generic.CreateView):
