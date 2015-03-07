@@ -5,8 +5,8 @@
     <p> Welcome to the badges portal!</p>
 
         <ul class="nav nav-tabs" role="tablist">
-            <li {% block tab1 %}{%endblock%}><a href="{% url 'badges:badges_term' "Fa14"%}">Current Term FTTA Trainees</a></li>
-            <li {% block tab2 %}{%endblock%}><a href="{% url 'badges:badges_term_xb' "Fa14"%}">Current Term FTTA-XB Trainees</a></li>
+            <li {% block tab1 %}{%endblock%}><a href="{% url 'badges:badges_term' "Sp15"%}">Current Term FTTA Trainees</a></li>
+            <li {% block tab2 %}{%endblock%}><a href="{% url 'badges:badges_term_xb' "Sp15"%}">Current Term FTTA-XB Trainees</a></li>
             <li {% block tab3 %}{%endblock%}><a href="{% url 'badges:badges_staff' %}">Staffs</a></li>
             <li {% block tab5 %}{%endblock%} class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Creator Management <span class="caret"></span></a>
@@ -20,7 +20,7 @@
             <li {% block tab6 %}{%endblock%} class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Printing Management <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{% url 'badges:badges_print_term_front' %}">Mass-Print Front Badge for Current Term</a></li>
+                    <li><a href="{% url 'badges:badges_print_term_massfront' %}">Mass-Print Front Badge for Current Term</a></li>
                     <!--<li class="divider"></li>-->
                     <li><a href="{% url 'badges:badges_print_term_back' %}">Mass-Print Back Badge for Current Term</a></li>
                     <!--<li class="divider"></li>-->

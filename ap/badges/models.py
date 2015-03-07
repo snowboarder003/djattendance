@@ -23,7 +23,7 @@ class Badge(models.Model):
     )
 
     type = models.CharField(max_length=2, choices=BADGE_TYPES, default='T')
-    original = models.ImageField(upload_to=_image_upload_path)
+    original = models.ImageField(upload_to=_image_upload_path, null=True, blank=True)
     term_created = models.ForeignKey(Term)
     # thumbnail
     # badge_size

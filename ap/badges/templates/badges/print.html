@@ -24,13 +24,29 @@
             .badge {
             width: 330px;
             height: 190px;
-            border: transparent 1px;
+            border: transparent; 1px;
+            }
+
+            .badgeborder {
+            width: 330px;
+            height: 190px;
+            border-bottom: solid 1px;
             }
 
             .secondfreshcolumn {
                 width: 330px;
                 height: 190px;
                 border: transparent 1px;
+                position: absolute;
+                float: left;
+                left: 426px;
+            }
+
+            .secondfreshcolumnborder {
+                width: 330px;
+                height: 190px;
+                border: transparent 1px;
+                border-bottom: solid 1px;
                 position: absolute;
                 float: left;
                 left: 426px;
@@ -54,7 +70,7 @@
                 height: 141px;
                 background-image: url('/media/badges/GorgeousLogoLatest.jpg');
                 background-repeat: no-repeat;
-                background-position: center;
+                background-position: center; 
             }
             
             .name {
@@ -90,36 +106,71 @@
                 <div class="page-break">
                 </div>
             {% endif %}
+            
+
             {% if forloop.counter0|divisibleby:2 and badge.type == "T" %}
-            <div class="secondfreshcolumn">
-                <div class="banner">
-                    Living Stream Ministry <br/>
-                    <small>Full-Time Training in Anaheim</small>
-                </div>
-                <div class="body">
-                    <div class="name">
-                        <b>{{badge.firstname}}</b> <br> 
-                        {{badge.locality}}
+                {% if forloop.counter0 in need_bottom_rightside or forloop.revcounter0 == 1%}
+                <div class="secondfreshcolumnborder">
+                    <div class="banner">
+                        Living Stream Ministry <br/>
+                        <small>Full-Time Training in Anaheim</small>
                     </div>
-                    <img class="badge-pic" src="/media/{{badge.original}}"></div>
+                    <div class="body">
+                        <div class="name">
+                            <b>{{badge.firstname}} {{badge.lastname}}</b> <br> 
+                            {{badge.locality}}
+                        </div>
+                        <img class="badge-pic" src="/media/{{badge.original}}"></div>
+                    </div>
                 </div>
-            </div>
+                {% else%}
+                <div class="secondfreshcolumn">
+                    <div class="banner">
+                        Living Stream Ministry <br/>
+                        <small>Full-Time Training in Anaheim</small>
+                    </div>
+                    <div class="body">
+                        <div class="name">
+                            <b>{{badge.firstname}} {{badge.lastname}}</b> <br> 
+                            {{badge.locality}}
+                        </div>
+                        <img class="badge-pic" src="/media/{{badge.original}}"></div>
+                    </div>
+                </div>
+                {% endif %}
             {% elif badge.type == "T"%}
-            <div class="badge">
-                <div class="banner">
-                    Living Stream Ministry <br/>
-                    <small>Full-Time Training in Anaheim</small>
-                </div>
-                <div class="body">
-                    <div class="name">
-                        <b>{{badge.firstname}}</b> <br> 
-                        {{badge.locality}}
+                {% if forloop.counter0 in need_bottom_leftside or forloop.revcounter0 == 0 %}
+                <div class="badgeborder">
+                    <div class="banner">
+                        Living Stream Ministry <br/>
+                        <small>Full-Time Training in Anaheim</small>
                     </div>
-                    <img class="badge-pic" src="/media/{{badge.original}}"></div>
+                    <div class="body">
+                        <div class="name">
+                            <b>{{badge.firstname}} {{badge.lastname}}</b> <br> 
+                            {{badge.locality}}
+                        </div>
+                        <img class="badge-pic" src="/media/{{badge.original}}"></div>
+                    </div>
                 </div>
-            </div>
+                {% else%}
+                <div class="badge">
+                    <div class="banner">
+                        Living Stream Ministry <br/>
+                        <small>Full-Time Training in Anaheim</small>
+                    </div>
+                    <div class="body">
+                        <div class="name">
+                            <b>{{badge.firstname}} {{badge.lastname}}</b> <br> 
+                            {{badge.locality}}
+                        </div>
+                        <img class="badge-pic" src="/media/{{badge.original}}"></div>
+                    </div>
+                </div>
+                {% endif %}
             {% endif %}
         {% endfor %}
+        
     </body>
 </html>
 {% endblock %}
