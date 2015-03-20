@@ -42,8 +42,8 @@ class EventGroupCreate(generic.FormView):
         return context
 
     def form_valid(self, form):
-        # custom logic (do something)
 
+        # create the EventGroup
         eg = EventGroup(
             name = form.cleaned_data['name'],
             code = form.cleaned_data['code'],
@@ -51,8 +51,9 @@ class EventGroupCreate(generic.FormView):
             repeat = ",".join(form.cleaned_data['repeat']), 
             duration = form.cleaned_data['duration'])
         eg.save()
-        self.success_url = eg.get_absolute_url()
+        self.success_url = eg.get_absolute_url()  # redirect to created obj
 
+        # create the first event as a template
         e = Event(
             name = form.cleaned_data['name'],
             code = form.cleaned_data['code'],
@@ -65,7 +66,17 @@ class EventGroupCreate(generic.FormView):
             end = form.cleaned_data['end'],
             group = eg,)
 
-        eg.create_children(e)
+        eg.create_children(e)  # model method handles event repeating
+
+        # add trainees to events
+        for trainee in form.cleaned_data['trainees']:
+            if Schedule.objects.filter(trainee=trainee).filter(term=e.term):
+                schedule = Schedule.objects.filter(trainee=trainee).filter(term=e.term)[0]
+            else: # if trainee doesn't already have a schedule, create it
+                schedule = Schedule(trainee=trainee, term=e.term)
+                schedule.save()
+
+            schedule.events.add(*eg.events.all())
 
         return super(EventGroupCreate, self).form_valid(form)
 
