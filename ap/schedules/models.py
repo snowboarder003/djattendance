@@ -57,7 +57,7 @@ class Event(models.Model):
     description = models.CharField(max_length=250, blank=True)
 
     # a groupID. used to group repeating events
-    group = models.ForeignKey('EventGroup', blank=True, null=True)
+    group = models.ForeignKey('EventGroup', blank=True, null=True, related_name="events")
 
     # if this event is a class, relate it
     classs = models.ForeignKey(Class, blank=True, null=True, verbose_name='class')  # class is a reserved keyword :(
@@ -134,7 +134,7 @@ class EventGroup(models.Model):
 class Schedule(models.Model):
 
     # which trainee this schedule belongs to
-    trainee = models.ForeignKey(Trainee)
+    trainee = models.ForeignKey(Trainee, related_name="schedule")
 
     # which term this schedule applies to
     term = models.ForeignKey(Term)
