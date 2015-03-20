@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     # admin third-party modules
     'adminactions',
     'suit',  # needs to be in front of 'django.contrib.admin'
+    'django_extensions',
 
     # django contrib
     'django.contrib.auth',

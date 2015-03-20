@@ -12,7 +12,7 @@ from localities.models import Locality
 class EventForm(forms.ModelForm):
     active_trainees = Trainee.objects.filter(active=True)
     trainees = ModelSelect2MultipleField(queryset=active_trainees, required=False, search_fields=['^first_name', '^last_name'])
-
+    
     class Meta:
         model = Event
         fields = ('type', 'name', 'code', 'description', 'classs', 'monitor', 'term', 'start', 'end')
