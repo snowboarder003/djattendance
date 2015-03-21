@@ -149,9 +149,24 @@ class EventUpdate(generic.UpdateView):
 
 class EventDelete(generic.DeleteView):
     model = Event
-    success_url = reverse_lazy('event-create')
+    success_url = reverse_lazy('schedules:event-create')
 
 
+class TermEvents(generic.ListView):
+    model = Event
+    template_name = 'schedules/term_events.html'
+    context_object_name = 'events'
+
+    def get_queryset(self, **kwargs):
+        return Event.objects.filter(term=Term.decode(self.kwargs['term']))
+
+    def get_context_data(self, **kwargs):
+        context = super(TermEvents, self).get_context_data(**kwargs)
+        context['term'] = Term.decode(self.kwargs['term'])
+        return context
+
+
+###  API-ONLY VIEWS  ###
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
