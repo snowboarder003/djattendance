@@ -18,7 +18,7 @@ class Locality(models.Model):
     city = models.ForeignKey(City)
 
     def __unicode__(self):
-        return unicode(self.city)
+        return self.city.name + ", " + str(self.city.state)
 
     class Meta:
         verbose_name_plural = 'localities'
