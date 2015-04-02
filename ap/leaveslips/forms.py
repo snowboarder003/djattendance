@@ -11,6 +11,9 @@ class IndividualSlipForm(forms.ModelForm):
 
 
 class GroupSlipForm(forms.ModelForm):
+
+  trainees = forms.ModelMultipleChoiceField(queryset=Trainee.objects.filter(active=True))
+
     class Meta:
         model = GroupSlip
         fields = ['type', 'trainees', 'description', 'comments', 'texted', 'informed', 'start', 'end']
