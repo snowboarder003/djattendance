@@ -20,5 +20,10 @@ djorm-ext-pgarray==0.10
 xhtml2pdf==0.0.6
 pdfminer==20140328
 
+# static wsgi extensions
+dj-static==0.0.6
+static3==0.5.1
+wsgiref==0.1.2
+
 # deprecate
 django-tastypie==0.11.1
