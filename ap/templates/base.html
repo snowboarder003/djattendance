@@ -12,12 +12,12 @@
     <link rel="shortcut icon" href="">
 
     <title>FTTA | {% block title %}{% endblock %}</title>
-    
+
     {% block media %}
 
       {% load bootstrap3 %}
 
-      <link href="{% static "css/base.css" %}" rel="stylesheet"> 
+      <link href="{% static "css/base.css" %}" rel="stylesheet">
       <link href="{% static "css/offcanvas.css" %}" rel="stylesheet">
       {% bootstrap_css %}
       {% bootstrap_messages %}
@@ -84,7 +84,7 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-    
+
     <div class="container-fluid">
       <div class="row row-offcanvas row-offcanvas-left">
 
@@ -121,6 +121,22 @@
                 <a class="list-group-item" href="{% url 'meal_seating.views.newseats' %}">Meal Seating</a>
 
               {% endblock %}
+
+            </ul>
+          </div>
+        </div><!--/sidebar-->
+    {% endblock %}
+
+    <!--CONTENT-->
+    <div id="content" class="col-xs-12 col-sm-9 content">
+
+        {% block messages %}
+            <div id="messages">
+              {% if messages %}
+                {% for message in messages %}
+                  {% bootstrap_messages message %}
+                {% endfor %}
+              {% endif %}
             </div>
           </div> <!--/SIDEBAR-->
         {% endblock %}
