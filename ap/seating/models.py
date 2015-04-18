@@ -37,7 +37,7 @@ class Template(models.Model):
 
 
 class Chart(models.Model):
-    """ Defines a seating chart, built on top of a template """
+    """ Defines a seating chart, with trainees associated to seats, built on top of a template """
 
     name = models.CharField(max_length=100)
     desc = models.CharField(max_length=255)

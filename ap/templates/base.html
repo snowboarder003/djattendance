@@ -127,22 +127,8 @@
         </div><!--/sidebar-->
     {% endblock %}
 
-    <!--CONTENT-->
-    <div id="content" class="col-xs-12 col-sm-9 content">
-
-        {% block messages %}
-            <div id="messages">
-              {% if messages %}
-                {% for message in messages %}
-                  {% bootstrap_messages message %}
-                {% endfor %}
-              {% endif %}
-            </div>
-          </div> <!--/SIDEBAR-->
-        {% endblock %}
-
         <!--CONTENT-->
-        <div id="content" class="col-xs-12 col-sm-10">
+        <div id="content" class="col-xs-12 col-sm-9 content">
 
           {% block messages %}
               <div id="messages">

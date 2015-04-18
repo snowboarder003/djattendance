@@ -1,0 +1,26 @@
+.cell {
+  width: 30px;
+	height: 30px;
+	background: #fafafa;
+  border: 1px dotted grey;
+}
+
+.cell:hover {
+    background: #cccccc;
+}
+
+.cell.seat {
+  background: white;
+  border: 1px solid black;
+}
+
+
+#width, #height {
+    width: 75px;
+    margin: 10px;
+}
+
+#name, #desc {
+    width: 250px;
+    margin: 10px;
+}
