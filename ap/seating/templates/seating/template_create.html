@@ -27,7 +27,7 @@
       render: function () {
         var classString = 'cell'
         if (this.state.seat){ classString += ' seat' };
-        return (<td className={classString} onClick={this.handleClick}></td>);
+        return (<td className={classString} onClick={this.handleClick} ref="cell"></td>);
       }
     });
 
@@ -104,6 +104,20 @@
         }
     });
 
+    var TestButton = React.createClass({
+
+      handleClick: function(e) {
+        var seats = document.getElementsByClassName("seat");
+        [].forEach.call(seats, function(e) {
+          console.log("seat at: "+e.cellIndex+", "+e.parentNode.rowIndex);
+        });
+      },
+
+      render: function() {
+        return (<button onClick={this.handleClick}>Log Seat Coordinates</button>);
+      }
+    });
+
     var TemplateCreate = React.createClass({
         getInitialState: function() {
             return {
@@ -121,6 +135,8 @@
             return (
                 <div>
                     <h2>Create Template</h2>
+
+                    <TestButton />
 
                     <NameBar />
 
