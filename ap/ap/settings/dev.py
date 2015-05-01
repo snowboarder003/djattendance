@@ -7,7 +7,8 @@ INSTALLED_APPS += ('django_extensions',
                    'autofixture',
                    'debug_toolbar',
                    'django_reset',
-                   'django_nose',)
+                   'django_nose',
+                   'anonymizer',)
 
 DATABASES = {
     'default': {
@@ -33,4 +34,3 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 DEBUG_TOOLBAR_CONFIG = {
     'JQUERY_URL': '',  # use local jquery (for offline development)
 }
-
