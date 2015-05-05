@@ -11,8 +11,6 @@ print(SITE_ROOT)
 
 ADMINS = (
     ('Attendance Project', 'attendanceproj@gmail.com'),
-    ('Jonathan Tien', 'jonathan.tien@gmail.com'),
-    ('Jonathan Yao', 'jonyao.o@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -176,7 +174,6 @@ INSTALLED_APPS = (
     'absent_trainee_roster',
     'dailybread',  # daily nourishment
     'leaveslips',
-    'leaveslip_api',
     'lifestudies',
     'meal_seating',
     'schedules',
