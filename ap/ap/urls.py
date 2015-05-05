@@ -4,7 +4,6 @@ from django.conf.urls import patterns, include, url
 from django.contrib.auth.views import login, logout_then_login
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-
 from rest_framework import routers
 
 from accounts.views import *

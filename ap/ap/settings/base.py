@@ -11,8 +11,6 @@ print(SITE_ROOT)
 
 ADMINS = (
     ('Attendance Project', 'attendanceproj@gmail.com'),
-    ('Jonathan Tien', 'jonathan.tien@gmail.com'),
-    ('Jonathan Yao', 'jonyao.o@gmail.com'),
 )
 
 MANAGERS = ADMINS
