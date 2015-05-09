@@ -9,15 +9,8 @@
 
     <form action="" method="post">
         {% csrf_token %}
-        {% for field in form %}
-            {% if field.label == "Due" %}
-                {% bootstrap_label field.label %}
-                <input type="date" class="form-control" placeholder="Due Date">
-                <p style="height:5pt"></p>
-            {% else %}
-                {% bootstrap_field field %}
-            {% endif %}
-        {% endfor %}
+        {% bootstrap_form form %}
+
         
         <button type="submit" class="btn btn-success">Assign</button>
     </form>

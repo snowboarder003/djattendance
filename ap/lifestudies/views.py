@@ -100,7 +100,7 @@ class DisciplineReportView(ListView):
 class DisciplineCreateView(SuccessMessageMixin, CreateView):
     model = Discipline
     form_class = NewDisciplineForm
-    success_url = reverse_lazy('discipline_list')
+    success_url = reverse_lazy('lifestudies:discipline_list')
     success_message = "Discipline Assigned to Single Trainee Successfully!"
 
 
@@ -127,7 +127,7 @@ class DisciplineDetailView(DetailView):
 class SummaryCreateView(SuccessMessageMixin, CreateView):
     model = Summary
     form_class = NewSummaryForm
-    success_url = reverse_lazy('discipline_list')
+    success_url = reverse_lazy('lifestudies:discipline_list')
     success_message = "Life Study Summary Created Successfully!"
 
     def get_context_data(self, **kwargs):
@@ -152,7 +152,7 @@ class SummaryApproveView(DetailView):
     def post(self, request, *args, **kwargs):
         self.get_object().approve()
         messages.success(request, "Summary Approved!")
-        return HttpResponseRedirect(reverse_lazy('discipline_list'))
+        return HttpResponseRedirect(reverse_lazy('lifestudies:discipline_list'))
 
 
 class SummaryUpdateView(SuccessMessageMixin, UpdateView):
@@ -163,7 +163,7 @@ class SummaryUpdateView(SuccessMessageMixin, UpdateView):
     template_name = 'lifestudies/summary_detail.html'
     fields = ['content']
     form_class = EditSummaryForm
-    success_url = reverse_lazy('discipline_list')
+    success_url = reverse_lazy('lifestudies:discipline_list')
     success_message = "Summary Updated Successfully!"
 
     def get_context_data(self, **kwargs):
@@ -184,6 +184,8 @@ class CreateHouseDiscipline(TemplateView):
         """this manually creates Disciplines for each house member"""
         if request.method == 'POST':
             form = HouseDisciplineForm(request.POST)
+            print(form)
+            print(form.errors)
             if form.is_valid():
                 listTrainee = form.cleaned_data['House'].trainee_set.all()
                 for trainee in listTrainee:
@@ -198,10 +200,10 @@ class CreateHouseDiscipline(TemplateView):
                     except IntegrityError:
                         transaction.rollback()
                 messages.success(request, "Disciplines Assigned to House!")
-                return HttpResponseRedirect(reverse_lazy('discipline_list'))
+                return HttpResponseRedirect(reverse_lazy('lifestudies:discipline_list'))
         else:
             form = HouseDisciplineForm()
-        return HttpResponseRedirect(reverse_lazy('discipline_list'))
+        return HttpResponseRedirect(reverse_lazy('lifestudies:discipline_list'))
 
 
 class AttendanceAssign(ListView):
