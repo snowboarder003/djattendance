@@ -7,7 +7,20 @@ used by other apps such as Room Reservation and Maintenance Requests.
 
 Data Models:
     - Room: a room inside the TC
+    - Building: a training building, in which are rooms
 """
+
+
+class Building (models.Model):
+
+    # the building's name, e.g., Training Center, Ministry Conference Center
+    name = models.CharField(max_length=30)
+
+    # the building short-hand code, e.g., TC, MCC
+    code = models.CharField(max_length=6)
+
+    def __unicode__(self):
+        return self.name + ' (' + self.code + ')'
 
 
 class Room (models.Model):
@@ -45,5 +58,10 @@ class Room (models.Model):
     # some rooms are in the system and have schedules, but cannot be reserved
     reservable = models.BooleanField(default=False)
 
+    # location of the room
+    building = models.ForeignKey(Building)
+
     def __unicode__(self):
     	return self.name
+
+
