@@ -132,7 +132,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         send_mail(subject, message, from_email, [self.email])
 
     def __unicode__(self):
-        return "%s, %s <%s>" % (self.lastname, self.firstname, self.email) 
+        return "%s, %s <%s>" % (self.lastname, self.firstname, self.email)
 
 
 class Profile(models.Model):
@@ -158,8 +158,8 @@ class Profile(models.Model):
 
 class TrainingAssistant(Profile):
 
-    services = models.ManyToManyField(Service, blank=True, null=True)
-    houses = models.ManyToManyField(House, blank=True, null=True)
+    services = models.ManyToManyField(Service, blank=True)
+    houses = models.ManyToManyField(House, blank=True)
 
     def __unicode__(self):
         return self.account.get_full_name()
@@ -175,7 +175,7 @@ class Trainee(Profile):
 
     type = models.CharField(max_length=1, choices=TRAINEE_TYPES)
 
-    term = models.ManyToManyField(Term, null=True)
+    term = models.ManyToManyField(Term)
     date_begin = models.DateField()
     date_end = models.DateField(null=True, blank=True)
 
