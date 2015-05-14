@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 from django.db.models import Q
 from django.views.generic import ListView
 from .models import Badge
-from accounts.models import User
+from accounts.models import User, Trainee
 from terms.models import Term
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.base import TemplateView
@@ -47,16 +47,21 @@ def batch(request):
 def badgeprintout(request):
     return render_to_response('badges/print.html', Badge.objects.filter(term_created__exact=Term.current_term()))
 
+def pictureRange(begin, end):
+    if begin>end:
+        return []
+
+    pictureRangeArray = []
+    for num in range(int(begin-end)/8):
+        pictureRangeArray = pictureRangeArray.append(begin+num*8)
+
+    return pictureRangeArray
+
 class BadgePrintFrontView(ListView):
 
     model = Badge
 
     def post(self, request, *args, **kwargs):
-        print "YES"
-        if 'print' in request.POST:
-            print "HI"
-            for value in request.POST.getlist('choice'):
-                print value
         return self.get(request, *args, **kwargs)
 
     def get_template_names(self):
@@ -67,11 +72,10 @@ class BadgePrintFrontView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super(BadgePrintFrontView, self).get_context_data(**kwargs)
-        badge_pk = []
-        if 'print' in self.request.POST:
-            for value in self.request.POST.getlist('choice'):
-                badge_pk.append(value)
-        context['object_list'] = Badge.objects.filter(id__in=badge_pk)
+
+        if 'choice' in self.request.POST:
+            context['object_list'] = Badge.objects.filter(id__in=self.request.POST.getlist('choice'))
+
         return context
 
 class BadgePrintMassFrontView(ListView):
@@ -86,8 +90,13 @@ class BadgePrintMassFrontView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super(BadgePrintMassFrontView, self).get_context_data(**kwargs)
-        context['need_bottom_rightside'] = [6,14,22,30,38,46,54,62,70,78,86,94,102,110,118,126,134,142,150,158,166,174,182,190,198,206,214,222,230]
-        context['need_bottom_leftside'] = [7,15,23,31,39,47,55,63,71,79,87,95,103,111,119,127,135,143,151,159,167,175,183,191,199,207,215,223,231]
+  
+        numTrainees = Trainee.objects.filter().all().count()
+        #Signifies the range of pictures to place on the right side
+        context['need_bottom_rightside'] = pictureRange(6, numTrainees)
+        #Signifies the range of pictures to place on the left side
+        context['need_bottom_leftside'] = pictureRange(7, numTrainees)
+
         return context
 
 class BadgePrintBackView(ListView):

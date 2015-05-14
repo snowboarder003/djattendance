@@ -24,7 +24,7 @@
             .badge {
             width: 330px;
             height: 190px;
-            border: transparent; 1px;
+            border: transparent 1px;
             }
 
             .badgeborder {
@@ -50,6 +50,10 @@
                 position: absolute;
                 float: left;
                 left: 426px;
+            }
+
+            .badge:nth-last-child(2), .secondfreshcolumn:nth-last-child(2), .badge:last-child,  .secondfreshcolumn:last-child{
+                border-bottom: solid 1px;
             }
 
             .banner {
@@ -101,29 +105,16 @@
         </style>
     </head>
     <body>
+        <div class="page">
         {% for badge in object_list %}
             {% if forloop.counter0|divisibleby:8 and forloop.counter0 >= 8 %}
-                <div class="page-break">
-                </div>
+                </div> <!-- end of page -->  
+                <div class="page-break"></div>
+                <div class="page">
             {% endif %}
             
 
             {% if forloop.counter0|divisibleby:2 and badge.type == "T" %}
-                {% if forloop.counter0 in need_bottom_rightside or forloop.revcounter0 == 1%}
-                <div class="secondfreshcolumnborder">
-                    <div class="banner">
-                        Living Stream Ministry <br/>
-                        <small>Full-Time Training in Anaheim</small>
-                    </div>
-                    <div class="body">
-                        <div class="name">
-                            <b>{{badge.firstname}} {{badge.lastname}}</b> <br> 
-                            {{badge.locality}}
-                        </div>
-                        <img class="badge-pic" src="/media/{{badge.original}}"></div>
-                    </div>
-                </div>
-                {% else%}
                 <div class="secondfreshcolumn">
                     <div class="banner">
                         Living Stream Ministry <br/>
@@ -134,26 +125,10 @@
                             <b>{{badge.firstname}} {{badge.lastname}}</b> <br> 
                             {{badge.locality}}
                         </div>
-                        <img class="badge-pic" src="/media/{{badge.original}}"></div>
+                        <img class="badge-pic" src="/media/{{badge.original}}">
                     </div>
                 </div>
-                {% endif %}
             {% elif badge.type == "T"%}
-                {% if forloop.counter0 in need_bottom_leftside or forloop.revcounter0 == 0 %}
-                <div class="badgeborder">
-                    <div class="banner">
-                        Living Stream Ministry <br/>
-                        <small>Full-Time Training in Anaheim</small>
-                    </div>
-                    <div class="body">
-                        <div class="name">
-                            <b>{{badge.firstname}} {{badge.lastname}}</b> <br> 
-                            {{badge.locality}}
-                        </div>
-                        <img class="badge-pic" src="/media/{{badge.original}}"></div>
-                    </div>
-                </div>
-                {% else%}
                 <div class="badge">
                     <div class="banner">
                         Living Stream Ministry <br/>
@@ -164,13 +139,12 @@
                             <b>{{badge.firstname}} {{badge.lastname}}</b> <br> 
                             {{badge.locality}}
                         </div>
-                        <img class="badge-pic" src="/media/{{badge.original}}"></div>
+                        <img class="badge-pic" src="/media/{{badge.original}}">
                     </div>
                 </div>
-                {% endif %}
             {% endif %}
-        {% endfor %}
-        
+        {% endfor %} 
+        </div> <!-- end of page -->
     </body>
 </html>
 {% endblock %}

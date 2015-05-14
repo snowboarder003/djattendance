@@ -11,4 +11,4 @@ def _image_upload_path(instance, filename):
 def resize_image(originimage, size=(100,100)):
     image = Image.open(originimage.path)
     final_path = str(originimage.path) + ".avatar"
-    image.resize(size, Image.ANTIALIAS).save(final_path, 'JPEG', quality=50)
+    image.resize(size, Image.ANTIALIAS).save(final_path, 'JPEG', quality=100)

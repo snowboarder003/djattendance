@@ -48,6 +48,10 @@
                 line-height: 1.2;
             }
             
+            .badge:nth-last-child(2), .secondfreshcolumn:nth-last-child(2), .badge:last-child,  .secondfreshcolumn:last-child{
+                border-bottom: solid 1px;
+            }
+
             .body {
                 position: relative;
                 width: 330px;
@@ -80,10 +84,12 @@
         </style>
     </head>
     <body>
+    <div class="page">
         {% for i in loop_times %}
             {% if forloop.counter0|divisibleby:8 and forloop.counter0 >= 8 %}
-                <div class="page-break">
                 </div>
+                <div class="page-break"> </div>
+                <div class="page">
             {% endif %}
             {% if forloop.counter0|divisibleby:2 %}
             <div class="secondfreshcolumn">
@@ -111,6 +117,7 @@
             </div>
             {% endif %}
         {% endfor %}
+    </div>
     </body>
 </html>
 {% endblock %}

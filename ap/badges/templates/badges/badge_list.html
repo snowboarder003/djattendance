@@ -12,8 +12,9 @@
 
 {% block scripts %}
     <script>
+        var table;
         $(document).ready(function(){
-            $('#badges-table').dataTable( {
+            table = $('#badges-table').dataTable( {
                 dom: 'T<"clear">lfrtip',
                 tableTools: {
                 "sRowSelect": "multi",
@@ -30,7 +31,7 @@
 
 {% block badges_content %}
     <BR>&nbsp;<BR>
-    <form role="form" action="{% url 'badges:badges_print_term_front' %}" method="post"> 
+    <form id="table" role="form" action="{% url 'badges:badges_print_term_front' %}" method="post"> 
     {% csrf_token %}
         <table class="table table-bordered display compact cell-border" id="badges-table" cellspacing="0" width="100%">
             <thead>
@@ -60,7 +61,7 @@
                         <th><a href="{% url 'badges:badge_delete' badge.pk %}" class="list-group-item-active">Delete</th>
                         <th>
                             <ul>
-                                <input type="checkbox" name="choice" value="{{ badge.pk }}" />
+                                <input id="{{ badge.pk }}" type="checkbox" name="choice" value="{{ badge.pk }}" />
                                 <label for="choice{{ badge.pk }}">Print</label><br />
                             </ul>
                         </th>
@@ -68,7 +69,53 @@
                 {% endfor %}
             </tbody>
         </table>
-        <button type="submit" name="print" class="btn btn-success">Print</button>
     </form>
+    <button onclick="printBadges()">Print{{tester}}</button>
+<script>
+function printBadges() {
+    var badge_print_list = [];
+    var url = document.getElementById("table").action;
+    var inputList = table.$("input");
+
+    for(var i = 0; i<inputList.length; i++) {
+        if(inputList[i].checked)
+            badge_print_list.push(inputList[i].value);
+    }
+
+    post(url, {'choice': badge_print_list, csrfmiddlewaretoken:'{{csrf_token}}'});
+}
+function post(path, params) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            if( params[key].constructor === Array ) {
+                for( var key2 in params[key] ) {
+                    var hiddenField = document.createElement("input");
+                    hiddenField.setAttribute("type", "hidden");
+                    hiddenField.setAttribute("name", key);
+                    hiddenField.setAttribute("value", params[key][key2]);
+
+                    form.appendChild(hiddenField);
+                }
+            }
+            else {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+         }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
+</script>
 
 {% endblock %}

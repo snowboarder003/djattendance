@@ -2,7 +2,7 @@
 {% load bootstrap3 %}
 
 {% block badges_content %}
-    
+
 <BR>&nbsp;<BR> 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -24,7 +24,13 @@
             .badge {
             width: 330px;
             height: 190px;
-            border: transparent 1px;
+            border: transparent; 1px;
+            }
+
+            .badgeborder {
+            width: 330px;
+            height: 190px;
+            border-bottom: solid 1px;
             }
 
             .secondfreshcolumn {
@@ -34,6 +40,20 @@
                 position: absolute;
                 float: left;
                 left: 426px;
+            }
+
+            .secondfreshcolumnborder {
+                width: 330px;
+                height: 190px;
+                border: transparent 1px;
+                border-bottom: solid 1px;
+                position: absolute;
+                float: left;
+                left: 426px;
+            }
+
+            .badge:nth-last-child(2), .secondfreshcolumn:nth-last-child(2), .badgeborder:nth-last-child(2), .secondfreshcolumnborder:nth-last-child(2) .badge:last-child,  .secondfreshcolumn:last-child, .badgeborder:last-child, .secondfreshcolumnborder:last-child {
+                border-bottom: solid 1px;
             }
 
             .banner {
@@ -65,43 +85,77 @@
             @media print {
                 .page-break { display: block; page-break-before: always; }
             }
-    
+
         </style>
     </head>
     <body>
-    {% for badge in object_list %}
+        <div class="page">
+        {% for badge in object_list %}
             {% if forloop.counter0|divisibleby:8 and forloop.counter0 >= 8 %}
-                <div class="page-break">
                 </div>
+                <div class="page-break"></div>
+                <div class="page">
             {% endif %}
-            {% if forloop.counter0|divisibleby:2 %}
-            <div class="secondfreshcolumn">
-                <div class="banner">
-                    <b>Property of Living Stream Ministry</b><br/>
-                    If found please return to:
+
+            {% if forloop.counter0|divisibleby:2 and badge.type == "T" %}
+                {% if forloop.counter0 in need_bottom_rightside or forloop.revcounter0 == 1%}
+                    <div class="secondfreshcolumnborder">
+                        <div class="banner">
+                            <b>Property of Living Stream Ministry</b><br/>
+                            If found please return to:
+                        </div>
+                    <div class="body">
+                        <div class="name">
+                            PO BOX 2121 Anaheim, CA 92804 <br/>
+                            (714)991-4688
+                        </div>
+                    </div>
                 </div>
-                <div class="body">
-                <div class="name">
-                        PO BOX 2121 Anaheim, CA 92804 <br/>
-                        (714)991-4688
-                </div>
-                </div>
-            </div>
-            {% else %}
-            <div class="badge">
-                <div class="banner">
-                    <b>Property of Living Stream Ministry</b><br/>
-                    If found please return to:
-                </div>
-                <div class="body">
-                <div class="name">
-                        PO BOX 2121 Anaheim, CA 92804 <br/>
-                        (714)991-4688
-                </div>
-                </div>
-            </div>
+                {% else%}
+                    <div class="secondfreshcolumn">
+                        <div class="banner">
+                            <b>Property of Living Stream Ministry</b><br/>
+                            If found please return to:
+                        </div>
+                        <div class="body">
+                            <div class="name">
+                                PO BOX 2121 Anaheim, CA 92804 <br/>
+                                (714)991-4688
+                            </div>
+                        </div>
+                    </div>
+                {%  endif %}
+            {% elif badge.type == "T"%}
+                {% if forloop.counter0 in need_bottom_leftside or forloop.revcounter0 == 0 %}
+                    <div class="badgeborder">
+                        <div class="banner">
+                            <b>Property of Living Stream Ministry</b><br/>
+                            If found please return to:
+                        </div>
+                        <div class="body">
+                            <div class="name">
+                                PO BOX 2121 Anaheim, CA 92804 <br/>
+                                (714)991-4688
+                            </div>
+                        </div>
+                    </div>
+                {% else%}
+                    <div class="badge">
+                        <div class="banner">
+                            <b>Property of Living Stream Ministry</b><br/>
+                            If found please return to:
+                        </div>
+                        <div class="body">
+                            <div class="name">
+                                PO BOX 2121 Anaheim, CA 92804 <br/>
+                                (714)991-4688
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             {% endif %}
-    {% endfor %}
+        {% endfor %}
+    </div>
     </body>
 </html>
 {% endblock %}
