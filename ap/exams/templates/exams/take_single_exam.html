@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% load staticfiles %}
+{% load exam_extras %}
+
 {% block references %}
     <link rel="stylesheet" href="{% static 'exams/css/exams.css' %}" />    
 {% endblock %}
@@ -22,8 +24,8 @@
             <h3 class="panel-title">{{ exam_template }}</h3>
         </div>
         <div class="panel-body">
-        {% if exam_is_taken %}
-        <i>Sorry, you have already taken this exam.</i>
+        {% if exam_is_complete %}
+            <i>Sorry, you have already taken this exam.</i>
         {% else %}
 
             <form action="" method="post">
@@ -31,13 +33,19 @@
                 <ol>
                     {% for question in exam_questions %}
                         <li>{{ question.body }}</li><br />
-                        <textarea class="" cols="100" id="{{ question.id }}" name="response" placeholder="Type your response here." rows="10" title=""></textarea>
+                        {% if exam_responses|has_response:question.id %}
+                            <textarea class="" cols="100" id="{{ question.id }}" name="response" rows="10" title="">{{ exam_responses|response:question.id }}</textarea>
+                        {% else %}
+                            <textarea class="" cols="100" id="{{ question.id }}" name="response" placeholder="Type your response here." rows="10" title=""></textarea>
+                        {% endif %}
                     {% empty %}
                         <i>No exam questions to view.</i><br />
                     {% endfor %}
                 </ol>
-                <button type="submit" value="Submit" class="btn btn-default">Save</button>
+                <button type="submit" name="Save" class="btn btn-default">Save</button>
+                <button type="submit" name="Submit" class="btn btn-default">Submit</button>
             </form>
+
         {% endif %}
 
         </div>

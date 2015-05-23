@@ -28,7 +28,7 @@ class ExamTemplateListView(ListView):
     	context = super(ExamTemplateListView, self).get_context_data(**kwargs)
     	context['taken'] = []
     	for template in ExamTemplate.objects.all():
-    		context['taken'].append(template.is_taken(self.request.user.trainee))
+    		context['taken'].append(template.is_complete(self.request.user.trainee))
     	return context
 
 class SingleExamGradesListView(CreateView, SuccessMessageMixin):
@@ -122,29 +122,66 @@ class TakeExamView(SuccessMessageMixin, CreateView):
 	model = Exam
 	context_object_name = 'exam'
 	fields = []
-	success_url = reverse_lazy('exams:exam_template_list')
-	success_message = 'Exam submitted successfully.'
 
+	# context data: template, questions, responses, whether or not the exam is complete
 	def get_context_data(self, **kwargs):
 		context = super(TakeExamView, self).get_context_data(**kwargs)
 		context['exam_template'] = ExamTemplate.objects.get(pk=self.kwargs['pk'])
-		context['exam_questions'] = context['exam_template'].questions.all()
-		context['exam_is_taken'] = context['exam_template'].is_taken(self.request.user.trainee)
+		context['exam_questions'] = context['exam_template'].questions.all().order_by('id')
+		try:
+			exam = Exam.objects.get(exam_template=context['exam_template'], trainee=self.request.user.trainee)
+			context['exam_responses'] = exam.responses.all().order_by('question')
+		except Exam.DoesNotExist:
+			context['exam_responses'] = []
+
+		context['exam_is_complete'] = context['exam_template'].is_complete(self.request.user.trainee)
 		return context
 
-	def form_valid(self, form):
-		exam = form.save(commit=False)
+	def _update_or_add_exam(self, is_complete):
+		# todo(haileyl): use update_or_create when we move to Django 1.7+
 		template = ExamTemplate.objects.get(pk=self.kwargs['pk'])
-		exam.exam_template = template
-		exam.trainee = self.request.user.trainee
-		exam.is_complete = True
-		exam.save()
+		trainee = self.request.user.trainee
+		try:
+			exam = Exam.objects.get(exam_template = template, trainee = trainee)
+			# The only value on exam that can be updated on submit is is_complete.
+			# Trainee and template will never change.
+			exam.is_complete = is_complete
+			exam.save()
+		except Exam.DoesNotExist:
+			exam = Exam(exam_template = template, trainee = trainee, is_complete = is_complete)
+			exam.save()
+		return exam
 
-		responses = self.request.POST.getlist('response')
-		questions = ExamTemplate.objects.get(pk=self.kwargs['pk']).questions.all()
+	# review (haileyl): static?  doesn't use self
+	def _update_or_add_response(self, exam, new_response, question):
+		# todo(haileyl): use update_or_create when we move to Django 1.7+
+		try:
+			response = TextResponse.objects.get(exam = exam, question = question)
+			response.body = new_response
+			response.save()
+		except TextResponse.DoesNotExist:
+			response = TextResponse(exam = exam, question = question, body = new_response)
+			response.save()
+
+	def post(self, request, *args, **kwargs):
+		is_complete = False
+		if 'Submit' in request.POST:
+			is_complete = True
+
+		# create exam if it doesn't exist and update the is_complete field
+		exam = self._update_or_add_exam(is_complete)
+
+		# create or update responses for given exam
+		responses = request.POST.getlist('response')
+		questions = ExamTemplate.objects.get(pk = self.kwargs['pk']).questions.all().order_by('id')
 		for i in range(len(responses)):
-			new_response = TextResponse(body=responses[i], question=questions[i], exam=exam)
-			new_response.save()
-		return super(TakeExamView, self).form_valid(form)
+			self._update_or_add_response(exam, responses[i], questions[i])
 
-
+		# if exam is complete, redirect to page listing available exams, otherwise
+		# simply refresh the page.
+		if (is_complete):
+			messages.success(request, 'Exam submitted successfully.')
+			return HttpResponseRedirect(reverse_lazy('exams:exam_template_list'))
+		else:
+			messages.success(request, 'Exam progress saved.')
+			return self.get(request, *args, **kwargs)

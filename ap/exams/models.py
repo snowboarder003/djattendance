@@ -39,9 +39,9 @@ class ExamTemplate(models.Model):
 	def __unicode__(self):
 		return "Exam for %s, [%s]" % (self.training_class, self.training_class.term)
 
-	def is_taken(self, trainee_id):
+	def is_complete(self, trainee_id):
 		try:
-			Exam.objects.get(exam_template=self, trainee=trainee_id)
+			Exam.objects.get(exam_template=self, trainee=trainee_id, is_complete=True)
 			return True
 		except Exam.DoesNotExist:
 			return False
@@ -72,6 +72,9 @@ class ExamTemplate(models.Model):
 class Exam(models.Model):
 	is_complete = models.BooleanField(default=False)
 	is_graded = models.BooleanField(default=False)
+
+	# todo/review(haileyl): is there a re-take limit?  Or should grade be 
+	# another class?
 	grade = models.IntegerField(default=0)
 
 	# each exam instance is linked to exactly one trainee
@@ -104,6 +107,3 @@ class TextQuestion(Question):
 class TextResponse(Response):
 	body = models.CharField(max_length=500)
 	question = models.ForeignKey(TextQuestion)
-
-
-
