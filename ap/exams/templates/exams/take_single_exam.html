@@ -14,7 +14,6 @@
 <h1>Taking Exam {{ exam }}</h1>
 
 {% if user.trainee %}
-
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="btn-group pull-right">
@@ -27,7 +26,6 @@
         {% if exam_is_complete %}
             <i>Sorry, you have already taken this exam.</i>
         {% else %}
-
             <form action="" method="post">
                 {% csrf_token %}
                 <ol>
@@ -38,6 +36,8 @@
                         {% else %}
                             <textarea class="" cols="100" id="{{ question.id }}" name="response" placeholder="Type your response here." rows="10" title=""></textarea>
                         {% endif %}
+                        <br />
+                        <b>Word Count:</b> <span id="{{ question|spanid }}">0</span>
                     {% empty %}
                         <i>No exam questions to view.</i><br />
                     {% endfor %}
@@ -59,4 +59,5 @@
 {% endblock %}
 
 {% block scripts %}
+    <script src="{% static 'exams/js/word-count.js' %}"></script>
 {% endblock %}

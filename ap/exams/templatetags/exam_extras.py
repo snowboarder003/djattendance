@@ -29,6 +29,12 @@ def response(responses, question_id):
 			return response.body
 	return None
 
+# returns id for span given the question
+@register.filter(name='spanid')
+def spanid(question):
+	return "count" + str(question.id)
+
 register.filter('lookup', lookup)
 register.filter('has_response', has_response)
 register.filter('response', response)
+register.filter('spanid', spanid)
