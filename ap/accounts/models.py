@@ -1,3 +1,4 @@
+from django.conf import settings
 from datetime import date
 
 from django.db import models
@@ -144,7 +145,7 @@ class Profile(models.Model):
     """
 
     # each user should only have one of each profile
-    account = models.OneToOneField(User)
+    account = models.OneToOneField(settings.AUTH_USER_MODEL)
 
     # whether this profile is still active
     # e.g. if a trainee becomes a TA, they no longer need a service worker profile
@@ -163,7 +164,6 @@ class TrainingAssistant(Profile):
 
     def __unicode__(self):
         return self.account.get_full_name()
-
 
 class Trainee(Profile):
 

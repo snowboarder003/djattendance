@@ -250,3 +250,9 @@ SUIT_CONFIG = {
     'ADMIN_NAME': 'FTTA Admin',
     'LIST_PER_PAGE': 20,
 }
+
+# Settings for graphing SQL Schema
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
