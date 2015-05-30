@@ -31,13 +31,9 @@
                 <ol>
                     {% for question in exam_questions %}
                         <li>{{ question.body }}</li><br />
-                        {% if exam_responses|has_response:question.id %}
-                            <textarea class="" cols="100" id="{{ question.id }}" name="response" rows="10" title="">{{ exam_responses|response:question.id }}</textarea>
-                        {% else %}
-                            <textarea class="" cols="100" id="{{ question.id }}" name="response" placeholder="Type your response here." rows="10" title=""></textarea>
-                        {% endif %}
+                        <textarea class="exam-response" id="{{ question.id }}" name="response" cols="100" rows="10" placeholder="Type your response here.">{{ exam_responses|response:question.id }}</textarea>                        
                         <br />
-                        <b>Word Count:</b> <span id="{{ question|spanid }}">0</span>
+                        <b>Word Count:</b> <span id="count{{ question.id }}">0</span>
                     {% empty %}
                         <i>No exam questions to view.</i><br />
                     {% endfor %}
