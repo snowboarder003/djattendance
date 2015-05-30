@@ -31,9 +31,9 @@
                         <ul class="list-group">
                             {% for summary in discipline.summary_set.all %}
                                 {% if summary.approved == False %}
-                                <a href="{% url 'lifestudies:summary_detail' summary.pk %}" class="list-group-item">
+                                <a href="{% url 'lifestudies:summary_detail' summary.pk %}" class="list-group-item col-md-12">
                                 {% else %}
-                                <a class="list-group-item disabled">
+                                <a class="list-group-item disabled col-md-12">
                                 {% endif %}
                                     <div class="col-md-12">
                                         <h3>{{summary.book.name}}</h3>
@@ -57,15 +57,16 @@
                                     </div>
                                 </a>
                             {% endfor %}
-                            {% if discipline.get_num_summary_due > 0 %}
+                        </ul>
+
+                    </div>
+                    {% if discipline.get_num_summary_due > 0 %}
                                 <form action="{% url 'lifestudies:summary_create' discipline.pk %}">
                                     <div class="pull-right">
-                                        <button class="btn btn-success btn-xs">New Life-Study Summary </button>
+                                        <button class="btn btn-success btn-">New Life-Study Summary </button>
                                     </div>
                                 </form>
-                            {% endif %}
-                        </ul>
-                    </div>
+                    {% endif %}
                 </div>
             {% endif %}
         {% endfor %}
@@ -127,6 +128,9 @@
                 </tbody>
 
             </table>
+            <p alight="right">
+                <b>AT</b>tendance || <b>C</b>ell Phone & <b>I</b>nternet || <b>M</b>issed <b>S</b>ervice || <br> <b>S</b>peeding || <b>A</b>larm <b>N</b>oise || <b>G</b>uard || <b>C</b>urfew || <b>M</b>isplaced Item || <b>H</b>ouse <b>I</b>nspection || <b>L</b>ibrary || <b>MISC</b>
+            </p>
             <div class="pull-right">
                 <button type="submit" name="approve" class="btn btn-success">Approve Selected</button>
                 <button type="submit" name="delete" class="btn btn-danger">Delete Selected</button>

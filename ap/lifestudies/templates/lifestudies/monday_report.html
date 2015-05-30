@@ -1,0 +1,35 @@
+    <style>
+    #monday_report_table thead tr {
+        text-align: left;
+    }
+    #monday_report_table th {
+        border-bottom: 1px black double;
+        padding-top:20px;
+        padding-bottom: 20px;
+        padding-right: 5px;
+    }
+
+    </style>
+
+    <table id="monday_report_table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Offense Reason</th>
+                <th># of LS</th>
+                <th>Notes</th>
+                <th>Init.</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for discipline in disciplines %}
+            <tr>
+                <td>{{discipline.trainee}}</td>
+                <td>{{discipline.offense}}</td>
+                <td>{{discipline.get_num_summary_due}}</td>
+                <td>{{discipline.note}}</td>
+                <td>_____</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>

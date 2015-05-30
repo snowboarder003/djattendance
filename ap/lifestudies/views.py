@@ -121,6 +121,9 @@ class DisciplineDetailView(DetailView):
                 chapter=1,
                 approved=True)
             messages.success(request, "Hard Copy Submission Created!")
+        if 'increase_penalty' in request.POST:
+            self.get_object().increase_penalty()
+            messages.success(request, "Increased Summary by 1")
         return HttpResponseRedirect('')
 
 
@@ -238,4 +241,17 @@ class AttendanceAssign(ListView):
                                         )
         else:
             return HttpResponseRedirect(reverse_lazy('attendance_assign',
-                                                     kwargs={'period: 1'}))
+                                                     kwargs={'period': 1}))
+
+
+class MondayReportView(TemplateView):
+
+    template_name = "lifestudies/monday_report.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(MondayReportView, self).get_context_data(**kwargs)
+        context['disciplines'] = Discipline.objects.all()
+        return context
+
+
+
