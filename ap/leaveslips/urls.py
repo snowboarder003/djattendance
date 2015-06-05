@@ -14,7 +14,4 @@ urlpatterns = patterns('',
     url(r'group/delete/(?P<pk>\d+)$', views.GroupSlipDelete.as_view(), name='group-delete'),
 
     url(r'^$',views.LeaveSlipList.as_view(), name='leaveslips-list'),
-
 )
-
-#     url(r'schedule/list/$', views.ScheduleList.as_view(), name='schedule-list'),
