@@ -39,7 +39,7 @@ class IndividualSlipUpdate(generic.UpdateView):
 
 class IndividualSlipDelete(generic.DeleteView):
     model = IndividualSlip
-    success_url='/leaveslips/'
+    success_url='/leaveslips/'    
 
 # group slips
 class GroupSlipCreate(generic.CreateView):
@@ -79,6 +79,17 @@ class LeaveSlipList(generic.ListView):
     def get_queryset(self):
          individual=IndividualSlip.objects.filter(trainee=self.request.user.trainee.id).order_by('status')
          group=GroupSlip.objects.filter(trainee=self.request.user.trainee.id).order_by('status') #if trainee is in a group leaveslip submitted by another user
+         queryset= chain(individual,group) #combines two querysets
+         return queryset
+
+class TALeaveSlipList(generic.ListView):
+    model = IndividualSlip, GroupSlip
+    template_name = 'leaveslips/ta_list.html'
+    context_object_name = "leaveslips"
+
+    def get_queryset(self):
+         individual=IndividualSlip.objects.filter(status__in=['P', 'F', 'S']).order_by('submitted')
+         group=GroupSlip.objects.filter(status__in=['P', 'F', 'S']).order_by('submitted') #if trainee is in a group leaveslip submitted by another user
          queryset= chain(individual,group) #combines two querysets
          return queryset
 
