@@ -8,13 +8,6 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('terms', '__first__'),
-        ('houses', '__first__'),
-        ('services', '__first__'),
-        ('localities', '__first__'),
-        ('auth', '0006_require_contenttypes_0002'),
-        ('teams', '__first__'),
-        ('aputils', '__first__'),
     ]
 
     operations = [
@@ -37,8 +30,6 @@ class Migration(migrations.Migration):
                 ('is_active', models.BooleanField(default=True)),
                 ('is_admin', models.BooleanField(default=False)),
                 ('is_staff', models.BooleanField(default=False)),
-                ('groups', models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Group', blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', verbose_name='groups')),
-                ('user_permissions', models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Permission', blank=True, help_text='Specific permissions for this user.', verbose_name='user permissions')),
             ],
             options={
                 'abstract': False,
@@ -67,61 +58,9 @@ class Migration(migrations.Migration):
                 ('active', models.BooleanField(default=True)),
                 ('date_created', models.DateField(auto_now_add=True)),
                 ('account', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
-                ('houses', models.ManyToManyField(to='houses.House', blank=True)),
-                ('services', models.ManyToManyField(to='services.Service', blank=True)),
             ],
             options={
                 'abstract': False,
             },
-        ),
-        migrations.AddField(
-            model_name='trainee',
-            name='TA',
-            field=models.ForeignKey(blank=True, to='accounts.TrainingAssistant', null=True),
-        ),
-        migrations.AddField(
-            model_name='trainee',
-            name='account',
-            field=models.OneToOneField(to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AddField(
-            model_name='trainee',
-            name='address',
-            field=models.ForeignKey(verbose_name=b'home address', blank=True, to='aputils.Address', null=True),
-        ),
-        migrations.AddField(
-            model_name='trainee',
-            name='bunk',
-            field=models.ForeignKey(blank=True, to='houses.Bunk', null=True),
-        ),
-        migrations.AddField(
-            model_name='trainee',
-            name='house',
-            field=models.ForeignKey(blank=True, to='houses.House', null=True),
-        ),
-        migrations.AddField(
-            model_name='trainee',
-            name='locality',
-            field=models.ManyToManyField(to='localities.Locality'),
-        ),
-        migrations.AddField(
-            model_name='trainee',
-            name='mentor',
-            field=models.ForeignKey(related_name='mentee', blank=True, to='accounts.Trainee', null=True),
-        ),
-        migrations.AddField(
-            model_name='trainee',
-            name='spouse',
-            field=models.OneToOneField(null=True, blank=True, to='accounts.Trainee'),
-        ),
-        migrations.AddField(
-            model_name='trainee',
-            name='team',
-            field=models.ForeignKey(blank=True, to='teams.Team', null=True),
-        ),
-        migrations.AddField(
-            model_name='trainee',
-            name='term',
-            field=models.ManyToManyField(to='terms.Term'),
         ),
     ]
