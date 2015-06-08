@@ -2,9 +2,9 @@ from itertools import chain
 from datetime import datetime
 
 from django.views import generic
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse, reverse_lazy
-from django.shortcuts import get_object_or_404
+from django.contrib import messages
 
 from rest_framework import viewsets
 
@@ -80,8 +80,8 @@ class LeaveSlipList(generic.ListView):
 
     def get_queryset(self):
          individual=IndividualSlip.objects.filter(trainee=self.request.user.trainee.id).order_by('status')
-         group=GroupSlip.objects.filter(trainee=self.request.user.trainee.id).order_by('status') #if trainee is in a group leaveslip submitted by another user
-         queryset= chain(individual,group) #combines two querysets
+         group=GroupSlip.objects.filter(trainee=self.request.user.trainee.id).order_by('status')  # if trainee is in a group leaveslip submitted by another user
+         queryset= chain(individual,group)  # combines two querysets
          return queryset
 
 class TALeaveSlipList(generic.ListView):
@@ -91,8 +91,8 @@ class TALeaveSlipList(generic.ListView):
 
     def get_queryset(self):
          individual=IndividualSlip.objects.filter(status__in=['P', 'F', 'S']).order_by('submitted')
-         group=GroupSlip.objects.filter(status__in=['P', 'F', 'S']).order_by('submitted') #if trainee is in a group leaveslip submitted by another user
-         queryset= chain(individual,group) #combines two querysets
+         group=GroupSlip.objects.filter(status__in=['P', 'F', 'S']).order_by('submitted')  # if trainee is in a group leaveslip submitted by another user
+         queryset= chain(individual,group)  # combines two querysets
          return queryset
 
 def modify_status(request, classname, status, id):
@@ -102,6 +102,16 @@ def modify_status(request, classname, status, id):
         leaveslip = get_object_or_404(GroupSlip, pk=id)
     leaveslip.status = status
     leaveslip.save()
+
+    message =  "%s's %s leaveslip was " % (leaveslip.trainee, leaveslip.get_type_display().upper()) 
+    if status == 'A':
+        message += "approved."
+    if status == 'D':
+        message += "denied."
+    if status == 'F':
+        message += "marked for fellowship."
+    messages.add_message(request, messages.SUCCESS, message)
+
     return redirect('leaveslips:ta-leaveslip-list')
 
 

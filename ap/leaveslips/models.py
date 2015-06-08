@@ -55,7 +55,7 @@ class LeaveSlip(models.Model):
     status = models.CharField(max_length=1, choices=LS_STATUS, default='P')
 
     TA = models.ForeignKey(TrainingAssistant)
-    trainee = models.ForeignKey(Trainee)#trainee who submitted the leaveslip
+    trainee = models.ForeignKey(Trainee)  #trainee who submitted the leaveslip
 
     submitted = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
@@ -84,6 +84,9 @@ class LeaveSlip(models.Model):
             self.finalized = datetime.now()
         super(LeaveSlip, self).save(force_insert, force_update)
         self.old_status = self.status
+
+    def __unicode__(self):
+        return "[%s] %s - %s" % (self.submitted.strftime('%m/%d'), self.type, self.trainee)
 
     class Meta:
         abstract = True
