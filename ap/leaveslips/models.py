@@ -68,6 +68,12 @@ class LeaveSlip(models.Model):
 
     informed = models.BooleanField(blank=True, default=False)  # not sure, need to ask
 
+    def _classname(self):
+        # returns whether slip is individual or group
+        return str(self.__class__.__name__)[:-4].lower()
+
+    classname = property(_classname)
+
     def __init__(self, *args, **kwargs):
         super(LeaveSlip, self).__init__(*args, **kwargs)
         self.old_status = self.status

@@ -15,4 +15,5 @@ urlpatterns = patterns('',
 
     url(r'^$', views.LeaveSlipList.as_view(), name='leaveslips-list'),
     url(r'ta$', views.TALeaveSlipList.as_view(), name='ta-leaveslip-list'),
+    url(r'(?P<classname>individual|group)/(?P<status>[APFDS])/(?P<id>\d+)$', views.modify_status, name='modify-status'),
 )

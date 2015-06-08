@@ -4,6 +4,7 @@ from datetime import datetime
 from django.views import generic
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.shortcuts import get_object_or_404
 
 from rest_framework import viewsets
 
@@ -40,6 +41,7 @@ class IndividualSlipUpdate(generic.UpdateView):
 class IndividualSlipDelete(generic.DeleteView):
     model = IndividualSlip
     success_url='/leaveslips/'    
+
 
 # group slips
 class GroupSlipCreate(generic.CreateView):
@@ -92,6 +94,15 @@ class TALeaveSlipList(generic.ListView):
          group=GroupSlip.objects.filter(status__in=['P', 'F', 'S']).order_by('submitted') #if trainee is in a group leaveslip submitted by another user
          queryset= chain(individual,group) #combines two querysets
          return queryset
+
+def modify_status(request, classname, status, id):
+    if classname == "individual":
+        leaveslip = get_object_or_404(IndividualSlip, pk=id)
+    if classname == "group":
+        leaveslip = get_object_or_404(GroupSlip, pk=id)
+    leaveslip.status = status
+    leaveslip.save()
+    return redirect('leaveslips:ta-leaveslip-list')
 
 
 """ API Views """

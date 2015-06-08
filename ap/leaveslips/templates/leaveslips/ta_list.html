@@ -4,16 +4,24 @@
 {% block content %}
 <h1>TA Leaveslip List</h1>
 
-<div class="list-group">   
+<ul class="list-group">   
 
   {% for leaveslip in leaveslips %}
-    <a href="#" class="list-group-item">
+    <li href="{{leaveslip.get_absolute_url}}" class="list-group-item">
 
       <span class="pull-right actionbar">
-        <button class="btn btn-default approve" title="Approve"><span class="glyphicon glyphicon-ok"></span></button>
-        <button class="btn btn-default deny" title="Deny"><span class="glyphicon glyphicon-remove"></span></button>
-        <button class="btn btn-default fellowship" title="Mark for Fellowship"><span class="glyphicon glyphicon-exclamation-sign"></span></button>
-        <button class="btn btn-default comment" title="Comment"><span class="glyphicon glyphicon-comment"></span></button>
+        <a href="{% url 'leaveslips:modify-status' classname=leaveslip.classname status='A' id=leaveslip.id %}">
+          <button class="btn btn-success approve" title="Approve"><span class="glyphicon glyphicon-ok"></span></button>
+        </a>
+         <a href="{% url 'leaveslips:modify-status' leaveslip.classname 'D' leaveslip.id %}">
+          <button class="btn btn-danger deny" title="Deny"><span class="glyphicon glyphicon-remove"></span></button>
+          </a>
+         <a href="{% url 'leaveslips:modify-status' leaveslip.classname 'F' leaveslip.id %}">
+          <button class="btn btn-info fellowship" title="Mark for Fellowship"><span class="glyphicon glyphicon-exclamation-sign"></span></button>
+        </a>
+         <a href="#">
+          <button class="btn btn-default comment" title="Comment"><span class="glyphicon glyphicon-comment"></span></button>
+        </a>
       </span>
 
       <h4 class="list-group-item-heading">
@@ -50,9 +58,9 @@
       </ul>
 
       </p>
-    </a>
+    </li>
   {% endfor %}
-</div>
+</ul>
 
   <script type="text/javascript">
     $(document).on('click', ".approve", function() {
