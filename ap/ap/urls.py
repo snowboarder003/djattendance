@@ -59,7 +59,6 @@ urlpatterns += patterns('',
     #third party
     url(r'^explorer/', include('explorer.urls')),
     url(r'^select2/', include('django_select2.urls')),
-
 )
 
 urlpatterns += staticfiles_urlpatterns()
