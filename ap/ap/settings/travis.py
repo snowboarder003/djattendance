@@ -1,5 +1,4 @@
 from .base import *
-import getpass
 
 DEBUG = True
 TEMPLATE_DEBUG = True
@@ -12,7 +11,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'djattendance',
-        'USER': getpass.getuser(),
+        'USER': 'postgres',
         'PASSWORD': '',
         'HOST': 'localhost',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',  # Set to empty string for default.
