@@ -3,8 +3,7 @@ from .base import *
 DEBUG = True
 TEMPLATE_DEBUG = True
 
-INSTALLED_APPS += ('django_extensions',
-                   'debug_toolbar',
+INSTALLED_APPS += ('debug_toolbar',
                    'django_nose',)
 
 DATABASES = {
