@@ -11,8 +11,6 @@ print(SITE_ROOT)
 
 ADMINS = (
     ('Attendance Project', 'attendanceproj@gmail.com'),
-    ('Jonathan Tien', 'jonathan.tien@gmail.com'),
-    ('Jonathan Yao', 'jonyao.o@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -138,6 +136,7 @@ INSTALLED_APPS = (
     # admin third-party modules
     'adminactions',
     'suit',  # needs to be in front of 'django.contrib.admin'
+    'django_extensions',
 
     # django contrib
     'django.contrib.auth',
@@ -148,7 +147,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    #'django.contrib.formtools',
 
     # third-party django modules
     'bootstrap3',  # easy-to-use bootstrap integration
@@ -251,4 +249,10 @@ SUIT_CONFIG = {
     # header
     'ADMIN_NAME': 'FTTA Admin',
     'LIST_PER_PAGE': 20,
+}
+
+# Settings for graphing SQL Schema
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
 }
