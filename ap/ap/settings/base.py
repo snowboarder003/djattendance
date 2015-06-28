@@ -157,6 +157,9 @@ INSTALLED_APPS = (
     'django_select2',
     'rest_framework',  # for API
 
+    # ap static util library
+    'utils',
+
     # ap CORE
     'accounts',
     'aputils',
